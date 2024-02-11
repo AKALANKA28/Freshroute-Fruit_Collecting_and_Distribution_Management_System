@@ -7,13 +7,38 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 import './App.css';
 import Dashboard from './components/dashboard/Dashboard';
+import Login from './components/LoginRegister/Login'
+import Register from './components/LoginRegister/Register'
 
+
+import{createBrowserRouter, RouterProvider} from 'react-router-dom'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <div><Login /></div>
+  },
+
+  {
+    path: '/register',
+    element: <div><Register /></div>
+  },
+
+  {
+    path: '/dashboard',
+    element: <div><Dashboard /></div>
+  },
+
+  
+ 
+
+])
 
 function App() {
   return (
-    < >
-       <Dashboard />
-    </>
+    <div >
+      <RouterProvider router={router}/> 
+    </div>
   );
 }
 
