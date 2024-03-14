@@ -117,7 +117,7 @@ const Sidebar = () => {
             <div className='navList'>
                 {navList.map(nav => (
                     <li className='nav-item' key={nav._id}>
-                    <a className='nav-link collapsed' href='#'>
+                    <a className='nav-link collapsed' href ={'/login'}>
                         <i className={nav.icon}></i>
                         <span>{nav.name}</span>
                     </a>
