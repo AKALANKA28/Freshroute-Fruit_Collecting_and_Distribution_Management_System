@@ -1,0 +1,19 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 120px;
+    color: white;
+}
+
+.nav-logo{
+    font-size: 42px;
+    font-weight: 500;
+}
+
+
+.nav-menu{
+    display: flex;
+    font-size: 18px;
+    gap: 90px;
+}
