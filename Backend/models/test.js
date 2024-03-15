@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const testSchema = new Schema({
     name : {
         type : String,
-        required: true
+        required: true,
+        trim: true
     },
 
     age: {
@@ -17,8 +18,9 @@ const testSchema = new Schema({
     gender: {
         type: String,
         required: true
-    }
+    },
 
+   
 })
 
 const test = mongoose.model("test", testSchema);

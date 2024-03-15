@@ -66,7 +66,11 @@ const login = () => {
 
           <Link to={'/dashboard'}>
             <button className='btn'>dashboard</button>
-            </Link>
+          </Link>
+
+          <Link to={'/tdashboard'}>
+            <button className='btn'>tranportdashboard</button>
+          </Link>
         </div>
                 </div>
             </div>
