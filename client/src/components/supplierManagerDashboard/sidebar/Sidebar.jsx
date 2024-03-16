@@ -22,7 +22,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-menu-button-wide'></i>
-                    <span>Documents</span>
+                    <span>Supplier Details</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
@@ -31,60 +31,27 @@ const Sidebar = () => {
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Suppliers</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Supplier Requests</span>
                             </i>
                         </a>
                     </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Customers</span>
-                            </i>
-                        </a>
-                    </li>
-
                 </ul>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-journal-text'></i>
-                    <span>Forms</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                    <span>Predict Details</span>
                 </a>
 
-                <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Application Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Release Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Cancellation Form</span>
-                            </i>
-                        </a>
-                    </li>
-
-                </ul>
+                
             </li>
 
             <li className='nav-item'>
