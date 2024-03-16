@@ -18,6 +18,7 @@ import OMDashboard from './components/orderManagement/OMDashboard';
 import SMDashboard from './components/supplierManagerDashboard/SMDashboard';
 import Coordinator from './components/Coordinator/Coordinator';
 import StaffManager from './components/StaffManager/StaffManager';
+import OPDashboard from './components/orderProcessor/OPDashboard';
 
 
 
@@ -81,6 +82,12 @@ const router = createBrowserRouter([
     path: '/StaffManager',
     element: <div><StaffManager /></div>
   },
+
+  {
+    path: '/OP',
+    element: <div><OPDashboard /></div>
+  },
+
 
   
 
