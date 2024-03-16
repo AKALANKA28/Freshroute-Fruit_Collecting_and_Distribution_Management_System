@@ -84,7 +84,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/OP',
+    path: '/OPDashboard',
     element: <div><OPDashboard /></div>
   },
 
