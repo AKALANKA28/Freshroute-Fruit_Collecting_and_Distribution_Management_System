@@ -21,8 +21,8 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-menu-button-wide'></i>
-                    <span>Documents</span>
+                <i class="bi bi-bucket"></i>
+                    <span>Fruit</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
@@ -31,88 +31,40 @@ const Sidebar = () => {
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Type</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Category</span>
                             </i>
                         </a>
                     </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Customers</span>
-                            </i>
-                        </a>
-                    </li>
+                    
 
                 </ul>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-journal-text'></i>
-                    <span>Forms</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <i class="bi bi-cash"></i>
+                    <span>Salary</span>
+                    
                 </a>
 
-                <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Application Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Release Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Cancellation Form</span>
-                            </i>
-                        </a>
-                    </li>
-
-                </ul>
+                
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-layout-text-window-reverse'></i>
-                    <span>Documents</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <i class="bi bi-truck"></i>
+                    <span>Transport</span>
+                    
                 </a>
 
-                <ul id='tables-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>General Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Data Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                   
-
-                </ul>
+               
             </li>
 
             <li className='nav-heading'>Pages</li>
