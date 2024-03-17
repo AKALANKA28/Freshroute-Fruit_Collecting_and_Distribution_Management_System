@@ -9,6 +9,7 @@ require("dotenv").config();
 
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
+const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
 
 
 
@@ -31,16 +32,10 @@ connection.once("open", () => {
 });
 
 
-const testRouter = require("./routes/test");
-app.use("/test", testRouter);
-
-const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
-app.use("/FruitType", FruitTypeRouter);
-
-
 // Use the routes
 app.use('/sales', salesRouter);
 app.use('/expense', expenseRouter);
+app.use("/FruitType", FruitTypeRouter);
 
 
 // Start the server

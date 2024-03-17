@@ -4,7 +4,7 @@ import React from 'react'
 const RecentSalesTable = ({items}) => {
     const handleStatus = status => {
     switch (status) {
-        case 'paid':
+        case 'Paid':
             return 'success';
             break;
         case 'Warning':
