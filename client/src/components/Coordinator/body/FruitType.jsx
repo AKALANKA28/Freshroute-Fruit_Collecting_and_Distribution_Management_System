@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FruitTypeForm from "./FruitTypeForm";
+
 import "./FruitType.css";
+
+import "./FruitType.css"
+// import "./main.css"
+
+
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -122,8 +128,14 @@ function FruitType() {
         />
       )}
 
+
       <div className="table-container">
         <table className="table table-borderless datatable">
+
+       
+      <div>
+         <table className="table table-bordeless datatable">
+
           <thead className="table-light">
             <tr>
               <th scope="col">Name</th>
@@ -162,10 +174,18 @@ function FruitType() {
                 <td colSpan="4">No Data</td>
               </tr>
             )}
+
           </tbody>
         </table>
       </div>
     </div>
+
+            </tbody>
+           </table>
+          </div>
+        </div>
+    </>
+
   );
 }
 
