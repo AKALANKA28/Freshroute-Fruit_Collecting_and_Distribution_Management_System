@@ -22,7 +22,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-menu-button-wide'></i>
-                    <span>Documents</span>
+                    <span>Orders</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
@@ -31,21 +31,21 @@ const Sidebar = () => {
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Assigned Orders</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Ongoing Orders</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Completed Orders</span>
                             </i>
                         </a>
                     </li>
@@ -56,7 +56,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-journal-text'></i>
-                    <span>Forms</span>
+                    <span>Suppliers</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
@@ -65,21 +65,21 @@ const Sidebar = () => {
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Application Form</span>
+                                <span>#</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Release Form</span>
+                                <span>#</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Cancellation Form</span>
+                                <span>#</span>
                             </i>
                         </a>
                     </li>
@@ -90,7 +90,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-layout-text-window-reverse'></i>
-                    <span>Documents</span>
+                    <span>Quality List</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
@@ -99,14 +99,14 @@ const Sidebar = () => {
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>General Tables</span>
+                                <span>#</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Data Tables</span>
+                                <span>#</span>
                             </i>
                         </a>
                     </li>

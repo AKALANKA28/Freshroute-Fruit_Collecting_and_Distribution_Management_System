@@ -24,6 +24,10 @@ import OPDashboard from './components/orderProcessor/OPDashboard';
 
 
 import{createBrowserRouter, RouterProvider} from 'react-router-dom'
+
+
+import QualityList from './components/orderManagement/QualityList';
+
 // import Background from './Website/Background/Background';
 // import Navbar from './Website/Navbar/Navbar';
 
@@ -89,7 +93,10 @@ const router = createBrowserRouter([
   },
 
 
-  
+  {
+    path: '/QualityList',
+    element: <div><QualityList /></div>
+  },
 
 
 
