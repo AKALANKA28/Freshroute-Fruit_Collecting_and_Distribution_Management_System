@@ -27,8 +27,15 @@ mongoose.connect(URL, {
 
 const connection = mongoose.connection;
 connection.once("open", () => {
-  console.log('MongoDB Connection Success!!!');
+  console.log("MongoDB Connection Success!!!");
 });
+
+
+const testRouter = require("./routes/test");
+app.use("/test", testRouter);
+
+const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
+app.use("/FruitType", FruitTypeRouter);
 
 
 // Use the routes
