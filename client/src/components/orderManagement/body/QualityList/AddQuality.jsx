@@ -1,10 +1,9 @@
-//C:\Users\HP\Documents\GitHub\MERN_Project\client\src\components\orderManagement\body\QualityList\AddQuality.jsx
+import React from "react";
 
 const AddQuality = ({ handleSubmit, handleOnChange, rest }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Fruit category
@@ -12,11 +11,11 @@ const AddQuality = ({ handleSubmit, handleOnChange, rest }) => {
           <input
             type="text"
             className="form-control"
-            name="FrCat"
+            name="fruit_category"
             placeholder="Fruit Category"
             required
             onChange={handleOnChange}
-            value={rest.NIC}
+            value={rest.fruit_category}
           />
         </div>
 
@@ -27,11 +26,11 @@ const AddQuality = ({ handleSubmit, handleOnChange, rest }) => {
           <input
             type="text"
             className="form-control"
-            name="qgrade"
+            name="grade"
             placeholder="Grade"
             required
             onChange={handleOnChange}
-            value={rest.username}
+            value={rest.grade}
           />
         </div>
 
@@ -42,11 +41,11 @@ const AddQuality = ({ handleSubmit, handleOnChange, rest }) => {
           <input
             type="text"
             className="form-control"
-            name="qdescription"
+            name="quality_desc"
             placeholder="Description"
             required
             onChange={handleOnChange}
-            value={rest.name}
+            value={rest.quality_desc}
           />
         </div> 
 
@@ -57,11 +56,11 @@ const AddQuality = ({ handleSubmit, handleOnChange, rest }) => {
           <input
             type="text"
             className="form-control"
-            name="conditions"
+            name="storage_cond"
             placeholder="Storage Conditions"
             required
             onChange={handleOnChange}
-            value={rest.name}
+            value={rest.storage_cond}
           />
         </div> 
 
