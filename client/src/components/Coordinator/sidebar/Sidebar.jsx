@@ -13,7 +13,7 @@ const Sidebar = () => {
         <ul className="sidebar-nav" id='sidebar-nav'>
 
             <li className='nav-item'>
-                <a className='nav-link' href='/'>
+                <a className='nav-link' href='/Coordinator'>
                     <i className='bi bi-grid'></i>
                     <span>Dashboard</span>
                 </a>
@@ -29,7 +29,7 @@ const Sidebar = () => {
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
                     <li>
-                        <a href='#'>
+                        <a href='/FruitType'>
                             <i className='bi bi-circle'>
                                 <span>Type</span>
                             </i>
