@@ -1,3 +1,4 @@
+// ./client/src/
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
@@ -15,6 +16,7 @@ import OMDashboard from "./components/orderManagement/OMDashboard";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
+import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -118,6 +120,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <FruitType />
+      </div>
+    ),
+  },
+
+  {
+    path: "/Salary",
+    element: (
+      <div>
+        <Salary />
       </div>
     ),
   },

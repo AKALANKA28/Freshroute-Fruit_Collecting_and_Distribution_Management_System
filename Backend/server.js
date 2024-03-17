@@ -6,16 +6,13 @@ const dotenv = require("dotenv");
 const app = express();
 require("dotenv").config();
 
-
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
-
-
-
+const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
+const SalaryRouter = require("./routes/coordinator/SalaryRoute.js");
 
 app.use(cors());
 app.use(bodyParser.json());
-
 
 // Connect to MongoDB
 const URL = process.env.MONGODB_URL;
@@ -30,18 +27,11 @@ connection.once("open", () => {
   console.log("MongoDB Connection Success!!!");
 });
 
-
-const testRouter = require("./routes/test");
-app.use("/test", testRouter);
-
-const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
-app.use("/FruitType", FruitTypeRouter);
-
-
 // Use the routes
-app.use('/sales', salesRouter);
-app.use('/expense', expenseRouter);
-
+app.use("/sales", salesRouter);
+app.use("/expense", expenseRouter);
+app.use("/FruitType", FruitTypeRouter);
+app.use("/Salary", SalaryRouter);
 
 // Start the server
 const PORT = process.env.PORT || 8070;
