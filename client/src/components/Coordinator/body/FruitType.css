@@ -29,13 +29,13 @@
   
   .table th, .table td {
     padding: 8px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     width: 100px;
   }
 
   .table .description{
     padding: 8px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     width: 600px;
    
   }

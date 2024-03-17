@@ -20,9 +20,16 @@ const Cards = () => {
 
 
   return (
-    <div>
-      {cards && cards.length > 0 && 
-        cards.map(card => <Card key={card._id} card={card} />)}
+
+    <div className='row'>
+      <div className="col-lg-8">
+        <div className="row">
+          {
+            cards && cards.length > 0 && 
+            cards.map(card => <Card key={card._id} card={card} />)
+          }
+        </div>
+      </div>
     </div>
   )
 }
