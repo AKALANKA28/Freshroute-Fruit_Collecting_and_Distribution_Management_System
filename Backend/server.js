@@ -10,6 +10,8 @@ require("dotenv").config();
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
 const cardsRouter = require("./routes/finance/cardsRoute.js");
+const scheduleRouter = require("./routes/transport/scheduleRoute.js");
+const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 
 
 const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
@@ -39,6 +41,8 @@ connection.once("open", () => {
 app.use('/sales', salesRouter);
 app.use('/expense', expenseRouter);
 app.use('/cards', cardsRouter);
+app.use('/schedule', scheduleRouter);
+app.use('/vehicle', vehicleRouter);
 
 
 
