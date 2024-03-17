@@ -2,9 +2,6 @@ import React from 'react'
 import './sidebar.css'
 import navList from './navItem';
 
-
-
-
 const Sidebar = () => {
   return (
     <div>
@@ -13,7 +10,7 @@ const Sidebar = () => {
         <ul className="sidebar-nav" id='sidebar-nav'>
 
             <li className='nav-item'>
-                <a className='nav-link' href='/'>
+                <a className='nav-link' href='SMDashboard'>
                     <i className='bi bi-grid'></i>
                     <span>Dashboard</span>
                 </a>
@@ -22,69 +19,36 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-menu-button-wide'></i>
-                    <span>Documents</span>
+                    <span>Supplier Details</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
                     <li>
-                        <a href='#'>
+                        <a href='SupplierDetails'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Suppliers</span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Supplier Requests</span>
                             </i>
                         </a>
                     </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Customers</span>
-                            </i>
-                        </a>
-                    </li>
-
                 </ul>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-journal-text'></i>
-                    <span>Forms</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                    <span>Predict Details</span>
                 </a>
 
-                <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Application Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Release Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Cancellation Form</span>
-                            </i>
-                        </a>
-                    </li>
-
-                </ul>
+                
             </li>
 
             <li className='nav-item'>

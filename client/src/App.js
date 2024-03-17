@@ -13,6 +13,7 @@ import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OMDashboard from "./components/orderManagement/OMDashboard";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
+import SupplierDetails from './components/supplierManagerDashboard/SupplierDetails';
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
 import StaffManager from "./components/StaffManager/StaffManager";
@@ -102,6 +103,11 @@ const router = createBrowserRouter([
         <SMDashboard />
       </div>
     ),
+  },
+
+  {
+    path: '/SupplierDetails',
+    element: <div><SupplierDetails /></div>
   },
 
   {
