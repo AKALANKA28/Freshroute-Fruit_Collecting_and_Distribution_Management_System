@@ -9,7 +9,6 @@ const SupplierDetailsBody = () => {
         <div className="row">
             <div className="col-lg-8">
                 <div className="row">
-                  <button className="btn btn-primary"><a href='AddSupplier'>Add Supplier</a></button>
                     <SuppliersList />
                 </div>    
             </div>  

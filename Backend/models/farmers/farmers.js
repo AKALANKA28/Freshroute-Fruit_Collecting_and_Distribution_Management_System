@@ -1,15 +1,7 @@
-const mongoose = require('mongoose');
+mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
-
-
-const farmerSchema = new Schema({
-    
-    farmerId : {
-        type : String,
-        required: true
-    },
-
+const FarmerSchema = new mongoose.Schema({
+  
     NIC : {
         type : String,
         required: true
@@ -39,9 +31,8 @@ const farmerSchema = new Schema({
         type: String,
         required: true
     },
-   
-})
+});
 
-const farmers = mongoose.model("farmers", farmerSchema);
+const Farmer = mongoose.model("Farmer", FarmerSchema);
 
-module.exports = farmers;
+module.exports = Farmer;
