@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FruitTypeForm from "./FruitTypeForm";
 import "./FruitType.css"
-import "./main.css"
+// import "./main.css"
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
