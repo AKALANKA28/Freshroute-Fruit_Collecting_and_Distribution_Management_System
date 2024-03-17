@@ -45,6 +45,10 @@ app.use('/cards', cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 
 
+const router = require("./routes/farmers/farmerRoutes");
+app.use('/Farmer', router);
+
+
 // Start the server
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
