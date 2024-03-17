@@ -1,32 +1,25 @@
-// ./client/src/components/Coordinator/body/FruitType.jsx
-
+// ./client/src/components/Coordinator/body/Salary.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import FruitTypeForm from "./FruitTypeForm";
-
-import "./FruitType.css";
-
-import "./FruitType.css"
-// import "./main.css"
-
-
+import SalaryForm from "./SalaryForm";
+import "./Salary.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function FruitType() {
+function Salary() {
   const [addSection, setAddSection] = useState(false);
   const [editSection, setEditSection] = useState(false);
   const [data, setData] = useState({
-    name: "",
+    jobroll: "",
     date: "",
-    description: "",
+    salary: "",
   });
 
   const [dataEdit, setDataEdit] = useState({
     _id: "",
-    name: "",
+    jobroll: "",
     date: "",
-    description: "",
+    salary: "",
   });
 
   const handleOnChange = (e) => {
@@ -41,10 +34,10 @@ function FruitType() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/FruitType/add", data);
-      alert("Fruit Type Added");
+      await axios.post("/Salary/add", data);
+      alert("Salary Added");
       getFetchData();
-      setAddSection(false);
+      window.location.reload();
     } catch (err) {
       alert(err.message);
     }
@@ -55,7 +48,7 @@ function FruitType() {
 
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/FruitType/");
+      const response = await axios.get("/Salary/");
       setDataList(response.data);
     } catch (err) {
       alert(err.message);
@@ -67,19 +60,14 @@ function FruitType() {
   }, []);
 
   // Edit data
-  const handleEdit = (fruitType) => {
-    setDataEdit(fruitType);
-    setEditSection(true);
-  };
-
   const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log("Updating Fruit Type with ID:", dataEdit._id);
+    console.log("Updating Salary with ID:", dataEdit._id);
     try {
-      await axios.put(`/FruitType/update/${dataEdit._id}`, dataEdit);
-      alert("Fruit Type Updated");
-      setEditSection(false);
-      getFetchData();
+      await axios.put(`/Salary/update/${dataEdit._id}`, dataEdit);
+      alert("Salary Updated");
+      setEditSection(true); 
+      window.location.reload();
     } catch (err) {
       console.log(err);
       alert(err.message);
@@ -94,10 +82,15 @@ function FruitType() {
     }));
   };
 
+  const handleEdit = (salary) => {
+    setDataEdit(salary);
+    setEditSection(true);
+  };
+
   // Delete data
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/FruitType/delete/${id}`);
+      await axios.delete(`/Salary/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
@@ -113,7 +106,7 @@ function FruitType() {
         </button>
       </div>
       {addSection && (
-        <FruitTypeForm
+        <SalaryForm
           handleSubmit={handleSubmit}
           handleOnChange={handleOnChange}
           data={data}
@@ -121,47 +114,41 @@ function FruitType() {
       )}
 
       {editSection && (
-        <FruitTypeForm
+        <SalaryForm
           handleSubmit={handleUpdate}
           handleOnChange={handleEditOnChange}
           data={dataEdit}
         />
       )}
 
-
       <div className="table-container">
         <table className="table table-borderless datatable">
-
-       
-      <div>
-         <table className="table table-bordeless datatable">
-
           <thead className="table-light">
             <tr>
-              <th scope="col">Name</th>
+              <th scope="col">Job Roll</th>
               <th scope="col">Date</th>
-              <th scope="col">Description</th>
+              <th scope="col">Salary(Rs)</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {dataList.length ? (
-              dataList.map((fruitType) => (
-                <tr key={fruitType._id}>
-                  <td>{fruitType.name}</td>
-                  <td>{fruitType.date}</td>
-                  <td className="description">{fruitType.description}</td>
+              dataList.map((salary) => (
+                <tr key={salary._id}>
+                  <td>{salary.jobroll}</td>
+                  <td>{salary.date}</td>
+                  <td>{salary.salary}</td>
                   <td>
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
-                        onClick={() => handleEdit(fruitType)}
+                        onClick={() => handleEdit(salary)}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>
                       <button
                         className="btn btn-delete"
-                        onClick={() => handleDelete(fruitType._id)}
+                        onClick={() => handleDelete(salary._id)}
                       >
                         Delete
                       </button>
@@ -174,19 +161,11 @@ function FruitType() {
                 <td colSpan="4">No Data</td>
               </tr>
             )}
-
           </tbody>
         </table>
       </div>
     </div>
-
-            </tbody>
-           </table>
-          </div>
-        </div>
-    </>
-
   );
 }
 
-export default FruitType;
+export default Salary;

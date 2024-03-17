@@ -30,16 +30,11 @@
   
   .table th, .table td {
     padding: 8px;
-    /* border: 1px solid #ddd; */
-    width: 100px;
+    border: 1px solid #ddd;
+    
   }
 
-  .table .description{
-    padding: 8px;
-    /* border: 1px solid #ddd; */
-    width: 600px;
-   
-  }
+
   
   .table .table-light th {
     background-color: #f2f2f2;
