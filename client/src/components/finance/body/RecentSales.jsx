@@ -11,7 +11,7 @@ const RecentSales = () => {
     };
 
     const fetchData = () => {
-        fetch("")
+        fetch("http://localhost:8070/sales/")//add the backend link
          .then(res => res.json())
          .then(data => {
             setItems(data);

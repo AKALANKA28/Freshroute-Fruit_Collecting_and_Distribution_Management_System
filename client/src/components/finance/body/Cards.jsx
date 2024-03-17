@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react'
 import Card from  './Card'
 
 const Cards = () => {
-
     const [cards, setCards] = useState([])
 
     const fetchData = () => {
-        fetch("")
+       fetch("http://localhost:8070/cards/")
          .then(res => res.json())
          .then(data => {
             setCards(data);
