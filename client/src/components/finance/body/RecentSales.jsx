@@ -2,6 +2,8 @@ import React,{useState, useEffect} from 'react'
 import CardFilter from './CardFilter'
 import RecentSalesTable from './RecentSalesTable'
 
+import './recentsales.css'
+
 const RecentSales = () => {
 
     const [items, setItems] = useState([])
