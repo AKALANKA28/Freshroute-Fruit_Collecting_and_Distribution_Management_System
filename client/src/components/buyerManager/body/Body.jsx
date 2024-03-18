@@ -28,16 +28,13 @@ const Body = () => {
                     <div className="col-12">
                      <RecentSales />
                     </div>
-                    <div className="col-12">
-                     <TopSellings />
-                    </div>
+                    
                 </div>
             </div>
             <div className="col-lg-4">
               <RecentActivity />
               <BudgetReport />
-              <WebTraffic />
-              <News />
+              
             </div>
         </div>
         <BackToTop />

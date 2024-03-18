@@ -20,6 +20,13 @@ import FruitType from "./components/Coordinator/FruitType";
 import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
 
+
+import RequestedOrder from './components/RequestedOrder/RequestedOrder';
+import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
+import NormalOrder from './components/NormalOrder/NormalOrder';
+import EditOrder from './components/NormalOrder/EditOrder';
+
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // import Background from './Website/Background/Background';
@@ -129,6 +136,28 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: '/RequestedOrder',
+    element: <div><RequestedOrder/></div>
+  },
+
+  {
+    path: '/BuyerDashboard',
+    element: <div><BuyerDashBoard/></div>
+  },
+
+  {
+    path: '/NormalOrder',
+    element: <div><NormalOrder/></div>
+  },
+
+  {
+    path: '/EditOrder/:id',
+    element: <div><EditOrder/></div>
+  },
+
+
 
   {
     path: "/Salary",
