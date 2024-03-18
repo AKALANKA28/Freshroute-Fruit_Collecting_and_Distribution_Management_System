@@ -220,6 +220,7 @@ function SuppliersList() {
     try {
       await axios.post("/Farmer/add", data);
       alert("Farmer Added");
+      window.location.reload();
       setAddSection(false);
       setData({
         NIC: "",
@@ -268,6 +269,7 @@ function SuppliersList() {
     try {
       await axios.put(`/Farmer/update/${dataEdit._id}`, dataEdit);
       alert("Farmer Updated");
+      window.location.reload();
     } catch (err) {
       console.log(err);
       alert(err.message);
@@ -292,6 +294,7 @@ function SuppliersList() {
     try {
       await axios.delete(`/Farmer/delete/${id}`);
       alert("Successfully Deleted");
+      window.location.reload();
       getFetchData();
     } catch (err) {
       alert(err.message);
@@ -301,8 +304,8 @@ function SuppliersList() {
 
   return (
     <>
-      <div id="main">
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setAddSection(true)}>
+      <div id="main col-8" className="text-center">
+        <button type="button" className="btn btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setAddSection(true)}>
           <i className="bi bi-plus-circle"></i>
               Add Farmer
         </button>
@@ -323,7 +326,7 @@ function SuppliersList() {
           />
         )}
 
-        <div id = "main">
+        <div id = "main col-8">
            <table className="table table-bordeless datatable">
              <thead className="table-light">
                <tr>
