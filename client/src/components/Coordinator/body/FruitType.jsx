@@ -129,8 +129,7 @@ function FruitType() {
       )}
 
 
-      <div className="table-container">
-        <table className="table table-borderless datatable">
+      
 
        
       <div>
@@ -180,11 +179,7 @@ function FruitType() {
       </div>
     </div>
 
-            </tbody>
-           </table>
-          </div>
-        </div>
-    </>
+     
 
   );
 }
