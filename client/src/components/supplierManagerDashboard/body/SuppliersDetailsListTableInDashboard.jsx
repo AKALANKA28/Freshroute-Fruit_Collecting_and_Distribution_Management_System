@@ -2,21 +2,6 @@ import React from 'react'
 
 
 const SuppliersDetailsListTableInDashboard = ({items}) => {
-    const handleStatus = status => {
-    switch (status) {
-        case 'Approved':
-            return 'success';
-            break;
-        case 'Warning':
-            return 'warning';
-            break;
-         case 'Rejected':
-            return 'danger';
-            break;
-         default:
-            return 'success';    
-    }   
-    };
 
     return (
         <div>
