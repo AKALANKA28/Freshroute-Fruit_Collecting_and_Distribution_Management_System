@@ -14,13 +14,6 @@ const SalaryRouter = require("./routes/coordinator/SalaryRoute.js");
 
 const cardsRouter = require("./routes/finance/cardsRoute.js");
 
-
-const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
-
-
-
-
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -37,24 +30,18 @@ connection.once("open", () => {
   console.log("MongoDB Connection Success!!!");
 });
 
-
 // Use the routes
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Salary", SalaryRouter);
 
-
 // Use the routes
-app.use('/sales', salesRouter);
-app.use('/expense', expenseRouter);
-app.use('/cards', cardsRouter);
-
-
+app.use("/sales", salesRouter);
+app.use("/expense", expenseRouter);
+app.use("/cards", cardsRouter);
 
 app.use("/FruitType", FruitTypeRouter);
-
-master
 
 // Start the server
 const PORT = process.env.PORT || 8070;
