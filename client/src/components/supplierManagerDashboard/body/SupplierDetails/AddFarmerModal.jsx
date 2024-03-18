@@ -14,7 +14,6 @@ const AddFarmerModal = ({ show, handleClose, handleSubmit, handleOnChange, rest 
           </div>
           <div className="modal-body">
             <FarmerForm 
-             // handleUpdate={handleUpdate}
               handleSubmit={handleSubmit} handleOnChange={handleOnChange} rest={rest} />
           </div>
           <div className="modal-footer">
