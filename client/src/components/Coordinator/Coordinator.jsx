@@ -6,7 +6,6 @@ import Main from './body/Main'
 import Footer from './footer/Footer'
 
 
-
 const Coordinator = () => {
   return (
     <div>

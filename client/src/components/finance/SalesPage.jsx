@@ -2,12 +2,11 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import Main from './body/Main'
+import Main from './body/Sales/Main'
 import Footer from './footer/Footer'
+import './body/main.css'
 
-
-
-const Dashboard = () => {
+const SalesPage = () => {
   return (
     <div>
       <Header />
@@ -18,4 +17,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default SalesPage

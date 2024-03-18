@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react'
 import Card from  './Card'
 
 const Cards = () => {
-
     const [cards, setCards] = useState([])
 
     const fetchData = () => {
-        fetch("")
+       fetch("http://localhost:8070/cards/")
          .then(res => res.json())
          .then(data => {
             setCards(data);
@@ -21,9 +20,16 @@ const Cards = () => {
 
 
   return (
-    <div>
-      {cards && cards.length > 0 && 
-        cards.map(card => <Card key={card._id} card={card} />)}
+
+    <div className='row'>
+      <div className="col-lg-8">
+        <div className="row">
+          {
+            cards && cards.length > 0 && 
+            cards.map(card => <Card key={card._id} card={card} />)
+          }
+        </div>
+      </div>
     </div>
   )
 }

@@ -24,13 +24,18 @@ const Card = ({card}) => {
                 <div className="ps-3">
                     <h6>
                         {card.name === 'Revenue'
-                          ? '$' + card.amount.toLocalString('en-US')
-                          : card.amount.toLocalString('en-US')}
+                          ? '$' + card.amount.toLocaleString('en-US')
+                          : card.amount.toLocaleString('en-US')}
                     </h6>
-                    <span className= {`${card.percentage > 0 ? 'text-success' : 'text-danger' } small pt-1 fw-bold`}>
+                    <span className= {`${
+                        card.percentage > 0 ? 'text-success' : 'text-danger' 
+                        } small pt-1 fw-bold`}
+                    >
                         {card.percentage > 0 
                         ? card.percentage * 100 
-                        : -card.percentage * 100} %
+                        : -card.percentage * 100} 
+                        %
+                        
                     </span>
                     <span className="text-muted small pt-2 ps-1">
                         {card.percentage > 0 ? 'increase' : 'decrease'}

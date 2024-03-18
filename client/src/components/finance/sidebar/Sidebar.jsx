@@ -1,7 +1,8 @@
 import React from 'react'
 import './sidebar.css'
 import navList from './navItem';
-
+import SalesPage from '../SalesPage'
+import { Link } from 'react-router-dom'; // Import Link from React Router
 
 
 
@@ -20,20 +21,20 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='#'>
+                <Link className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' to='/SalesPage'>
                     <i className='bi bi-menu-button-wide'></i>
-                    <span>Documents</span>
+                    <span>Sales</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
-                </a>
+                </Link>
 
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
                     <li>
-                        <a href='#'>
+                        <Link to='/SalesPage'>
                             <i className='bi bi-circle'>
                                 <span>Customers</span>
                             </i>
-                        </a>
+                        </Link>
                     </li>
                     <li>
                         <a href='#'>

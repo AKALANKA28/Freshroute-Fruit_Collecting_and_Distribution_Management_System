@@ -1,10 +1,11 @@
+// ./client/src/
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-import Dashboard from "./components/finance/Dashboard";
+import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
 import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
@@ -13,11 +14,25 @@ import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OMDashboard from "./components/orderManagement/OMDashboard";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
+import SupplierDetails from './components/supplierManagerDashboard/SupplierDetails';
 import Coordinator from "./components/Coordinator/Coordinator";
+import FruitType from "./components/Coordinator/FruitType";
+import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
-import Employee from "./components/StaffManager/Employee";
+import SalesPage from "./components/finance/SalesPage";
+
+
+
+
+
+
+
+
+
+
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 // import Background from './Website/Background/Background';
 // import Navbar from './Website/Navbar/Navbar';
 
@@ -41,7 +56,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard",
+    path: "/finance",
     element: (
       <div>
         <Dashboard />
@@ -104,10 +119,33 @@ const router = createBrowserRouter([
   },
 
   {
+    path: '/SupplierDetails',
+    element: <div><SupplierDetails /></div>
+  },
+
+  {
     path: "/Coordinator",
     element: (
       <div>
         <Coordinator />
+      </div>
+    ),
+  },
+
+  {
+    path: "/FruitType",
+    element: (
+      <div>
+        <FruitType />
+      </div>
+    ),
+  },
+
+  {
+    path: "/Salary",
+    element: (
+      <div>
+        <Salary />
       </div>
     ),
   },
@@ -121,14 +159,20 @@ const router = createBrowserRouter([
     ),
   },
 
+
   {
-    path: "/Employee",
+    path: "/SalesPage",
     element: (
       <div>
-        <Employee />
+        <SalesPage />
       </div>
     ),
   },
+
+
+
+
+
 ]);
 
 function App() {

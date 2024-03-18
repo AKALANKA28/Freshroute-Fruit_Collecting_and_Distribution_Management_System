@@ -8,8 +8,8 @@ const Main = () => {
   return (
    
     <main id='main' className='main'>
-     <PageTitle page="Dashboard" />
-     <Body />
+      <PageTitle page="Dashboard" />
+      <Body />
     </main>
   
   )
