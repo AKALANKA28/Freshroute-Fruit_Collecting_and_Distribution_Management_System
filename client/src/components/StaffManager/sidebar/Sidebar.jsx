@@ -8,19 +8,14 @@ const Sidebar = () => {
       <aside id="sidebar" className="sidebar">
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="/">
+            <a className="nav-link" href="/StaffManager">
               <i className="bi bi-grid"></i>
               <span>Dashboard</span>
             </a>
           </li>
 
           <li className="nav-item">
-            <a
-              className="nav-link collapsed"
-              data-bs-target="#components-nav"
-              data-bs-toggle="collapse"
-              href="#"
-            >
+            <a className="nav-link collapsed" href="/Employee">
               <i class="bi bi-people"></i>
               <span>Employees</span>
             </a>

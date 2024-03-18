@@ -17,8 +17,7 @@ const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const router = require("./routes/farmers/farmerRoutes");
-
-
+const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -42,12 +41,12 @@ app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Salary", SalaryRouter);
-app.use('/schedule', scheduleRouter);
-app.use('/vehicle', vehicleRouter);
-app.use('/process', processRouter);
-app.use('/coverings', coveringsRouter);
-app.use('/Farmer', router);
-
+app.use("/schedule", scheduleRouter);
+app.use("/vehicle", vehicleRouter);
+app.use("/process", processRouter);
+app.use("/coverings", coveringsRouter);
+app.use("/Farmer", router);
+app.use("/Employee", EmployeeRouter);
 
 // Start the server
 const PORT = process.env.PORT || 8070;
