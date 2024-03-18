@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 const app = express();
 require("dotenv").config();
 
+const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
@@ -20,11 +22,13 @@ mongoose.connect(URL, {
 
 const connection = mongoose.connection;
 connection.once("open", () => {
-  console.log('MongoDB Connection Success!!!');
+  console.log("MongoDB Connection Success!!!");
 });
 
 const testRouter = require("./routes/test");
-app.use('/test', testRouter);
+app.use("/test", testRouter);
+
+app.use("/Employee", EmployeeRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port: ${PORT}`);
