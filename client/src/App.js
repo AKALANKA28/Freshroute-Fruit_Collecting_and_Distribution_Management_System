@@ -5,7 +5,7 @@ import "remixicon/fonts/remixicon.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-import Dashboard from "./components/finance/Dashboard";
+import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
 import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
@@ -19,6 +19,17 @@ import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
 import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
+import SalesPage from "./components/finance/SalesPage";
+
+
+
+
+
+
+
+
+
+
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -45,7 +56,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard",
+    path: "/finance",
     element: (
       <div>
         <Dashboard />
@@ -147,6 +158,21 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+
+  {
+    path: "/SalesPage",
+    element: (
+      <div>
+        <SalesPage />
+      </div>
+    ),
+  },
+
+
+
+
+
 ]);
 
 function App() {
