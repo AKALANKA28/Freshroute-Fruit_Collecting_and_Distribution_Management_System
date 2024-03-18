@@ -64,7 +64,7 @@ const login = () => {
 
           </from>
 
-          <Link to={'/dashboard'}>
+          <Link to={'/finance'}>
             <button className='btn'>dashboard</button>
           </Link>
 

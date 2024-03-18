@@ -1,0 +1,41 @@
+#main{
+    margin-top: 95px;
+    padding: 20px 30px;
+    transition: all 0.3s;
+}
+
+
+@media(max-width: 1199px){
+    #main{
+        padding: 0px;
+    }
+}
+
+.body .recent-sales{
+    font-size: 14px;
+}
+
+.body .recent-sales .table thead{
+    background: #f6f6fe !important;
+}
+
+.body .recent-sales .table thead th{
+    border: 0;
+}
+
+.body .recent-sales .datatable-top{
+    padding: 0 0 10px 0;
+}
+
+.body .recent-sales .datatable-bottom{
+    padding: 10px 0 0 0;
+}
+
+
+
+/* .cards{
+    margin-top: 30px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  } */
