@@ -1,20 +1,21 @@
+// ./client/src/components/Coordinator/body/SalaryForm.js
 import React from "react";
 
-const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
+const SalaryForm = ({ handleSubmit, handleOnChange, data }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Fruit Name
+          <label htmlFor="jobroll" className="form-label">
+            Job Roll
           </label>
           <input
             type="text"
             className="form-control"
-            name="name"
-            placeholder="Fruit Name"
+            name="jobroll"
+            placeholder="Job Roll"
             onChange={handleOnChange}
-            value={data?.name || ""}
+            value={data.jobroll}
             required
           />
         </div>
@@ -28,30 +29,28 @@ const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
             name="date"
             placeholder="Date"
             onChange={handleOnChange}
-            value={data?.date || ""}
+            value={data.date}
             required
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
+          <label htmlFor="salary" className="form-label">
+            Salary(Rs)
           </label>
           <input
-            type="text"
+            type="number"
             className="form-control"
-            name="description"
-            placeholder="Description"
+            name="salary"
+            placeholder="Salary(Rs)"
             onChange={handleOnChange}
-            value={data?.description || ""}
+            value={data.salary}
             required
           />
         </div>
-        <button type="submit" className="btn btn-success">
-          Submit
-        </button>
+        <button type="submit" className="btn btn-success">Submit</button>
       </form>
     </div>
   );
-};
+}
 
-export default FruitTypeForm;
+export default SalaryForm;

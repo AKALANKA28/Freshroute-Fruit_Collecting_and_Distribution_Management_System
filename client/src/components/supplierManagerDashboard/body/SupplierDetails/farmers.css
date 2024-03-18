@@ -2,7 +2,6 @@
 .container {
     margin-bottom: 20px;
     position: relative; 
-    /* Make container positioning context */
 }
 
 .btn-add {
@@ -11,7 +10,6 @@
     padding: 10px 20px;
     cursor: pointer;
     margin-top: 10px;
-    margin-bottom: 10px;
     position: inherit;
     width: 25%;
     
@@ -30,13 +28,13 @@
   
   .table th, .table td {
     padding: 8px;
-    /* border: 1px solid #ddd; */
+    border: 1px solid #ddd;
     width: 100px;
   }
 
   .table .description{
     padding: 8px;
-    /* border: 1px solid #ddd; */
+    border: 1px solid #ddd;
     width: 600px;
    
   }
@@ -70,14 +68,4 @@
   
   .btn-delete:hover{
     background-color: #ff0019;
-  }
-
-  .btn-success{
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
-    position: inherit;
-    width: 25%;
   }
