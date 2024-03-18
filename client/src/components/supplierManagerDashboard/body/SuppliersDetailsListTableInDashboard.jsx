@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const SuppliersDetailsListTableInDashboard = ({items}) => {
 
     return (
@@ -22,17 +21,8 @@ const SuppliersDetailsListTableInDashboard = ({items}) => {
                  items.length > 0 &&
                  items.map(item => (
                     <tr key={item._id}>
-                        {/* <th className="row">
-                            <a href="#">
-                                {item.number}
-                            </a>
-                        </th>  ------ if you want to show custom id numbers..use this commented code and the above column also--------*/}
                         <td>{item.NIC}</td>
-                        <td>
-                            {/* <a href='#' className='text-primary'> */}
-                                {item.username}
-                            {/* </a> */}
-                        </td>
+                        <td>{item.username}</td>
                         <td>{item.name}</td>
                         <td>{item.email}</td>
                         <td>{item.city}</td>
@@ -42,6 +32,6 @@ const SuppliersDetailsListTableInDashboard = ({items}) => {
           </table>
         </div>
       )
-    }
+    };
 
-export default SuppliersDetailsListTableInDashboard
+export default SuppliersDetailsListTableInDashboard;
