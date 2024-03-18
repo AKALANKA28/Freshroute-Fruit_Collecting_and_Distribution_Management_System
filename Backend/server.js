@@ -52,7 +52,8 @@ app.use('/expense', expenseRouter);
 app.use('/cards', cardsRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
-
+app.use('/process', processRouter);
+app.use('/coverings', coveringsRouter);
 
 
 app.use("/FruitType", FruitTypeRouter);
