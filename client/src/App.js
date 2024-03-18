@@ -14,22 +14,13 @@ import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OMDashboard from "./components/orderManagement/OMDashboard";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
-import SupplierDetails from './components/supplierManagerDashboard/SupplierDetails';
+import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
 import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
+import Employee from "./components/StaffManager/Employee";
 import SalesPage from "./components/finance/SalesPage";
-
-
-
-
-
-
-
-
-
-
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -119,8 +110,12 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/SupplierDetails',
-    element: <div><SupplierDetails /></div>
+    path: "/SupplierDetails",
+    element: (
+      <div>
+        <SupplierDetails />
+      </div>
+    ),
   },
 
   {
@@ -159,6 +154,14 @@ const router = createBrowserRouter([
     ),
   },
 
+  {
+    path: "/Employee",
+    element: (
+      <div>
+        <Employee />
+      </div>
+    ),
+  },
 
   {
     path: "/SalesPage",
@@ -168,11 +171,6 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
-
-
-
-
 ]);
 
 function App() {
