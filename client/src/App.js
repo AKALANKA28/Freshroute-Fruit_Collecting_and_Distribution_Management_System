@@ -21,6 +21,8 @@ import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import SalesPage from "./components/finance/SalesPage";
+import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -168,6 +170,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <SalesPage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/VehicleDetails",
+    element: (
+      <div>
+        <VehicleDetails />
       </div>
     ),
   },
