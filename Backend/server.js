@@ -6,22 +6,18 @@ const dotenv = require("dotenv");
 const app = express();
 require("dotenv").config();
 
-
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
+
+const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
+const SalaryRouter = require("./routes/coordinator/SalaryRoute.js");
+
 const cardsRouter = require("./routes/finance/cardsRoute.js");
 const scheduleRouter = require("./routes/transport/scheduleRoute.js");
 const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 
-
-const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
-
-
-
-
 app.use(cors());
 app.use(bodyParser.json());
-
 
 // Connect to MongoDB
 const URL = process.env.MONGODB_URL;
@@ -36,8 +32,21 @@ connection.once("open", () => {
   console.log("MongoDB Connection Success!!!");
 });
 
+// Use the routes
+app.use("/sales", salesRouter);
+app.use("/expense", expenseRouter);
+app.use("/FruitType", FruitTypeRouter);
+app.use("/Salary", SalaryRouter);
 
 // Use the routes
+
+app.use("/sales", salesRouter);
+app.use("/expense", expenseRouter);
+app.use("/cards", cardsRouter);
+
+app.use("/FruitType", FruitTypeRouter);
+
+
 app.use('/sales', salesRouter);
 app.use('/expense', expenseRouter);
 app.use('/cards', cardsRouter);
@@ -47,6 +56,7 @@ app.use('/vehicle', vehicleRouter);
 
 
 app.use("/FruitType", FruitTypeRouter);
+
 
 
 const router = require("./routes/farmers/farmerRoutes");
