@@ -13,11 +13,15 @@ const BudgetChart = () => {
                 shape: 'circle',
                 indicator: [
                     {
-                        name: 'Sales',
+                        name: 'Conditions',
                         max: 95000,
                     },
                     {
-                        name: 'Administration',
+                        name: 'Fule',
+                        max: 95000,
+                    },
+                    {
+                        name: 'Tires',
                         max: 95000,
                     },
                     {
@@ -25,15 +29,11 @@ const BudgetChart = () => {
                         max: 95000,
                     },
                     {
-                        name: 'bla bla',
+                        name: 'Distance',
                         max: 95000,
                     },
                     {
-                        name: 'Marketing',
-                        max: 95000,
-                    },
-                    {
-                        name: 'bla bla',
+                        name: 'Parts',
                         max: 95000,
                     },
                 ],
