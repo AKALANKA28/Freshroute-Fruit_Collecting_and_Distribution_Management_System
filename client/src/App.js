@@ -20,6 +20,7 @@ import FruitType from "./components/Coordinator/FruitType";
 import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
 import SalesPage from "./components/finance/SalesPage";
+import ExpensePage from "./components/finance/ExpensePage";
 
 
 
@@ -169,6 +170,14 @@ const router = createBrowserRouter([
     ),
   },
 
+  {
+    path: "/ExpensePage",
+    element: (
+      <div>
+        <ExpensePage />
+      </div>
+    ),
+  },
 
 
 

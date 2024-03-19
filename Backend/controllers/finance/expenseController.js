@@ -4,16 +4,14 @@ const Expense = require('../../models/finance/expense');
 // Add a new expense record
 exports.addExpense = async (req, res) => {
     try {
-        const { customer_name, date, fruit_name, amount, paid, due, status } = req.body;
+        const { date, category, amount, description,} = req.body;
 
         const newExpense = new Expense({
-            customer_name,
             date: new Date(date), // Convert date string to Date object
-            fruit_name,
+            category,
             amount,
-            paid,
-            due,
-            status
+            description,
+
         });
 
         await newExpense.save();
@@ -27,8 +25,8 @@ exports.addExpense = async (req, res) => {
 // Retrieve all expense records
 exports.getAllExpenses = async (req, res) => {
     try {
-        const Expense = await Expense.find();
-        res.json(Expense);
+        const expenses = await Expense.find();
+        res.json(expenses);
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving expense records", error: err.message });
@@ -56,16 +54,13 @@ exports.getExpenseById = async (req, res) => {
 exports.updateExpense = async (req, res) => {
     try {
         const expenseId = req.params.id;
-        const { customer_name, date, fruit_name, amount, paid, due, status } = req.body;
+        const { date, category, amount, description, } = req.body;
 
         const updateExpense = {
-            customer_name,
-            date: new Date(date), 
-            fruit_name,
+            date: new Date(date), // Convert date string to Date object
+            category,
             amount,
-            paid,
-            due,
-            status
+            description,
         };
 
         const updatedExpense = await Expense.findByIdAndUpdate(expenseId, updateExpense, { new: true });

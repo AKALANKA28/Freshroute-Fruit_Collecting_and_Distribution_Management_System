@@ -2,7 +2,7 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import Main from './body/Sales/Main'
+import Body from './body/Sales/Body'
 import Footer from './footer/Footer'
 import './body/main.css'
 
@@ -11,7 +11,7 @@ const SalesPage = () => {
     <div>
       <Header />
       <Sidebar />
-      <Main />
+      <Body />
       <Footer />
     </div>
   )
