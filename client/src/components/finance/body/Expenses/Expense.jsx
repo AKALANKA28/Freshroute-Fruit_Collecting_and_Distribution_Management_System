@@ -38,14 +38,12 @@ const Expense = () => {
         
       }) 
     }
-  
-  
     //add data
     const handleSubmit = async(e)=>{
       e.preventDefault()
       axios.post("http://localhost:8070/expense/add", data).then(() => {
         alert("Student Added")
-        getFetchData()
+        fetchData()
       }).catch((err) =>{
         alert(err)
       })
@@ -54,21 +52,7 @@ const Expense = () => {
 
  
   
-   //get data
-    const [dataList, setDataList] = useState([]);
-  
-    const getFetchData = async()=>{
-    axios.get("http://localhost:8070/expense/").then((res) => {
-        setDataList(res.data);
-    }).catch((err) =>{
-        alert(err)
-      })
-    }
-  
-    useEffect(()=>{
-      getFetchData();
-    },[])
-  
+   
   
     const handleFilterChange = filter => {
         setFilter(filter)
@@ -90,11 +74,11 @@ const Expense = () => {
   
     const handleRefreshClick = () => {
       fetchData();
-  };
+    };
 
-  const handleButtonClick = () => {
-    fetchData();
-};
+    const handleButtonClick = () => {
+      fetchData();
+    };
 
   return (
     <main className='main' id='main'>
@@ -142,19 +126,20 @@ const Expense = () => {
 
 
 {/* --------------------add button------------------ */}
+
               <div class="page-btn">
-                  <a href="#" class="btn btn-added" onClick={() => setAddSection(true)}>
-                  <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
-                    Add Expense
-                  </a>
-                </div>
-                <ExpenseFormModal
-                  show={addSection}
-                  handleClose={() => setAddSection(false)}
-                  handleSubmit={handleSubmit}
-                  handleOnChange={handleOnChange}
-                  rest={data}
-                />
+                  <button type="button" class="btn btn-added" data-bs-toggle="modal"  data-bs-target="#expenseModal" onClick={() => setAddSection(true)}>
+                    <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
+                      Add Expense
+                  </button>
+                  </div>
+                  <ExpenseFormModal
+                    show={addSection}
+                    handleClose={() => setAddSection(false)}
+                    handleSubmit={handleSubmit}
+                    handleOnChange={handleOnChange}
+                    rest={data}
+                  />
 
 {/* --------------------imported search bar and table data ------------------------*/}
             </div>  

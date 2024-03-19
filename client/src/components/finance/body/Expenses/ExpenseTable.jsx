@@ -1,67 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExpenseFormModal from './ExpenseFormModal';
+import ExpenseForm from './ExpenseForm';
 
+axios.defaults.baseURL = "http://localhost:8070/";
 
 
 const ExpenseTable = ({ items }) => {
-  const [showFormModal, setShowFormModal] = useState(false); // State variable for form modal visibility
+  const [editSection, setEditSection] = useState(false);
+
+  const [showFormModal, setShowFormModal] = useState(true); // State variable for form modal visibility
+
   const [dataEdit, setDataEdit] = useState({
-    _id: '',
+    _id: "",
     date: '',
     category: '',
     amount: '',
-    description: ''
+    description: '',
   });
 
-   // Handle show modal function
-   const handleShowModal = () => {
-    setShowFormModal(true);
-  };
-  // Fetch data effect
-  useEffect(() => {
-    getFetchData();
-  }, []);
 
-  // Fetch data function
-  const getFetchData = async () => {
-    try {
-      const res = await axios.get('http://localhost:8070/expense/');
-    } catch (err) {
-      alert(err);
-    }
-  };
+    // Get data
+    const [dataList, setDataList] = useState([]);
 
-  // Handle submit function
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.patch(`http://localhost:8070/expense/update/${dataEdit._id}`, dataEdit);
-      alert('Expense Record Updated');
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-      alert(err);
-    }
-  };
+    const getFetchData = async () => {
+      try {
+        const response = await axios.get("/expense/");
+        setDataList(response.data);
+      } catch (err) {
+        alert(err.message);
+      }
+    };
 
-  // Handle edit on change function
-  const handleEditOnChange = (e) => {
-    const { value, name } = e.target;
-    setDataEdit((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
-  // Handle edit function
-  const handleEdit = (item) => {
-    console.log("Edit button clicked");
-    setDataEdit(item);
-    setShowFormModal(true);
-  };
+    useEffect(() => {
+      getFetchData();
+    }, []);
 
-  // Handle delete function
+    // //edit data
+        const handleUpdate = async(e) => {
+          e.preventDefault()
+          console.log("Updating Expense with ID:", dataEdit._id);
+        axios.patch(`http://localhost:8070/expense/update/${dataEdit._id}`, dataEdit)
+        .then(() => {
+          setShowFormModal(false);
+
+          alert("Expense Record Updated");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err);
+        });
+        
+        }
+
+    const handleEditOnChange = async(e) => {
+      const {value,name} = e.target;
+      setDataEdit((preve)=>{
+        return{
+          ...preve,
+          [name] : value,
+        }
+        
+      }) ;
+    };
+
+    const handleEdit = (item) =>{
+      setDataEdit(item)   
+      setShowFormModal(true); // Show the form modal
+      setEditSection(true);
+
+    };
+
+
+
+
+  // Delete data
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8070/expense/delete/${id}`);
@@ -75,9 +89,16 @@ const ExpenseTable = ({ items }) => {
 
   return (
     <>
-       <button onClick={handleShowModal}>
-        Add Expense
-      </button>
+{/*      
+     {editSection && (
+        <ExpenseForm
+          handleSubmit={handleUpdate}
+          handleOnChange={handleEditOnChange}
+          rest={dataEdit}
+        />
+      )}
+       */}
+      
       <div>
         <table className="table table-bordeless datatable">
           <thead className="table-light">
@@ -100,17 +121,11 @@ const ExpenseTable = ({ items }) => {
                   <td>{item.description}</td>
                   <td>
                     <div className="buttons">
-                      <button className="btn-table edit" onClick={() => handleEdit(item)}>
+                      <button className="btn-table edit" data-bs-toggle="modal"  data-bs-target="#expenseModal" onClick={() => handleEdit(item)}>
                         <i className="bi bi-pencil-square"></i>
                       </button>
-                      <ExpenseFormModal
-        show={showFormModal}
-        handleClose={() => setShowFormModal(false)}
-        handleSubmit={handleSubmit}
-        handleOnChange={handleEditOnChange}
-        rest={dataEdit}
-      />
-
+                      
+     
                       <button className="btn-table delete" onClick={() => handleDelete(item._id)}>
                         <i className="bi bi-trash3-fill"></i>
                       </button>
@@ -121,6 +136,23 @@ const ExpenseTable = ({ items }) => {
           </tbody>
         </table>
       </div>
+      {editSection && (
+        <ExpenseForm
+          handleSubmit={handleUpdate}
+          handleOnChange={handleEditOnChange}
+          rest={dataEdit}
+        />
+      )}
+      
+        {/*---------- Form Popup ------------*/}
+        {showFormModal && (
+        <ExpenseFormModal
+          handleClose={() => setShowFormModal(false)}
+          handleSubmit={handleUpdate}
+          handleOnChange={handleEditOnChange}
+          rest={dataEdit}
+        />
+      )}
     </>
   );
 };
