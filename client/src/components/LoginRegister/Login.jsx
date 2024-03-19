@@ -75,6 +75,10 @@ const login = () => {
           <Link to={'/coordinator'}>
             <button className='btn'>Coordinator DashBoard</button>
           </Link>
+
+          <Link to={'/StaffManager'}>
+            <button className='btn'>Staff Manager DashBoard</button>
+          </Link>
         </div>
                 </div>
             </div>
