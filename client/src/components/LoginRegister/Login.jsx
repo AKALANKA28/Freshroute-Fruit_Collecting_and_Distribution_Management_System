@@ -75,6 +75,14 @@ const login = () => {
           <Link to={'/coordinator'}>
             <button className='btn'>Coordinator DashBoard</button>
           </Link>
+
+          <Link to={'/SMDashboard'}>
+            <button className='btn'>Farmer Manager Dashboard</button>
+          </Link>
+
+          <Link to={'/FDashboard'}>
+            <button className='btn'>Farmer DashBoard</button>
+          </Link>
         </div>
                 </div>
             </div>
