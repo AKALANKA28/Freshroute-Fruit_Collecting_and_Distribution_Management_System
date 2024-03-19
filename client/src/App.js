@@ -1,4 +1,3 @@
-// ./client/src/
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
@@ -21,6 +20,7 @@ import Salary from "./components/Coordinator/Salary";
 import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
+import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
@@ -171,6 +171,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Employee />
+      </div>
+    ),
+  },
+
+  {
+    path: "/CalculateSalary",
+    element: (
+      <div>
+        <CalculateSalary />
       </div>
     ),
   },

@@ -1,48 +1,5 @@
 const Employee = require("../../models/StaffManager/Employee");
 
-const addEmployee = async (req, res) => {
-  const {
-    name,
-    jobrole,
-    nic,
-    address,
-    email,
-    accno,
-    bankname,
-    qualifications,
-    joineddate,
-    salary,
-    allowance,
-    epfe,
-    epfr,
-    etf,
-    netsalary,
-  } = req.body;
-
-  try {
-    const newEmployee = await Employee.create({
-      name,
-      jobrole,
-      nic,
-      address,
-      email,
-      accno,
-      bankname,
-      qualifications,
-      joineddate,
-      salary: 0,
-      allowance: 0,
-      epfe: 0,
-      epfr: 0,
-      etf: 0,
-      netsalary: 0,
-    });
-    res.json("New Employee Added");
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
 const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employee.find();
@@ -62,17 +19,7 @@ const getOneEmployee = async (req, res) => {
   }
 };
 
-const deleteEmployee = async (req, res) => {
-  const id = req.params.id;
-  try {
-    await Employee.findByIdAndDelete(id);
-    res.status(200).json({ message: "Employee Deleted" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
-const updateEmployee = async (req, res) => {
+const updateCalculateSalary = async (req, res) => {
   const id = req.params.id;
   const {
     name,
@@ -84,7 +31,16 @@ const updateEmployee = async (req, res) => {
     bankname,
     qualifications,
     joineddate,
+    salary,
+    allowance,
+    epfe,
+    epfr,
+    etf,
   } = req.body;
+
+  const salaryWithEPF = salary - salary * (epfe / 100);
+  const netsalary = salaryWithEPF + allowance * 1;
+
   try {
     await Employee.findByIdAndUpdate(id, {
       name,
@@ -96,6 +52,12 @@ const updateEmployee = async (req, res) => {
       bankname,
       qualifications,
       joineddate,
+      salary,
+      allowance,
+      epfe,
+      epfr,
+      etf,
+      netsalary,
     });
     res.status(200).json({ message: "Employee updated" });
   } catch (err) {
@@ -104,9 +66,7 @@ const updateEmployee = async (req, res) => {
 };
 
 module.exports = {
-  addEmployee,
   getAllEmployees,
   getOneEmployee,
-  deleteEmployee,
-  updateEmployee,
+  updateCalculateSalary,
 };

@@ -19,6 +19,7 @@ const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const router = require("./routes/farmers/farmerRoutes");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -49,6 +50,7 @@ app.use("/process", processRouter);
 app.use("/coverings", coveringsRouter);
 app.use("/Farmer", router);
 app.use("/Employee", EmployeeRouter);
+app.use("/CalculateSalary", CalculateSalaryRouter);
 
 // Start the server
 const PORT = process.env.PORT || 8070;
