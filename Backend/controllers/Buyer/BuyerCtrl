@@ -1,0 +1,219 @@
+// // const express = require("express")
+// // const Request = require("../../models/Buyer/Bmanager");
+
+
+
+// // //save request
+// // exports.saveRequest = (req, res) => {
+// //     let newRequest = new Request(req.body);
+
+// //     newRequest.save((err) => {
+// //         if (err) {
+// //             return res.status(400).json({
+// //                 error: err
+// //             });
+// //         }
+// //         return res.status(200).json({
+// //             success: "Request Save Successfully"
+// //         });
+// //     });
+// // };
+
+// // //get details
+// // const Request = require('../models/Request');
+
+// // exports.getRequests = (req, res) => {
+// //     Request.find().exec((err, requests) => {
+// //         if (err) {
+// //             return res.status(400).json({
+// //                 error: err
+// //             });
+// //         }
+// //         return res.status(200).json({
+// //             success: true,
+// //             existingRequest: requests
+// //         });
+// //     });
+// // };
+
+// // //update
+// // const Request = require('../models/Request');
+
+// // exports.updateRequest = (req, res) => {
+// //     Request.findByIdAndUpdate(
+// //         req.params.id,
+// //         { $set: req.body },
+// //         (err, request) => {
+// //             if (err) {
+// //                 return res.status(400).json({ error: err });
+// //             }
+// //             return res.status(200).json({ success: "update successfully" });
+// //         }
+// //     );
+// // };
+
+// // //delete
+
+// // const Request = require('../models/Request');
+
+// // exports.deleteRequest = (req, res) => {
+// //     Request.findByIdAndRemove(req.params.id).exec((err, deleteRequest) => {
+// //         if (err) {
+// //             return res.status(400).json({
+// //                 message: "Delete Unsuccessful",
+// //                 error: err
+// //             });
+// //         }
+// //         return res.json({
+// //             message: "Delete Successful",
+// //             deleteRequest
+// //         });
+// //     });
+// // };
+
+// // //get a specific request
+
+// // const Request = require('../models/Request');
+
+// // exports.getRequestById = (req, res) => {
+// //     let requestId = req.params.id;
+
+// //     Request.findById(requestId, (err, request) => {
+// //         if (err) {
+// //             return res.status(400).json({ success: false, error: err });
+// //         }
+
+// //         return res.status(200).json({ success: true, request });
+// //     });
+// // };
+
+
+
+// // module.exports = {
+// //     saveRequest, 
+// //     getRequests, 
+// //     updateRequest, 
+// //     deleteRequest,
+// //     getRequestById
+// //   };
+
+
+// const Request = require("../../models/Buyer/Bmanager");
+
+// const saveRequest = async (req, res) => {
+//   const { rname, fruit, category, quality, quantity, date } = req.body;
+//   const request = new Request ({
+//     rname,
+//     fruit,
+//     category,
+//     quality,
+//     quantity,
+//     date
+//   });
+
+//   try {
+//     await request.save();
+//   } catch (error) {
+//     return res.status(500).json({ message: "Adding book failed!" });
+//   }
+
+//   return res.status(201).json({ message: "Book added successfully!", request });
+// };
+
+// const getRequests = async (req, res) => {
+//   let request;
+//   try {
+//     request = await Request.find();
+//   } catch (err) {
+//     return res.status(500).json({ message: "Fetching books failed!" });
+//   }
+
+//   if (!request) {
+//     return res.status(404).json({ message: "No books found!" });
+//   }
+//   return res.status(200).json({ request });
+// };
+
+// const getRequestById = async (req, res) => {
+//   const requestedID = req.params.id;
+
+//   let request;
+//   try {
+//     request = await Request.findById(requestedID);
+//   } catch (err) {
+//     return res.status(404).json({ message: "Book not found!" });
+//   }
+
+//   return res.status(200).json({ request});
+// };
+
+// const updateRequest = async (req, res) => {
+//   const requestedID = req.params.id;
+//   const { rname, fruit, category, quality, quantity, date} = req.body;
+
+//   let request;
+//   try {
+//     request = await Request.findById(requestedID);
+//     if (!request) {
+//       return res.status(404).json({ message: "Book not found!" });
+//     }
+//   } catch (err) {
+//     return res.status(500).json({ message: "Error finding book!" });
+//   }
+
+//   if (rname !== undefined) {
+//     request.rname = rname;
+//   }
+//   if (fruit !== undefined) {
+//     request.fruit = fruit;
+//   }
+//   if (category !== undefined) {
+//     request.category = category;
+//   }
+//   if (quality !== undefined) {
+//     request.quality = quality;
+//   }
+//   if (quantity !== undefined) {
+//     request.quantity = quantity;
+//   }
+//   if (date !== undefined) {
+//     request.date = date;
+//   }
+  
+
+//   try {
+//     await request.save();
+//     return res
+//       .status(200)
+//       .json({ message: "Book updated successfully!", request });
+//   } catch (err) {
+//     return res.status(500).json({ message: "Updating book failed!" });
+//   }
+// };
+
+//   const deleteRequest = async (req, res) => {
+//   const requestedID = req.params.id;
+
+//   let request;
+//   try {
+//     request = await Request.findById(requestedID);
+//   } catch (err) {
+//     return res.status(404).json({ message: "Book not found!" });
+//   }
+
+//   try {
+//     await request.deleteOne();
+//   } catch (err) {
+//     return res.status(500).json({ message: "Deleting book failed!", err });
+//   }
+
+//   return res.status(200).json({ message: "Book deleted successfully!" });
+// };
+
+// module.exports = {
+//     saveRequest, 
+//     getRequests, 
+//     updateRequest, 
+//     getRequestById,
+//     deleteRequest
+// };
