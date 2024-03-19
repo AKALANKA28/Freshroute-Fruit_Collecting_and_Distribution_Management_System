@@ -21,8 +21,11 @@ import Salary from "./components/Coordinator/Salary";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import SalesPage from "./components/finance/SalesPage";
+import FDashboard from "./components/farmer/FDashboard";
+
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PredictionDetails from "./components/farmer/PredictionDetails";
 
 // import Background from './Website/Background/Background';
 // import Navbar from './Website/Navbar/Navbar';
@@ -114,6 +117,24 @@ const router = createBrowserRouter([
     element: (
       <div>
         <SupplierDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/FDashboard",
+    element: (
+      <div>
+        <FDashboard />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PredictionDetails",
+    element: (
+      <div>
+        <PredictionDetails />
       </div>
     ),
   },

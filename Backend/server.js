@@ -16,7 +16,8 @@ const scheduleRouter = require("./routes/transport/scheduleRoute.js");
 const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
-const router = require("./routes/farmers/farmerRoutes");
+const farmerRouter = require("./routes/farmers/farmerRoutes");
+const predictionRouter = require("./routes/farmers/predictionRoutes");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
 app.use(cors());
@@ -45,7 +46,8 @@ app.use("/schedule", scheduleRouter);
 app.use("/vehicle", vehicleRouter);
 app.use("/process", processRouter);
 app.use("/coverings", coveringsRouter);
-app.use("/Farmer", router);
+app.use("/Farmer", farmerRouter);
+app.use("/Prediction", predictionRouter);
 app.use("/Employee", EmployeeRouter);
 
 // Start the server
