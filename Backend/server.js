@@ -1,3 +1,4 @@
+///Users/heshan/Desktop/ITP/Untitled/Backend/server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -52,5 +53,6 @@ app.use("/Employee", EmployeeRouter);
 // Start the server
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
+  console.log("\nDatabase Connected 😌");
   console.log(`Server is up and running on port: ${PORT}`);
 });

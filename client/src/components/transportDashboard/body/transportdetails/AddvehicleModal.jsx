@@ -1,7 +1,7 @@
 import React from "react";
-import FarmerForm from "./FarmerForm";
+import VehicleForm from "./VehicleForm"
 
-const AddFarmerModal = ({ show, handleClose, handleSubmit, handleOnChange, rest }) => {
+const AddvehicleModal = ({ show, handleClose, handleSubmit, handleOnChange, rest }) => {
   const showHideClassName = show ? "modal fade show" : "modal fade";
 
   return (
@@ -9,11 +9,12 @@ const AddFarmerModal = ({ show, handleClose, handleSubmit, handleOnChange, rest 
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">Add Farmer</h1>
+            <h1 className="modal-title fs-5" id="exampleModalLabel">Add Vehicle</h1>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}></button>
           </div>
           <div className="modal-body">
-            <FarmerForm 
+            <VehicleForm 
+             // handleUpdate={handleUpdate}
               handleSubmit={handleSubmit} handleOnChange={handleOnChange} rest={rest} />
           </div>
           <div className="modal-footer">
@@ -25,4 +26,4 @@ const AddFarmerModal = ({ show, handleClose, handleSubmit, handleOnChange, rest 
   );
 };
 
-export default AddFarmerModal;
+export default AddvehicleModal;
