@@ -1,19 +1,19 @@
 import React from 'react';
 import '../main.css';
-import SuppliersList from './SuppliersList';
+import VehicleDetailsList from './VehicleDetailsList';
 
-const SupplierDetailsBody = () => {
+const VehicleDetailsBody = () => {
   return (
     <div id="main"> 
       <section className="body" id='body'>
         <div className="row">
             <div className="row">
-              <SuppliersList />
+              < VehicleDetailsList/>
             </div>    
-        </div>  
+          </div>  
       </section>  
     </div>
   );
 };
 
-export default SupplierDetailsBody;
+export default VehicleDetailsBody;
