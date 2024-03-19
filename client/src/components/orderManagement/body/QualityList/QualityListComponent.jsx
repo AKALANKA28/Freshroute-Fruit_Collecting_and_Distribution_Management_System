@@ -102,7 +102,7 @@ function QualityListComponent() {
   return (
     <>
       <sidebar />
-      <div id="main">
+      <div id="main col-8" className="text-center">
         <button className="btn btn-add main" onClick={() => setAddSection(true)}>
           <i className="bi bi-plus-circle"></i> Add Quality
         </button>
@@ -123,9 +123,9 @@ function QualityListComponent() {
         />
       )}
 
-      <div id="main">
-        <table className="table table-bordeless datatable">
-          <thead className="table-light">
+        <div id = "main col-8">
+           <table className="table table-bordeless datatable">
+             <thead className="table-light">
             <tr>
               <th scope="col">Fruit Type</th>
               <th scope="col">Grade</th>
