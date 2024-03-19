@@ -162,7 +162,7 @@ function FruitType() {
                         className="btn btn-delete"
                         onClick={() => handleDelete(fruitType._id)}
                       >
-                        Delete
+                       <i className="bi bi-trash-fill"></i>
                       </button>
                     </div>
                   </td>

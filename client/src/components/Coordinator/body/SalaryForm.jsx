@@ -1,4 +1,3 @@
-// ./client/src/components/Coordinator/body/SalaryForm.js
 import React from "react";
 
 const SalaryForm = ({ handleSubmit, handleOnChange, data }) => {
@@ -6,16 +5,16 @@ const SalaryForm = ({ handleSubmit, handleOnChange, data }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="jobroll" className="form-label">
-            Job Roll
+          <label htmlFor="jobrole" className="form-label">
+            Job Role
           </label>
           <input
             type="text"
             className="form-control"
-            name="jobroll"
-            placeholder="Job Roll"
+            name="jobrole"
+            placeholder="Job Role"
             onChange={handleOnChange}
-            value={data.jobroll}
+            value={data.jobrole}
             required
           />
         </div>
@@ -24,7 +23,7 @@ const SalaryForm = ({ handleSubmit, handleOnChange, data }) => {
             Date
           </label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             name="date"
             placeholder="Date"

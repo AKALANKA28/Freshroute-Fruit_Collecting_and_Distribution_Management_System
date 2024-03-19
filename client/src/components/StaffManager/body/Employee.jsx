@@ -173,7 +173,7 @@ function Employee() {
                           className="btn btn-delete"
                           onClick={() => handleDelete(employee._id)}
                         >
-                          Delete
+                           <i className="bi bi-trash-fill"></i>
                         </button>
                       </div>
                     </td>

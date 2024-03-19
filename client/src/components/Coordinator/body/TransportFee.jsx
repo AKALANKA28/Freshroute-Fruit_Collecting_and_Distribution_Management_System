@@ -142,7 +142,7 @@ function TransportFee() {
                   <td>{transportfee.date}</td>
                   <td>{transportfee.maxweight}</td>
                   <td>{transportfee.pricepkm}</td>
-                  <td>
+                  <td className="action">
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
@@ -154,7 +154,7 @@ function TransportFee() {
                         className="btn btn-delete"
                         onClick={() => handleDelete(transportfee._id)}
                       >
-                        Delete
+                        <i className="bi bi-trash-fill"></i>
                       </button>
                     </div>
                   </td>
