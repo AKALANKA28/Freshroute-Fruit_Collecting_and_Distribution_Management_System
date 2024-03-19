@@ -51,16 +51,16 @@ const PredictionForm = ({ handleSubmit, handleOnChange, rest }) => {
 
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
-            Email
+            Price
           </label>
           <input
             type="text"
             className="form-control"
-            name="email"
-            placeholder="Email"
+            name="price"
+            placeholder="Price"
             required
             onChange={handleOnChange}
-            value={rest.email}
+            value={rest.price}
           />
         </div>
         <div className="mb-3">

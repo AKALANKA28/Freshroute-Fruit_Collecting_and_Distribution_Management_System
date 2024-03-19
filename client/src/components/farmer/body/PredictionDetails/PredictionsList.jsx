@@ -28,7 +28,7 @@ function PredictionsList() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/Farmer/add", data);
+      await axios.post("/Prediction/add", data);
       alert("Prediction Added");
       window.location.reload();
       setAddSection(false);
