@@ -2,20 +2,19 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import Main from './body/Main'
+import VehicleDetailsBody from './body/transportdetails/VehicleDetailsBody'
 import Footer from './footer/Footer'
 
 
-
-const Dashboard = () => {
+const VehicleDetails = () => {
   return (
     <div>
       <Header />
       <Sidebar />
-      <Main />
+      <VehicleDetailsBody />
       <Footer />
     </div>
   )
 }
 
-export default Dashboard
+export default VehicleDetails

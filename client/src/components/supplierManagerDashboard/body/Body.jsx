@@ -3,20 +3,20 @@ import './main.css'
 
 import Cards from './Cards'
 import Reports from './Reports'
-import RecentSales from './RecentSales'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import BudgetReport from './BudgetReport'
 import WebTraffic from './WebTraffic'
 import News from './News'
 import BackToTop from './BackToTop'
+import SuppliersDetailsListInDashboard from './SuppliersDetailsListInDashboard'
 
 const Body = () => {
 
 
    
   return (
-    <div> 
+   <div> 
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8">
@@ -26,7 +26,7 @@ const Body = () => {
                         <Reports />
                     </div>
                     <div className="col-12">
-                     <RecentSales />
+                     <SuppliersDetailsListInDashboard />
                     </div>
                     <div className="col-12">
                      <TopSellings />
@@ -42,7 +42,6 @@ const Body = () => {
         </div>
         <BackToTop />
    </section>
-
    </div>
   )
 }
