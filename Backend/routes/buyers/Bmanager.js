@@ -1,5 +1,5 @@
 const express = require("express")
-const Request = require("../../models/Bmanager");
+const Request = require("../../models/Buyer/Bmanager");
 
 const router = express.Router();
 
@@ -89,3 +89,62 @@ router.get("/request/:id",(req, res) =>{
   })
   
   module.exports = router 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+// const router = express.Router();
+// const BuyerCtrl = require("../../controllers/Buyer/BuyerCtrl")
+
+// const express=require("express");
+
+// router.post("/request/save", BuyerCtrl.newRequest);
+// router.get("/requests", BuyerCtrl.Request.find);
+// router.put("/request/update/:id", BuyerCtrl.Request.findByIdAndUpdate);
+// router.delete("/request/delete/:id", BuyerCtrl.Request.findByIdAndRemove);
+// router.get("/request/:id", BuyerCtrl.Request.findById);
+
+// module.exports = router
+
+
+
+// const router = express.Router();
+// const BuyerCtrl = require("../../controllers/Buyer/BuyerCtrl")
+// const { saveRequest, getRequests, updateRequest, deleteRequest,getRequestById } = require("../../controllers/Buyer/BuyerCtrl");
+
+// const express=require("express");
+
+// router.post("/request/save", saveRequest);
+// router.get("/requests", getRequests);
+// router.put("/request/update/:id", updateRequest);
+// router.delete("/request/delete/:id", deleteRequest);
+// router.get("/request/:id", getRequestById);
+
+// module.exports = router
+
+// const express = require("express");
+// const { saveRequest, getRequests, updateRequest, deleteRequest, getRequestById } = require("../../controllers/Buyer/BuyerCtrl");
+
+
+// const router = express.Router();
+
+// router.post("/request/save", saveRequest);
+// router.get("/requests", getRequests);
+// router.put("/request/update/:id",updateRequest);
+// router.delete("/request/delete/:id",deleteRequest);
+// router.get("/request/:id",getRequestById);
+
+// module.exports = router;
