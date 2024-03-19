@@ -7,11 +7,9 @@ const SupplierDetailsBody = () => {
     <div id="main"> 
       <section className="body" id='body'>
         <div className="row">
-          <div className="col-lg-8">
             <div className="row">
               <SuppliersList />
             </div>    
-          </div>  
         </div>  
       </section>  
     </div>
