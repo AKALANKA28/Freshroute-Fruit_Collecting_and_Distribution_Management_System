@@ -37,6 +37,7 @@ function QualityListComponent() {
     try {
       await axios.post("/quality/add/", data); // Changed URL
       alert("Quality Added");
+      window.location.reload();
       getFetchData();
     } catch (err) {
       alert(err.message);
@@ -67,6 +68,7 @@ function QualityListComponent() {
     try {
       await axios.patch(`/quality/update/${dataEdit._id}`, dataEdit); // Corrected URL
       alert("Quality Updated");
+      window.location.reload();
       setEditSection(false); // Reset edit section after update
       getFetchData(); // Refresh data after update
     } catch (err) {
@@ -93,6 +95,7 @@ function QualityListComponent() {
     try {
       await axios.delete(`/quality/delete/${id}`);
       alert("Successfully Deleted");
+      window.location.reload();
       getFetchData();
     } catch (err) {
       alert(err.message);
