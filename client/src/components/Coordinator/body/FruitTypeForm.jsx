@@ -23,7 +23,7 @@ const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
             Date
           </label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             name="date"
             placeholder="Date"
