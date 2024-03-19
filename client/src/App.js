@@ -18,6 +18,7 @@ import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetai
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
 import Salary from "./components/Coordinator/Salary";
+import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import SalesPage from "./components/finance/SalesPage";
@@ -141,6 +142,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Salary />
+      </div>
+    ),
+  },
+
+  {
+    path: "/TransportFee",
+    element: (
+      <div>
+        <TransportFee />
       </div>
     ),
   },
