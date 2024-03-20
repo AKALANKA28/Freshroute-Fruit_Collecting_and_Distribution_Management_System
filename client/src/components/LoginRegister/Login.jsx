@@ -64,6 +64,7 @@ const login = () => {
 
           </from>
 
+
           <Link to={'/finance'}>
             <button className='btn'>dashboard</button>
           </Link>
@@ -83,6 +84,7 @@ const login = () => {
           <Link to={'/FDashboard'}>
             <button className='btn'>Farmer DashBoard</button>
           </Link>
+
         </div>
                 </div>
             </div>

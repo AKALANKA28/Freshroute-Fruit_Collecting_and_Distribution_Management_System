@@ -1,4 +1,3 @@
-// ./client/src/
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
@@ -18,10 +17,24 @@ import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetai
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
 import Salary from "./components/Coordinator/Salary";
+import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
+import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import SalesPage from "./components/finance/SalesPage";
+
 import FDashboard from "./components/farmer/FDashboard";
+
+import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+import ExpensePage from "./components/finance/ExpensePage";
+
+
+
+import RequestedOrder from './components/RequestedOrder/RequestedOrder';
+import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
+import NormalOrder from './components/NormalOrder/NormalOrder';
+import EditOrder from './components/NormalOrder/EditOrder';
+
 
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -158,10 +171,41 @@ const router = createBrowserRouter([
   },
 
   {
+    path: '/RequestedOrder',
+    element: <div><RequestedOrder/></div>
+  },
+
+  {
+    path: '/BuyerDashboard',
+    element: <div><BuyerDashBoard/></div>
+  },
+
+  {
+    path: '/NormalOrder',
+    element: <div><NormalOrder/></div>
+  },
+
+  {
+    path: '/EditOrder/:id',
+    element: <div><EditOrder/></div>
+  },
+
+
+
+  {
     path: "/Salary",
     element: (
       <div>
         <Salary />
+      </div>
+    ),
+  },
+
+  {
+    path: "/TransportFee",
+    element: (
+      <div>
+        <TransportFee />
       </div>
     ),
   },
@@ -185,6 +229,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/CalculateSalary",
+    element: (
+      <div>
+        <CalculateSalary />
+      </div>
+    ),
+  },
+
+  {
     path: "/SalesPage",
     element: (
       <div>
@@ -192,6 +245,25 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/VehicleDetails",
+    element: (
+      <div>
+        <VehicleDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ExpensePage",
+    element: (
+      <div>
+        <ExpensePage />
+      </div>
+    ),
+  },
+
 ]);
 
 function App() {

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import "./sidebar.css";
 import navList from "./navItem";
@@ -22,13 +23,8 @@ const Sidebar = () => {
           </li>
 
           <li className="nav-item">
-            <a
-              className="nav-link collapsed"
-              data-bs-target="#forms-nav"
-              data-bs-toggle="collapse"
-              href="#"
-            >
-              <i class="bi bi-cash-coin"></i>
+            <a className="nav-link collapsed" href="/CalculateSalary">
+              <i class="bi bi-people"></i>
               <span>Salaries</span>
             </a>
           </li>

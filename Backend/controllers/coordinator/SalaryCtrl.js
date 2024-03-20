@@ -2,9 +2,9 @@
 const Salary = require("../../models/coordinator/Salary");
 
 const addSalary = async (req, res) => {
-  const { jobroll, date, salary } = req.body;
+  const { jobrole, date, salary } = req.body;
   try {
-    const newSalary = await Salary.create({ jobroll, date, salary });
+    const newSalary = await Salary.create({ jobrole, date, salary });
     res.json("New Salary Added");
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -42,9 +42,9 @@ const deleteSalary = async (req, res) => {
 
 const updateSalary = async (req, res) => {
   const id = req.params.id;
-  const { jobroll, date, salary } = req.body;
+  const { jobrole, date, salary } = req.body;
   try {
-    await Salary.findByIdAndUpdate(id, { jobroll, date, salary });
+    await Salary.findByIdAndUpdate(id, { jobrole, date, salary });
     res.status(200).json({ message: "Salary Updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });

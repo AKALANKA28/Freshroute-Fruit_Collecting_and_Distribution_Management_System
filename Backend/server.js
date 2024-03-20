@@ -1,9 +1,10 @@
-///Users/heshan/Desktop/ITP/Untitled/Backend/server.js
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+
+const express = require("express")
+const mongoose = require("mongoose")
+const bodyParser = require("body-parser")
+const cors = require("cors")
 const dotenv = require("dotenv");
+
 const app = express();
 require("dotenv").config();
 
@@ -11,14 +12,22 @@ const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
 const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
 const SalaryRouter = require("./routes/coordinator/SalaryRoute.js");
+const TransportFeeRouter = require("./routes/coordinator/TransportFeeRoute.js");
 const cardsRouter = require("./routes/finance/cardsRoute.js");
 const scheduleRouter = require("./routes/transport/scheduleRoute.js");
 const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
+
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
+
+const router = require("./routes/farmers/farmerRoutes");
+const itemRouter = require("./routes/buyers/Bmanager")
+
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
+
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -42,6 +51,13 @@ app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Salary", SalaryRouter);
+app.use('/schedule', scheduleRouter);
+app.use('/vehicle', vehicleRouter);
+app.use('/process', processRouter);
+app.use('/coverings', coveringsRouter);
+app.use('/Farmer', router);
+// app.use(itemRouter);
+app.use("/TransportFee", TransportFeeRouter);
 app.use("/schedule", scheduleRouter);
 app.use("/vehicle", vehicleRouter);
 app.use("/process", processRouter);
@@ -49,10 +65,16 @@ app.use("/coverings", coveringsRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
 app.use("/Employee", EmployeeRouter);
+app.use("/CalculateSalary", CalculateSalaryRouter);
+
 
 // Start the server
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
+
+  
+
   console.log("\nDatabase Connected 😌");
+
   console.log(`Server is up and running on port: ${PORT}`);
 });
