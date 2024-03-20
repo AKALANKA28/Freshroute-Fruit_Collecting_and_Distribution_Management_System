@@ -162,7 +162,7 @@ export default function () {
 </div>
 
 <div className="mb-3">
-    <label htmlFor="dateInput" className="form-label">Date you want supplies</label>
+    <label htmlFor="dateInput" className="form-label">Date</label>
     <input type="date" id="dateInput" name="date" max={""} value={date}
     className="form-control"
      onChange={(e) => setDate(e.target.value)}
@@ -173,7 +173,7 @@ export default function () {
       </div>
       <div class="modal-footer">
         
-        <button type="submit" class="btn">Save changes</button>
+        <button type="submit" class="btn">Request for Order</button>
        
       </div>
       </form>
