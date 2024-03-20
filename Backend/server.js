@@ -3,6 +3,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cors = require("cors")
+
 const dotenv = require("dotenv");
 
 const app = express();
@@ -19,9 +20,13 @@ const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const router = require("./routes/farmers/farmerRoutes");
-// const itemRouter = require("./routes/buyers/Bmanager")
+const itemRouter = require("./routes/buyers/Bmanager")
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+
+const qualityRoute = require("./routes/q_and_o/qualityRoute");
+
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
+
 
 
 app.use(cors());
@@ -51,22 +56,20 @@ app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
 app.use('/Farmer', router);
-// app.use(itemRouter);
+app.use(itemRouter);
+
 app.use("/TransportFee", TransportFeeRouter);
-app.use("/schedule", scheduleRouter);
-app.use("/vehicle", vehicleRouter);
-app.use("/process", processRouter);
-app.use("/coverings", coveringsRouter);
-app.use("/Farmer", router);
 app.use("/Employee", EmployeeRouter);
+
+app.use('/quality', qualityRoute);
+
 app.use("/CalculateSalary", CalculateSalaryRouter);
+
 
 
 // Start the server
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
-
-  
 
   console.log("\nDatabase Connected 😌");
 

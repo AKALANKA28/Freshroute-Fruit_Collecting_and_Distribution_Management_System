@@ -1,11 +1,11 @@
-const schedule = require('../../models/transport/schedule');
+const Schedule = require('../../models/transport/schedule');
 
 // Add a new schedule record
 exports.addSchedule = async (req, res) => {
     try {
         const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, time, quantity} = req.body;
 
-        const newSchedule = new schedule({
+        const newSchedule = new Schedule({
             schedule_ID,
             vehicle_no,
             driver_name,
@@ -28,8 +28,9 @@ exports.addSchedule = async (req, res) => {
 // Retrieve all schedule records
 exports.getAllSchedule = async (req, res) => {
     try {
-        const schedule = await schedule.find();
-        res.json(schedule);
+
+        const schedules = await Schedule.find();
+        res.json(schedules);
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving schedule records", error: err.message });
@@ -56,7 +57,7 @@ exports.getScheduleById = async (req, res) => {
 // Update a schedule record
 exports.updateSchedule = async (req, res) => {
     try {
-        const ScheduleId = req.params.id;
+        const scheduleId = req.params.id;
         const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, time, quantity } = req.body;
 
         const updateSchedule = {
@@ -65,12 +66,12 @@ exports.updateSchedule = async (req, res) => {
             driver_name,
             pickup_location,
             destination,
-            date,
+            date: new Date(date),
             time,
             quantity,
         };
 
-        const updatedSchedule = await schedule.findByIdAndUpdate(ScheduleId, updateSchedule, { new: true });
+        const updatedSchedule = await Schedule.findByIdAndUpdate(scheduleId, updateSchedule, { new: true });
 
         if (!updatedSchedule) {
             return res.status(404).json({ status: "Schedule not found" });
@@ -86,8 +87,8 @@ exports.updateSchedule = async (req, res) => {
 // Delete a Schedule record
 exports.deleteSchedule = async (req, res) => {
     try {
-        const ScheduleId = req.params.id;
-        await schedule.findByIdAndDelete(ScheduleId);
+        const scheduleId = req.params.id;
+        await Schedule.findByIdAndDelete(scheduleId);
         res.status(200).json({ status: "Schedule record deleted" });
     } catch (err) {
         console.log(err);
