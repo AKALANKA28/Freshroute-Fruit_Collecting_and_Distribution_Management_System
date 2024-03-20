@@ -23,6 +23,10 @@ import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+
+import OPDashboard from './components/orderProcessor/OPDashboard';
+import QualityList from './components/orderManagement/QualityList';
+
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
 
@@ -233,6 +237,15 @@ const router = createBrowserRouter([
     ),
   },
 
+  {
+
+    path: '/OPDashboard',
+    element: <div><OPDashboard /></div>
+  },
+  {
+    path: '/QualityList',
+    element: <div><QualityList /></div>
+  },
   {
     path: "/ExpensePage",
     element: (
