@@ -59,7 +59,7 @@ const login = () => {
             </button>
 
             <span className='forgotPassword'>
-              Forgot your password? <a href=''>Click Here</a>
+              Forgot your password? <a href='#'>Click Here</a>
             </span>
 
           </from>

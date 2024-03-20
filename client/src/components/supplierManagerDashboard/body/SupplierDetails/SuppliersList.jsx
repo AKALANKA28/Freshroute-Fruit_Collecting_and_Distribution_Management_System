@@ -255,6 +255,7 @@ function SuppliersList() {
     try {
       await axios.post("/Farmer/add", data);
       alert("Farmer Added");
+      window.location.reload();
       setAddSection(false);
       setData({
         NIC: "",
