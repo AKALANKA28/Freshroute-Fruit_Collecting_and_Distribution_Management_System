@@ -42,11 +42,16 @@ const Expense = () => {
     const handleSubmit = async(e)=>{
       e.preventDefault()
       axios.post("http://localhost:8070/expense/add", data).then(() => {
-        alert("Student Added")
+        alert("Expense Added")
         fetchData()
       }).catch((err) =>{
-        alert(err)
-      })
+        if (err.response && err.response.data && err.response.data.err) {
+          // If the error has a custom message from the backend, display it
+          alert(err.response.data.err);
+        } else {
+          // Otherwise, display a generic error message
+          alert("An error occurred while updating the expense record");
+        }      })
      
     }
 
@@ -128,7 +133,7 @@ const Expense = () => {
 {/* --------------------add button------------------ */}
 
               <div class="page-btn">
-                  <button type="button" class="btn btn-added" data-bs-toggle="modal"  data-bs-target="#expenseModal" onClick={() => setAddSection(true)}>
+                  <button type="button" class="btn btn-added" data-bs-toggle="modal"  data-bs-target="#addExpenseModal" onClick={() => setAddSection(true)}>
                     <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
                       Add Expense
                   </button>

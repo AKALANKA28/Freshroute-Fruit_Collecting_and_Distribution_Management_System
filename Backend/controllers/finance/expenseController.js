@@ -14,11 +14,18 @@ exports.addExpense = async (req, res) => {
 
         });
 
+
         await newExpense.save();
         res.json("Expense Added");
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ status: "Error adding expense record", error: err.message });
+        if (err.name === 'ValidationError') {
+            // Extract validation error messages
+            const errorMessages = Object.values(err.errors).map(error => error.message);
+            return res.status(400).json({ status: "Validation Error", errors: errorMessages });
+        } else {
+            console.log(err);
+            res.status(500).json({ status: "Error adding expense record", error: err.message });
+        }
     }
 };
 
@@ -40,10 +47,10 @@ exports.getExpenseById = async (req, res) => {
         const sale = await Expense.findById(ExpenseId);
         
         if (!sale) {
-            return res.status(404).json({ status: "Sale not found" });
+            return res.status(404).json({ status: "Expense not found" });
         }
         
-        res.status(200).json({ status: "Sale fetched", sale });
+        res.status(200).json({ status: "Expense fetched", sale });
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving Expense record", error: err.message });

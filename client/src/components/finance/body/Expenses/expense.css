@@ -35,7 +35,17 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
+    white-space: normal; /* Enable text wrapping */
+    word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
+    padding: 8px;
+
 }
+
+.table th, .table td {
+    padding: 8px;
+    /* border: 1px solid #ddd; */
+    width: 100px;
+  }
 
 .page-header {
     display: flex;
@@ -61,9 +71,32 @@
 }
 
 .btn-added {
+    padding: 0.8rem;
+    background: var(--primaryColor);
+    border-radius: 10px;
+    color: #FFFFFF;
+    margin: auto;
+    font-size: 16px;
+    width: 100%;
+    transition: .3s ease;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
 }
+
+.btn-secondary {
+    
+    background: var(--primaryColor);
+    border: 0px;
+    color: #FFFFFF;
+    font-size: 16px;
+    width: 25%;
+    transition: .3s ease;
+
+}
+
+.btn-added:hover{
+    background: var(--hoverColor);
+    color: #ffffff;}
 .icon {
     width: 30px; /* Set the width of the image */
     height: 30px; /* Set the height of the image */

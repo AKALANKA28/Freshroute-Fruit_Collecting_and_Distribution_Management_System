@@ -1,12 +1,12 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Dashboard from "./components/finance/Finance";
-import Login from "./components/LoginRegister/Login";
-import Register from "./components/LoginRegister/Register";
+// import Login from "./components/LoginRegister/Login";
+// import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
@@ -44,26 +44,26 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import Navbar from './Website/Navbar/Navbar';
 
 const router = createBrowserRouter([
+  // {
+  //   path: "/",
+  //   element: (
+  //     <div>
+  //       <Login />
+  //     </div>
+  //   ),
+  // },
+
+  // {
+  //   path: "/register",
+  //   element: (
+  //     <div>
+  //       <Register />
+  //     </div>
+  //   ),
+  // },
+
   {
     path: "/",
-    element: (
-      <div>
-        <Login />
-      </div>
-    ),
-  },
-
-  {
-    path: "/register",
-    element: (
-      <div>
-        <Register />
-      </div>
-    ),
-  },
-
-  {
-    path: "/finance",
     element: (
       <div>
         <Dashboard />
