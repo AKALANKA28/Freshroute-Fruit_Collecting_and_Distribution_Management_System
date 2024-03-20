@@ -132,7 +132,7 @@ const handleUpdate = async(e) => {
 
   return (
     <>
-      <div id="main">
+      <div id="main" className="main">
         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setAddSection(true)}>
           <i className="bi bi-plus-circle"></i>
               Add Schedule
