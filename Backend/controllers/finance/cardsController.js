@@ -25,8 +25,8 @@ exports.addcard = async (req, res) => {
 // Retrieve all Card
 exports.getAllCards = async (req, res) => {
     try {
-        const Cards = await Cards.find();
-        res.json(Cards);
+        const cards = await Cards.find();
+        res.json(cards);
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving Card ", error: err.message });

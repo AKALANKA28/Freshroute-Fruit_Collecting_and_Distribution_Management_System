@@ -3,18 +3,12 @@ const mongoose = require('mongoose');
 
 
 const expenseSchema = mongoose.Schema({
-    customer_name : {
-        type : String,
+    date : {
+        type : Date,
         required: true,
-        trim: true
     },
 
-    date: {
-        type: Date,
-        required: true
-    },
-
-    fruit_name: {
+    category: {
         type: String,
         required: true
     },
@@ -24,20 +18,12 @@ const expenseSchema = mongoose.Schema({
         required: true
     },
 
-    paid: {
-        type: Number,
-        required: true
-    },
-
-    due: {
-        type: Number,
-        required: true
-    },
-
-    status: {
+    description: {
         type: String,
         required: true
     },
+
+    
    
 })
 

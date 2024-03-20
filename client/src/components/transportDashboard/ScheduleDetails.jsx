@@ -2,19 +2,19 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import Body from './body/Sales/Body'
+import ScheduleDetailsBody from './body/scheduledetails/ScheduleDetailsBody'
 import Footer from './footer/Footer'
-import './body/main.css'
 
-const SalesPage = () => {
+
+const ScheduleDetails = () => {
   return (
     <div>
       <Header />
       <Sidebar />
-      <Body />
+      <ScheduleDetailsBody />
       <Footer />
     </div>
   )
 }
 
-export default SalesPage
+export default ScheduleDetails

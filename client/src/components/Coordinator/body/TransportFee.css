@@ -30,7 +30,12 @@
 .table th,
 .table td {
   padding: 8px;
-  border: 1px solid #ddd;
+}
+
+.table .action {
+  width: 10%;
+  padding: 8px;
+  
 }
 
 .table .table-light th {

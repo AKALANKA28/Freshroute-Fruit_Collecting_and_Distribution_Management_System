@@ -23,6 +23,9 @@ import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+import ExpensePage from "./components/finance/ExpensePage";
+import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
+
 
 
 
@@ -230,6 +233,25 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/ExpensePage",
+    element: (
+      <div>
+        <ExpensePage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ScheduleDetails",
+    element: (
+      <div>
+        <ScheduleDetails />
+      </div>
+    ),
+  },
+
 ]);
 
 function App() {

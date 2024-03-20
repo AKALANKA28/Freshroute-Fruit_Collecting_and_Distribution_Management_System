@@ -64,17 +64,7 @@ const login = () => {
 
           </from>
 
-          <Link to={'/finance'}>
-            <button className='btn'>dashboard</button>
-          </Link>
-
-          <Link to={'/tdashboard'}>
-            <button className='btn'>tranportdashboard</button>
-          </Link>
-
-          <Link to={'/coordinator'}>
-            <button className='btn'>Coordinator DashBoard</button>
-          </Link>
+         
         </div>
                 </div>
             </div>
