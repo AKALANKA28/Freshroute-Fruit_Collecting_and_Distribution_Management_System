@@ -16,7 +16,7 @@ const WebTraffic = () => {
 
       <div className="card-body pb-0">
         <h5 className="card-title">
-          Website Traffic<span>| {filter}</span>
+          Expenses<span>| {filter}</span>
         </h5>
         <WebTrafficChart />
       </div>

@@ -21,15 +21,14 @@ const Cards = () => {
 
   return (
 
-    <div className='row'>
-      <div className="col-lg-8">
+   
+     <div className='col-12'>   
         <div className="row">
-          {
-            cards && cards.length > 0 && 
-            cards.map(card => <Card key={card._id} card={card} />)
-          }
-        </div>
-      </div>
+        {
+                cards && cards.length > 0 && 
+                cards.map(card => <Card key={card._id} card={card} />)
+          }    
+        </div>       
     </div>
   )
 }

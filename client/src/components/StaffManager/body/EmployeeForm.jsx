@@ -122,7 +122,7 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             Joined Date
           </label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             name="joineddate"
             placeholder="Joined Date"

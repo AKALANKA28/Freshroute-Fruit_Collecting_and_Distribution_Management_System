@@ -21,7 +21,8 @@ const Body = () => {
         <div className="row">
             <div className="col-lg-8">
                 <div className="row">
-                    <Cards />
+                   
+                      <Cards />
                     <div className="col-12">
                         <Reports />
                     </div>

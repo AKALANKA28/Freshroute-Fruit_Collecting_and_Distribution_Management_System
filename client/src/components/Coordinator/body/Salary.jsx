@@ -1,4 +1,4 @@
-// ./client/src/components/Coordinator/body/Salary.jsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SalaryForm from "./SalaryForm";
@@ -10,14 +10,14 @@ function Salary() {
   const [addSection, setAddSection] = useState(false);
   const [editSection, setEditSection] = useState(false);
   const [data, setData] = useState({
-    jobroll: "",
+    jobrole: "",
     date: "",
     salary: "",
   });
 
   const [dataEdit, setDataEdit] = useState({
     _id: "",
-    jobroll: "",
+    jobrole: "",
     date: "",
     salary: "",
   });
@@ -125,7 +125,7 @@ function Salary() {
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
-              <th scope="col">Job Roll</th>
+              <th scope="col">Job Role</th>
               <th scope="col">Date</th>
               <th scope="col">Salary(Rs)</th>
               <th>Action</th>
@@ -135,10 +135,10 @@ function Salary() {
             {dataList.length ? (
               dataList.map((salary) => (
                 <tr key={salary._id}>
-                  <td>{salary.jobroll}</td>
+                  <td>{salary.jobrole}</td>
                   <td>{salary.date}</td>
                   <td>{salary.salary}</td>
-                  <td>
+                  <td className="action">
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
@@ -150,7 +150,7 @@ function Salary() {
                         className="btn btn-delete"
                         onClick={() => handleDelete(salary._id)}
                       >
-                        Delete
+                        <i className="bi bi-trash-fill"></i>
                       </button>
                     </div>
                   </td>
@@ -158,7 +158,7 @@ function Salary() {
               ))
             ) : (
               <tr>
-                <td colSpan="4">No Data</td>
+                <td colSpan="5">No Data</td>
               </tr>
             )}
           </tbody>

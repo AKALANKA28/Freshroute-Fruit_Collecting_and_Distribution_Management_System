@@ -31,6 +31,47 @@
     padding: 10px 0 0 0;
 }
 
+/*-------------------------------- Searchbar ------------------------------------*/
+
+.search-bar{
+    min-width: 360px;
+    padding: 0 20px;
+}
+
+.search-form{
+    width: 37%;
+
+}
+
+.search-form input{
+    border: 0;
+    font-size: 14px;
+    color: #012970;
+    border: 1px solid rgba(1, 41, 112, 0.2);
+    border-radius: 5px;
+    padding: 7px 40px 7px 20px;
+    width: 100%;
+    transition: 0.3s;
+
+}
+
+.search-form input:focus,
+.search-form input:hover{
+    outline: none;
+    box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
+    border: 1px solid rgba(1, 41, 112, 0.3);
+}
+
+.search-form button{
+    border: 0;
+    padding: 0;
+    margin-left: -30px;
+    background: none;
+}
+
+.search-form i{
+    color: #012970;
+}
 
 
 /* .cards{
@@ -38,4 +79,58 @@
     border: none;
     border-radius: 25px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  } */
+
+
+  /* .div {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    font-weight: 600;
+  }
+
+  .div-2 {
+    color: #0c2f2b;
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: auto 0;
+    font: 22px Inter, sans-serif;
+  }
+  .div-3 {
+    display: flex;
+    gap: 16px;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .img {
+    aspect-ratio: 1.02;
+    object-fit: auto;
+    object-position: center;
+    width: 61px;
+    border-radius: 10px;
+    border-color: rgba(221, 221, 221, 1);
+    border-style: solid;
+    border-width: 1px;
+  }
+  .div-4 {
+    border-radius: 10px;
+    background-color: #76b81f;
+    display: flex;
+    gap: 20px;
+    padding: 13px 25px;
+  }
+
+  .img-2 {
+    aspect-ratio: 1;
+    object-fit: auto;
+    object-position: center;
+    width: 35px;
+  }
+  .div-5 {
+    font-family: Inter, sans-serif;
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: auto 0;
   } */
