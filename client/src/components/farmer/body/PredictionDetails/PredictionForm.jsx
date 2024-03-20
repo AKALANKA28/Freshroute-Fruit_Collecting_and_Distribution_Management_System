@@ -68,7 +68,7 @@ const PredictionForm = ({ handleSubmit, handleOnChange, rest }) => {
           Date Can Be Given
           </label>
           <input
-            type="text"
+            type="Date"
             className="form-control"
             name="dateCanBeGiven"
             placeholder="Date Can Be Given"

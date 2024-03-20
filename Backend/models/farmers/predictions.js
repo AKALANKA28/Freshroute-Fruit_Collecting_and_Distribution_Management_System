@@ -23,7 +23,7 @@ const PredictionSchema = new mongoose.Schema({
     },
 
     dateCanBeGiven : {
-        type : Date,
+        type : String,
         required: true
     },
 });
