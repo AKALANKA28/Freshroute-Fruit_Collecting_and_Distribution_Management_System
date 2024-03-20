@@ -26,7 +26,11 @@ const router = require("./routes/farmers/farmerRoutes");
 const itemRouter = require("./routes/buyers/Bmanager")
 
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+
+const qualityRoute = require("./routes/q_and_o/qualityRoute");
+
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
+
 
 
 app.use(cors());
@@ -65,7 +69,11 @@ app.use("/coverings", coveringsRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
 app.use("/Employee", EmployeeRouter);
+
+app.use('/quality', qualityRoute);
+
 app.use("/CalculateSalary", CalculateSalaryRouter);
+
 
 
 // Start the server

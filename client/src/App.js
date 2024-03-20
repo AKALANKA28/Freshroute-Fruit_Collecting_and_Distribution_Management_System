@@ -26,7 +26,13 @@ import SalesPage from "./components/finance/SalesPage";
 import FDashboard from "./components/farmer/FDashboard";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+
+import OPDashboard from './components/orderProcessor/OPDashboard';
+import QualityList from './components/orderManagement/QualityList';
+
 import ExpensePage from "./components/finance/ExpensePage";
+import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
+
 
 
 
@@ -34,7 +40,6 @@ import RequestedOrder from './components/RequestedOrder/RequestedOrder';
 import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
-
 
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -256,10 +261,28 @@ const router = createBrowserRouter([
   },
 
   {
+
+    path: '/OPDashboard',
+    element: <div><OPDashboard /></div>
+  },
+  {
+    path: '/QualityList',
+    element: <div><QualityList /></div>
+  },
+  {
     path: "/ExpensePage",
     element: (
       <div>
         <ExpensePage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ScheduleDetails",
+    element: (
+      <div>
+        <ScheduleDetails />
       </div>
     ),
   },
