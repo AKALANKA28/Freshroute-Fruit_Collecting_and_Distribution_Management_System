@@ -34,7 +34,6 @@ import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
 
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // import Background from './Website/Background/Background';
