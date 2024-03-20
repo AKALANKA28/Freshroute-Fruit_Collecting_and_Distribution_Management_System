@@ -1,7 +1,7 @@
 import React from "react";
 
-const ExpenseForm = ({ handleSubmit, handleOnChange, rest }) => {
-    const { date, category, amount, description } = rest || {}; // Destructure the object, or provide an empty object if 'rest' is undefined
+const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
+  const { date, category, amount, description } = rest;
 
   return (
     <div>
@@ -17,23 +17,33 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, rest }) => {
             placeholder="Date"
             required
             onChange={handleOnChange}
-            value={date}
+            value={date || ""}
           />
+          {err.date && (
+            <div className="text-danger">hhhhhhh</div>
+          )}
         </div>
 
         <div className="mb-3">
           <label htmlFor="category" className="form-label">
             Category
           </label>
-          <input
-            type="text"
-            className="form-control"
+          <select
             name="category"
-            placeholder="Category"
-            required
+            className="form-control"
             onChange={handleOnChange}
-            value={category}
-          />
+            value={category || ""}
+          >
+            
+            <option value="">Select Category</option>
+            <option value="Transport">Transport</option>
+            <option value="Employee">Employee</option>
+            <option value="Research">Research</option>
+            <option value="Promotion">Promotion</option>
+          </select>
+          {err.category && (
+            <div className="text-danger">{err.category}</div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -47,9 +57,13 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, rest }) => {
             placeholder="Amount"
             required
             onChange={handleOnChange}
-            value={amount}
+            value={amount || ""}
           />
+          {err.amount && (
+            <div className="text-danger">{err.amount}</div>
+          )}
         </div>
+
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
             Description
@@ -61,11 +75,16 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, rest }) => {
             placeholder="Description"
             required
             onChange={handleOnChange}
-            value={description}
+            value={description || ""}
           />
+          
         </div>
-
-        <button type="submit" className="btn btn-primary">Submit</button>
+        {err.description && (
+            <div className="text-danger">{err.description}</div>
+          )}
+        {/* <button type="submit" className="btn btn-primary">
+          Submit
+        </button> */}
       </form>
     </div>
   );
