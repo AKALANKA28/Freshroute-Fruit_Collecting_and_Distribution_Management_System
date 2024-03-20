@@ -64,7 +64,7 @@ const AddQuality = ({ handleSubmit, handleOnChange, rest }) => {
           />
         </div> 
 
-        <button type="submit">Submit</button>
+        <button className="btn btn-secondary" type="submit">Submit</button>
       </form>
     </div>
   );

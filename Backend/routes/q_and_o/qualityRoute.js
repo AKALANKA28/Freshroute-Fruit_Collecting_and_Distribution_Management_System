@@ -12,7 +12,7 @@ router.get("/", qualityController.getAllQualities); // Corrected function name
 router.get("/get/:id", qualityController.getQualityById);
 
 // Update a quality record
-router.patch("/update/:id", qualityController.updateQuality);
+router.put("/update/:id", qualityController.updateQuality);
 
 // Delete a quality record
 router.delete("/delete/:id", qualityController.deleteQuality);

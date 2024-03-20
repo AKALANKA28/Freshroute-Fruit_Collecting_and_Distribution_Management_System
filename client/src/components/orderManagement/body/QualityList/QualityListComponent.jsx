@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddQuality from "./AddQuality";
+import AddQualityModal from "./AddQualityModal";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -38,7 +38,13 @@ function QualityListComponent() {
       await axios.post("/quality/add/", data); // Changed URL
       alert("Quality Added");
       window.location.reload();
-      getFetchData();
+      setAddSection(false);
+      setData({
+        fruit_category: "",
+        grade: "",
+        quality_desc: "",
+        storage_cond: "",
+      });
     } catch (err) {
       alert(err.message);
     }
@@ -66,11 +72,9 @@ function QualityListComponent() {
     e.preventDefault();
     console.log("Updating Quality with ID:", dataEdit._id);
     try {
-      await axios.patch(`/quality/update/${dataEdit._id}`, dataEdit); // Corrected URL
+      await axios.put(`/quality/update/${dataEdit._id}`, dataEdit); // Corrected URL
       alert("Quality Updated");
       window.location.reload();
-      setEditSection(false); // Reset edit section after update
-      getFetchData(); // Refresh data after update
     } catch (err) {
       console.log(err);
       alert(err.message);
@@ -106,17 +110,18 @@ function QualityListComponent() {
     <>
       <sidebar />
       <div id="main col-8" className="text-center">
-        <button className="btn btn-add main" onClick={() => setAddSection(true)}>
-          <i className="bi bi-plus-circle"></i> Add Quality
+        <button type="button" className="btn btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setAddSection(true)}>
+          <i className="bi bi-plus-circle"></i>
+              Add Quality
         </button>
       </div>
-      {addSection && (
-        <AddQuality
-          handleSubmit={handleSubmit}
-          handleOnChange={handleOnChange}
-          rest={data}
-        />
-      )}
+      <AddQualityModal
+        show={addSection}
+        handleClose={() => setAddSection(false)}
+        handleSubmit={handleSubmit}
+        handleOnChange={handleOnChange}
+        rest={data}
+      />
 
       {editSection && (
         <AddQuality
