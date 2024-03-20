@@ -1,41 +1,56 @@
+// .Backend/models/StaffManager/Employee.js
 const mongoose = require("mongoose");
 
 const EmployeeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   jobrole: {
     type: String,
-    required: true,
   },
   nic: {
     type: String,
-    required: true,
   },
   address: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
-    required: true,
   },
   accno: {
     type: Number,
-    required: true,
   },
   bankname: {
     type: String,
-    required: true,
   },
   qualifications: {
     type: String,
-    required: true,
   },
   joineddate: {
     type: String,
-    required: true,
+  },
+  salary: {
+    type: Number,
+  },
+
+  allowance: {
+    type: Number,
+  },
+
+  epfe: {
+    type: Number,
+  },
+
+  epfr: {
+    type: Number,
+  },
+
+  etf: {
+    type: Number,
+  },
+
+  netsalary: {
+    type: Number,
   },
 });
 

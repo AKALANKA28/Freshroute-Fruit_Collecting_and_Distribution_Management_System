@@ -1,7 +1,6 @@
 import React from 'react'
 import './sidebar.css'
 import navList from './navItem';
-import SalesPage from '../SalesPage'
 import { Link } from 'react-router-dom'; // Import Link from React Router
 
 
@@ -15,7 +14,7 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link' href='/'>
-                    <i className='bi bi-grid'></i>
+                    <i className='bi bi-grid-1x2-fill'></i>
                     <span>Dashboard</span>
                 </a>
             </li>
@@ -23,7 +22,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <Link className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' to='/SalesPage'>
                     <i className='bi bi-menu-button-wide'></i>
-                    <span>Sales</span>
+                    <span>Reports</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </Link>
 
@@ -32,24 +31,24 @@ const Sidebar = () => {
                     <li>
                         <Link to='/SalesPage'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Invoices</span>
                             </i>
                         </Link>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Customers</span>
+                                <span>Tax Reports</span>
                             </i>
                         </a>
                     </li>
-                    <li>
+                    {/* <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
                                 <span>Customers</span>
                             </i>
                         </a>
-                    </li>
+                    </li> */}
 
                 </ul>
             </li>
@@ -57,7 +56,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-journal-text'></i>
-                    <span>Forms</span>
+                    <span>Expenses</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
@@ -91,7 +90,7 @@ const Sidebar = () => {
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
                     <i className='bi bi-layout-text-window-reverse'></i>
-                    <span>Documents</span>
+                    <span>Sales</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 

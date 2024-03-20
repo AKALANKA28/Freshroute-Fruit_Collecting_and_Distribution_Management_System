@@ -1,45 +1,35 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import CardFilter from './CardFilter'
-import RecentActivityItem from './RecentActivityItem'
+
 
 
 const RecentActivity = () => {
 
-    const [items, setItems] = useState([])
+  
     const [filter, setFilter] = useState('Today');
     const handleFilterChange = filter => {
         setFilter(filter)
     };
 
 
-    const fetchData = () => {
-        fetch("")
-         .then(res => res.json())
-         .then(data => {
-            setItems(data);
-         })
-         .catch(e => console.log(e.message))
-    };
 
-    useEffect(() => {
-        fetchData();
-    }, [])
  
   return (
     <div className='card'>
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Recent Activity<span>| {filter}</span>
+        Real-Time Market Prices<span>| {filter}</span>
         </h5>
+        <a href='https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report'>
+          <button className='btn centralBank'> Central Bank Price List</button>
+          </a>
 
-        <div className="activity">
-          {items &&
-          items.lenght > 0 &&
-          items.map(item => (
-            <RecentActivityItem key={item._id} item={item}/>
-            ))}
-      </div>
+        <hr></hr>
+        <a href='https://ceypetco.gov.lk/marketing-sales/'>
+          <button className='btn ceypetco'> Ceypetco Fuel Price List   </button>
+          </a>
+       
        
       </div>
     </div>

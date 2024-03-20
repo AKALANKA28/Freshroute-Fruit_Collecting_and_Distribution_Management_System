@@ -28,8 +28,8 @@ exports.addVehicle = async (req, res) => {
 // Retrieve all vehicle records
 exports.getAllVehicle = async (req, res) => {
     try {
-        const Vehicle = await Vehicle.find();
-        res.json(Vehicle);
+        const vehicles = await Vehicle.find();
+        res.json(vehicles);
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving vehicle records", error: err.message });
@@ -40,13 +40,13 @@ exports.getAllVehicle = async (req, res) => {
 exports.getVehicleById = async (req, res) => {
     try {
         const vehicleId = req.params.id;
-        const Vehicle = await Vehicle.findById(vehicleId);
+        const vehicle = await Vehicle.findById(vehicleId);
         
-        if (!Vehicle) {
+        if (!vehicle) {
             return res.status(404).json({ status: "vehicle not found" });
         }
         
-        res.status(200).json({ status: "Vehicle fetched", Vehicle });
+        res.status(200).json({ status: "Vehicle fetched", vehicle });
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving vehicle record", error: err.message });

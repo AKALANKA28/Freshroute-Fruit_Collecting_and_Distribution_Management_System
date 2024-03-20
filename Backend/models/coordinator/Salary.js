@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 const SalarySchema = new mongoose.Schema({
-  jobroll: {
+  jobrole: {
     type: String,
     required: true,
   },

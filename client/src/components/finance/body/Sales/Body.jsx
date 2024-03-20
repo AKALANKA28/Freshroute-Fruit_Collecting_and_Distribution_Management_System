@@ -1,5 +1,5 @@
 import React from 'react'
-// import './main.css'
+import './sales.css'
 
 import Sales from './Sales'
 
@@ -8,8 +8,8 @@ const Body = () => {
 
    
   return (
-    <div> 
-   <section className="body" id='body'>
+    <main id='main' className='main'>
+    <section className="body" id='body'>
             <div>
             <Sales />
 
@@ -18,7 +18,7 @@ const Body = () => {
         {/* <BackToTop /> */}
    </section>
 
-   </div>
+   </main>
   )
 }
 

@@ -47,7 +47,7 @@ const RecentSalesTable = ({items}) => {
                             {item.fruit_name}
                         </a>
                     </td>
-                    <td>${item.amount.toFixed(2)}</td>
+                    <td>Rs. {item.amount.toFixed(2)}</td>
                     <td>
                         <span className={`badge bg-${handleStatus(item.status)}`}>
                             {item.status}
