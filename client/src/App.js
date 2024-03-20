@@ -195,8 +195,6 @@ const router = createBrowserRouter([
     element: <div><EditOrder/></div>
   },
 
-
-
   {
     path: "/Salary",
     element: (
