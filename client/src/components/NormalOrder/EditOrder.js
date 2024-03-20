@@ -97,9 +97,9 @@ export default function EditOrder(props) {
             value={fruit}
           >
             <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">Banana</option>
+            <option value="2">Papaya</option>
+            <option value="3">Apple</option>
           </select>
         </div>
 
@@ -121,7 +121,7 @@ export default function EditOrder(props) {
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Quantity</label>
           <input type="number" className="form-control" id="exampleInputPassword1" placeholder="Enter Quantity"
-            max={"2000"} min={"1"}
+            min={"1"}
             onChange={(e) => {
               setQuantity(e.target.value);
             }}
@@ -138,9 +138,9 @@ export default function EditOrder(props) {
             value={quality}
           >
             <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">A</option>
+            <option value="2">B</option>
+            <option value="3">C</option>
           </select>
         </div>
 
