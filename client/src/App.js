@@ -24,7 +24,6 @@ import Employee from "./components/StaffManager/Employee";
 import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // import Background from './Website/Background/Background';
