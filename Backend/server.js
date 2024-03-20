@@ -5,13 +5,6 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 
 
-
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
-
 const app = express();
 require("dotenv").config();
 
@@ -26,7 +19,6 @@ const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const router = require("./routes/farmers/farmerRoutes");
-
 const itemRouter = require("./routes/buyers/Bmanager")
 
 
