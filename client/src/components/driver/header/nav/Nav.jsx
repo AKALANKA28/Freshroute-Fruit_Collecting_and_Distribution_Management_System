@@ -1,6 +1,4 @@
 import React from 'react'
-import '../header.css'
-
 import NavMessage from './NavMessage'
 import NavAvatar from './NavAvatar'
 import NavNotification from './NavNotification'

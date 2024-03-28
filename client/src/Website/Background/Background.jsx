@@ -2,29 +2,29 @@ import React from 'react'
 
 import './background.css'
 
-import video1 from '../../Website/assests/video1.mp4'
-import image1 from '../../Website/assests/image1.png'
-import image2 from '../../Website/assests/image2.png'
-import image3 from '../../Website/assests/image3.png'
+import video1 from '../assests/video1.mp4'
+import image1 from '../assests/image1.jpg'
+import image2 from '../assests/image2.jpeg'
+import image3 from '../assests/image3.jpeg'
 
 
-const Background = (playStatus, heroCount) => {
+const Background = ({playStatus, heroCount}) => {
 
   if (playStatus){
     return (
-        <video className='background' autoPlay loop muted>
+        <video className='background fade-in' autoPlay loop muted>
             <source src={video1} type='video/mp4' />
         </video>
     )
   }
   else if(heroCount === 0){
-    return <img src={image1} className='background' alt='' />
+    return <img src={image1} className='background fade-in' alt='' />
   }
   else if(heroCount === 1){
-    return <img src={image2} className='background' alt='' />
+    return <img src={image2} className='background fade-in' alt='' />
   }
   else if(heroCount === 2){
-    return <img src={image3} className='background' alt='' />
+    return <img src={image3} className='background fade-in' alt='' />
   }
 }
 
