@@ -1,5 +1,5 @@
 import React from 'react'
-import './sidebar.css'
+import '../../../App.css'
 import navList from './navItem';
 import Logo from './Logo';
 
