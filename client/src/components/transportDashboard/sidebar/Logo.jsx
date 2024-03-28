@@ -1,5 +1,5 @@
 import React from 'react'
-import './sidebar.css';
+import '../../../App.css'
 import logo from '../../../assests/logo.png'
 
 

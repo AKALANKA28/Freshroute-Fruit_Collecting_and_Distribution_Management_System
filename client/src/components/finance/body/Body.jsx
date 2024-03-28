@@ -16,7 +16,7 @@ const Body = () => {
 
    
   return (
-    <div> 
+   <div> 
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8">
@@ -43,7 +43,6 @@ const Body = () => {
         </div>
         <BackToTop />
    </section>
-
    </div>
   )
 }

@@ -28,7 +28,7 @@ const ExpenseTable = ({ items }) => {
         if (err.response && err.response.data && err.response.data.error) {
           alert(err.response.data.error);
         } else {
-          alert("An error occurred while deleting the expense record");
+          alert("An error occurred while retrieving the expense record");
         }
       }
     };
@@ -90,7 +90,7 @@ const ExpenseTable = ({ items }) => {
       await axios.delete(`http://localhost:8070/expense/delete/${id}`);
       alert('Successfully Deleted');
       getFetchData();
-      window.location.reload();
+      // window.location.reload();
 
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {

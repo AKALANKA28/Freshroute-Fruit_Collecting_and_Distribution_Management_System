@@ -50,8 +50,9 @@ const Expense = () => {
           alert(err.response.data.err);
         } else {
           // Otherwise, display a generic error message
-          alert("An error occurred while updating the expense record");
-        }      })
+          alert("An error occurred while adding the expense record");
+        }      
+      })
      
     }
 
@@ -64,12 +65,17 @@ const Expense = () => {
     };
 
     const fetchData = () => {
-        fetch("http://localhost:8070/expense/")//add the backend link
+        fetch("http://localhost:8070/expense/")
          .then(res => res.json())
          .then(data => {
             setItems(data);
-         })
-         .catch(e => console.log(e.message))
+         }).catch((err) =>{
+          if (err.response && err.response.data && err.response.data.err) {
+            alert(err.response.data.err);
+          } else {
+            alert("An error occurred while retrieving the expense records");
+          }      
+        })
     };
 
     useEffect(() => {
@@ -86,8 +92,7 @@ const Expense = () => {
     };
 
   return (
-    <main className='main' id='main'>
-      <div className="body" id='body'> 
+   
         <div className="card recent-sales overflow-auto">
 
 {/* ---------------------------table filter---------------------- */}
@@ -153,8 +158,7 @@ const Expense = () => {
             </div> 
 
         </div>   
-      </div>
-    </main>
+   
   )
 }
 

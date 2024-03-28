@@ -2,7 +2,7 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import Expense from './body/Expenses/Expense'
+import Expense from './body/Expenses/ExpenseMain'
 import Footer from './footer/Footer'
 
 
