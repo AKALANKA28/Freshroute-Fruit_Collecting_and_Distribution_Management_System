@@ -1,4 +1,4 @@
-// ./client/src/components/Coordinator/body/FruitType.jsx
+// ./client/src/components/Coordinator/body/FruitType/FruitType.jsx
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
