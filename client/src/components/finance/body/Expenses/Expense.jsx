@@ -42,10 +42,16 @@ const Expense = () => {
     const handleSubmit = async(e)=>{
       e.preventDefault()
       axios.post("http://localhost:8070/expense/add", data).then(() => {
-        alert("Student Added")
+        alert("Expense Added")
         fetchData()
       }).catch((err) =>{
-        alert(err)
+        if (err.response && err.response.data && err.response.data.err) {
+          // If the error has a custom message from the backend, display it
+          alert(err.response.data.err);
+        } else {
+          // Otherwise, display a generic error message
+          alert("An error occurred while adding the expense record");
+        }      
       })
      
     }
@@ -59,12 +65,17 @@ const Expense = () => {
     };
 
     const fetchData = () => {
-        fetch("http://localhost:8070/expense/")//add the backend link
+        fetch("http://localhost:8070/expense/")
          .then(res => res.json())
          .then(data => {
             setItems(data);
-         })
-         .catch(e => console.log(e.message))
+         }).catch((err) =>{
+          if (err.response && err.response.data && err.response.data.err) {
+            alert(err.response.data.err);
+          } else {
+            alert("An error occurred while retrieving the expense records");
+          }      
+        })
     };
 
     useEffect(() => {
@@ -81,8 +92,7 @@ const Expense = () => {
     };
 
   return (
-    <main className='main' id='main'>
-      <div className="body" id='body'> 
+   
         <div className="card recent-sales overflow-auto">
 
 {/* ---------------------------table filter---------------------- */}
@@ -128,7 +138,7 @@ const Expense = () => {
 {/* --------------------add button------------------ */}
 
               <div class="page-btn">
-                  <button type="button" class="btn btn-added" data-bs-toggle="modal"  data-bs-target="#expenseModal" onClick={() => setAddSection(true)}>
+                  <button type="button" class="btn btn-added" data-bs-toggle="modal"  data-bs-target="#addExpenseModal" onClick={() => setAddSection(true)}>
                     <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
                       Add Expense
                   </button>
@@ -148,8 +158,7 @@ const Expense = () => {
             </div> 
 
         </div>   
-      </div>
-    </main>
+   
   )
 }
 

@@ -2,12 +2,12 @@ import React from "react";
 import ExpenseForm from "./ExpenseForm";
 
 const ExpenseFormModal = ({ show, handleClose, handleSubmit, handleOnChange, rest }) => {
-  const { _id, date, category, amount, description } = rest || {}; // Destructure the object, or provide an empty object if 'rest' is undefined
+  const { _id} = rest || {};
 
-  // const showHideClassName = show ? "modal fade show" : "modal fade";
+  const modalId = _id ? "editExpenseModal" : "addExpenseModal"; 
 
   return (
-    <div className={show ? "modal fade show" : "modal fade"} id="expenseModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className={show ? "modal fade show" : "modal fade"} id={modalId} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -21,7 +21,7 @@ const ExpenseFormModal = ({ show, handleClose, handleSubmit, handleOnChange, res
               rest={rest} />
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Close</button>
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleSubmit}>Submit</button>
           </div>
         </div>
       </div>

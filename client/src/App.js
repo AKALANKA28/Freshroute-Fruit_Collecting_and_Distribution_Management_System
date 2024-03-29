@@ -1,12 +1,12 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
-import Register from "./components/LoginRegister/Register";
+// import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
@@ -45,12 +45,21 @@ import EditOrder from './components/NormalOrder/EditOrder';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
-// import Background from './Website/Background/Background';
-// import Navbar from './Website/Navbar/Navbar';
+import Website from './Website/Website';
 
 const router = createBrowserRouter([
+
   {
-    path: "/",
+    path: "/freshroute",
+    element: (
+      <div>
+        <Website />
+      </div>
+    ),
+  },
+
+  {
+    path: "/login",
     element: (
       <div>
         <Login />
@@ -58,17 +67,17 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/register",
-    element: (
-      <div>
-        <Register />
-      </div>
-    ),
-  },
+  // {
+  //   path: "/register",
+  //   element: (
+  //     <div>
+  //       <Register />
+  //     </div>
+  //   ),
+  // },
 
   {
-    path: "/finance",
+    path: "/",
     element: (
       <div>
         <Dashboard />
@@ -288,19 +297,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // let heroData = [
-  //   {text1: "Dive into", text2: "what you love"},
-  //   {text1: "Indulge", text2: "your passion"},
-  //   {text1: "Give in to", text2: "your passions"},
-
-  // ]
-
-  // const [heroCount, setHeroCount] = useState(1);
-  // const [playStatus, setPlayStatus] = useState(false);
+ 
   return (
     <div>
-      {/* <Background playStatus = {playStatus} heroCount = {heroCount} />
-      <Navbar /> */}
       <RouterProvider router={router} />
     </div>
   );

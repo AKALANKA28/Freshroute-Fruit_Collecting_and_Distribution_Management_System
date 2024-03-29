@@ -3,6 +3,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cors = require("cors")
+
 const dotenv = require("dotenv");
 
 const app = express();
@@ -60,7 +61,8 @@ app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
 app.use('/Farmer', router);
-// app.use(itemRouter);
+app.use(itemRouter);
+
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/schedule", scheduleRouter);
 app.use("/vehicle", vehicleRouter);
@@ -68,6 +70,7 @@ app.use("/process", processRouter);
 app.use("/coverings", coveringsRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
+
 app.use("/Employee", EmployeeRouter);
 
 app.use('/quality', qualityRoute);
@@ -79,8 +82,6 @@ app.use("/CalculateSalary", CalculateSalaryRouter);
 // Start the server
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
-
-  
 
   console.log("\nDatabase Connected 😌");
 
