@@ -126,11 +126,6 @@ const login = () => {
         //   </from>
 
 
-        </div>
-                </div>
-            </div>
-        </div>
-
          
         // </div>
     //             </div>
