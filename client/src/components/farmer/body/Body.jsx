@@ -9,7 +9,7 @@ import BudgetReport from './BudgetReport'
 import WebTraffic from './WebTraffic'
 import News from './News'
 import BackToTop from './BackToTop'
-import SuppliersDetailsListInDashboard from './SuppliersDetailsListInDashboard'
+import PredictionsDetailsListInDashboard from './PredictionsDetailsListInDashboard'
 
 const Body = () => {
 
@@ -26,7 +26,7 @@ const Body = () => {
                         <Reports />
                     </div>
                     <div className="col-12">
-                     <SuppliersDetailsListInDashboard />
+                     <PredictionsDetailsListInDashboard />
                     </div>
                     <div className="col-12">
                      <TopSellings />
@@ -46,4 +46,4 @@ const Body = () => {
   )
 }
 
-export default Body
+export default Body;

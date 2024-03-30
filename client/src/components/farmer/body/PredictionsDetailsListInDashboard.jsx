@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import SuppliersDetailsListTableInDashboard from './SuppliersDetailsListTableInDashboard';
+import PredictionsDetailsListTableInDashboard from './PredictionsDetailsListTableInDashboard';
 
-const SuppliersDetailsListInDashboard = () => {
+const PredictionsDetailsListInDashboard = () => {
     const [items, setItems] = useState([]);
 
     const fetchData = () => {
-        fetch("http://localhost:8070/Farmer")
+        fetch("http://localhost:8070/Prediction")
             .then(res => res.json())
             .then(data => {
                 setItems(data);
@@ -21,12 +21,12 @@ const SuppliersDetailsListInDashboard = () => {
         <div className='card recent-sales overflow-auto'>
             <div className="card-body">
                 <h5 className="card-title">
-                    Supplier Details
+                    Prediction Details
                 </h5>
-                <SuppliersDetailsListTableInDashboard items={items} />
+                <PredictionsDetailsListTableInDashboard items={items} />
             </div>
         </div>
     );
 };
 
-export default SuppliersDetailsListInDashboard;
+export default PredictionsDetailsListInDashboard;
