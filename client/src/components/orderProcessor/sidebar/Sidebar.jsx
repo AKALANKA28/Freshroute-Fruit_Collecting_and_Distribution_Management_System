@@ -29,21 +29,21 @@ const Sidebar = () => {
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
                     <li>
-                        <a href='#'>
+                        <a href='/OPDashboard/AssignedOrders'>
                             <i className='bi bi-circle'>
                                 <span>Assigned Orders</span>
                             </i>
                         </a>
                     </li>
                     <li>
-                        <a href='/OPDashboard/MyOrder'>
+                        <a href='/OPDashboard/OngoingOrders'>
                             <i className='bi bi-circle'>
                                 <span>Ongoing Orders</span>
                             </i>
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='/OPDashboard/CompletedOrders'>
                             <i className='bi bi-circle'>
                                 <span>Completed Orders</span>
                             </i>

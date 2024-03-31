@@ -8,7 +8,7 @@ import SearchBar from '../SearchBar'
 import axios from 'axios';
 
 import AssignedOrderPopupForm from './AssignedOrderPopupForm';
-import AssignedOrderTable from './AssignedorderTable';
+import AssignedOrderTable from './AssignedOrderTable';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -161,7 +161,7 @@ const AssignedOrder = () => {
                           <div className="page-btn">
                               <button type="button" className="btn btn-added"  onClick={handleAddNew}>
                                   <i className="bi bi-plus-circle" style={{marginRight: '10px'}}></i>
-                                  Add Quality
+                                  Add
                               </button>
                           </div>
 
