@@ -28,7 +28,6 @@ import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
 import OPDashboard from "./components/orderProcessor/OPDashboard";
-import QualityList from "./components/orderManagement/QualityList";
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -123,10 +122,6 @@ const router = createBrowserRouter([
         </div>
     ),
     children: [ {
-      path: "/OMDashboard/",
-      element: <Main/>,
-    },
-      {
         path: "/OMDashboard/QualityList",
         element: <QualityList/>,
       },
@@ -145,10 +140,7 @@ const router = createBrowserRouter([
           <OPDashboard />
         </div>
     ),
-    children: [ {
-      path: "/OPDashboard/",
-      element: <Main/>,
-    },
+    children: [
       // {
       //   path: "/OPDashboard/AssignedOrders",
       //   element: <AssignedOrder/>,
