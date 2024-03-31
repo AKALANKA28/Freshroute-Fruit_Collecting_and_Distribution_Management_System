@@ -3,13 +3,13 @@ const Quality = require('../../models/q_and_o/qualityModel.js');
 // Add a new quality record
 exports.addQuality = async (req, res) => {
     try {
-        const { fruit_category, grade, quality_desc, storage_cond } = req.body;
+        const { fruitCategory, grade, qualityDesc, storageCond } = req.body;
 
         const newQuality = new Quality({
-            fruit_category,
+            fruitCategory,
             grade,
-            quality_desc,
-            storage_cond
+            qualityDesc,
+            storageCond
         });
 
         await newQuality.save();
@@ -24,6 +24,7 @@ exports.addQuality = async (req, res) => {
 exports.getAllQualities = async (req, res) => {
     try {
         const allQualities = await Quality.find();
+        console.log(allQualities);
         res.json(allQualities);
     } catch (err) {
         console.log(err);
@@ -52,13 +53,13 @@ exports.getQualityById = async (req, res) => {
 exports.updateQuality = async (req, res) => {
     try {
         const qualityId = req.params.id;
-        const { fruit_category, grade, quality_desc, storage_cond } = req.body;
+        const { fruitCategory, grade, qualityDesc, storageCond } = req.body;
 
         const updateQuality = {
-            fruit_category,
+            fruitCategory,
             grade,
-            quality_desc,
-            storage_cond
+            qualityDesc,
+            storageCond
         };
 
         const updatedQuality = await Quality.findByIdAndUpdate(qualityId, updateQuality, { new: true });

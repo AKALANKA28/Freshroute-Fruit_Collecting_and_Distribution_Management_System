@@ -1,12 +1,10 @@
-//C:\Users\HP\Documents\GitHub\MERN_Project\Backend\models\q_and_o\qualityModel.js
-
 const mongoose = require('mongoose');
 
 const qualitySchema = mongoose.Schema({
-    fruit_category : {
+    
+    fruitCategory : {
         type : String,
-        required: true,
-       
+        required: true,  
     },
 
     grade: {
@@ -14,12 +12,12 @@ const qualitySchema = mongoose.Schema({
         required: true
     },
 
-    quality_desc: {
+    qualityDesc: {
         type: String,
         required: true
     },
 
-    storage_cond: {
+    storageCond: {
         type: String,
         required: true
     },

@@ -12,6 +12,8 @@ import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OMDashboard from "./components/orderManagement/OMDashboard";
+import QualityList from "./components/orderManagement/body/QualityList/QualityList";
+import ReqOrder from "./components/orderManagement/body/ReqOrders/ReqOrder";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
@@ -116,11 +118,53 @@ const router = createBrowserRouter([
   {
     path: "/OMDashboard",
     element: (
-      <div>
-        <OMDashboard />
-      </div>
+        <div>
+          <OMDashboard />
+        </div>
     ),
+    children: [ {
+      path: "/OMDashboard/",
+      element: <Main/>,
+    },
+      {
+        path: "/OMDashboard/QualityList",
+        element: <QualityList/>,
+      },
+      {
+        path: "/OMDashboard/ReqOrders",
+        element: <ReqOrder/>,
+      },
+
+    ]
   },
+
+  {
+    path: "/OPDashboard",
+    element: (
+        <div>
+          <OPDashboard />
+        </div>
+    ),
+    children: [ {
+      path: "/OPDashboard/",
+      element: <Main/>,
+    },
+      // {
+      //   path: "/OPDashboard/AssignedOrders",
+      //   element: <AssignedOrder/>,
+      // },
+      // {
+      //   path: "/OPDashboard/OngoingOrders",
+      //   element: <OngoingOrder/>,
+      // },
+      // {
+      //   path: "/OPDashboard/CompletedOrders",
+      //   element: <CompletedOrder/>,
+      // },
+
+    ]
+  },
+
 
   {
     path: "/SMDashboard",

@@ -36,7 +36,7 @@ const Sidebar = () => {
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='/OPDashboard/MyOrder'>
                             <i className='bi bi-circle'>
                                 <span>Ongoing Orders</span>
                             </i>
