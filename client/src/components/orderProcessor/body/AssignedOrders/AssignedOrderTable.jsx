@@ -31,10 +31,13 @@ const AssignedOrderTable = ({ items, updateQualityList, editItem }) => {
         <table className="table table-bordeless datatable">
           <thead className="table-light">
             <tr>
-              <th className="col">Fruit Type</th>
-              <th className="col">Grade</th>
-              <th className="col">Quality Description</th>
-              <th className="col">Storage Conditions</th>
+              <th className="col">Customer</th>
+              <th className="col">Fruit Categort</th>
+              <th className="col">Quality</th>
+              <th className="col">Quantity</th>
+              <th className="col">Placed Date</th>
+              <th className="col">Due Date</th>
+              <th className="col">Processor Name</th>
               <th className="col">Action</th>
             </tr>
           </thead>

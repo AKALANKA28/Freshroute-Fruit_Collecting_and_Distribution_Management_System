@@ -124,8 +124,8 @@ const OngoingOrder = () => {
 
                               {/* --------------------------table name ---------------------------*/}
                               <div className="card-title">
-                                  Quality Details<span></span>
-                                  <h6>Manage qualty</h6>
+                                  Ongoing Orders<span></span>
+                                  <h6>#</h6>
                               </div>
                           </div>
 
