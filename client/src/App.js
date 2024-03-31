@@ -1,8 +1,8 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
@@ -16,6 +16,7 @@ import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
+import Category from "./components/Coordinator/Category";
 import Salary from "./components/Coordinator/Salary";
 import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
@@ -24,26 +25,22 @@ import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-import OPDashboard from './components/orderProcessor/OPDashboard';
-import QualityList from './components/orderManagement/QualityList';
+import OPDashboard from "./components/orderProcessor/OPDashboard";
+import QualityList from "./components/orderManagement/QualityList";
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
 
-
-
-
-import RequestedOrder from './components/RequestedOrder/RequestedOrder';
-import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
-import NormalOrder from './components/NormalOrder/NormalOrder';
-import EditOrder from './components/NormalOrder/EditOrder';
+import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+import NormalOrder from "./components/NormalOrder/NormalOrder";
+import EditOrder from "./components/NormalOrder/EditOrder";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Website from './Website/Website';
+import Website from "./Website/Website";
 
 const router = createBrowserRouter([
-
   {
     path: "/freshroute",
     element: (
@@ -162,26 +159,49 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/RequestedOrder',
-    element: <div><RequestedOrder/></div>
+    path: "/Category",
+    element: (
+      <div>
+        <Category />
+      </div>
+    ),
   },
 
   {
-    path: '/BuyerDashboard',
-    element: <div><BuyerDashBoard/></div>
+    path: "/RequestedOrder",
+    element: (
+      <div>
+        <RequestedOrder />
+      </div>
+    ),
   },
 
   {
-    path: '/NormalOrder',
-    element: <div><NormalOrder/></div>
+    path: "/BuyerDashboard",
+    element: (
+      <div>
+        <BuyerDashBoard />
+      </div>
+    ),
   },
 
   {
-    path: '/EditOrder/:id',
-    element: <div><EditOrder/></div>
+    path: "/NormalOrder",
+    element: (
+      <div>
+        <NormalOrder />
+      </div>
+    ),
   },
 
-
+  {
+    path: "/EditOrder/:id",
+    element: (
+      <div>
+        <EditOrder />
+      </div>
+    ),
+  },
 
   {
     path: "/Salary",
@@ -247,13 +267,20 @@ const router = createBrowserRouter([
   },
 
   {
-
-    path: '/OPDashboard',
-    element: <div><OPDashboard /></div>
+    path: "/OPDashboard",
+    element: (
+      <div>
+        <OPDashboard />
+      </div>
+    ),
   },
   {
-    path: '/QualityList',
-    element: <div><QualityList /></div>
+    path: "/QualityList",
+    element: (
+      <div>
+        <QualityList />
+      </div>
+    ),
   },
   {
     path: "/ExpensePage",
@@ -272,11 +299,9 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
 ]);
 
 function App() {
- 
   return (
     <div>
       <RouterProvider router={router} />
