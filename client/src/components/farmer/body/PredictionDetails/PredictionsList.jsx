@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import WebTrafficChart from "../FruitDetailsChart"; // Import the WebTrafficChart component
 import PredictionForm from "./PredictionForm";
 import AddPredictionModal from "./AddPredictionModal";
 
@@ -179,7 +180,6 @@ function PredictionsList() {
              </tbody>
            </table>
          </div>
-
     </>
   );
 }

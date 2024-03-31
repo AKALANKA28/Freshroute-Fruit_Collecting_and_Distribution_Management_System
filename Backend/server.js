@@ -60,21 +60,12 @@ app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
-app.use('/Farmer', router);
 app.use(itemRouter);
-
 app.use("/TransportFee", TransportFeeRouter);
-app.use("/schedule", scheduleRouter);
-app.use("/vehicle", vehicleRouter);
-app.use("/process", processRouter);
-app.use("/coverings", coveringsRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
-
 app.use("/Employee", EmployeeRouter);
-
 app.use('/quality', qualityRoute);
-
 app.use("/CalculateSalary", CalculateSalaryRouter);
 
 

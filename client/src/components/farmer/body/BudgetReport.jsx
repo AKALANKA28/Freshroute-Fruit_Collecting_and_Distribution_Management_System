@@ -13,11 +13,9 @@ const BudgetReport = () => {
 
   return (
     <div className='card'>
-      <CardFilter filterChange={handleFilterChange} />
-
-      <div className="card-body pb-0">
+      <div className="card-body pb-0 text-center">
         <h5 className="card-title">
-          Budget Report<span>| {filter}</span>
+          Weather Forecast
         </h5>
         <BudgetChart />
       </div>
