@@ -11,7 +11,7 @@ import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
-import OMDashboard from "./components/orderManagement/OMDashboard";
+import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
 import QualityList from "./components/orderManagement/body/QualityList/QualityList";
 import ReqOrder from "./components/orderManagement/body/ReqOrders/ReqOrder";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
@@ -40,6 +40,7 @@ import EditOrder from "./components/NormalOrder/EditOrder";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Website from "./Website/Website";
+import OMDashboard from "./components/orderManagement/body/OMDashboard";
 
 const router = createBrowserRouter([
   {
@@ -118,10 +119,14 @@ const router = createBrowserRouter([
     path: "/OMDashboard",
     element: (
         <div>
-          <OMDashboard />
+          <OrderManagerHomePage />
         </div>
     ),
     children: [ {
+        path: "/OMDashboard/",
+        element: <OMDashboard/>,
+      },
+      {
         path: "/OMDashboard/QualityList",
         element: <QualityList/>,
       },

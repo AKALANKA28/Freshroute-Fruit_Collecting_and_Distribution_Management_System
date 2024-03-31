@@ -6,7 +6,7 @@ import Sidebar from './sidebar/Sidebar'
 import Footer from './footer/Footer'
 import {Outlet} from 'react-router-dom'
 
-const OMDashboard = () => {
+const OrderManagerHomePage = () => {
   return (
     <div>
       <Header />
@@ -17,4 +17,4 @@ const OMDashboard = () => {
   )
 }
 
-export default OMDashboard
+export default OrderManagerHomePage

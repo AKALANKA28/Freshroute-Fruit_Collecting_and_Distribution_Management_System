@@ -108,6 +108,10 @@ const QualityList = () => {
         setShowModal(true);
     };
 
+    const handleSearchOnClick = (filterData) => {
+        console.log(filterData)
+    }
+
     return (
         <main className='main' id='main'>
           <div className="body" id='body'>
@@ -163,7 +167,12 @@ const QualityList = () => {
 
                           {/* --------------------imported search bar and table data ------------------------*/}
                       </div>
-                      <SearchBar/>
+                      <div className="w-100">
+                          <SearchBar enableFilterType={true}
+                                     filterColumns={["Fruit Type", "Grade", "Quality Description", "Storage Conditions"]}
+                                     handleSearch={handleSearchOnClick}
+                          />
+                      </div>
                       <QualityTable items={items} updateQualityList={getQualityList} editItem={handleEdit}/>
                   </div>
                   <div>

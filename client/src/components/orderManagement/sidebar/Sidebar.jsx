@@ -20,31 +20,10 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='QualityControl'>
+                <a className='nav-link ' href='/OMDashboard/QualityList'>
                     <i className='bi bi-menu-button-wide'></i>
                     <span>Quality Control</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
-
-                <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-
-                    <li>
-                        <a href='/OMDashboard/QualityList'>
-                            <i className='bi bi-circle'>
-                                <span>Quality List</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='AddQuality'>
-                            <i className='bi bi-circle'>
-                                <span>Add Quality</span>
-                            </i>
-                        </a>
-                    </li>
-                    
-
-                </ul>
             </li>
 
             <li className='nav-item'>
