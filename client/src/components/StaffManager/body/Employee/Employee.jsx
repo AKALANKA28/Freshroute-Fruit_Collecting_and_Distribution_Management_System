@@ -3,6 +3,11 @@ import axios from "axios";
 import EmployeeForm from "./EmployeeForm";
 import "./Employee.css";
 
+import SearchBar from './SearchBar'
+import Excel from "../../../../assests/img/icons/excel.png";
+import Pdf from "../../../../assests/img/icons/pdf.png";
+import Refresh from "../../../../assests/img/icons/refresh.png";
+
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Employee() {
@@ -70,6 +75,15 @@ function Employee() {
     getFetchData();
   }, []);
 
+
+const handleRefreshClick = () => {
+  getFetchData();
+};
+
+const handleButtonClick = () => {
+  getFetchData();
+};
+
   // Edit data
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -109,12 +123,48 @@ function Employee() {
   };
 
   return (
-    <>
-      <div id="main">
-        <div>
-          <button className="btn btn-add" onClick={() => setAddSection(true)}>
-            <i className="bi bi-plus-circle"></i> Add
+    <div id="main">
+    <div className="card recent-sales overflow-auto">
+     
+          <div className="card-body">
+          
+            <div class="page-header">
+              <div class="add-item d-flex">
+
+              <div class="card-title">
+                  Employee Details
+                  <h6>Manage employee details</h6>
+                </div>
+              </div>
+
+              <ul class="table-top-head">
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li> 
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Excel} alt="Excel Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>  
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleRefreshClick}>
+                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>    
+              </ul>
+              <div class="page-btn">  
+          <button type="button" className="btn btn-added" onClick={() => setAddSection(true)}>
+            <i className="bi bi-plus-circle"></i> Add Employee
           </button>
+        </div>
         </div>
         {addSection && (
           <EmployeeForm
@@ -133,6 +183,7 @@ function Employee() {
         )}
 
         <div className="table-container">
+        <SearchBar/>
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -174,21 +225,22 @@ function Employee() {
                           onClick={() => handleDelete(employee._id)}
                         >
                            <i className="bi bi-trash-fill"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4">No Data</td>
+                           </button>
+                    </div>
+                  </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="10">No Data</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-    </>
+      </div>
+    </div>
+    </div>
   );
 }
 
