@@ -86,3 +86,34 @@ exports.deleteQuality = async (req, res) => {
         res.status(500).json({ status: "Error deleting quality record", error: err.message });
     }
 };
+
+// Retrieve filtered quality records
+exports.getFilteredQualities = async (req, res) => {
+    try {
+        let filter = {};
+        const filterType = req.body.filterType;
+        const filterValue = req.body.filterValue;
+
+        switch (filterType) {
+            case 'fruitCategory':
+                filter = { fruitCategory: new RegExp(filterValue, 'i') };
+                break;
+            case 'grade':
+                filter = { grade: new RegExp(filterValue, 'i') };
+                break;
+            case 'qualityDesc':
+                filter = { qualityDesc: new RegExp(filterValue, 'i') };
+                break;
+            case 'storageCond':
+                filter = { storageCond: new RegExp(filterValue, 'i') }; // Assuming filterValue is a string representation of a number
+                break;
+            default:
+                return res.status(400).json({ message: 'Invalid filter type' });
+        }
+        const filteredQualities = await Quality.find(filter);
+        res.json(filteredQualities);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+};

@@ -16,13 +16,13 @@ const SearchBar = ({enableFilterType, filterColumns, handleSearch}) => {
                 {enableFilterType && filterColumns &&
                     <select className="w-25 m-2 form-select rounded-4 text-secondary" name="filterType" id="dropdown">
                         {filterColumns.map((value, index) => (
-                            <option key={index} value={value}>{value}</option>
+                            <option key={index} value={value.tag}>{value.name}</option>
                         ))}
                     </select>
                 }
 
                 <div className="m-2 w-25">
-                    <input type='text' name='query' placeholder='Search' title='Enter search keyword'/>
+                    <input type='text' name='filterValue' placeholder='Search' title='Enter search keyword'/>
                     <button type='submit' title='Search'>
                         <i className='bi bi-search'>
                         </i>
