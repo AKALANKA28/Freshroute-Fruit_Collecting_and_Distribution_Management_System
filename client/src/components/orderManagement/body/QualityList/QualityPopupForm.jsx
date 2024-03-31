@@ -1,14 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:8070/";
 function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handleOnChange }) {
 
-    const [fruitType, setFruitType] = useState(["Mango", "Banana", "Apple"]);
-    const [grade, setGrade] = useState(["A", "B", "C"]);
+    const [fruitType, setFruitType] = useState([]);
+
+    useEffect(() => {
+        if (show) {
+            getFruitTypes();
+        }
+    }, [show])
 
     const handleChange = (event) => {
         handleOnChange(event);
     };
+
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const formData1 = new FormData(event.target);
@@ -17,7 +24,22 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
         onHide();
     };
 
-
+    const getFruitTypes = async () => {
+        try {
+            const response = await axios.get("/FruitType");
+            const fruitTypes = response.data;
+            if (fruitTypes) {
+                const fruitTypeNames = fruitTypes.map((ft)=> ft.name);
+                setFruitType(fruitTypeNames);
+            }
+        } catch (err) {
+            if (err.response && err.response.data && err.response.data.error) {
+                alert(err.response.data.error);
+            } else {
+                alert("An error occurred while getting quality list");
+            }
+        }
+    }
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
@@ -40,9 +62,9 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
                         <Form.Label>Grade</Form.Label>
                         <Form.Select name="grade" required onChange={handleChange} value={formData.grade}>
                             <option value="">Select Grade</option>
-                            {grade.map((value, index) => (
-                                <option key={index} value={value}>{value}</option>
-                            ))}
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
                         </Form.Select>
                     </Form.Group>
 
