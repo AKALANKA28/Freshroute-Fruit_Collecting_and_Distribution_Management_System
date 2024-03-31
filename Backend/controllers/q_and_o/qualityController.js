@@ -1,68 +1,18 @@
-const Quality = require('../../models/q_and_o/qualityModel.js');
+const FruitDetail = require('../../models/coordinator/FruitDetail');
 
-// Add a new quality record
-exports.addQuality = async (req, res) => {
+// Add new quality record or edit existing record / Update existing record qualities
+exports.addEditQuality = async (req, res) => {
     try {
-        const { fruitCategory, grade, qualityDesc, storageCond } = req.body;
-
-        const newQuality = new Quality({
-            fruitCategory,
-            grade,
-            qualityDesc,
-            storageCond
-        });
-
-        await newQuality.save();
-        res.json("Quality Added");
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ status: "Error adding quality record", error: err.message });
-    }
-};
-
-// Retrieve all quality records
-exports.getAllQualities = async (req, res) => {
-    try {
-        const allQualities = await Quality.find();
-        console.log(allQualities);
-        res.json(allQualities);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
-    }
-};
-
-// Retrieve a specific quality record by ID
-exports.getQualityById = async (req, res) => {
-    try {
-        const qualityId = req.params.id;
-        const foundQuality = await Quality.findById(qualityId);
-        
-        if (!foundQuality) {
-            return res.status(404).json({ status: "Quality not found" });
-        }
-        
-        res.status(200).json({ status: "Quality fetched", quality: foundQuality });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ status: "Error retrieving quality record", error: err.message });
-    }
-};
-
-// Update a quality record
-exports.updateQuality = async (req, res) => {
-    try {
-        const qualityId = req.params.id;
-        const { fruitCategory, grade, qualityDesc, storageCond } = req.body;
-
-        const updateQuality = {
-            fruitCategory,
-            grade,
-            qualityDesc,
-            storageCond
-        };
-
-        const updatedQuality = await Quality.findByIdAndUpdate(qualityId, updateQuality, { new: true });
+        const { id, qualityDesc, storageCond, qualityStatus } = req.body;
+        console.log("addEditQuality");
+        console.log(id)
+        const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
+            $set: {
+                qualityDesc: qualityDesc,
+                storageCond: storageCond,
+                qualityStatus: qualityStatus
+            }
+        }, { new: true });
 
         if (!updatedQuality) {
             return res.status(404).json({ status: "Quality not found" });
@@ -75,15 +25,74 @@ exports.updateQuality = async (req, res) => {
     }
 };
 
-// Delete a quality record
-exports.deleteQuality = async (req, res) => {
+// Retrieve all quality records
+exports.getAllQualities = async (req, res) => {
     try {
-        const qualityId = req.params.id;
-        await Quality.findByIdAndDelete(qualityId);
-        res.status(200).json({ status: "Quality record deleted" });
+        const filter = { qualityStatus: 1 }; // get quality added records only
+        const allQualities = await FruitDetail.find(filter);
+        console.log(allQualities);
+        res.json(allQualities);
     } catch (err) {
         console.log(err);
-        res.status(500).json({ status: "Error deleting quality record", error: err.message });
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+};
+
+// Retrieve all quality records
+exports.getAvailableFruitAndCategoryAndGrade = async (req, res) => {
+    try {
+        const filter = { qualityStatus: 0 }; // get quality added records only
+        const allValidQualities = await FruitDetail.find(filter);
+        categorizeData(allValidQualities);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+};
+
+
+// Retrieve a specific quality record by ID
+exports.getQualityById = async (req, res) => {
+    try {
+        const qualityId = req.params.id;
+        const foundQuality = await FruitDetail.findById(qualityId);
+        
+        if (!foundQuality) {
+            return res.status(404).json({ status: "Quality not found" });
+        }
+        
+        res.status(200).json({ status: "Quality fetched", quality: foundQuality });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error retrieving quality record", error: err.message });
+    }
+};
+
+
+
+// Delete a quality record
+exports.removeQuality = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
+            $unset: {
+                qualityDesc: "",
+                storageCond: "",
+            },
+            $set: {
+                qualityStatus: 0,
+            }
+        }, { new: true });
+
+        if (!updatedQuality) {
+            return res.status(404).json({ status: "Quality not found" });
+        }
+
+        res.status(200).json({ status: "Quality record updated", updatedQuality });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error updating quality record", error: err.message });
     }
 };
 
@@ -117,3 +126,33 @@ exports.getFilteredQualities = async (req, res) => {
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
+
+
+
+const categorizeData = (objArray) => {
+
+    const categoryMapping = new Map();
+    let temp = [];
+    objArray.map((obj)=> {
+        // console.log(obj);
+        if (!categoryMapping.has(obj.category)) {
+            categoryMapping.set(obj.category, [{ id: obj._id.value, grade: obj.quality}])
+        } else {
+            let temArray = categoryMapping.get(obj.category);
+            categoryMapping.set(obj.category, [...temArray,{ id: obj._id.value, grade: obj.quality}])
+        }
+    })
+    // console.log(categoryMapping);
+    const mappedData = new Map();
+
+    objArray.map((obj)=> {
+        if (!mappedData.has(obj.fruit)) {
+            mappedData.set(obj.fruit, [categoryMapping.get(obj.category)])
+        } else {
+            mappedData.set(obj.fruit, [ ...mappedData.get(obj.fruit), categoryMapping.get(obj.category)])
+        }
+    })
+
+    console.log(mappedData);
+
+}
