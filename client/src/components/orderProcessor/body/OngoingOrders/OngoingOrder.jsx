@@ -160,7 +160,7 @@ const OngoingOrder = () => {
                           <div className="page-btn">
                               <button type="button" className="btn btn-added"  onClick={handleAddNew}>
                                   <i className="bi bi-plus-circle" style={{marginRight: '10px'}}></i>
-                                  Add Quality
+                                  Add
                               </button>
                           </div>
 

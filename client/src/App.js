@@ -28,6 +28,9 @@ import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
 import OPDashboard from "./components/orderProcessor/OPDashboard";
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
+import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -141,18 +144,18 @@ const router = createBrowserRouter([
         </div>
     ),
     children: [
-      // {
-      //   path: "/OPDashboard/AssignedOrders",
-      //   element: <AssignedOrder/>,
-      // },
-      // {
-      //   path: "/OPDashboard/OngoingOrders",
-      //   element: <OngoingOrder/>,
-      // },
-      // {
-      //   path: "/OPDashboard/CompletedOrders",
-      //   element: <CompletedOrder/>,
-      // },
+      {
+        path: "/OPDashboard/AssignedOrders",
+        element: <AssignedOrder/>,
+      },
+      {
+        path: "/OPDashboard/OngoingOrders",
+        element: <OngoingOrder/>,
+      },
+      {
+        path: "/OPDashboard/CompletedOrders",
+        element: <CompletedOrder/>,
+      },
 
     ]
   },
