@@ -4,6 +4,12 @@ import axios from "axios";
 import SalaryForm from "./SalaryForm";
 import "./Salary.css";
 
+import SearchBar from './SearchBar'
+import Excel from "../../../../assests/img/icons/excel.png";
+import Pdf from "../../../../assests/img/icons/pdf.png";
+import Refresh from "../../../../assests/img/icons/refresh.png";
+
+
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Salary() {
@@ -59,6 +65,15 @@ function Salary() {
     getFetchData();
   }, []);
 
+
+const handleRefreshClick = () => {
+  getFetchData();
+};
+
+const handleButtonClick = () => {
+  getFetchData();
+};
+
   // Edit data
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -100,10 +115,48 @@ function Salary() {
 
   return (
     <div id="main">
-      <div>
-        <button className="btn btn-add" onClick={() => setAddSection(true)}>
-          <i className="bi bi-plus-circle"></i> Add
+    <div className="card recent-sales overflow-auto">
+     
+          <div className="card-body">
+          
+            <div class="page-header">
+              <div class="add-item d-flex">
+
+              <div class="card-title">
+                  Salary Details
+                  <h6>Manage employee salaries</h6>
+                </div>
+              </div>
+
+              <ul class="table-top-head">
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li> 
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Excel} alt="Excel Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>  
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleRefreshClick}>
+                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>    
+              </ul>
+      
+      <div class="page-btn">
+        <button type="button" className="btn btn-added" onClick={() => setAddSection(true)}>
+          <i className="bi bi-plus-circle" ></i> Add Salary
         </button>
+      </div>
       </div>
       {addSection && (
         <SalaryForm
@@ -122,6 +175,7 @@ function Salary() {
       )}
 
       <div className="table-container">
+      <SearchBar/>
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
@@ -164,6 +218,8 @@ function Salary() {
           </tbody>
         </table>
       </div>
+      </div>
+    </div>
     </div>
   );
 }

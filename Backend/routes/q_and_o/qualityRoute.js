@@ -17,4 +17,7 @@ router.put("/update/:id", qualityController.updateQuality);
 // Delete a quality record
 router.delete("/delete/:id", qualityController.deleteQuality);
 
+//Get filtered quality list
+router.post("/filteredQualities", qualityController.getFilteredQualities);
+
 module.exports = router;

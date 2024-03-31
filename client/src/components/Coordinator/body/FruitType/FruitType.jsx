@@ -6,8 +6,10 @@ import FruitTypeForm from "./FruitTypeForm";
 
 import "./FruitType.css";
 
-import "./FruitType.css"
-// import "./main.css"
+import SearchBar from './SearchBar'
+import Excel from "../../../../assests/img/icons/excel.png";
+import Pdf from "../../../../assests/img/icons/pdf.png";
+import Refresh from "../../../../assests/img/icons/refresh.png";
 
 
 
@@ -66,6 +68,14 @@ function FruitType() {
     getFetchData();
   }, []);
 
+  const handleRefreshClick = () => {
+    getFetchData();
+  };
+  
+  const handleButtonClick = () => {
+    getFetchData();
+  };
+
   // Edit data
   const handleEdit = (fruitType) => {
     setDataEdit(fruitType);
@@ -107,10 +117,47 @@ function FruitType() {
 
   return (
     <div id="main">
-      <div>
-        <button className="btn btn-add" onClick={() => setAddSection(true)}>
-          <i className="bi bi-plus-circle"></i> Add
+    <div className="card recent-sales overflow-auto">
+     
+          <div className="card-body">
+          
+            <div class="page-header">
+              <div class="add-item d-flex">
+
+              <div class="card-title">
+                  Fruit Details
+                  <h6>Manage fruit details</h6>
+                </div>
+              </div>
+
+              <ul class="table-top-head">
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li> 
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Excel} alt="Excel Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>  
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleRefreshClick}>
+                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>    
+              </ul>
+      <div class="page-btn">
+        <button type="button" className="btn btn-added" onClick={() => setAddSection(true)}>
+          <i className="bi bi-plus-circle"></i> Add Fruit
         </button>
+      </div>
       </div>
       {addSection && (
         <FruitTypeForm
@@ -132,8 +179,9 @@ function FruitType() {
       
 
        
-      <div>
-         <table className="table table-bordeless datatable">
+<div className="table-container">
+      <SearchBar/>
+        <table className="table table-borderless datatable">
 
           <thead className="table-light">
             <tr>
@@ -164,23 +212,21 @@ function FruitType() {
                       >
                        <i className="bi bi-trash-fill"></i>
                       </button>
-                    </div>
+                      </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4">No Data</td>
+                <td colSpan="5">No Data</td>
               </tr>
             )}
-
           </tbody>
         </table>
       </div>
+      </div>
     </div>
-
-     
-
+    </div>
   );
 }
 

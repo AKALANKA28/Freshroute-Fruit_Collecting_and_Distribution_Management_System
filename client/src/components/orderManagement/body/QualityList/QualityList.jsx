@@ -108,8 +108,17 @@ const QualityList = () => {
         setShowModal(true);
     };
 
-    const handleSearchOnClick = (filterData) => {
-        console.log(filterData)
+    const handleSearchOnClick = async (filterData) => {
+        try {
+            const response = await axios.post("/quality/filteredQualities", filterData);
+            setItems(response.data);
+        } catch (err) {
+            if (err.response && err.response.data && err.response.data.error) {
+                alert(err.response.data.error);
+            } else {
+                alert("An error occurred while getting filtered data");
+            }
+        }
     }
 
     return (
@@ -169,7 +178,26 @@ const QualityList = () => {
                       </div>
                       <div className="w-100">
                           <SearchBar enableFilterType={true}
-                                     filterColumns={["Fruit Type", "Grade", "Quality Description", "Storage Conditions"]}
+                                     filterColumns={
+                                        [
+                                            {
+                                                name: "Fruit Type",
+                                                tag: "fruitCategory"
+                                            },
+                                            {
+                                                name: "Grade",
+                                                tag: "grade"
+                                            },
+                                            {
+                                                name: "Quality Description",
+                                                tag: "qualityDesc"
+                                            },
+                                            {
+                                                name: "Storage Conditions",
+                                                tag: "storageCond"
+                                            }
+                                        ]
+                                     }
                                      handleSearch={handleSearchOnClick}
                           />
                       </div>
