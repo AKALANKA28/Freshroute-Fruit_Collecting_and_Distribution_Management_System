@@ -32,12 +32,11 @@ const AssignedOrderTable = ({ items, updateQualityList, editItem }) => {
           <thead className="table-light">
             <tr>
               <th className="col">Customer</th>
-              <th className="col">Fruit Categort</th>
+              <th className="col">Fruit Category</th>
               <th className="col">Quality</th>
-              <th className="col">Quantity</th>
+              <th className="col">Required Quantity</th>
               <th className="col">Placed Date</th>
               <th className="col">Due Date</th>
-              <th className="col">Processor Name</th>
               <th className="col">Action</th>
             </tr>
           </thead>
@@ -50,16 +49,16 @@ const AssignedOrderTable = ({ items, updateQualityList, editItem }) => {
                   <td>{item.grade}</td>
                   <td >{item.qualityDesc}</td>
                   <td >{item.storageCond}</td>
+                  <td ></td>
+                  <td ></td>
                   <td>
                     <div className="buttons">
-                    <button className="btn-table edit"  onClick={() => handleEdit(item)}>
+                      <button className="btn-table edit"  onClick={() => handleEdit(item)}>
                         <i className="bi bi-pencil-square"></i>
-                      </button>
-                      <button className="btn-table delete" onClick={ () =>  handleDelete(item._id)}>
-                        <i className="bi bi-trash3-fill"></i>
                       </button>
                     </div>
                   </td>
+
                 </tr>
               ))}
           </tbody>
