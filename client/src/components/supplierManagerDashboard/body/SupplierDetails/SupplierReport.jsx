@@ -1,5 +1,6 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import './farmers.css';
 
 const styles = StyleSheet.create({
   page: {
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
 const SupplierReport = ({ dataList }) => {
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.heading}>Supplier Details Report</Text>
           <View style={styles.table}>

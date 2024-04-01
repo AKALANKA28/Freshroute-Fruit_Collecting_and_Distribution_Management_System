@@ -136,7 +136,7 @@ function SuppliersList() {
 
   return (
     <>
-    <ul class="table-top-head">
+    <ul class="table-top-head" style={{ float: "right" }}>
       <li>
       <div className="button-container">
         <a onClick={handleShowReportModal}>
@@ -175,37 +175,26 @@ function SuppliersList() {
                       </a>
                   </div>
                 </li>    
-              </ul>
+              
 
 
     {/* --------------------add button------------------ */}
-
-
-
-      <div class="page-btn">
-        <button 
-          type="button" 
-          class="btn btn-added" 
-          data-bs-toggle="modal"  
-          data-bs-target="#exampleModal" 
-          onClick={() => setAddSection(true)}
-        >
-          <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
-            Add Farmer
-        </button>
-      </div>
-
-      {/* <div id="main col-8" className="text-center">
-        <button
-          type="button"
-          className="btn btn-add"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          onClick={() => setAddSection(true)}
-        >
-          <i className="bi bi-plus-circle"></i> Add Farmer
-        </button>
-      </div> */}
+      <li>
+        <div class="page-btn">
+          <button 
+            type="button" 
+            class="btn btn-added" 
+            data-bs-toggle="modal"  
+            data-bs-target="#exampleModal" 
+            onClick={() => setAddSection(true)}
+          >
+            <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
+              Add Farmer
+          </button>
+        </div>
+      </li>
+      </ul>
+      
       <AddFarmerModal
         show={addSection}
         handleClose={() => setAddSection(false)}
