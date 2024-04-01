@@ -8,6 +8,7 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import SalaryForm from "./SalaryForm";
 import SalaryReport from "./SalaryReport";
+import "./Salary.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
