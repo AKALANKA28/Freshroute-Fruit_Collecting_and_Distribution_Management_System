@@ -37,8 +37,10 @@ const SalaryForm = ({ handleSubmit, initialData }) => {
           className="form-control"
           id="jobrole"
           name="jobrole"
+          placeholder="Job Role"
           value={formData.jobrole}
           onChange={handleChange}
+          required
         />
       </div>
       <div className="mb-3">
@@ -46,12 +48,14 @@ const SalaryForm = ({ handleSubmit, initialData }) => {
           Date
         </label>
         <input
-          type="text"
+          type="date"
           className="form-control"
           id="date"
           name="date"
+          placeholder="Date"
           value={formData.date}
           onChange={handleChange}
+          required
         />
       </div>
       <div className="mb-3">
@@ -59,12 +63,14 @@ const SalaryForm = ({ handleSubmit, initialData }) => {
           Salary
         </label>
         <input
-          type="text"
+          type="number"
           className="form-control"
           id="salary"
           name="salary"
+          placeholder="Salary"
           value={formData.salary}
           onChange={handleChange}
+          required
         />
       </div>
       <button type="submit" className="btn btn-primary">
