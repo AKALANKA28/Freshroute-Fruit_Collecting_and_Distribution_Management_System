@@ -1,36 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const PredictionForm = ({ handleSubmit, handleOnChange, rest }) => {
+const PredictionForm = ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    fruitType: "",
+    quality: "",
+    quantity: "",
+    price: "",
+    dateCanBeGiven: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-              Fruit Type
-          </label>
-          <input
+    <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+           <label htmlFor="name" className="form-label">
+               Fruit Type
+           </label>
+           <input
             type="text"
             className="form-control"
             name="fruitType"
+            id="fruitType"
             placeholder="Fruit Type"
             required
-            onChange={handleOnChange}
-            value={rest.fruitType}
+            onChange={handleChange}
+            value={formData.fruitType}
           />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-          Quality
-          </label>
-          <input
+           <label htmlFor="date" className="form-label">
+           Quality
+           </label>
+           <input
             type="text"
             className="form-control"
             name="quality"
             placeholder="Quality"
             required
-            onChange={handleOnChange}
-            value={rest.quality}
+            onChange={handleChange}
+            value={formData.quality}
           />
         </div>
 
@@ -44,8 +71,8 @@ const PredictionForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="quantity"
             placeholder="Quantity"
             required
-            onChange={handleOnChange}
-            value={rest.quantity}
+            onChange={handleChange}
+            value={formData.quantity}
           />
         </div>
 
@@ -59,8 +86,8 @@ const PredictionForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="price"
             placeholder="Price"
             required
-            onChange={handleOnChange}
-            value={rest.price}
+            onChange={handleChange}
+            value={formData.price}
           />
         </div>
         <div className="mb-3">
@@ -73,14 +100,15 @@ const PredictionForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="dateCanBeGiven"
             placeholder="Date Can Be Given"
             required
-            onChange={handleOnChange}
-            value={rest.dateCanBeGiven}
+            onChange={handleChange}
+            value={formData.dateCanBeGiven}
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
-    </div>
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
   );
 };
 

@@ -103,7 +103,6 @@ function SuppliersList() {
                 <h6>Manage Supplier Details</h6>
               </div>
             </div>
-            {/* Moved the list to the top-right corner */}
             <ul class="table-top-head" style={{ float: "right" }}>
               <li>
                 <div className="button-container">
