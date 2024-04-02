@@ -5,7 +5,7 @@ import './farmers.css';
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#ffffff",
   },
   section: {
     margin: 10,
