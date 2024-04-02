@@ -19,12 +19,9 @@ const scheduleRouter = require("./routes/transport/scheduleRoute.js");
 const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
-
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
 
-const router = require("./routes/farmers/farmerRoutes");
-const itemRouter = require("./routes/buyers/Bmanager")
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
@@ -55,21 +52,19 @@ app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Category", CategoryRouter);
 app.use("/Salary", SalaryRouter);
-app.use('/schedule', scheduleRouter);
-app.use('/vehicle', vehicleRouter);
-app.use('/process', processRouter);
-app.use('/coverings', coveringsRouter);
 app.use("/schedule", scheduleRouter);
 app.use("/vehicle", vehicleRouter);
 app.use("/process", processRouter);
 app.use("/coverings", coveringsRouter);
-app.use("/Farmer", router);
-app.use(itemRouter);
-app.use("/TransportFee", TransportFeeRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
+app.use(itemRouter);
+
+app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
-app.use('/quality', qualityRoute);
+
+app.use("/quality", qualityRoute);
+
 app.use("/CalculateSalary", CalculateSalaryRouter);
 
 // Start the server
