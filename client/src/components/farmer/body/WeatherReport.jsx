@@ -1,9 +1,7 @@
 import React, {useState} from 'react'
+import WeatherChart from './WeatherChart';
 
-import CardFilter from './CardFilter';
-import BudgetChart from './BudgetChart';
-
-const BudgetReport = () => {
+const WeatherReport = () => {
 
     const [filter, setFilter] = useState('Today');
     const handleFilterChange = filter => {
@@ -13,14 +11,16 @@ const BudgetReport = () => {
 
   return (
     <div className='card'>
-      <div className="card-body pb-0 text-center">
+      <div className="card-body pb-0">
         <h5 className="card-title">
           Weather Forecast
         </h5>
-        <BudgetChart />
+        <div className='text-center'>
+        <WeatherChart />
+        </div>
       </div>
     </div>
   )
 }
 
-export default BudgetReport
+export default WeatherReport

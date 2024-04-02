@@ -5,7 +5,7 @@ import Cards from './Cards'
 import Reports from './Reports'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
-import BudgetReport from './BudgetReport'
+import WeatherReport from './WeatherReport'
 import FruitDetails from './FruitDetails'
 import News from './News'
 import BackToTop from './BackToTop'
@@ -35,7 +35,7 @@ const Body = () => {
             </div>
             <div className="col-lg-4">
               <RecentActivity />
-              <BudgetReport />
+              <WeatherReport />
               <FruitDetails />
               <News />
             </div>
