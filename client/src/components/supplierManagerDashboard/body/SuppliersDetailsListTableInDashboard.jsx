@@ -1,6 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SuppliersDetailsListTableInDashboard = ({ items }) => {
+    
+    const displayedItems = items.slice(0, 4);
+
     return (
         <div>
             <table className='table table-hover'>
@@ -16,7 +20,7 @@ const SuppliersDetailsListTableInDashboard = ({ items }) => {
                 </thead>
 
                 <tbody>
-                    {items.map((farmer, index) => (
+                    {displayedItems.map((farmer, index) => (
                         <tr key={index}>
                             <th scope='row'>{index + 1}</th>
                             <td>{farmer.NIC}</td>
@@ -28,6 +32,9 @@ const SuppliersDetailsListTableInDashboard = ({ items }) => {
                     ))}
                 </tbody>
             </table>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Link to="/SupplierDetails" className="btn btn-primary btn-sm">View More</Link>
+            </div>
         </div>
     );
 };

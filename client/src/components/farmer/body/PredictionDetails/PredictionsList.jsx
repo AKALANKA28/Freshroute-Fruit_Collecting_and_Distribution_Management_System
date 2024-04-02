@@ -5,16 +5,16 @@ import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-import FarmerForm from "./FarmerForm";
-import SupplierReport from "./SupplierReport";
+import PredictionForm from "./PredictionForm";
+import PredictionReport from "./PredictionReport";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function SuppliersList() {
+function PredictionsList() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
-  const [selectedFarmer, setSelectedFarmer] = useState(null);
+  const [selectedPrediction, setSelectedPrediction] = useState(null);
 
   useEffect(() => {
     getFetchData();
@@ -22,7 +22,7 @@ function SuppliersList() {
 
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/Farmer/");
+      const response = await axios.get("/Prediction/");
       setDataList(response.data);
     } catch (err) {
       alert(err.message);
@@ -45,8 +45,8 @@ function SuppliersList() {
     setAddModalOpen(false);
   };
 
-  const handleEditModalOpen = (farmer) => {
-    setSelectedFarmer(farmer);
+  const handleEditModalOpen = (prediction) => {
+    setSelectedPrediction(prediction);
     setEditModalOpen(true);
   };
 
@@ -56,7 +56,7 @@ function SuppliersList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/Farmer/delete/${id}`);
+      await axios.delete(`/Prediction/delete/${id}`);
       alert("Successfully Deleted");
       window.location.reload();
       getFetchData();
@@ -67,8 +67,8 @@ function SuppliersList() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Farmer/add", formData);
-      alert("Farmer Added");
+      await axios.post("/Prediction/add", formData);
+      alert("Prediction Added");
       window.location.reload();
       handleAddModalClose();
       getFetchData();
@@ -79,8 +79,8 @@ function SuppliersList() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Farmer/update/${formData._id}`, formData);
-      alert("Farmer Updated");
+      await axios.put(`/Prediction/update/${formData._id}`, formData);
+      alert("Prediction Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -99,8 +99,8 @@ function SuppliersList() {
           <div className="page-header">
             <div class="add-item d-flex">
               <div class="card-title">
-                Supplier Details
-                <h6>Manage Supplier Details</h6>
+              Prediction Details
+                <h6>Manage Prediction Details</h6>
               </div>
             </div>
             <ul class="table-top-head" style={{ float: "right" }}>
@@ -132,18 +132,18 @@ function SuppliersList() {
                     className="btn btn-added"
                     onClick={handleAddModalOpen}
                   >
-                    <i className="bi bi-plus-circle"></i> Add Farmer
+                    <i className="bi bi-plus-circle"></i> Add Supply Prediction
                   </button>
                 </div>
               </li>
             </ul>
             <Modal show={showReportModal} onHide={handleCloseReportModal}>
               <Modal.Header closeButton>
-                <Modal.Title>Supplier Details Report</Modal.Title>
+                <Modal.Title>Prediction Details Report</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <PDFViewer width="100%" height="500px">
-                  <SupplierReport dataList={dataList} />
+                  <PredictionReport dataList={dataList} />
                 </PDFViewer>
               </Modal.Body>
               <Modal.Footer>
@@ -156,21 +156,21 @@ function SuppliersList() {
 
           <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Add Farmer</Modal.Title>
+              <Modal.Title>Add Supply Prediction</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FarmerForm handleSubmit={handleAddSubmit} />
+              <PredictionForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Farmer</Modal.Title>
+              <Modal.Title>Edit Supply Prediction</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FarmerForm
+              <PredictionForm
                 handleSubmit={handleEditSubmit}
-                initialData={selectedFarmer}
+                initialData={selectedPrediction}
               />
             </Modal.Body>
           </Modal>
@@ -180,36 +180,34 @@ function SuppliersList() {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">NIC</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">City</th>
-                  <th scope="col">Lane</th>
+                  <th scope="col">Fruit Type</th>
+                  <th scope="col">Quality</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Date Can Be Given</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {dataList.length ? (
-                  dataList.map((farmer) => (
-                    <tr key={farmer._id}>
-                      <td>{farmer.NIC}</td>
-                      <td>{farmer.username}</td>
-                      <td>{farmer.name}</td>
-                      <td>{farmer.email}</td>
-                      <td>{farmer.city}</td>
-                      <td>{farmer.lane}</td>
+                  dataList.map((prediction) => (
+                    <tr key={prediction._id}>
+                      <td>{prediction.fruitType}</td>
+                      <td>{prediction.quality}</td>
+                      <td>{prediction.quantity}</td>
+                      <td>{prediction.price}</td>
+                      <td>{prediction.dateCanBeGiven}</td>
                       <td className="action">
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(farmer)}
+                            onClick={() => handleEditModalOpen(prediction)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
                           <button
                             className="btn btn-delete"
-                            onClick={() => handleDelete(farmer._id)}
+                            onClick={() => handleDelete(prediction._id)}
                           >
                             <i className="bi bi-trash-fill"></i>
                           </button>
@@ -231,4 +229,4 @@ function SuppliersList() {
   );
 }
 
-export default SuppliersList;
+export default PredictionsList;
