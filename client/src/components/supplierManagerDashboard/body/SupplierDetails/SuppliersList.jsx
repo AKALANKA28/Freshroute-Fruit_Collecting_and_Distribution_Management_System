@@ -55,13 +55,15 @@ function SuppliersList() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/Farmer/delete/${id}`);
-      alert("Successfully Deleted");
-      window.location.reload();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
+    const confirmDelete = window.confirm("Are you sure you want to delete this farmer?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(`/Farmer/delete/${id}`);
+        alert("Successfully Deleted");
+        getFetchData();
+      } catch (err) {
+        alert(err.message);
+      }
     }
   };
 
