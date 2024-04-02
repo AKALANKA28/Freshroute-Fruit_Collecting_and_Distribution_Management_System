@@ -1,61 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { PDFViewer } from "@react-pdf/renderer";
+import { Button, Modal } from "react-bootstrap";
+import SearchBar from './SearchBar';
+import Excel from "../../../../assests/img/icons/excel.png";
+import Pdf from "../../../../assests/img/icons/pdf.png";
+import Refresh from "../../../../assests/img/icons/refresh.png";
 import EmployeeForm from "./EmployeeForm";
+import EmployeeReport from "./EmployeeReport";
 import "./Employee.css";
-
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Employee() {
-  const [addSection, setAddSection] = useState(false);
-  const [editSection, setEditSection] = useState(false);
-  const [data, setData] = useState({
-    name: "",
-    jobrole: "",
-    nic: "",
-    address: "",
-    email: "",
-    accno: "",
-    bankname: "",
-    qualifications: "",
-    joineddate: "",
-  });
-
-  const [dataEdit, setDataEdit] = useState({
-    _id: "",
-    name: "",
-    jobrole: "",
-    nic: "",
-    address: "",
-    email: "",
-    accno: "",
-    bankname: "",
-    qualifications: "",
-    joineddate: "",
-  });
-
-  const handleOnChange = (e) => {
-    const { value, name } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Add data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("/Employee/add", data);
-      alert("Employee Added");
-      getFetchData();
-      window.location.reload();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  // Get data
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
 
   const getFetchData = async () => {
     try {
@@ -66,73 +30,154 @@ function Employee() {
     }
   };
 
-  useEffect(() => {
+  const handleRefreshClick = () => {
     getFetchData();
-  }, []);
-
-  // Edit data
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    console.log("Updating Employee with ID:", dataEdit._id);
-    try {
-      await axios.put(`/Employee/update/${dataEdit._id}`, dataEdit); // fixed string interpolation
-      alert("Employee Updated");
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-      alert(err.message);
-    }
   };
 
-  const handleEditOnChange = (e) => {
-    const { value, name } = e.target;
-    setDataEdit((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleButtonClick = () => {
+    getFetchData();
   };
 
-  const handleEdit = (employee) => {
-    setDataEdit(employee);
-    setEditSection(true);
+  const handleAddModalOpen = () => {
+    setAddModalOpen(true);
   };
 
-  // Delete data
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
+  };
+
+  const handleEditModalOpen = (salary) => {
+    setSelectedEmployee(salary);
+    setEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+  };
+
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/Employee/delete/${id}`); // fixed string interpolation
-      alert("Successfully Delete");
+      await axios.delete(`/Employee/delete/${id}`);
+      alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
       alert(err.message);
     }
   };
 
+  const handleAddSubmit = async (formData) => {
+    try {
+      await axios.post("/Employee/add", formData);
+      alert("Employee Added");
+      handleAddModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleEditSubmit = async (formData) => {
+    try {
+      await axios.put(`/Employee/update/${formData._id}`, formData);
+      alert("Employee Updated");
+      handleEditModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
+
+
   return (
-    <>
-      <div id="main">
-        <div>
-          <button className="btn btn-add" onClick={() => setAddSection(true)}>
-            <i className="bi bi-plus-circle"></i> Add
-          </button>
+    <div id="main">
+    <div className="card recent-sales overflow-auto">
+     
+          <div className="card-body">
+          
+            <div class="page-header">
+              <div class="add-item d-flex">
+
+              <div class="card-title">
+                  Employee Details
+                  <h6>Manage employee details</h6>
+                </div>
+              </div>
+
+              <ul class="table-top-head">
+              <li>
+                  <div className="button-container">
+                      <a onClick={handleShowReportModal}>
+                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+                      </a>
+                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Employee Details Report</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PDFViewer width="100%" height="500px" >
+              <EmployeeReport dataList={dataList} />
+            </PDFViewer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseReportModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+      </li>
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleButtonClick}>
+                          <img src={Excel} alt="Excel Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>  
+                <li>
+                  <div className="button-container">
+                      <a href="#" onClick={handleRefreshClick}>
+                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
+                      </a>
+                  </div>
+                </li>    
+              </ul>
+              <div class="page-btn">  
+              <button
+                type="button"
+                className="btn btn-added"
+                onClick={handleAddModalOpen}
+              >
+                <i className="bi bi-plus-circle"></i> Add New Employee
+              </button>
         </div>
-        {addSection && (
-          <EmployeeForm
-            handleSubmit={handleSubmit}
-            handleOnChange={handleOnChange}
-            rest={data}
-          />
-        )}
+        </div>
+        <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Employee</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <EmployeeForm handleSubmit={handleAddSubmit} />
+            </Modal.Body>
+          </Modal>
 
-        {editSection && (
-          <EmployeeForm
-            handleSubmit={handleUpdate}
-            handleOnChange={handleEditOnChange}
-            rest={dataEdit}
-          />
-        )}
-
+          <Modal show={editModalOpen} onHide={handleEditModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Employee Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <EmployeeForm
+                handleSubmit={handleEditSubmit}
+                initialData={selectedEmployee}
+              />
+            </Modal.Body>
+          </Modal>
         <div className="table-container">
+        <SearchBar/>
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -165,7 +210,7 @@ function Employee() {
                       <div className="buttons">
                         <button
                           className="btn btn-edit"
-                          onClick={() => handleEdit(employee)}
+                          onClick={() => handleEditModalOpen(employee)}
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
@@ -174,21 +219,22 @@ function Employee() {
                           onClick={() => handleDelete(employee._id)}
                         >
                            <i className="bi bi-trash-fill"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4">No Data</td>
+                           </button>
+                    </div>
+                  </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="10">No Data</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-    </>
+      </div>
+    </div>
+    </div>
   );
 }
 

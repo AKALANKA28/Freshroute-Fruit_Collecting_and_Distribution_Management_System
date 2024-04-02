@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
+const EmployeeForm =  ({ handleSubmit, initialData }) => {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    jobrole: "",
+    nic: "",
+    address: "",
+    email: "",
+    accno: "",
+    bankname: "",
+    qualifications: "",
+    joineddate: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Employee Name
@@ -13,8 +44,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="name"
             placeholder="Employee Name"
-            onChange={handleOnChange}
-            value={rest.name}
+            onChange={handleChange}
+            value={formData.name}
             required
           />
         </div>
@@ -28,8 +59,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="jobrole"
             placeholder="Job Role"
-            onChange={handleOnChange}
-            value={rest.jobrole}
+            onChange={handleChange}
+            value={formData.jobrole}
             required
           />
         </div>
@@ -42,8 +73,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="nic"
             placeholder="NIC"
-            onChange={handleOnChange}
-            value={rest.nic}
+            onChange={handleChange}
+            value={formData.nic}
             required
           />
         </div>
@@ -56,8 +87,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="address"
             placeholder="Address"
-            onChange={handleOnChange}
-            value={rest.address}
+            onChange={handleChange}
+            value={formData.address}
             required
           />
         </div>
@@ -70,8 +101,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="email"
             placeholder="Email Address"
-            onChange={handleOnChange}
-            value={rest.email}
+            onChange={handleChange}
+            value={formData.email}
             required
           />
         </div>
@@ -84,8 +115,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="accno"
             placeholder="Account Number"
-            onChange={handleOnChange}
-            value={rest.accno}
+            onChange={handleChange}
+            value={formData.accno}
             required
           />
         </div>
@@ -98,8 +129,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="bankname"
             placeholder="Bank Name"
-            onChange={handleOnChange}
-            value={rest.bankname}
+            onChange={handleChange}
+            value={formData.bankname}
             required
           />
         </div>
@@ -112,8 +143,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="qualifications"
             placeholder="Qualifications"
-            onChange={handleOnChange}
-            value={rest.qualifications}
+            onChange={handleChange}
+            value={formData.qualifications}
             required
           />
         </div>
@@ -126,8 +157,8 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="joineddate"
             placeholder="Joined Date"
-            onChange={handleOnChange}
-            value={rest.joineddate}
+            onChange={handleChange}
+            value={formData.joineddate}
             required
           />
         </div>
@@ -135,7 +166,7 @@ const EmployeeForm = ({ handleSubmit, handleOnChange, rest }) => {
           Submit
         </button>
       </form>
-    </div>
+    
   );
 };
 

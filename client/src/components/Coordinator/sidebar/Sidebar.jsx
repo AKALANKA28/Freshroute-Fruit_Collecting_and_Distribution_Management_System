@@ -39,7 +39,7 @@ const Sidebar = () => {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="/Category">
                   <i className="bi bi-circle">
                     <span>Category</span>
                   </i>

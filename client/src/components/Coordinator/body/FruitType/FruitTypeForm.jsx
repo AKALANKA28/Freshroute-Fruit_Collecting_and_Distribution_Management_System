@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
+const FruitTypeForm = ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    date: "",
+    description: ""
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Fruit Name
@@ -13,8 +36,8 @@ const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="name"
             placeholder="Fruit Name"
-            onChange={handleOnChange}
-            value={data?.name || ""}
+            onChange={handleChange}
+            value={formData.name}
             required
           />
         </div>
@@ -27,8 +50,8 @@ const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="date"
             placeholder="Date"
-            onChange={handleOnChange}
-            value={data?.date || ""}
+            onChange={handleChange}
+            value={formData.date}
             required
           />
         </div>
@@ -41,8 +64,8 @@ const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="description"
             placeholder="Description"
-            onChange={handleOnChange}
-            value={data?.description || ""}
+            onChange={handleChange}
+            value={formData.description}
             required
           />
         </div>
@@ -50,7 +73,7 @@ const FruitTypeForm = ({ handleSubmit, handleOnChange, data }) => {
           Submit
         </button>
       </form>
-    </div>
+  
   );
 };
 
