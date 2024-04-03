@@ -23,7 +23,7 @@ import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import SalesPage from "./components/finance/SalesPage";
-
+import SupplierRequests from "./components/supplierManagerDashboard/SupplierRequests";
 import FDashboard from "./components/farmer/FDashboard";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
@@ -141,6 +141,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <SupplierDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplierRequests",
+    element: (
+      <div>
+        <SupplierRequests />
       </div>
     ),
   },

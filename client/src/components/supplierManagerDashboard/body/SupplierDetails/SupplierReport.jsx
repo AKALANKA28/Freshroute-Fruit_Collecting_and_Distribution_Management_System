@@ -52,7 +52,7 @@ const SupplierReport = ({ dataList }) => {
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Supplier Details Report</Text>
+          <Text style={styles.heading}>Freshroute - Supplier Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>NIC</Text>

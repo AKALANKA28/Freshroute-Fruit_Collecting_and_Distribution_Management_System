@@ -21,6 +21,7 @@ const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
+const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
 
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
@@ -58,6 +59,7 @@ app.use("/process", processRouter);
 app.use("/coverings", coveringsRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
+app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
 app.use(itemRouter);
 
 app.use("/TransportFee", TransportFeeRouter);
