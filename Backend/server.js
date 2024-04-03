@@ -22,10 +22,10 @@ const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const router = require("./routes/farmers/farmerRoutes");
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
+const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
 
 const qualityRoute = require("./routes/q_and_o/qualityRoute");
-
-const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -59,10 +59,9 @@ app.use(itemRouter);
 
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
-
-app.use("/quality", qualityRoute);
-
 app.use("/CalculateSalary", CalculateSalaryRouter);
+app.use("/Notice", NoticeRouter);
+app.use("/quality", qualityRoute);
 
 // Start the server
 const PORT = process.env.PORT || 8070;

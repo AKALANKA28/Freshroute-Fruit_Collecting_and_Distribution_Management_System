@@ -22,6 +22,7 @@ import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
+import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
@@ -244,6 +245,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <CalculateSalary />
+      </div>
+    ),
+  },
+
+  {
+    path: "/Notice",
+    element: (
+      <div>
+        <Notice />
       </div>
     ),
   },
