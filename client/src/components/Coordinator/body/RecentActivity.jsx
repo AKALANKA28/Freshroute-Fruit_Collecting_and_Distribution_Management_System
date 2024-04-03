@@ -22,12 +22,12 @@ const RecentActivity = () => {
         Real-Time Market Prices<span>| {filter}</span>
         </h5>
         <a href='https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report'>
-          <button className='btn centralBank'> Central Bank Price List</button>
+          <button style={{width:"100%"}} className='btn btn-primary'> Central Bank Price List</button>
           </a>
 
         <hr></hr>
         <a href='https://ceypetco.gov.lk/marketing-sales/'>
-          <button className='btn ceypetco'> Ceypetco Fuel Price List   </button>
+          <button  style={{width:"100%"}} className='btn btn-primary '> Ceypetco Fuel Price List   </button>
           </a>
        
        
