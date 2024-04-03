@@ -1,6 +1,7 @@
 import React from "react";
 import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
@@ -43,27 +44,38 @@ const styles = StyleSheet.create({
     padding: 5,
     flex: 1,
     fontSize: 10,
+    wordWrap: "break-word", // Add wordWrap property for content wrapping
   },
 });
 
-const SalaryReport = ({ dataList }) => {
+const EmployeeReport = ({ dataList }) => {
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A3" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.heading}>Salary Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
+
+            <Text style={styles.tableColHeader}>Employee Name</Text>
               <Text style={styles.tableColHeader}>Job Role</Text>
-              <Text style={styles.tableColHeader}>Date</Text>
-              <Text style={styles.tableColHeader}>Salary</Text>
-            
+              <Text style={styles.tableColHeader}>Basic</Text>
+              <Text style={styles.tableColHeader}>Allowance</Text>
+              <Text style={styles.tableColHeader}>EPF - Employee Contribution</Text>
+              <Text style={styles.tableColHeader}>EPF - Employer Contribution</Text>
+              <Text style={styles.tableColHeader}>ETF -  Employer Contribution</Text>
+              
             </View>
-            {dataList.map((salary, index) => (
+            {dataList.map((calculateSalary, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{salary.jobrole}</Text>
-                <Text style={styles.tableCol}>{salary.date}</Text>
-                <Text style={styles.tableCol}>{salary.salary}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.name}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.jobrole}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.salary}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.allowance}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.epfe}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.epfr}</Text>
+                <Text style={styles.tableCol}>{calculateSalary.etf}</Text>
+               
               </View>
             ))}
           </View>
@@ -73,4 +85,4 @@ const SalaryReport = ({ dataList }) => {
   );
 };
 
-export default SalaryReport;
+export default EmployeeReport;

@@ -4,7 +4,7 @@ import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/re
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#FFFFFF",
   },
   section: {
     margin: 10,
