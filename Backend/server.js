@@ -25,6 +25,9 @@ const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
 const qualityRoute = require("./routes/q_and_o/qualityRoute");
 
+const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
+
+
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 
 
@@ -51,11 +54,21 @@ app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Salary", SalaryRouter);
+
 app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
 app.use('/Farmer', router);
+
+app.use("/schedule", scheduleRouter);
+app.use("/vehicle", vehicleRouter);
+app.use("/process", processRouter);
+app.use("/coverings", coveringsRouter);
+app.use("/Farmer", router);
+app.use("/Promotion", PromotionRouter);
+
+
 app.use(itemRouter);
 
 app.use("/TransportFee", TransportFeeRouter);
