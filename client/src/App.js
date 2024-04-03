@@ -24,6 +24,9 @@ import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
+
+import FDashboard from "./components/farmer/FDashboard";
+
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
 import OPDashboard from "./components/orderProcessor/OPDashboard";
@@ -37,7 +40,9 @@ import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
 import NormalOrder from "./components/NormalOrder/NormalOrder";
 import EditOrder from "./components/NormalOrder/EditOrder";
 
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import Website from "./Website/Website";
 
@@ -137,6 +142,24 @@ const router = createBrowserRouter([
     element: (
       <div>
         <SupplierDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/FDashboard",
+    element: (
+      <div>
+        <FDashboard />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PredictionDetails",
+    element: (
+      <div>
+        <PredictionDetails />
       </div>
     ),
   },

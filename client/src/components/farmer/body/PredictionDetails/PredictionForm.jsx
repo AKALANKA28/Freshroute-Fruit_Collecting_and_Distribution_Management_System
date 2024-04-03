@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const FarmerForm = ({ handleSubmit, initialData }) => {
+const PredictionForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
-    NIC: "",
-    username: "",
-    name: "",
-    email: "",
-    city: "",
-    lane: "",
+    fruitType: "",
+    quality: "",
+    quantity: "",
+    price: "",
+    dateCanBeGiven: "",
   });
 
   useEffect(() => {
@@ -32,92 +31,77 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
-        <label htmlFor="jobrole" className="form-label">
-          Farmer NIC
-        </label>
-             <input
-            type="text"
-            className="form-control"
-            name="NIC"
-            placeholder="Farmer NIC"
-            id = "NIC"
-            required
-            onChange={handleChange}
-            value={formData.NIC}
-        />
-      </div>
-      
-      <div className="mb-3">
-           <label htmlFor="date" className="form-label">
-             Username
+           <label htmlFor="name" className="form-label">
+               Fruit Type
            </label>
            <input
             type="text"
             className="form-control"
-            name="username"
-            placeholder="Username"
+            name="fruitType"
+            id="fruitType"
+            placeholder="Fruit Type"
             required
             onChange={handleChange}
-            value={formData.username}
+            value={formData.fruitType}
+          />
+        </div>
+
+        <div className="mb-3">
+           <label htmlFor="date" className="form-label">
+           Quality
+           </label>
+           <input
+            type="text"
+            className="form-control"
+            name="quality"
+            placeholder="Quality"
+            required
+            onChange={handleChange}
+            value={formData.quality}
           />
         </div>
 
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
-            Name
+          Quantity
           </label>
           <input
             type="text"
             className="form-control"
-            name="name"
-            placeholder="name"
+            name="quantity"
+            placeholder="Quantity"
             required
             onChange={handleChange}
-            value={formData.name}
+            value={formData.quantity}
           />
         </div>
 
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
-            Email
+            Price
           </label>
           <input
             type="text"
             className="form-control"
-            name="email"
-            placeholder="Email"
+            name="price"
+            placeholder="Price"
             required
             onChange={handleChange}
-            value={formData.email}
+            value={formData.price}
           />
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
-            City
+          Date Can Be Given
           </label>
           <input
-            type="text"
+            type="Date"
             className="form-control"
-            name="city"
-            placeholder="City"
+            name="dateCanBeGiven"
+            placeholder="Date Can Be Given"
             required
             onChange={handleChange}
-            value={formData.city}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Lane
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="lane"
-            placeholder="Lane"
-            required
-            onChange={handleChange}
-            value={formData.lane}
+            value={formData.dateCanBeGiven}
           />
         </div>
 
@@ -128,4 +112,4 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
   );
 };
 
-export default FarmerForm;
+export default PredictionForm;
