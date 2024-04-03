@@ -1,10 +1,40 @@
-// ./client/src/components/StaffManager/body/CalculateSalaryForm.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
+const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    jobrole: "",
+    nic: "",
+    salary: "",
+    allowance: "",
+    epfe: "",
+    epfr: "",
+    etf: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Employee Name
@@ -14,9 +44,10 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="name"
             placeholder="Employee Name"
-            onChange={handleOnChange}
-            value={rest.name}
+            onChange={handleChange}
+            value={formData.name}
             required
+            disabled
           />
         </div>
 
@@ -29,9 +60,10 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="jobrole"
             placeholder="Job Role"
-            onChange={handleOnChange}
-            value={rest.jobrole}
+            onChange={handleChange}
+            value={formData.jobrole}
             required
+            disabled
           />
         </div>
         <div className="mb-3">
@@ -43,8 +75,8 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="salary"
             placeholder="Basic"
-            onChange={handleOnChange}
-            value={rest.salary}
+            onChange={handleChange}
+            value={formData.salary}
             required
           />
         </div>
@@ -58,8 +90,8 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="allowance"
             placeholder="Allowance"
-            onChange={handleOnChange}
-            value={rest.allowance}
+            onChange={handleChange}
+            value={formData.allowance}
             
           />
         </div>
@@ -73,8 +105,8 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="epfe"
             placeholder="EPF - Employee Contribution"
-            onChange={handleOnChange}
-            value={rest.epfe}
+            onChange={handleChange}
+            value={formData.epfe}
             
           />
         </div>
@@ -88,8 +120,8 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="epfr"
             placeholder="EPF - Employer Contribution"
-            onChange={handleOnChange}
-            value={rest.epfr}
+            onChange={handleChange}
+            value={formData.epfr}
             
           />
         </div>
@@ -103,8 +135,8 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
             className="form-control"
             name="etf"
             placeholder="ETF -  Employer Contribution"
-            onChange={handleOnChange}
-            value={rest.etf}
+            onChange={handleChange}
+            value={formData.etf}
             
           />
         </div>
@@ -113,11 +145,11 @@ const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
         
        
         <button type="submit" className="btn btn-success">
-          Calculate
-          <i class="bi bi-calculator"></i>
+          Calculate<i class="bi bi-calculator"></i>
+          
         </button>
       </form>
-    </div>
+    
   );
 };
 
