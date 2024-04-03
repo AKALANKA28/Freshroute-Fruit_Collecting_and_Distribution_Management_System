@@ -35,10 +35,17 @@ import QualityList from "./components/orderManagement/QualityList";
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
 
-import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-import NormalOrder from "./components/NormalOrder/NormalOrder";
-import EditOrder from "./components/NormalOrder/EditOrder";
+
+import RequestedOrder from './components/RequestedOrder/RequestedOrder';
+import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
+import NormalOrder from './components/NormalOrder/NormalOrder';
+import EditOrder from './components/NormalOrder/EditOrder';
+import PromotionPage from "./components/researchDashboard/PromotionPage";
+
+//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+//import NormalOrder from "./components/NormalOrder/NormalOrder";
+//import EditOrder from "./components/NormalOrder/EditOrder";
 
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -235,6 +242,16 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/PromotionPage",
+    element: (
+      <div>
+        <PromotionPage />
+      </div>
+    ),
+  },
+
 
   {
     path: "/TransportFee",

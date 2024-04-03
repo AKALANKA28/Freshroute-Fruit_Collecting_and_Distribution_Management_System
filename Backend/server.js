@@ -22,8 +22,14 @@ const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
 
+
+const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
+
+
+
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
 
@@ -52,12 +58,20 @@ app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Category", CategoryRouter);
 app.use("/Salary", SalaryRouter);
-app.use("/schedule", scheduleRouter);
-app.use("/vehicle", vehicleRouter);
-app.use("/process", processRouter);
-app.use("/coverings", coveringsRouter);
+
+app.use('/schedule', scheduleRouter);
+app.use('/vehicle', vehicleRouter);
+app.use('/process', processRouter);
+app.use('/coverings', coveringsRouter);
+app.use('/Farmer', router);
+
+app.use("/Promotion", PromotionRouter);
+
+
+
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
+
 app.use(itemRouter);
 
 app.use("/TransportFee", TransportFeeRouter);
