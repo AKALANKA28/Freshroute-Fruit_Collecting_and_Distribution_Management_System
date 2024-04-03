@@ -1,5 +1,5 @@
 import React from "react";
-import "./sidebar.css";
+import '../../../App.css'
 import navList from "./navItem";
 
 const Sidebar = () => {
@@ -39,7 +39,7 @@ const Sidebar = () => {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="/Category">
                   <i className="bi bi-circle">
                     <span>Category</span>
                   </i>

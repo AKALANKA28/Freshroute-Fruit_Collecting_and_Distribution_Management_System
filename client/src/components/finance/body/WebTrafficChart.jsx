@@ -36,23 +36,23 @@ const WebTrafficChart = () => {
                     data: [
                         {
                             value: 1048,   // only this from backend
-                            name: 'Search Engine', //from backend
+                            name: 'Transport', //from backend
                         },
                         {
                             value: 735,
-                            name: 'Direct',
+                            name: 'Staff Cost',
                         },
                         {
                             value: 484,
-                            name: 'Email',
+                            name: 'Promotion Cost',
                         },
                         {
                             value: 300,
-                            name: 'Union Ads',
+                            name: 'Reasearch Cost',
                         },
                         {
                             value: 700,
-                            name: 'Video Ads',
+                            name: 'Maintainance',
                         },
                     ],
                

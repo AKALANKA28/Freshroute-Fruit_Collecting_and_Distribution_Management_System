@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExpenseFormModal from './ExpenseFormModal';
-import ExpenseForm from './ExpenseForm';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 
 const ExpenseTable = ({ items }) => {
-  const [editSection, setEditSection] = useState(false);
-
-  const [showFormModal, setShowFormModal] = useState(true); // State variable for form modal visibility
+  const [showFormModal, setShowFormModal] = useState(false); // State variable for form modal visibility
 
   const [dataEdit, setDataEdit] = useState({
     _id: "",
@@ -28,7 +25,11 @@ const ExpenseTable = ({ items }) => {
         const response = await axios.get("/expense/");
         setDataList(response.data);
       } catch (err) {
-        alert(err.message);
+        if (err.response && err.response.data && err.response.data.error) {
+          alert(err.response.data.error);
+        } else {
+          alert("An error occurred while retrieving the expense record");
+        }
       }
     };
 
@@ -37,7 +38,7 @@ const ExpenseTable = ({ items }) => {
       getFetchData();
     }, []);
 
-    // //edit data
+   //edit data
         const handleUpdate = async(e) => {
           e.preventDefault()
           console.log("Updating Expense with ID:", dataEdit._id);
@@ -46,10 +47,19 @@ const ExpenseTable = ({ items }) => {
           setShowFormModal(false);
 
           alert("Expense Record Updated");
+          window.location.reload();
+
+          getFetchData();
+
         })
-        .catch((err) => {
-          console.log(err);
-          alert(err);
+        .catch((error) => {
+          if (error.response && error.response.data && error.response.data.error) {
+            // If the error has a custom message from the backend, display it
+            alert(error.response.data.error);
+          } else {
+            // Otherwise, display a generic error message
+            alert("An error occurred while updating the expense record");
+          }
         });
         
         }
@@ -68,7 +78,6 @@ const ExpenseTable = ({ items }) => {
     const handleEdit = (item) =>{
       setDataEdit(item)   
       setShowFormModal(true); // Show the form modal
-      setEditSection(true);
 
     };
 
@@ -81,23 +90,23 @@ const ExpenseTable = ({ items }) => {
       await axios.delete(`http://localhost:8070/expense/delete/${id}`);
       alert('Successfully Deleted');
       getFetchData();
+      // window.location.reload();
 
-    } catch (err) {
-      alert(err);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        alert("An error occurred while deleting the expense record");
+      }
     }
   };
 
+
+
+
   return (
     <>
-{/*      
-     {editSection && (
-        <ExpenseForm
-          handleSubmit={handleUpdate}
-          handleOnChange={handleEditOnChange}
-          rest={dataEdit}
-        />
-      )}
-       */}
+
       
       <div>
         <table className="table table-bordeless datatable">
@@ -118,10 +127,10 @@ const ExpenseTable = ({ items }) => {
                   <td>{item.date}</td>
                   <td>{item.category}</td>
                   <td>Rs.{item.amount.toFixed(2)}</td>
-                  <td>{item.description}</td>
+                  <td >{item.description}</td>
                   <td>
                     <div className="buttons">
-                      <button className="btn-table edit" data-bs-toggle="modal"  data-bs-target="#expenseModal" onClick={() => handleEdit(item)}>
+                      <button className="btn-table edit" data-bs-toggle="modal"  data-bs-target="#editExpenseModal" onClick={() => handleEdit(item)}>
                         <i className="bi bi-pencil-square"></i>
                       </button>
                       
@@ -136,13 +145,7 @@ const ExpenseTable = ({ items }) => {
           </tbody>
         </table>
       </div>
-      {editSection && (
-        <ExpenseForm
-          handleSubmit={handleUpdate}
-          handleOnChange={handleEditOnChange}
-          rest={dataEdit}
-        />
-      )}
+    
       
         {/*---------- Form Popup ------------*/}
         {showFormModal && (

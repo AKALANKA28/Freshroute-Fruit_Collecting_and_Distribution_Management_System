@@ -2,11 +2,11 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
-import Register from "./components/LoginRegister/Register";
+// import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
@@ -16,19 +16,25 @@ import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
+import Category from "./components/Coordinator/Category";
 import Salary from "./components/Coordinator/Salary";
 import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
+import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
+
+import FDashboard from "./components/farmer/FDashboard";
+
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-import OPDashboard from './components/orderProcessor/OPDashboard';
-import QualityList from './components/orderManagement/QualityList';
+import OPDashboard from "./components/orderProcessor/OPDashboard";
+import QualityList from "./components/orderManagement/QualityList";
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
+
 
 import RequestedOrder from './components/RequestedOrder/RequestedOrder';
 import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
@@ -43,13 +49,22 @@ import PromotionPage from "./components/researchDashboard/PromotionPage";
 
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PredictionDetails from "./components/farmer/PredictionDetails";
 
-// import Background from './Website/Background/Background';
-// import Navbar from './Website/Navbar/Navbar';
+import Website from "./Website/Website";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/freshroute",
+    element: (
+      <div>
+        <Website />
+      </div>
+    ),
+  },
+
+  {
+    path: "/login",
     element: (
       <div>
         <Login />
@@ -57,17 +72,17 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/register",
-    element: (
-      <div>
-        <Register />
-      </div>
-    ),
-  },
+  // {
+  //   path: "/register",
+  //   element: (
+  //     <div>
+  //       <Register />
+  //     </div>
+  //   ),
+  // },
 
   {
-    path: "/finance",
+    path: "/",
     element: (
       <div>
         <Dashboard />
@@ -139,6 +154,24 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/FDashboard",
+    element: (
+      <div>
+        <FDashboard />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PredictionDetails",
+    element: (
+      <div>
+        <PredictionDetails />
+      </div>
+    ),
+  },
+
+  {
     path: "/Coordinator",
     element: (
       <div>
@@ -157,26 +190,49 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/RequestedOrder',
-    element: <div><RequestedOrder/></div>
+    path: "/Category",
+    element: (
+      <div>
+        <Category />
+      </div>
+    ),
   },
 
   {
-    path: '/BuyerDashboard',
-    element: <div><BuyerDashBoard/></div>
+    path: "/RequestedOrder",
+    element: (
+      <div>
+        <RequestedOrder />
+      </div>
+    ),
   },
 
   {
-    path: '/NormalOrder',
-    element: <div><NormalOrder/></div>
+    path: "/BuyerDashboard",
+    element: (
+      <div>
+        <BuyerDashBoard />
+      </div>
+    ),
   },
 
   {
-    path: '/EditOrder/:id',
-    element: <div><EditOrder/></div>
+    path: "/NormalOrder",
+    element: (
+      <div>
+        <NormalOrder />
+      </div>
+    ),
   },
 
-
+  {
+    path: "/EditOrder/:id",
+    element: (
+      <div>
+        <EditOrder />
+      </div>
+    ),
+  },
 
   {
     path: "/Salary",
@@ -234,6 +290,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/Notice",
+    element: (
+      <div>
+        <Notice />
+      </div>
+    ),
+  },
+
+  {
     path: "/SalesPage",
     element: (
       <div>
@@ -252,13 +317,20 @@ const router = createBrowserRouter([
   },
 
   {
-
-    path: '/OPDashboard',
-    element: <div><OPDashboard /></div>
+    path: "/OPDashboard",
+    element: (
+      <div>
+        <OPDashboard />
+      </div>
+    ),
   },
   {
-    path: '/QualityList',
-    element: <div><QualityList /></div>
+    path: "/QualityList",
+    element: (
+      <div>
+        <QualityList />
+      </div>
+    ),
   },
   {
     path: "/ExpensePage",
@@ -277,23 +349,11 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
 ]);
 
 function App() {
-  // let heroData = [
-  //   {text1: "Dive into", text2: "what you love"},
-  //   {text1: "Indulge", text2: "your passion"},
-  //   {text1: "Give in to", text2: "your passions"},
-
-  // ]
-
-  // const [heroCount, setHeroCount] = useState(1);
-  // const [playStatus, setPlayStatus] = useState(false);
   return (
     <div>
-      {/* <Background playStatus = {playStatus} heroCount = {heroCount} />
-      <Navbar /> */}
       <RouterProvider router={router} />
     </div>
   );

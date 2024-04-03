@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from './header/header';
 import Sidebar from './sidebar/Sidebar';
-import FruitType from './body/FruitType'; 
+import FruitType from './body/FruitType/FruitType'; 
 import Footer from './footer/Footer';
 
 const Coordinator = () => {

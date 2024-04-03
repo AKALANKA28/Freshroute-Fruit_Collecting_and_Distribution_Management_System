@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "./header/header";
 import Sidebar from "./sidebar/Sidebar";
-import Employee from "./body/Employee";
+import Employee from "./body/Employee/Employee";
 import Footer from "./footer/Footer";
 
 const StaffManager = () => {

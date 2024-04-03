@@ -1,5 +1,5 @@
 import React from 'react'
-import './sidebar.css'
+import '../../../App.css'
 import navList from './navItem';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 
@@ -54,7 +54,7 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
+                <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='/ExpensePage'>
                     <i className='bi bi-journal-text'></i>
                     <span>Expenses</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
@@ -63,26 +63,26 @@ const Sidebar = () => {
                 <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
                     
                     <li>
-                        <a href='#'>
+                        <a href='/ExpensePage'>
                             <i className='bi bi-circle'>
-                                <span>Application Form</span>
+                                <span>Expenses </span>
                             </i>
                         </a>
                     </li>
                     <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
-                                <span>Release Form</span>
+                                <span>Expense Approvals</span>
                             </i>
                         </a>
                     </li>
-                    <li>
+                    {/* <li>
                         <a href='#'>
                             <i className='bi bi-circle'>
                                 <span>Cancellation Form</span>
                             </i>
                         </a>
-                    </li>
+                    </li> */}
 
                 </ul>
             </li>
