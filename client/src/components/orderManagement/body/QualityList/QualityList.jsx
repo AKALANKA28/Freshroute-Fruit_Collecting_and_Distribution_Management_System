@@ -10,35 +10,50 @@ import QualityPopupForm from "./QualityPopupForm";
 axios.defaults.baseURL = "http://localhost:8070/";
 const QualityList = () => {
 
-    const [items, setItems] = useState([]); // to store table data
-
+    const [items, setItems] = useState([]); // to store all data
+    const [tableData, setTableData] = useState([]); // to store all data
+    const [tab, setTab] = useState("A")
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         id: "",
-        fruitCategory: "",
-        grade: "",
+        fruit: "",
+        category: "",
+        quality: "",
         qualityDesc: "",
         storageCond: ""
     });
 
     const handleOnInputChange = (event) => {
         const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        if (name === 'fruit') {
+            setFormData({ ...formData, category: "", id: "", quality: "" });
+        }
+        if (name === 'category') {
+            setFormData({ ...formData, id: "", quality: "" });
+        }
+        if (name === 'quality') {
+            const { selectedId } = event.target;
+            setFormData({ ...formData, [name]: value, id: selectedId });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
-    const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
 
     useEffect(() => {
-      getQualityList();  // load data initially
+        getQualityList();  // load data initially
     }, []);
 
     const getQualityList = async () => {
         try {
+            const filterData = { filterType: "quality", filterValue: tab}
+            await axios.post("/quality/filteredQualities", filterData);
             const response = await axios.get("/quality");
             setItems(response.data);
+            setTableData(items.filter((item) => item.quality === tab))
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -46,21 +61,13 @@ const QualityList = () => {
                 alert("An error occurred while getting quality list");
             }
         }
+
     };
 
     const handleSubmit = async(data)=>{
 
-        if (isEdit) {
-            await editEntity(data);
-        } else {
-            await addEntity(data);
-        }
-        getQualityList();
-    }
-
-    const addEntity = async(data)=> {
         try {
-            const response = await axios.post("/quality/add", data);
+            const response = await axios.put("/quality/update", data);
             alert(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -69,27 +76,18 @@ const QualityList = () => {
                 alert("An error occurred while adding");
             }
         }
+        getQualityList();
     }
 
-    const editEntity = async(data)=>{
-        try {
-            const response = await axios.put(`/quality/update/${formData.id}`, data);
-            alert(response.data);
-        } catch (err) {
-            if (err.response && err.response.data && err.response.data.error) {
-                alert(err.response.data.error);
-            } else {
-                alert("An error occurred while updating quality");
-            }
-        }
-    }
+
 
     const handleAddNew = () =>{
         setIsEdit(false);
         setFormData({
             id: "",
-            fruitCategory: "",
-            grade: "",
+            fruit: "",
+            category: "",
+            quality: "",
             qualityDesc: "",
             storageCond: ""
         });
@@ -99,8 +97,9 @@ const QualityList = () => {
         setIsEdit(true);
         const dataObj = {
             id: item._id,
-            fruitCategory: item.fruitCategory,
-            grade: item.grade,
+            fruit: item.fruit,
+            category: item.category,
+            quality: item.quality,
             qualityDesc: item.qualityDesc,
             storageCond: item.storageCond
         }
@@ -112,6 +111,7 @@ const QualityList = () => {
         try {
             const response = await axios.post("/quality/filteredQualities", filterData);
             setItems(response.data);
+            setTableData(items.filter((item) => item.quality === tab));
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -119,6 +119,11 @@ const QualityList = () => {
                 alert("An error occurred while getting filtered data");
             }
         }
+    }
+
+    const handleTabChange = (value) => {
+        setTab(value);
+        setTableData(items.filter((item) => item.quality === value))
     }
 
     return (
@@ -140,7 +145,7 @@ const QualityList = () => {
                           </div>
 
                           {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-                          <ul class="table-top-head">
+                          <ul className="table-top-head">
                               <li>
                                   <div className="button-container">
                                       <a href="#">
@@ -168,7 +173,7 @@ const QualityList = () => {
                           {/* --------------------add button------------------ */}
 
                           <div className="page-btn">
-                              <button type="button" className="btn btn-added"  onClick={handleAddNew}>
+                              <button type="button" className="btn btn-added" onClick={handleAddNew}>
                                   <i className="bi bi-plus-circle" style={{marginRight: '10px'}}></i>
                                   Add Quality
                               </button>
@@ -177,31 +182,59 @@ const QualityList = () => {
                           {/* --------------------imported search bar and table data ------------------------*/}
                       </div>
                       <div className="w-100">
-                          <SearchBar enableFilterType={true}
-                                     filterColumns={
-                                        [
-                                            {
-                                                name: "Fruit Type",
-                                                tag: "fruitCategory"
-                                            },
-                                            {
-                                                name: "Grade",
-                                                tag: "grade"
-                                            },
-                                            {
-                                                name: "Quality Description",
-                                                tag: "qualityDesc"
-                                            },
-                                            {
-                                                name: "Storage Conditions",
-                                                tag: "storageCond"
-                                            }
-                                        ]
-                                     }
-                                     handleSearch={handleSearchOnClick}
-                          />
+
                       </div>
-                      <QualityTable items={items} updateQualityList={getQualityList} editItem={handleEdit}/>
+                      <ul className="nav nav-tabs m-0 mt-2 justify-content-start" id="myTab" role="tablist">
+                          <li className="nav-item m-0 " role="presentation">
+                              <button className="nav-link active tab-height" id="home-tab" data-bs-toggle="tab"
+                                      data-bs-target="#home-tab-pane" type="button" role="tab"
+                                      aria-controls="home-tab-pane" aria-selected="true" onClick={() => handleTabChange("A")}>Grade A
+                              </button>
+                          </li>
+                          <li className="nav-item m-0" role="presentation">
+                              <button className="nav-link tab-height" id="profile-tab" data-bs-toggle="tab"
+                                      data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                      aria-controls="profile-tab-pane" aria-selected="false" onClick={() => handleTabChange("B")}>Grade B
+                              </button>
+                          </li>
+                          <li className="nav-item" role="presentation">
+                              <button className="nav-link tab-height" id="contact-tab" data-bs-toggle="tab"
+                                      data-bs-target="#contact-tab-pane" type="button" role="tab"
+                                      aria-controls="contact-tab-pane" aria-selected="false" onClick={() => handleTabChange("C")}>Grade C
+                              </button>
+                          </li>
+                          <li className="nav-item w-75 text-end">
+                              <SearchBar enableFilterType={true}
+                                         filterColumns={
+                                             [
+                                                 {
+                                                     name: "Fruit Type",
+                                                     tag: "fruit"
+                                                 },
+                                                 {
+                                                     name: "Fruit Category",
+                                                     tag: "category"
+                                                 },
+                                                 {
+                                                     name: "Grade",
+                                                     tag: "quality"
+                                                 },
+                                                 {
+                                                     name: "Quality Description",
+                                                     tag: "qualityDesc"
+                                                 },
+                                                 {
+                                                     name: "Storage Conditions",
+                                                     tag: "storageCond"
+                                                 }
+                                             ]
+                                         }
+                                         handleSearch={handleSearchOnClick}
+                              />
+                          </li>
+                      </ul>
+
+                      <QualityTable items={tableData} updateQualityList={getQualityList} editItem={handleEdit}/>
                   </div>
                   <div>
                       <QualityPopupForm

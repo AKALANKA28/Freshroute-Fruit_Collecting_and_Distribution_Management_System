@@ -32,6 +32,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
           <thead className="table-light">
             <tr>
               <th className="col">Fruit Type</th>
+              <th className="col">Fruit Category</th>
               <th className="col">Grade</th>
               <th className="col">Quality Description</th>
               <th className="col">Storage Conditions</th>
@@ -43,8 +44,9 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
               items.length > 0 &&
               items.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.fruitCategory}</td>
-                  <td>{item.grade}</td>
+                  <td>{item.fruit}</td>
+                  <td>{item.category}</td>
+                  <td>{item.quality}</td>
                   <td >{item.qualityDesc}</td>
                   <td >{item.storageCond}</td>
                   <td>

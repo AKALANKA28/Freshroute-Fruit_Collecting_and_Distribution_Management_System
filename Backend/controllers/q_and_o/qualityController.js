@@ -4,8 +4,6 @@ const FruitDetail = require('../../models/coordinator/FruitDetail');
 exports.addEditQuality = async (req, res) => {
     try {
         const { id, qualityDesc, storageCond, qualityStatus } = req.body;
-        console.log("addEditQuality");
-        console.log(id)
         const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
             $set: {
                 qualityDesc: qualityDesc,
@@ -20,7 +18,7 @@ exports.addEditQuality = async (req, res) => {
 
         res.status(200).json({ status: "Quality record updated", updatedQuality });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ status: "Error updating quality record", error: err.message });
     }
 };
@@ -30,23 +28,26 @@ exports.getAllQualities = async (req, res) => {
     try {
         const filter = { qualityStatus: 1 }; // get quality added records only
         const allQualities = await FruitDetail.find(filter);
-        console.log(allQualities);
         res.json(allQualities);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
 
 // Retrieve all quality records
-exports.getAvailableFruitAndCategoryAndGrade = async (req, res) => {
+exports.getCategorizedFruitDetail = async (req, res) => {
     try {
         const filter = { qualityStatus: 0 }; // get quality added records only
-        const allValidQualities = await FruitDetail.find(filter);
-        categorizeData(allValidQualities);
-        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+
+        const allValidQualities = await FruitDetail.find(filter, 'fruit category quality');
+
+        const result= categorizeData(allValidQualities);
+
+        res.json(result);
+
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
@@ -64,7 +65,7 @@ exports.getQualityById = async (req, res) => {
         
         res.status(200).json({ status: "Quality fetched", quality: foundQuality });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ status: "Error retrieving quality record", error: err.message });
     }
 };
@@ -91,7 +92,7 @@ exports.removeQuality = async (req, res) => {
 
         res.status(200).json({ status: "Quality record updated", updatedQuality });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ status: "Error updating quality record", error: err.message });
     }
 };
@@ -104,55 +105,52 @@ exports.getFilteredQualities = async (req, res) => {
         const filterValue = req.body.filterValue;
 
         switch (filterType) {
-            case 'fruitCategory':
-                filter = { fruitCategory: new RegExp(filterValue, 'i') };
+            case 'fruit':
+                filter = { fruit: new RegExp(filterValue, 'i') };
                 break;
-            case 'grade':
-                filter = { grade: new RegExp(filterValue, 'i') };
+            case 'category':
+                filter = { category: new RegExp(filterValue, 'i') };
+                break;
+            case 'quality':
+                filter = { quality: new RegExp(filterValue, 'i') };
                 break;
             case 'qualityDesc':
                 filter = { qualityDesc: new RegExp(filterValue, 'i') };
                 break;
             case 'storageCond':
-                filter = { storageCond: new RegExp(filterValue, 'i') }; // Assuming filterValue is a string representation of a number
+                filter = { storageCond: new RegExp(filterValue, 'i') };
                 break;
             default:
                 return res.status(400).json({ message: 'Invalid filter type' });
         }
-        const filteredQualities = await Quality.find(filter);
+        const filteredQualities = await FruitDetail.find(filter);
         res.json(filteredQualities);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
 
 
+const categorizeData = (fruitDetails) => {
 
-const categorizeData = (objArray) => {
-
-    const categoryMapping = new Map();
-    let temp = [];
-    objArray.map((obj)=> {
-        // console.log(obj);
-        if (!categoryMapping.has(obj.category)) {
-            categoryMapping.set(obj.category, [{ id: obj._id.value, grade: obj.quality}])
-        } else {
-            let temArray = categoryMapping.get(obj.category);
-            categoryMapping.set(obj.category, [...temArray,{ id: obj._id.value, grade: obj.quality}])
+    const categorizeByFruit = fruitDetails.reduce((accumulator,fruitDetail ) =>{
+        if (!accumulator[fruitDetail.fruit]) {
+            accumulator[fruitDetail.fruit] = [];
         }
-    })
-    // console.log(categoryMapping);
-    const mappedData = new Map();
+        accumulator[fruitDetail.fruit].push({ category: fruitDetail.category, quality: fruitDetail.quality, id: fruitDetail._id });
+        return accumulator;
+    },{});
 
-    objArray.map((obj)=> {
-        if (!mappedData.has(obj.fruit)) {
-            mappedData.set(obj.fruit, [categoryMapping.get(obj.category)])
-        } else {
-            mappedData.set(obj.fruit, [ ...mappedData.get(obj.fruit), categoryMapping.get(obj.category)])
-        }
-    })
-
-    console.log(mappedData);
-
+    for (const fruit in categorizeByFruit) {
+        const categorizeByType = categorizeByFruit[fruit].reduce((accumulator, fruitObj) =>{
+            if (!accumulator[fruitObj.category]) {
+                accumulator[fruitObj.category] = [];
+            }
+            accumulator[fruitObj.category].push({quality: fruitObj.quality, id: fruitObj.id});
+            return accumulator
+        },{});
+        categorizeByFruit[fruit] = categorizeByType;
+    }
+    return categorizeByFruit;
 }

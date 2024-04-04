@@ -18,6 +18,6 @@ router.delete("/delete/:id", qualityController.removeQuality);
 router.post("/filteredQualities", qualityController.getFilteredQualities);
 
 
-router.get("/categorizedData", qualityController.getAvailableFruitAndCategoryAndGrade);
+router.get("/categorizedData", qualityController.getCategorizedFruitDetail);
 
 module.exports = router;
