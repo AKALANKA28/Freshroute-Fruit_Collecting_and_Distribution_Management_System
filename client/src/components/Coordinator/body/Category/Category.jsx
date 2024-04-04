@@ -1,59 +1,33 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { PDFViewer } from "@react-pdf/renderer";
+import { Button, Modal } from "react-bootstrap";
+import SearchBar from './SearchBar';
+import Excel from "../../../../assests/img/icons/excel.png";
+import Pdf from "../../../../assests/img/icons/pdf.png";
+import Refresh from "../../../../assests/img/icons/refresh.png";
 import CategoryForm from "./CategoryForm";
 import CategoryPriceForm from "./CategoryPriceForm";
+import CategoryReport from "./CategoryReport";
 import "./Category.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Category() {
-  const [addSection, setAddSection] = useState(false);
-  const [editSection, setEditSection] = useState(false);
-  const [priceSection, setPriceSection] = useState(false);
-  const [data, setData] = useState({
-    fruit: "",
-    category: "",
-    date: "",
-    weight: "",
-    quality: "",
-    price: "",
-  });
-
-  const [dataEdit, setDataEdit] = useState({
-    fruit: "",
-    category: "",
-    date: "",
-    weight: "",
-    quality: "",
-    price: "",
-  });
-
-  
-
-  const handleOnChange = (e) => {
-    const { value, name } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Add data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("/Category/add", data);
-      alert("Category Added");
-      getFetchData();
-      window.location.reload();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  // Get data
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [priceModalOpen, setPriceModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -64,63 +38,51 @@ function Category() {
     }
   };
 
-  useEffect(() => {
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((category) => {
+      const fullName = `${category.fruit} ${category.category} ${category.date} ${category.quality}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
+
+  const handleRefreshClick = () => {
     getFetchData();
-  }, []);
-
-
-
-  // Edit data
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    console.log("Updating Category with ID:", dataEdit._id);
-    try {
-      await axios.put(`/Category/update/${dataEdit._id}`, dataEdit);
-      alert("Category Updated");
-      setEditSection(true); 
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-      alert(err.message);
-    }
+    
   };
 
-  const handleEditOnChange = (e) => {
-    const { value, name } = e.target;
-    setDataEdit((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleButtonClick = () => {
+    getFetchData();
   };
 
-  const handleEdit = (category) => {
-    setDataEdit(category);
-    setEditSection(true);
+  const handleAddModalOpen = () => {
+    setAddModalOpen(true);
   };
 
-  const handlePrice = (category) => {
-    setDataEdit(category);
-    setPriceSection(true);
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
   };
 
-    //pricing
-    const handleUpdatePrice = async (e) => {
-        e.preventDefault();
-        console.log("Updating Category with ID:", dataEdit._id);
-        try {
-          await axios.put(`/Category/update/${dataEdit._id}`, dataEdit);
-          alert("Category Priced");
-          setEditSection(true); 
-          window.location.reload();
-        } catch (err) {
-          console.log(err);
-          alert(err.message);
-        }
-      };
+  const handleEditModalOpen = (category) => {
+    setSelectedCategory(category);
+    setEditModalOpen(true);
+  };
 
-  
+  const handlePriceModalOpen = (category) => {
+    setSelectedCategory(category);
+    setPriceModalOpen(true);
+  };
 
-  // Delete data
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+  };
+
+  const handlePriceModalClose = () => {
+    setPriceModalOpen(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Category/delete/${id}`);
@@ -131,38 +93,141 @@ function Category() {
     }
   };
 
+  const handleAddSubmit = async (formData) => {
+    try {
+      await axios.post("/Category/add", formData);
+      alert("Category Added");
+      handleAddModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleEditSubmit = async (formData) => {
+    try {
+      await axios.put(`/Category/update/${formData._id}`, formData);
+      alert("Category Updated");
+      handleEditModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handlePriceSubmit = async (formData) => {
+    try {
+      await axios.put(`/Category/update/${formData._id}`, formData);
+      alert("Category Priced");
+      handlePriceModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
+
+
   return (
     <div id="main">
-      <div>
-        <button className="btn btn-add" onClick={() => setAddSection(true)}>
-          <i className="bi bi-plus-circle"></i> Add
-        </button>
+      <div className="card recent-sales overflow-auto">
+        <div className="card-body">
+          <div className="page-header">
+            <div class="add-item d-flex">
+              <div class="card-title">
+              Category Details
+                <h6>Manage Category Details</h6>
+              </div>
+            </div>
+            <ul class="table-top-head">
+            <li>
+                  <div className="button-container">
+                      <a onClick={handleShowReportModal}>
+                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+                      </a>
+                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Category Details Report</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PDFViewer width="100%" height="500px">
+              <CategoryReport dataList={dataList} />
+            </PDFViewer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseReportModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      {addSection && !editSection && !priceSection && (
-        <CategoryForm
-          handleSubmit={handleSubmit}
-          handleOnChange={handleOnChange}
-          data={data}
-        />
-      )}
+      </li>
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleButtonClick}>
+                    <img src={Excel} alt="Excel Icon" className="icon" />
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleRefreshClick}>
+                    <img src={Refresh} alt="Refresh Icon" className="icon" />
+                  </a>
+                </div>
+              </li>
+            </ul>
+            <div class="page-btn">
+              <button
+                type="button"
+                className="btn btn-added"
+                onClick={handleAddModalOpen}
+              >
+                <i className="bi bi-plus-circle"></i> Add Category
+              </button>
+            </div>
+          </div>
 
-      {editSection && !priceSection && (
-        <CategoryForm
-          handleSubmit={handleUpdate}
-          handleOnChange={handleEditOnChange}
-          data={dataEdit}
-        />
-      )}
+          <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Category</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <CategoryForm handleSubmit={handleAddSubmit} />
+            </Modal.Body>
+          </Modal>
 
-    {priceSection && (
-        <CategoryPriceForm
-          handleSubmit={handleUpdatePrice}
-          handleOnChange={handleEditOnChange}
-          data={dataEdit}
-        />
-      )}
+          <Modal show={editModalOpen} onHide={handleEditModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Pricing for Category</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <CategoryForm
+                handleSubmit={handleEditSubmit}
+                initialData={selectedCategory}
+              />
+            </Modal.Body>
+          </Modal>
+
+          <Modal show={priceModalOpen} onHide={handlePriceModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Pricing for Category</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <CategoryPriceForm
+                handleSubmit={handlePriceSubmit}
+                initialData={selectedCategory}
+              />
+            </Modal.Body>
+          </Modal>
+
 
       <div className="table-container">
+      <SearchBar onSearch={handleSearch} />
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
@@ -176,8 +241,8 @@ function Category() {
             </tr>
           </thead>
           <tbody>
-            {dataList.length ? (
-              dataList.map((category) => (
+          {filteredDataList.length ? (
+                  filteredDataList.map((category) => (
                 <tr key={category._id}>
                   <td>{category.fruit}</td>
                   <td>{category.category}</td>
@@ -190,14 +255,14 @@ function Category() {
 
                     <button
                         className="btn btn-edit"
-                        onClick={() => handlePrice(category)}
+                        onClick={() => handlePriceModalOpen(category)}
                       >
                         <i class="bi bi-calculator-fill"></i>
                       </button>
 
                       <button
                         className="btn btn-edit"
-                        onClick={() => handleEdit(category)}
+                        onClick={() => handleEditModalOpen(category)}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>
@@ -213,11 +278,13 @@ function Category() {
               ))
             ) : (
               <tr>
-                <td colSpan="4">No Data</td>
+                <td colSpan="7">No Data</td>
               </tr>
             )}
-          </tbody>
-        </table>
+         </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,36 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
+const FarmerForm = ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    NIC: "",
+    username: "",
+    name: "",
+    email: "",
+    city: "",
+    lane: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Farmer NIC
-          </label>
-          <input
+    <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+        <label htmlFor="jobrole" className="form-label">
+          Farmer NIC
+        </label>
+             <input
             type="text"
             className="form-control"
             name="NIC"
             placeholder="Farmer NIC"
+            id = "NIC"
             required
-            onChange={handleOnChange}
-            value={rest.NIC}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Username
-          </label>
-          <input
+            onChange={handleChange}
+            value={formData.NIC}
+        />
+      </div>
+      
+      <div className="mb-3">
+           <label htmlFor="date" className="form-label">
+             Username
+           </label>
+           <input
             type="text"
             className="form-control"
             name="username"
             placeholder="Username"
             required
-            onChange={handleOnChange}
-            value={rest.username}
+            onChange={handleChange}
+            value={formData.username}
           />
         </div>
 
@@ -44,8 +72,8 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="name"
             placeholder="name"
             required
-            onChange={handleOnChange}
-            value={rest.name}
+            onChange={handleChange}
+            value={formData.name}
           />
         </div>
 
@@ -59,8 +87,8 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="email"
             placeholder="Email"
             required
-            onChange={handleOnChange}
-            value={rest.email}
+            onChange={handleChange}
+            value={formData.email}
           />
         </div>
         <div className="mb-3">
@@ -73,8 +101,8 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="city"
             placeholder="City"
             required
-            onChange={handleOnChange}
-            value={rest.city}
+            onChange={handleChange}
+            value={formData.city}
           />
         </div>
 
@@ -88,14 +116,15 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             name="lane"
             placeholder="Lane"
             required
-            onChange={handleOnChange}
-            value={rest.lane}
+            onChange={handleChange}
+            value={formData.lane}
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
-    </div>
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
   );
 };
 

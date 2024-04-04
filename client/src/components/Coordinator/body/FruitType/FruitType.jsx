@@ -1,59 +1,32 @@
-// ./client/src/components/Coordinator/body/FruitType/FruitType.jsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import FruitTypeForm from "./FruitTypeForm";
-
-import "./FruitType.css";
-
-import SearchBar from './SearchBar'
+import { PDFViewer } from "@react-pdf/renderer";
+import { Button, Modal } from "react-bootstrap";
+import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-
+import FruitTypeForm from "./FruitTypeForm";
+import FruitTypeReport from "./FruitTypeReport";
+import "./FruitType.css";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function FruitType() {
-  const [addSection, setAddSection] = useState(false);
-  const [editSection, setEditSection] = useState(false);
-  const [data, setData] = useState({
-    name: "",
-    date: "",
-    description: "",
-  });
-
-  const [dataEdit, setDataEdit] = useState({
-    _id: "",
-    name: "",
-    date: "",
-    description: "",
-  });
-
-  const handleOnChange = (e) => {
-    const { value, name } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Add data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("/FruitType/add", data);
-      alert("Fruit Type Added");
-      getFetchData();
-      setAddSection(false);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  // Get data
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
+  const [selectedFruitType, setSelectedFruitType] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -64,47 +37,40 @@ function FruitType() {
     }
   };
 
-  useEffect(() => {
-    getFetchData();
-  }, []);
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((fruittype) => {
+      const fullName = `${fruittype.name} ${fruittype.date}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
 
   const handleRefreshClick = () => {
     getFetchData();
   };
-  
+
   const handleButtonClick = () => {
     getFetchData();
   };
 
-  // Edit data
-  const handleEdit = (fruitType) => {
-    setDataEdit(fruitType);
-    setEditSection(true);
+  const handleAddModalOpen = () => {
+    setAddModalOpen(true);
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    console.log("Updating Fruit Type with ID:", dataEdit._id);
-    try {
-      await axios.put(`/FruitType/update/${dataEdit._id}`, dataEdit);
-      alert("Fruit Type Updated");
-      setEditSection(false);
-      getFetchData();
-    } catch (err) {
-      console.log(err);
-      alert(err.message);
-    }
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
   };
 
-  const handleEditOnChange = (e) => {
-    const { value, name } = e.target;
-    setDataEdit((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleEditModalOpen = (fruitType) => {
+    setSelectedFruitType(fruitType);
+    setEditModalOpen(true);
   };
 
-  // Delete data
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/FruitType/delete/${id}`);
@@ -114,6 +80,34 @@ function FruitType() {
       alert(err.message);
     }
   };
+
+  const handleAddSubmit = async (formData) => {
+    try {
+      await axios.post("/FruitType/add", formData);
+      alert("Fruit Type Added");
+      handleAddModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleEditSubmit = async (formData) => {
+    try {
+      await axios.put(`/FruitType/update/${formData._id}`, formData);
+      alert("Fruit Type Updated");
+      handleEditModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
+
 
   return (
     <div id="main">
@@ -131,14 +125,29 @@ function FruitType() {
               </div>
 
               <ul class="table-top-head">
-                <li>
+              <li>
                   <div className="button-container">
-                      <a href="#" onClick={handleButtonClick}>
+                      <a onClick={handleShowReportModal}>
                           <img src={Pdf} alt="Pdf Icon"  className="icon"  />
                       </a>
-                  </div>
-                </li> 
-                <li>
+                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Salary Details Report</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PDFViewer width="100%" height="500px">
+              <FruitTypeReport dataList={dataList} />
+            </PDFViewer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseReportModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+      </li>
+      <li>
                   <div className="button-container">
                       <a href="#" onClick={handleButtonClick}>
                           <img src={Excel} alt="Excel Icon"  className="icon"  />
@@ -154,46 +163,55 @@ function FruitType() {
                 </li>    
               </ul>
       <div class="page-btn">
-        <button type="button" className="btn btn-added" onClick={() => setAddSection(true)}>
-          <i className="bi bi-plus-circle"></i> Add Fruit
-        </button>
+      <button
+                type="button"
+                className="btn btn-added"
+                onClick={handleAddModalOpen}
+              >
+                <i className="bi bi-plus-circle"></i> Add Fruit Type
+              </button>
       </div>
       </div>
-      {addSection && (
-        <FruitTypeForm
-          handleSubmit={handleSubmit}
-          handleOnChange={handleOnChange}
-          data={data}
-        />
-      )}
+      <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Fruit Type</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FruitTypeForm handleSubmit={handleAddSubmit} />
+            </Modal.Body>
+          </Modal>
 
-      {editSection && (
-        <FruitTypeForm
-          handleSubmit={handleUpdate}
-          handleOnChange={handleEditOnChange}
-          data={dataEdit}
-        />
-      )}
+          <Modal show={editModalOpen} onHide={handleEditModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Fruit Type</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FruitTypeForm
+                handleSubmit={handleEditSubmit}
+                initialData={selectedFruitType}
+              />
+            </Modal.Body>
+          </Modal>
 
 
       
 
        
 <div className="table-container">
-      <SearchBar/>
+<SearchBar onSearch={handleSearch} />
         <table className="table table-borderless datatable">
 
           <thead className="table-light">
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Date</th>
-              <th scope="col">Description</th>
+              <th scope="col" >Description</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {dataList.length ? (
-              dataList.map((fruitType) => (
+          {filteredDataList.length ? (
+                  filteredDataList.map((fruitType) => (
                 <tr key={fruitType._id}>
                   <td>{fruitType.name}</td>
                   <td>{fruitType.date}</td>
@@ -202,7 +220,7 @@ function FruitType() {
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
-                        onClick={() => handleEdit(fruitType)}
+                        onClick={() =>handleEditModalOpen(fruitType)}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>

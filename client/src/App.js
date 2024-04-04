@@ -24,7 +24,11 @@ import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
+import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
+
+import FDashboard from "./components/farmer/FDashboard";
+
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
 import OPDashboard from "./components/orderProcessor/OPDashboard";
@@ -35,12 +39,21 @@ import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/Com
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
 
-import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-import NormalOrder from "./components/NormalOrder/NormalOrder";
-import EditOrder from "./components/NormalOrder/EditOrder";
+
+import RequestedOrder from './components/RequestedOrder/RequestedOrder';
+import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
+import NormalOrder from './components/NormalOrder/NormalOrder';
+import EditOrder from './components/NormalOrder/EditOrder';
+import PromotionPage from "./components/researchDashboard/PromotionPage";
+
+//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+//import NormalOrder from "./components/NormalOrder/NormalOrder";
+//import EditOrder from "./components/NormalOrder/EditOrder";
+
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import Website from "./Website/Website";
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
@@ -185,6 +198,24 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/FDashboard",
+    element: (
+      <div>
+        <FDashboard />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PredictionDetails",
+    element: (
+      <div>
+        <PredictionDetails />
+      </div>
+    ),
+  },
+
+  {
     path: "/Coordinator",
     element: (
       <div>
@@ -257,6 +288,16 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/PromotionPage",
+    element: (
+      <div>
+        <PromotionPage />
+      </div>
+    ),
+  },
+
+
+  {
     path: "/TransportFee",
     element: (
       <div>
@@ -288,6 +329,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <CalculateSalary />
+      </div>
+    ),
+  },
+
+  {
+    path: "/Notice",
+    element: (
+      <div>
+        <Notice />
       </div>
     ),
   },

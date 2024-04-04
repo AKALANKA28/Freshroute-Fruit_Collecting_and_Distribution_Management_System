@@ -1,66 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EmployeeForm from "./EmployeeForm";
-import "./Employee.css";
-
-import SearchBar from './SearchBar'
+import { PDFViewer } from "@react-pdf/renderer";
+import { Button, Modal } from "react-bootstrap";
+import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-
+import EmployeeForm from "./EmployeeForm";
+import EmployeeReport from "./EmployeeReport";
+import "./Employee.css";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Employee() {
-  const [addSection, setAddSection] = useState(false);
-  const [editSection, setEditSection] = useState(false);
-  const [data, setData] = useState({
-    name: "",
-    jobrole: "",
-    nic: "",
-    address: "",
-    email: "",
-    accno: "",
-    bankname: "",
-    qualifications: "",
-    joineddate: "",
-  });
-
-  const [dataEdit, setDataEdit] = useState({
-    _id: "",
-    name: "",
-    jobrole: "",
-    nic: "",
-    address: "",
-    email: "",
-    accno: "",
-    bankname: "",
-    qualifications: "",
-    joineddate: "",
-  });
-
-  const handleOnChange = (e) => {
-    const { value, name } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Add data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("/Employee/add", data);
-      alert("Employee Added");
-      getFetchData();
-      window.location.reload();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  // Get data
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -71,56 +35,78 @@ function Employee() {
     }
   };
 
-  useEffect(() => {
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((employee) => {
+      const fullName = `${employee.name} ${employee.jobrole} ${employee.address} ${employee.nic} ${employee.email} ${employee.accno} ${employee.bankname} ${employee.joineddate}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
+  const handleRefreshClick = () => {
     getFetchData();
-  }, []);
-
-
-const handleRefreshClick = () => {
-  getFetchData();
-};
-
-const handleButtonClick = () => {
-  getFetchData();
-};
-
-  // Edit data
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    console.log("Updating Employee with ID:", dataEdit._id);
-    try {
-      await axios.put(`/Employee/update/${dataEdit._id}`, dataEdit); // fixed string interpolation
-      alert("Employee Updated");
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-      alert(err.message);
-    }
+    
   };
 
-  const handleEditOnChange = (e) => {
-    const { value, name } = e.target;
-    setDataEdit((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleButtonClick = () => {
+    getFetchData();
   };
 
-  const handleEdit = (employee) => {
-    setDataEdit(employee);
-    setEditSection(true);
+  const handleAddModalOpen = () => {
+    setAddModalOpen(true);
   };
 
-  // Delete data
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
+  };
+
+  const handleEditModalOpen = (salary) => {
+    setSelectedEmployee(salary);
+    setEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+  };
+
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/Employee/delete/${id}`); // fixed string interpolation
-      alert("Successfully Delete");
+      await axios.delete(`/Employee/delete/${id}`);
+      alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
       alert(err.message);
     }
   };
+
+  const handleAddSubmit = async (formData) => {
+    try {
+      await axios.post("/Employee/add", formData);
+      alert("Employee Added");
+      handleAddModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleEditSubmit = async (formData) => {
+    try {
+      await axios.put(`/Employee/update/${formData._id}`, formData);
+      alert("Employee Updated");
+      handleEditModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
+
 
   return (
     <div id="main">
@@ -138,13 +124,28 @@ const handleButtonClick = () => {
               </div>
 
               <ul class="table-top-head">
-                <li>
+              <li>
                   <div className="button-container">
-                      <a href="#" onClick={handleButtonClick}>
+                      <a onClick={handleShowReportModal}>
                           <img src={Pdf} alt="Pdf Icon"  className="icon"  />
                       </a>
-                  </div>
-                </li> 
+                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Employee Details Report</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PDFViewer width="100%" height="500px" >
+              <EmployeeReport dataList={dataList} />
+            </PDFViewer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseReportModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+      </li>
                 <li>
                   <div className="button-container">
                       <a href="#" onClick={handleButtonClick}>
@@ -161,29 +162,37 @@ const handleButtonClick = () => {
                 </li>    
               </ul>
               <div class="page-btn">  
-          <button type="button" className="btn btn-added" onClick={() => setAddSection(true)}>
-            <i className="bi bi-plus-circle"></i> Add Employee
-          </button>
+              <button
+                type="button"
+                className="btn btn-added"
+                onClick={handleAddModalOpen}
+              >
+                <i className="bi bi-plus-circle"></i> Add New Employee
+              </button>
         </div>
         </div>
-        {addSection && (
-          <EmployeeForm
-            handleSubmit={handleSubmit}
-            handleOnChange={handleOnChange}
-            rest={data}
-          />
-        )}
+        <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Employee</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <EmployeeForm handleSubmit={handleAddSubmit} />
+            </Modal.Body>
+          </Modal>
 
-        {editSection && (
-          <EmployeeForm
-            handleSubmit={handleUpdate}
-            handleOnChange={handleEditOnChange}
-            rest={dataEdit}
-          />
-        )}
-
+          <Modal show={editModalOpen} onHide={handleEditModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Employee Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <EmployeeForm
+                handleSubmit={handleEditSubmit}
+                initialData={selectedEmployee}
+              />
+            </Modal.Body>
+          </Modal>
         <div className="table-container">
-        <SearchBar/>
+        <SearchBar onSearch={handleSearch} />
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -200,9 +209,9 @@ const handleButtonClick = () => {
               </tr>
             </thead>
             <tbody>
-              {dataList.length ? (
-                dataList.map((employee) => (
-                  <tr key={employee._id}>
+            {filteredDataList.length ? (
+                  filteredDataList.map((employee) => (
+                    <tr key={employee._id}>
                     <td>{employee.name}</td>
                     <td>{employee.jobrole}</td>
                     <td>{employee.nic}</td>
@@ -216,7 +225,7 @@ const handleButtonClick = () => {
                       <div className="buttons">
                         <button
                           className="btn btn-edit"
-                          onClick={() => handleEdit(employee)}
+                          onClick={() => handleEditModalOpen(employee)}
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
