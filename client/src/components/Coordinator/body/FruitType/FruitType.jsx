@@ -18,10 +18,15 @@ function FruitType() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFruitType, setSelectedFruitType] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,6 +35,15 @@ function FruitType() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((fruittype) => {
+      const fullName = `${fruittype.name} ${fruittype.date}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
   };
 
   const handleRefreshClick = () => {
@@ -184,7 +198,7 @@ function FruitType() {
 
        
 <div className="table-container">
-      <SearchBar/>
+<SearchBar onSearch={handleSearch} />
         <table className="table table-borderless datatable">
 
           <thead className="table-light">
@@ -196,8 +210,8 @@ function FruitType() {
             </tr>
           </thead>
           <tbody>
-            {dataList.length ? (
-              dataList.map((fruitType) => (
+          {filteredDataList.length ? (
+                  filteredDataList.map((fruitType) => (
                 <tr key={fruitType._id}>
                   <td>{fruitType.name}</td>
                   <td>{fruitType.date}</td>

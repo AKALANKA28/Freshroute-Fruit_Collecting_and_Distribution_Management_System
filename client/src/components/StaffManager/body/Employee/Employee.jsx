@@ -38,7 +38,7 @@ function Employee() {
   // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
+      const fullName = `${employee.name} ${employee.jobrole} ${employee.address} ${employee.nic} ${employee.email} ${employee.accno} ${employee.bankname} ${employee.joineddate}`; // Customize this according to your data structure
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);

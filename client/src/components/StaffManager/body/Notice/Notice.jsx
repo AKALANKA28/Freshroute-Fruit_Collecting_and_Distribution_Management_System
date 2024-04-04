@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from "./SearchBar";
-import Excel from "../../../../assests/img/icons/excel.png";
-import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import NoticeForm from "./NoticeForm";
 import "./Notice.css";
@@ -15,10 +12,15 @@ function Notice() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]);
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -27,6 +29,15 @@ function Notice() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((notice) => {
+      const fullName = `${notice.title}  ${notice.date}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
   };
 
   const handleRefreshClick = () => {
@@ -86,10 +97,6 @@ function Notice() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
 
   return (
     <div id="main">
@@ -140,7 +147,7 @@ function Notice() {
             </Modal.Body>
           </Modal>
           <div className="table-container">
-            <SearchBar />
+          <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -151,8 +158,8 @@ function Notice() {
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((notice) => (
+              {filteredDataList.length ? (
+                  filteredDataList.map((notice) => (
                     <tr key={notice._id}>
                       <td>{notice.date}</td>
                       <td>{notice.title}</td>
