@@ -45,10 +45,6 @@ const QualityList = () => {
 
     useEffect(() => {
         getQualityList();  // load data initially
-        setTimeout(() => {
-            handleTabChange("A");
-            console.log("sdasdasdasdasdasdasdasdsadsaa")
-        }, 5000);
     }, []);
 
     const getQualityList = async () => {
@@ -56,8 +52,10 @@ const QualityList = () => {
             const filterData = { filterType: "quality", filterValue: tab}
             await axios.post("/quality/filteredQualities", filterData);
             const response = await axios.get("/quality");
-            setItems(response.data);
-            setTableData(items.filter((item) => item.quality === tab))
+            const responseData = response.data;
+            setItems(responseData);
+
+            setTableData(responseData.filter((item) => item.quality === tab))
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -114,12 +112,8 @@ const QualityList = () => {
     const handleSearchOnClick = async (filterData) => {
         try {
             const response = await axios.post("/quality/filteredQualities", filterData);
-            const responseData = response.data;
-            if (responseData) {
-                const tblData = responseData.filter((item) => responseData.quality === tab);
-                setTableData(tblData);
-                setItems(responseData);
-            }
+            setItems(response.data);
+            setTableData(items.filter((item) => item.quality === tab));
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -242,7 +236,7 @@ const QualityList = () => {
                           </li>
                       </ul>
 
-                      <QualityTable items={items} updateQualityList={getQualityList} editItem={handleEdit}/>
+                      <QualityTable items={tableData} updateQualityList={getQualityList} editItem={handleEdit}/>
                   </div>
                   <div>
                       <QualityPopupForm
