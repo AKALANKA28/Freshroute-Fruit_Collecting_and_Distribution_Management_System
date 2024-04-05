@@ -32,7 +32,8 @@ const ReqOrderTable = ({ items, updateQualityList, editItem }) => {
           <thead className="table-light">
             <tr>
               <th className="col">Customer Name</th>
-              <th className="col">Fruit Type</th>
+              <th className="col">Fruit</th>
+              <th className="col">Category</th>
               <th className="col">Grade</th>
               <th className="col">Quantity</th>
               <th className="col">Placed Date</th>

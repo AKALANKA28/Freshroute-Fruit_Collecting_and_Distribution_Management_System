@@ -8,14 +8,18 @@ const mockSchema = mongoose.Schema({
         required: true,   
     },
 
-    fruit_category: {
+    fruit: {
         type: String,
-        required: true
+        required: true,
     },
 
-    grade: {
+    category: {
         type: String,
-        required: true
+        required: true,
+    },
+
+    quality: {
+        type: String,
     },
 
     quantity: {
@@ -32,6 +36,14 @@ const mockSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+
+    order_status: {
+        type: Number,
+        required: true
+    },
+
+
+    
     
 })
 
