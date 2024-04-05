@@ -24,6 +24,7 @@ const predictionRouter = require("./routes/farmers/predictionRoutes");
 
 
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
+const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
 
 
 
@@ -66,7 +67,7 @@ app.use('/coverings', coveringsRouter);
 app.use('/Farmer', router);
 
 app.use("/Promotion", PromotionRouter);
-
+app.use("/Compaign", CompaignRouter);
 
 
 app.use("/Farmer", farmerRouter);
