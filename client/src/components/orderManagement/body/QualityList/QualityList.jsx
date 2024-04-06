@@ -49,8 +49,7 @@ const QualityList = () => {
 
     const getQualityList = async () => {
         try {
-            const filterData = { filterType: "quality", filterValue: tab}
-            await axios.post("/quality/filteredQualities", filterData);
+
             const response = await axios.get("/quality");
             const responseData = response.data;
             setItems(responseData);
