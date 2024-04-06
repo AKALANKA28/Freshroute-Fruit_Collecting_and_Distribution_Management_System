@@ -8,6 +8,8 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import SearchBar from './SearchBar';
 import FarmerForm from "./FarmerForm";
 import SupplierReport from "./SupplierReport";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import './farmers.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -37,12 +39,26 @@ function SuppliersList() {
   };
 
   const handleRefreshClick = () => {
-    getFetchData();
+    window.location.reload();
   };
 
-  const handleButtonClick = () => {
-    getFetchData();
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "suppliers_report.xlsx");
   };
+  
+  const handleButtonClick = () => {
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
+  };
+  
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);
