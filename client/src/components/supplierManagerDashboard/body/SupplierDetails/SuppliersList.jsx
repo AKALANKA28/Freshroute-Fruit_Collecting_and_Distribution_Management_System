@@ -8,6 +8,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import SearchBar from './SearchBar';
 import FarmerForm from "./FarmerForm";
 import SupplierReport from "./SupplierReport";
+import './farmers.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -96,14 +97,37 @@ function SuppliersList() {
     }
   };
 
+
+
   // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((farmer) => {
-      const fullName = `${farmer.name} ${farmer.username}`;
-      return fullName.toLowerCase().includes(query.toLowerCase());
+      // Check the selected search attribute and filter accordingly
+      switch (searchAttribute) {
+        case 'name':
+          const fullName = `${farmer.name} ${farmer.username}`;
+          return fullName.toLowerCase().includes(query.toLowerCase());
+        case 'email':
+          return farmer.email.toLowerCase().includes(query.toLowerCase());
+        case 'city':
+          return farmer.city.toLowerCase().includes(query.toLowerCase());
+        default:
+          return false;
+      }
     });
     setFilteredDataList(filteredList);
   };
+
+  // State variable for selected search attribute
+  const [searchAttribute, setSearchAttribute] = useState('name');
+
+  // Function to handle search attribute change
+  const handleSearchAttributeChange = (event) => {
+    setSearchAttribute(event.target.value);
+  };
+
+
+
 
 
   const [showReportModal, setShowReportModal] = useState(false);
@@ -112,7 +136,7 @@ function SuppliersList() {
 
   return (
     <div  id="main col-8">
-      <div className="card recent-sales overflow-auto">
+      <div classname="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
             <div class="add-item d-flex">
@@ -194,7 +218,9 @@ function SuppliersList() {
           </Modal>
 
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} />
+          <div className="search-bar">
+            <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
+          </div>
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
