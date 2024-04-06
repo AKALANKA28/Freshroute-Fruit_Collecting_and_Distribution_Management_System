@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 
 const MockOrderDetailSchema = mongoose.Schema({
 
-    customer : {
+
+    customerId : {
+        type : String,
+        required: true,   
+    },
+
+    customerName : {
         type : String,
         required: true,   
     },
