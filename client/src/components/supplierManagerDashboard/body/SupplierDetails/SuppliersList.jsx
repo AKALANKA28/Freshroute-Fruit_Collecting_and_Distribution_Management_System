@@ -5,6 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import SearchBar from './SearchBar';
 import FarmerForm from "./FarmerForm";
 import SupplierReport from "./SupplierReport";
 
@@ -15,10 +16,15 @@ function SuppliersList() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFarmer, setSelectedFarmer] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -89,6 +95,16 @@ function SuppliersList() {
       alert(err.message);
     }
   };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((farmer) => {
+      const fullName = `${farmer.name} ${farmer.username}`;
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
 
   const [showReportModal, setShowReportModal] = useState(false);
   const handleCloseReportModal = () => setShowReportModal(false);
@@ -178,7 +194,7 @@ function SuppliersList() {
           </Modal>
 
           <div className="table-container">
-            {/* <SearchBar /> */}
+          <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -192,8 +208,8 @@ function SuppliersList() {
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((farmer) => (
+                {filteredDataList.length ? (
+                  filteredDataList.map((farmer) => (
                     <tr key={farmer._id}>
                       <td>{farmer.NIC}</td>
                       <td>{farmer.username}</td>
