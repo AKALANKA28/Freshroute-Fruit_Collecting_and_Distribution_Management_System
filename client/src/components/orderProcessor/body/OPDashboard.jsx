@@ -4,7 +4,7 @@ import PageTitle from './PageTitle'
 import Body from './Body'
 
 
-const Main = () => {
+const OPDashboard = () => {
   return (
    
     <main id='main' className='main'>
@@ -15,4 +15,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default OPDashboard

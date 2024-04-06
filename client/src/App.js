@@ -57,6 +57,7 @@ import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import Website from "./Website/Website";
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
+import OPDashboard from "./components/orderProcessor/body/OPDashboard";
 
 const router = createBrowserRouter([
   {
@@ -162,6 +163,10 @@ const router = createBrowserRouter([
         </div>
     ),
     children: [
+      {
+        path: "/OPDashboard/",
+        element: <OPDashboard/>,
+      },
       {
         path: "/OPDashboard/AssignedOrders",
         element: <AssignedOrder/>,
