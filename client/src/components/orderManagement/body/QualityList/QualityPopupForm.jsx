@@ -105,16 +105,16 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
                         <Form.Label>Fruit Type</Form.Label>
                         <Form.Select name="fruit" required onChange={fruitOnChange} value={formData.fruit} disabled={isEdit}>
                             <option value="">{ isEdit? formData.fruit :"Select Fruit"}</option>
-                            {!isEdit && Object.keys(fruitDetail).map((quality, index) => (
-                                <option key={index} value={quality}>
-                                    {quality}
+                            {!isEdit && Object.keys(fruitDetail).map((fruit, index) => (
+                                <option key={index} value={fruit}>
+                                    {fruit}
                                 </option>
                             ))}
                         </Form.Select>
                     </Form.Group>
 
                     <Form.Group className="mb-3 error" controlId="fromFruitCategory">
-                        <Form.Label>Fruit Type</Form.Label>
+                        <Form.Label>Fruit Category</Form.Label>
                         <Form.Select name="category" required onChange={categoryOnChange} value={formData.category} disabled={inputFieldDisable.category}>
                             <option value="">{ isEdit? formData.category : "Select Category" }</option>
                             {!isEdit && Object.keys(fruitCategory).map((category, index) => (
@@ -126,7 +126,7 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formGrade">
-                        <Form.Label>Fruit Type</Form.Label>
+                        <Form.Label>Grade</Form.Label>
                         <Form.Select name="quality" required onChange={gradeOnChange} value={formData.quality} disabled={inputFieldDisable.grade}>
                             <option value="">{ isEdit? formData.quality :"Select Grade"}</option>
                             {!isEdit && grade.map((grade, index) => (
@@ -141,7 +141,7 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
                         <Form.Control type="text" name="id" required placeholder="Description" value={formData.id} onChange={handleChange}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formDescription">
-                        <Form.Label>Fruit </Form.Label>
+                        <Form.Label>Quality Description</Form.Label>
                         <Form.Control type="text" name="qualityDesc" required placeholder="Description" value={formData.qualityDesc} onChange={handleChange}/>
                     </Form.Group>
 
