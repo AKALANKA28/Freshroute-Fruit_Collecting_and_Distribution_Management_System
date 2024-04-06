@@ -38,7 +38,7 @@ exports.getAllQualities = async (req, res) => {
 // Retrieve all quality records
 exports.getCategorizedFruitDetail = async (req, res) => {
     try {
-        const filter = { qualityStatus: 1 }; // get quality added records only
+        const filter = { qualityStatus: 0 }; // get quality added records only
 
         const allValidQualities = await FruitDetail.find(filter, 'fruit category quality');
 
