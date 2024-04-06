@@ -118,6 +118,8 @@ function SuppliersList() {
     setFilteredDataList(filteredList);
   };
 
+
+  
   // State variable for selected search attribute
   const [searchAttribute, setSearchAttribute] = useState('name');
 
