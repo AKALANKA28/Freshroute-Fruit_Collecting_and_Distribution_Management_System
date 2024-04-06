@@ -118,8 +118,6 @@ function SuppliersList() {
     setFilteredDataList(filteredList);
   };
 
-
-  
   // State variable for selected search attribute
   const [searchAttribute, setSearchAttribute] = useState('name');
 
@@ -137,17 +135,17 @@ function SuppliersList() {
   const handleShowReportModal = () => setShowReportModal(true);
 
   return (
-    <div  id="main col-8">
-      <div classname="card recent-sales overflow-auto">
+    <div id="main col-8">
+      <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
-            <div class="add-item d-flex">
-              <div class="card-title">
+            <div className="add-item d-flex">
+              <div className="card-title">
                 Supplier Details
                 <h6>Manage Supplier Details</h6>
               </div>
             </div>
-            <ul class="table-top-head" style={{ float: "right" }}>
+            <ul className="table-top-head" style={{ float: "right" }}>
               <li>
                 <div className="button-container">
                   <a onClick={handleShowReportModal}>
@@ -170,7 +168,7 @@ function SuppliersList() {
                 </div>
               </li>
               <li>
-                <div class="page-btn">
+                <div className="page-btn">
                   <button
                     type="button"
                     className="btn btn-added"
@@ -220,9 +218,7 @@ function SuppliersList() {
           </Modal>
 
           <div className="table-container">
-          <div className="search-bar">
-            <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
-          </div>
+          <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
