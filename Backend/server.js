@@ -19,22 +19,20 @@ const scheduleRouter = require("./routes/transport/scheduleRoute.js");
 const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
+
+//Heshan
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
 const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
 
-
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
-
-
-
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
+const qualityRoute = require("./routes/q_and_o/qualityRoute");
+
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
-
-const qualityRoute = require("./routes/q_and_o/qualityRoute");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -59,28 +57,27 @@ app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Category", CategoryRouter);
 app.use("/Salary", SalaryRouter);
-
-app.use('/schedule', scheduleRouter);
-app.use('/vehicle', vehicleRouter);
-app.use('/process', processRouter);
-app.use('/coverings', coveringsRouter);
-app.use('/Farmer', router);
-
-app.use("/Promotion", PromotionRouter);
+app.use("/schedule", scheduleRouter);
+app.use("/vehicle", vehicleRouter);
+app.use("/process", processRouter);
+app.use("/coverings", coveringsRouter);
 
 
-
+//Heshan
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
 app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
-
 app.use(itemRouter);
+
+app.use("/Promotion", PromotionRouter);
 
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
+
+app.use("/quality", qualityRoute);
+
 app.use("/CalculateSalary", CalculateSalaryRouter);
 app.use("/Notice", NoticeRouter);
-app.use("/quality", qualityRoute);
 
 // Start the server
 const PORT = process.env.PORT || 8070;
