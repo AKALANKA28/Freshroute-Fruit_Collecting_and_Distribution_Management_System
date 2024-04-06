@@ -1,4 +1,11 @@
-const Order = require('../../models/q_and_o/orderModel.js');
+const mockController = require("./mockController")
+const Order = require('../../models/q_and_o/OrderExecutionDetail');
+
+//temp
+exports.addToMock = async (req, res) => {
+    await mockController.addMockOrder(req, res);
+};
+
 
 // Controller for adding a new order
 exports.addOrder = async (req, res) => {

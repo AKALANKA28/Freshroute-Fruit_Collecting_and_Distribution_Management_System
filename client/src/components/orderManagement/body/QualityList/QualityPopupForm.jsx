@@ -36,7 +36,7 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
 
     const getDetail = async () => {
         try {
-            const response = await axios.get("/quality/categorizedData");
+            const response = await axios.get("/om/quality/categorizedData");
             const fruitTypes = response.data;
             if (fruitTypes) {
                 setFruitDetail(fruitTypes);
@@ -45,7 +45,7 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
             } else {
-                alert("An error occurred while getting quality list");
+                alert("An error occurred while getting categorized quality list");
             }
         }
     }

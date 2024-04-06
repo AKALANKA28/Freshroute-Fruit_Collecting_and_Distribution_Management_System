@@ -32,8 +32,8 @@ const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
-
-const qualityRoute = require("./routes/q_and_o/qualityRoute");
+const orderProcessorRoute = require("./routes/q_and_o/OrderProcessorRoute")
+const orderMangerRoute = require("./routes/q_and_o/OrderManagerRoute");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -78,7 +78,8 @@ app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
 app.use("/CalculateSalary", CalculateSalaryRouter);
 app.use("/Notice", NoticeRouter);
-app.use("/quality", qualityRoute);
+app.use("/om", orderMangerRoute);
+app.use("/op", orderProcessorRoute);
 
 // Start the server
 const PORT = process.env.PORT || 8070;

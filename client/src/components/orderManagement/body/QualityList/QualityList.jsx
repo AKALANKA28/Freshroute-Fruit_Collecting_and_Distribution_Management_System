@@ -50,7 +50,7 @@ const QualityList = () => {
     const getQualityList = async () => {
         try {
 
-            const response = await axios.get("/quality");
+            const response = await axios.get("/om/quality");
             const responseData = response.data;
             setItems(responseData);
 
@@ -68,7 +68,7 @@ const QualityList = () => {
     const handleSubmit = async(data)=>{
 
         try {
-            const response = await axios.put("/quality/update", data);
+            const response = await axios.put("/om/quality/update", data);
             alert(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -110,7 +110,7 @@ const QualityList = () => {
 
     const handleSearchOnClick = async (filterData) => {
         try {
-            const response = await axios.post("/quality/filteredQualities", filterData);
+            const response = await axios.post("/om/quality/filteredQualities", filterData);
             setItems(response.data);
             setTableData(items.filter((item) => item.quality === tab));
         } catch (err) {

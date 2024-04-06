@@ -1,24 +1,22 @@
-const MockOrder = require('../../models/q_and_o/mockDB');
+const MockOrderDetail = require('../../models/q_and_o/MockOrderDetail');
 
 // Add a new vehicle record
 exports.addMockOrder = async (req, res) => {
     try {
-        const {customer, fruit, category, quality, quantity, placed_date, due_date, order_status} = req.body;
+        const { customer, fruit, category, quality, quantity, placedDate, dueDate } = req.body;
 
-        const newMockOrder = new MockOrder({
+        const newMockOrderDetail = new MockOrderDetail({
             customer,
             fruit,
             category,
             quality,
             quantity,
-            placed_date,
-            due_date,
-            order_status,
-            
+            placedDate,
+            dueDate
         });
 
-        await newMockOrder.save();
-        res.json("Vehicle Added");
+        await newMockOrderDetail.save();
+        res.json("Order Added");
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error adding vehicle record", error: err.message });

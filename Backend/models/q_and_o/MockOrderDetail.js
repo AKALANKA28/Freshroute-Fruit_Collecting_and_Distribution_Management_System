@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const mockSchema = mongoose.Schema({
-    
+const MockOrderDetailSchema = mongoose.Schema({
 
     customer : {
         type : String,
@@ -27,26 +26,24 @@ const mockSchema = mongoose.Schema({
         required: true
     },
 
-    placed_date: {
+    placedDate: {
         type: Date,
         required: true
     },
 
-    due_date: {
+    dueDate: {
         type: Date,
         required: true
     },
 
-    order_status: {
-        type: Number,
-        required: true
-    },
-
-
-    
+    orderStatus: {   // PENDING  ASSIGNED IN_PROGRESS  COMPLETED
+        type: String,
+        required: true,
+        default: "PENDING",
+    }
     
 })
 
-const MockOrder = mongoose.model("MockOrder", mockSchema);
+const MockOrderDetail = mongoose.model("MockOrderDetail", MockOrderDetailSchema);
 
-module.exports = MockOrder;
+module.exports = MockOrderDetail;

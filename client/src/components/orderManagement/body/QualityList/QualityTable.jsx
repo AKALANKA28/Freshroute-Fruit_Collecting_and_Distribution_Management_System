@@ -8,7 +8,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/quality/delete/${id}`);
+      await axios.delete(`/om/quality/delete/${id}`);
       updateQualityList();
       alert('Successfully Deleted');
 

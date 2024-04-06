@@ -1,22 +1,25 @@
 const mongoose = require('mongoose');
 
-const executionHistory = mongoose.Schema({
+const ExecutionHistorySchema = mongoose.Schema({
     
     supplier: String,
     
     execNo: Number,
 
     execQuantity: Number,
-        
+
     filledQuantity: Number,
-       
+
     execTime: Date,
 
 });
 
 
-const orderSchema = mongoose.Schema({
-    
+const OrderExecutionDetailSchema = mongoose.Schema({
+    orderId: {
+        type : String,
+        required: true,
+    },
     opName : {
         type : String,
         required: true,   
@@ -51,13 +54,18 @@ const orderSchema = mongoose.Schema({
         type: Date,
         required: true
     },
-    executionHistory:[executionHistory]
+    orderStatus: {   // PENDING  ASSIGNED IN_PROGRESS  COMPLETED
+        type: String,
+        required: true,
+        default: "PENDING",
+    },
+    executionHistory:[ExecutionHistorySchema]
    
 });
 
-const Order = mongoose.model("Order", orderSchema);
+const OrderExecutionDetail = mongoose.model("OrderExecutionDetail", OrderExecutionDetailSchema);
 
-module.exports = Order;
+module.exports = OrderExecutionDetail;
 
 
 

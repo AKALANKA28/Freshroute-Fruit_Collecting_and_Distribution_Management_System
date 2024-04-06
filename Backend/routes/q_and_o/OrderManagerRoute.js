@@ -1,0 +1,30 @@
+const express = require('express');
+const router = express.Router();
+const qualityController = require('../../controllers/q_and_o/QualityController.js');
+const orderManageController = require('../../controllers/q_and_o/OrderManageController');
+
+/** Quality */
+// Add a new quality record
+router.put("/quality/update", qualityController.addEditQuality);
+
+// Retrieve all quality records
+router.get("/quality/", qualityController.getAllQualities); // Corrected function name
+
+// Retrieve a specific quality record by ID
+router.get("/quality/get/:id", qualityController.getQualityById);
+
+// Delete a quality record
+router.delete("/quality/delete/:id", qualityController.removeQuality);
+
+//Get filtered quality list
+router.post("/quality/filteredQualities", qualityController.getFilteredQualities);
+
+router.get("/quality/categorizedData", qualityController.getCategorizedFruitDetail);
+
+/** Order Manager */
+
+
+
+
+
+module.exports = router;
