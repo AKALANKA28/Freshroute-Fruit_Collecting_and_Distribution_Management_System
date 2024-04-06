@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom'
 
 
 
-const OPDashboard = () => {
+const OrderProcessorHomePage = () => {
   return (
     <div>
       <Header />
@@ -18,4 +18,4 @@ const OPDashboard = () => {
   )
 }
 
-export default OPDashboard
+export default OrderProcessorHomePage

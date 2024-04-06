@@ -10,8 +10,8 @@ import QualityPopupForm from "./QualityPopupForm";
 axios.defaults.baseURL = "http://localhost:8070/";
 const QualityList = () => {
 
-    const [items, setItems] = useState([]); // to store all data
-    const [tableData, setTableData] = useState([]); // to store all data
+    const [items, setItems] = useState([]);
+    const [tableData, setTableData] = useState([]);
     const [tab, setTab] = useState("A")
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);

@@ -31,7 +31,7 @@ import FDashboard from "./components/farmer/FDashboard";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-import OPDashboard from "./components/orderProcessor/OPDashboard";
+import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
 import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
 import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
@@ -158,7 +158,7 @@ const router = createBrowserRouter([
     path: "/OPDashboard",
     element: (
         <div>
-          <OPDashboard />
+          <OrderProcessorHomePage />
         </div>
     ),
     children: [
@@ -360,14 +360,6 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/OPDashboard",
-    element: (
-      <div>
-        <OPDashboard />
-      </div>
-    ),
-  },
   {
     path: "/QualityList",
     element: (
