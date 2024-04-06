@@ -1,4 +1,5 @@
 const MockOrderDetail = require("../../models/q_and_o/MockOrderDetail");
+const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
 
 exports.getPendingOrderList = async (req, res) => {
     const filter = { orderStatus: "PENDING" };
@@ -83,3 +84,53 @@ const getOrderListByFilter = async (res, filter) => {
     }
 }
 
+
+exports.getOrderProcessorList = async (req, res) => {
+    try {
+        // const op = await StaffManager.find();
+        const op = { opList: [
+                {name: "Sasanka", id: "1233456"},
+                {name: "Sasanka1", id: "852665"},
+                {name: "Sasanka2", id: "855521"},
+                {name: "Sasanka3", id: "5585255"},
+            ]};
+        res.json(op);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving order processor list", error: err.message });
+    }
+};
+
+exports.assignOrder = async (req, res) => {
+    const {orderId, opName, opId } = req.body;
+    console.log(orderId);
+    try {
+        const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
+            $set: {
+                orderStatus: "ASSIGNED",
+            }
+        }, { new: true });
+
+        if (!order) {
+            return res.status(404).json({ status: "Order not found" });
+        }
+        const orderExecutionRecord = new OrderExecutionDetail({
+            orderId: orderId,
+            opName : opName,
+            opId : opId,
+            customer : order.customer,
+            category: order.category,
+            quality: order.quality,
+            quantity: order.quantity,
+            placedDate: order.placedDate,
+            dueDate: order.dueDate,
+            orderStatus: "ASSIGNED"
+        });
+        await orderExecutionRecord.save();
+
+        res.status(200).json({ status: "Order assigned successfully", orderExecutionRecord });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error occurred while assigning the order", error: err.message });
+    }
+};

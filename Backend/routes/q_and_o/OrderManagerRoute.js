@@ -21,6 +21,7 @@ router.post("/quality/filteredQualities", qualityController.getFilteredQualities
 
 router.get("/quality/categorizedData", qualityController.getCategorizedFruitDetail);
 
+
 /** Order Manager */
 
 //Get Order List from Buyer Manager
@@ -33,4 +34,10 @@ router.post("/pendingOrderList", orderManageController.getPendingOrderListByFilt
 router.post("/ongoingOrderList", orderManageController.getOngoingOrderListByFilter);
 router.post("/completedOrderList", orderManageController.getCompletedOrderListByFilter);
 
+// Get order processor list from  staff manager
+router.get("/processorList", orderManageController.getOrderProcessorList);
+
+
+// Assign order to order processor
+router.post("/assignOrder", orderManageController.assignOrder);
 module.exports = router;

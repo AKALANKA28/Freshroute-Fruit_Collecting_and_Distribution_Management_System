@@ -24,18 +24,22 @@ const OrderExecutionDetailSchema = mongoose.Schema({
         type : String,
         required: true,   
     },
+    opId : {
+        type : String,
+        required: true,
+    },
 
     customer : {
         type : String,
         required: true,   
     },
 
-    fruitCategory: {
+    category: {
         type: String,
         required: true
     },
 
-    grade: {
+    quality: {
         type: String,
         required: true
     },
@@ -54,10 +58,10 @@ const OrderExecutionDetailSchema = mongoose.Schema({
         type: Date,
         required: true
     },
-    orderStatus: {   // PENDING  ASSIGNED IN_PROGRESS  COMPLETED
+    orderStatus: {   //  ASSIGNED IN_PROGRESS  COMPLETED
         type: String,
         required: true,
-        default: "PENDING",
+        default: "ASSIGNED",
     },
     executionHistory:[ExecutionHistorySchema]
    
