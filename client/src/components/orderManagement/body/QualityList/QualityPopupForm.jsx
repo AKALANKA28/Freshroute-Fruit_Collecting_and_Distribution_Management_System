@@ -56,11 +56,13 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
         }
         const { value } = e.target;
         if (value === "") {
+            setFruitCategory({});
             setInputDisable({ category: true, grade: true});
         } else {
             setFruitCategory(fruitDetail[value]);
             setInputDisable({ category: false, grade: true})
         }
+        setGrade([]);
         handleOnChange(e);
     }
 
