@@ -17,10 +17,15 @@ function Salary() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedSalary, setSelectedSalary] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -31,8 +36,19 @@ function Salary() {
     }
   };
 
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((employee) => {
+      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
+
   const handleRefreshClick = () => {
     getFetchData();
+    
   };
 
   const handleButtonClick = () => {
@@ -178,7 +194,7 @@ function Salary() {
           </Modal>
 
           <div className="table-container">
-            <SearchBar />
+          <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -189,8 +205,8 @@ function Salary() {
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((salary) => (
+              {filteredDataList.length ? (
+                  filteredDataList.map((salary) => (
                     <tr key={salary._id}>
                       <td>{salary.jobrole}</td>
                       <td>{salary.date}</td>

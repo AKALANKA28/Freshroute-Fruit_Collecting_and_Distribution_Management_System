@@ -16,10 +16,15 @@ function Employee() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,8 +35,18 @@ function Employee() {
     }
   };
 
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((employee) => {
+      const fullName = `${employee.name} ${employee.jobrole} ${employee.address} ${employee.nic} ${employee.email} ${employee.accno} ${employee.bankname} ${employee.joineddate}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
   const handleRefreshClick = () => {
     getFetchData();
+    
   };
 
   const handleButtonClick = () => {
@@ -177,7 +192,7 @@ function Employee() {
             </Modal.Body>
           </Modal>
         <div className="table-container">
-        <SearchBar/>
+        <SearchBar onSearch={handleSearch} />
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -194,9 +209,9 @@ function Employee() {
               </tr>
             </thead>
             <tbody>
-              {dataList.length ? (
-                dataList.map((employee) => (
-                  <tr key={employee._id}>
+            {filteredDataList.length ? (
+                  filteredDataList.map((employee) => (
+                    <tr key={employee._id}>
                     <td>{employee.name}</td>
                     <td>{employee.jobrole}</td>
                     <td>{employee.nic}</td>

@@ -5,7 +5,7 @@ import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/re
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#FFFFFF",
   },
   section: {
     margin: 10,
@@ -53,7 +53,7 @@ const EmployeeReport = ({ dataList }) => {
     <Document>
       <Page size="A3" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Salary Details Report</Text>
+          <Text style={styles.heading}>Employee Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
 
@@ -64,7 +64,6 @@ const EmployeeReport = ({ dataList }) => {
               <Text style={styles.tableColHeader}>Email Address</Text>
               <Text style={styles.tableColHeader}>Account Number</Text>
               <Text style={styles.tableColHeader}>Bank Name</Text>
-              <Text style={styles.tableColHeader}>Qualification</Text>
               <Text style={styles.tableColHeader}>Joined Date</Text>
               
             
@@ -78,7 +77,7 @@ const EmployeeReport = ({ dataList }) => {
                 <Text style={styles.tableCol}>{employee.email}</Text>
                 <Text style={styles.tableCol}>{employee.accno}</Text>
                 <Text style={styles.tableCol}>{employee.bankname}</Text>
-                <Text style={styles.tableCol}>{employee.qualifications}</Text>
+               
                 <Text style={styles.tableCol}>{employee.joineddate}</Text>
               </View>
             ))}

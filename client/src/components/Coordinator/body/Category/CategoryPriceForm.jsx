@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const CategoryPriceForm = ({ handleSubmit, handleOnChange, data }) => {
+const CategoryPriceForm = ({ handleSubmit, initialData }) => {
+
+  const [formData, setFormData] = useState({
+   
+    weight: "",
+    price: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };  
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="weight" className="form-label">
             Weight(kg)
@@ -13,25 +39,12 @@ const CategoryPriceForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="weight"
             placeholder="Weight"
-            onChange={handleOnChange}
-            value={data.weight}
+            onChange={handleChange}
+            value={formData.weight}
             
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="quality" className="form-label">
-          Quality
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="quality"
-            placeholder="Quality"
-            onChange={handleOnChange}
-            value={data.quality}
-            
-          />
-        </div>
+        
         <div className="mb-3">
           <label htmlFor="price" className="form-label">
             Price
@@ -41,8 +54,8 @@ const CategoryPriceForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="price"
             placeholder="Price"
-            onChange={handleOnChange}
-            value={data.price}
+            onChange={handleChange}
+            value={formData.price}
             
           />
         </div>

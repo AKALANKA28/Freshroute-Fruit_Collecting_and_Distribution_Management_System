@@ -1,10 +1,35 @@
-// ./client/src/components/Coordinator/body/TransportFeeForm.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
+const TransportFeeForm =  ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    vehicletype: "",
+    date: "",
+    maxweight: "",
+    pricepkm: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="vehicletype" className="form-label">
             Vehicle Type
@@ -14,8 +39,8 @@ const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="vehicletype"
             placeholder="Vehicle Type"
-            onChange={handleOnChange}
-            value={data.vehicletype}
+            onChange={handleChange}
+            value={formData.vehicletype}
             required
           />
         </div>
@@ -28,8 +53,8 @@ const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="date"
             placeholder="Date"
-            onChange={handleOnChange}
-            value={data.date}
+            onChange={handleChange}
+            value={formData.date}
             required
           />
         </div>
@@ -42,8 +67,8 @@ const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="maxweight"
             placeholder="MaxWeight(kg)"
-            onChange={handleOnChange}
-            value={data.maxweight}
+            onChange={handleChange}
+            value={formData.maxweight}
             required
           />
         </div>
@@ -56,8 +81,8 @@ const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="pricepkm"
             placeholder="  Price per km(Rs)"
-            onChange={handleOnChange}
-            value={data.pricepkm}
+            onChange={handleChange}
+            value={formData.pricepkm}
             required
           />
         </div>
@@ -65,7 +90,7 @@ const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
           Submit
         </button>
       </form>
-    </div>
+    
   );
 };
 
