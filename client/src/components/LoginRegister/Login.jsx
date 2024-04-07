@@ -39,7 +39,12 @@ const login = () => {
 
                    <h4>Welcome Back!</h4>
                    {/* <span className='showMessage'>Login status will go here</span> */}
-
+                   {/* <div class="sign-in-options">
+                        <div class="signin">
+                            <a href="#" class="google"><i class="fab fa-google"></i> Sign in with Google</a>
+                            <a href="#" class="facebook"><i class="fab fa-facebook"></i> Sign in with Facebook</a>
+                        </div>
+                    </div> */}
                    <form action="">
                       <div class="input-field">
                             <input type="text" class="input" id="email" required="" autocomplete="off"/>

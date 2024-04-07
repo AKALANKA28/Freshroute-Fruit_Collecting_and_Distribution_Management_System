@@ -40,18 +40,50 @@ import EditOrder from './components/NormalOrder/EditOrder';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Website from './Website/Website';
+import Home from './Website/Home';
+import About from "./Website/About";
+import Shop from "./Website/Shop";
+import Contact from "./Website/Contact";
 
 const router = createBrowserRouter([
 
   {
-    path: "/freshroute",
+    path: "/home",
     element: (
       <div>
-        <Website />
+        <Home />
       </div>
     ),
   },
+
+  {
+    path: "/about",
+    element: (
+      <div>
+        <About />
+      </div>
+    ),
+  },
+
+  {
+    path: "/shop",
+    element: (
+      <div>
+        <Shop />
+      </div>
+    ),
+  },
+
+  {
+    path: "/contact",
+    element: (
+      <div>
+        <Contact />
+      </div>
+    ),
+  },
+
+
 
   {
     path: "/login",

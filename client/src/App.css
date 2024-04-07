@@ -18,6 +18,7 @@
   --bgColor: #e8e8e8;
   --textColor: #79797c;
   --inputColor: #f8f6f7;
+  --colorYellow: #FEAA09;
 
   --biggestFontSize: 2.5rem;
   --h1FontSize: 1.5rem;
@@ -480,9 +481,7 @@ header .search-form input:hover{
 }
 
 
-::-webkit-scrollbar {
-  display: none;
-}
+
 
 .sidebar-nav{
   padding: 0;
@@ -652,3 +651,6 @@ header .search-form input:hover{
 /* ---------------------------------------------------- */
 
 
+/* ::-webkit-scrollbar {
+  display: none;
+} */

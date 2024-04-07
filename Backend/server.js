@@ -3,11 +3,17 @@ const express = require("express")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-
 const dotenv = require("dotenv");
-
 const app = express();
 require("dotenv").config();
+
+const { errorHandler, notFound } = require("./middlewares/errorHandler.js");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan")
+
+const authRouter = require('./routes/authRoute.js');
+const productRouter = require('./routes/productRoute.js');
 
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
@@ -22,16 +28,13 @@ const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const router = require("./routes/farmers/farmerRoutes");
 const itemRouter = require("./routes/buyers/Bmanager")
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
-
 const qualityRoute = require("./routes/q_and_o/qualityRoute");
-
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 
-
-
+app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.json());
-
+app.use(cookieParser());
 // Connect to MongoDB
 const URL = process.env.MONGODB_URL;
 
@@ -46,6 +49,8 @@ connection.once("open", () => {
 });
 
 // Use the routes
+app.use('/user', authRouter);
+app.use('/product', productRouter);
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
@@ -57,16 +62,14 @@ app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
 app.use('/Farmer', router);
 app.use(itemRouter);
-
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
-
 app.use('/quality', qualityRoute);
-
 app.use("/CalculateSalary", CalculateSalaryRouter);
 
 
-
+app.use(notFound);
+app.use(errorHandler);
 // Start the server
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
