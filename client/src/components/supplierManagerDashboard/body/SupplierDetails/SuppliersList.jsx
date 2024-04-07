@@ -26,7 +26,7 @@ function SuppliersList() {
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+    setFilteredDataList(dataList); // InitialidataListze filteredDataList with 
   }, [dataList]);
 
   const getFetchData = async () => {

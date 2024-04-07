@@ -5,6 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import SearchBar from './SearchBar';
 import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
 
@@ -15,10 +16,16 @@ function PredictionsList() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedPrediction, setSelectedPrediction] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [searchAttribute, setSearchAttribute] = useState('fruit'); // Initialize with 'fruit'
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,7 +37,7 @@ function PredictionsList() {
   };
 
   const handleRefreshClick = () => {
-    getFetchData();
+    window.location.reload();
   };
 
   const handleButtonClick = () => {
@@ -88,6 +95,28 @@ function PredictionsList() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((prediction) => {
+      // Check the selected search attribute and filter accordingly
+      switch (searchAttribute) {
+        case 'fruit':
+          const fruit = `${prediction.fruit} ${prediction.subCategory}`;
+          return fruit.toLowerCase().includes(query.toLowerCase());
+        case 'quality':
+          return prediction.quality.toLowerCase().includes(query.toLowerCase());
+        default:
+          return false;
+      }
+    });
+    setFilteredDataList(filteredList);
+  };
+
+  // Function to handle search attribute change
+  const handleSearchAttributeChange = (event) => {
+    setSearchAttribute(event.target.value);
   };
 
   const [showReportModal, setShowReportModal] = useState(false);
@@ -178,7 +207,11 @@ function PredictionsList() {
           </Modal>
 
           <div className="table-container">
-            {/* <SearchBar /> */}
+            <SearchBar
+              onSearch={handleSearch}
+              searchAttribute={searchAttribute}
+              onSearchAttributeChange={handleSearchAttributeChange}
+            />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -192,8 +225,8 @@ function PredictionsList() {
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((prediction) => (
+                {filteredDataList.length ? (
+                  filteredDataList.map((prediction) => (
                     <tr key={prediction._id}>
                       <td>{prediction.fruit}</td>
                       <td>{prediction.subCategory}</td>
