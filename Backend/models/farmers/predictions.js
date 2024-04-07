@@ -2,7 +2,12 @@ mongoose = require("mongoose");
 
 const PredictionSchema = new mongoose.Schema({
 
-    fruitType : {
+    fruit : {
+        type : String,
+        required: true
+    },
+
+    subCategory : {
         type : String,
         required: true
     },

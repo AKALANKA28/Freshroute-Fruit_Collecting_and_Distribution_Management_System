@@ -115,14 +115,14 @@ function PredictionsList() {
               </li>
               <li>
                 <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
+                  <a onClick={handleButtonClick}>
                     <img src={Excel} alt="Excel Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
                 <div className="button-container">
-                  <a href="#" onClick={handleRefreshClick}>
+                  <a onClick={handleRefreshClick}>
                     <img src={Refresh} alt="Refresh Icon" className="icon" />
                   </a>
                 </div>
@@ -182,7 +182,8 @@ function PredictionsList() {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">Fruit Type</th>
+                  <th scope="col">Fruit</th>
+                  <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Price</th>
@@ -194,7 +195,8 @@ function PredictionsList() {
                 {dataList.length ? (
                   dataList.map((prediction) => (
                     <tr key={prediction._id}>
-                      <td>{prediction.fruitType}</td>
+                      <td>{prediction.fruit}</td>
+                      <td>{prediction.subCategory}</td>
                       <td>{prediction.quality}</td>
                       <td>{prediction.quantity}</td>
                       <td>{prediction.price}</td>
@@ -219,7 +221,7 @@ function PredictionsList() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5">No Data</td>
+                    <td colSpan="6">No Data</td>
                   </tr>
                 )}
               </tbody>

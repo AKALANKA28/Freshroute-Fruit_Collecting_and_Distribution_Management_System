@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 const PredictionForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
-    fruitType: "",
+    fruit: "",
+    subCategory: "",
     quality: "",
     quantity: "",
     price: "",
@@ -10,7 +11,8 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
   });
 
   const [formErrors, setFormErrors] = useState({
-    fruitType: "",
+    fruit: "",
+    subCategory: "",
     quality: "",
     quantity: "",
     price: "",
@@ -36,8 +38,11 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
   const validateInput = (name, value) => {
     let error = "";
     switch (name) {
-      case "fruitType":
-        error = value.trim().length === 0 ? "Fruit type is required" : "";
+      case "fruit":
+        error = value.trim().length === 0 ? "Name of Fruit is required" : "";
+        break;
+      case "subCategory":
+        error = value.trim().length === 0 ? "Sub Category is required" : "";
         break;
       case "quality":
         error = value.trim().length === 0 ? "Quality is required" : "";
@@ -75,24 +80,41 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
-        <label htmlFor="fruitType" className="form-label">
-          Fruit Type
+        <label htmlFor="fruit" className="form-label">
+          Fruit
         </label>
         <input
           type="text"
-          className={`form-control ${formErrors.fruitType && "is-invalid"}`}
-          name="fruitType"
-          id="fruitType"
-          placeholder="Enter Fruit Type"
+          className={`form-control ${formErrors.fruit && "is-invalid"}`}
+          name="fruit"
+          id="fruit"
+          placeholder="Enter Name of Fruit"
           required
           onChange={handleChange}
-          value={formData.fruitType}
+          value={formData.fruit}
         />
-        {formErrors.fruitType && <div className="invalid-feedback">{formErrors.fruitType}</div>}
+        {formErrors.fruit && <div className="invalid-feedback">{formErrors.fruit}</div>}
       </div>
       
       <div className="mb-3">
-            <label htmlFor="date" className="form-label">
+        <label htmlFor="subCategory" className="form-label">
+          Sub Category
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.subCategory && "is-invalid"}`}
+          name="subCategory"
+          id="subCategory"
+          placeholder="Enter Name of Fruit"
+          required
+          onChange={handleChange}
+          value={formData.subCategory}
+        />
+        {formErrors.subCategory && <div className="invalid-feedback">{formErrors.subCategory}</div>}
+      </div>
+
+      <div className="mb-3">
+            <label htmlFor="quality" className="form-label">
             Quality
             </label>
             <input
@@ -108,7 +130,7 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
+          <label htmlFor="quantity" className="form-label">
           Quantity
           </label>
           <input
@@ -124,7 +146,7 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
+          <label htmlFor="priceForOne" className="form-label">
             Price of One
           </label>
           <input
@@ -140,7 +162,7 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">
+          <label htmlFor="dateCanBeGiven" className="form-label">
           Date Can Be Given
           </label>
           <input
