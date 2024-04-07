@@ -20,7 +20,7 @@ function Category() {
   const [dataList, setDataList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
-
+  
   useEffect(() => {
     getFetchData();
   }, []);
@@ -46,6 +46,8 @@ function Category() {
     });
     setFilteredDataList(filteredList);
   };
+
+  
 
 
   const handleRefreshClick = () => {
@@ -231,12 +233,12 @@ function Category() {
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
+              <th scope="col">Date</th>
               <th scope="col">Fruit</th>
               <th scope="col">Category</th>
-              <th scope="col">Date</th>
-              <th scope="col">Weight</th>
               <th scope="col">Quality</th>
-              <th scope="col">Price</th>
+              <th scope="col">Quality Description</th>
+              <th scope="col">Price(1KG)</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -244,11 +246,11 @@ function Category() {
           {filteredDataList.length ? (
                   filteredDataList.map((category) => (
                 <tr key={category._id}>
+                  <td>{category.date}</td>
                   <td>{category.fruit}</td>
                   <td>{category.category}</td>
-                  <td>{category.date}</td>
-                  <td>{category.weight}</td>
                   <td>{category.quality}</td>
+                  <td>{category.qualityDesc}</td>
                   <td>{category.price}</td>
                   <td className="action">
                     <div className="buttons">
