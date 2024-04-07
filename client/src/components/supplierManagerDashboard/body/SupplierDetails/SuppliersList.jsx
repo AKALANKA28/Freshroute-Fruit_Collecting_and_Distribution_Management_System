@@ -5,8 +5,12 @@ import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import SearchBar from './SearchBar';
 import FarmerForm from "./FarmerForm";
 import SupplierReport from "./SupplierReport";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
+import './farmers.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -15,10 +19,15 @@ function SuppliersList() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFarmer, setSelectedFarmer] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // InitialidataListze filteredDataList with 
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,12 +39,26 @@ function SuppliersList() {
   };
 
   const handleRefreshClick = () => {
-    getFetchData();
+    window.location.reload();
   };
 
-  const handleButtonClick = () => {
-    getFetchData();
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "suppliers_report.xlsx");
   };
+  
+  const handleButtonClick = () => {
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
+  };
+  
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);
@@ -55,13 +78,15 @@ function SuppliersList() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/Farmer/delete/${id}`);
-      alert("Successfully Deleted");
-      window.location.reload();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
+    const confirmDelete = window.confirm("Are you sure you want to delete this farmer?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(`/Farmer/delete/${id}`);
+        alert("Successfully Deleted");
+        getFetchData();
+      } catch (err) {
+        alert(err.message);
+      }
     }
   };
 
@@ -88,45 +113,78 @@ function SuppliersList() {
     }
   };
 
+
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((farmer) => {
+      // Check the selected search attribute and filter accordingly
+      switch (searchAttribute) {
+        case 'name':
+          const fullName = `${farmer.name} ${farmer.username}`;
+          return fullName.toLowerCase().includes(query.toLowerCase());
+        case 'email':
+          return farmer.email.toLowerCase().includes(query.toLowerCase());
+        case 'city':
+          return farmer.city.toLowerCase().includes(query.toLowerCase());
+        default:
+          return false;
+      }
+    });
+    setFilteredDataList(filteredList);
+  };
+
+  // State variable for selected search attribute
+  const [searchAttribute, setSearchAttribute] = useState('name');
+
+  // Function to handle search attribute change
+  const handleSearchAttributeChange = (event) => {
+    setSearchAttribute(event.target.value);
+  };
+
+
+
+
+
   const [showReportModal, setShowReportModal] = useState(false);
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
   return (
-    <div  id="main col-8">
+    <div id="main col-8">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
-            <div class="add-item d-flex">
-              <div class="card-title">
+            <div className="add-item d-flex">
+              <div className="card-title">
                 Supplier Details
                 <h6>Manage Supplier Details</h6>
               </div>
             </div>
-            <ul class="table-top-head" style={{ float: "right" }}>
+            <ul className="table-top-head" style={{ float: "right" }}>
               <li>
-                <div className="button-container">
+                <div className="button-container" title="Generate Report as PDF">
                   <a onClick={handleShowReportModal}>
                     <img src={Pdf} alt="Pdf Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
+                <div className="button-container" title="Generate Report as Excel">
+                  <a onClick={handleButtonClick}>
                     <img src={Excel} alt="Excel Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleRefreshClick}>
+                <div className="button-container" title="Refresh">
+                  <a onClick={handleRefreshClick}>
                     <img src={Refresh} alt="Refresh Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
-                <div class="page-btn">
+                <div className="page-btn">
                   <button
                     type="button"
                     className="btn btn-added"
@@ -176,7 +234,7 @@ function SuppliersList() {
           </Modal>
 
           <div className="table-container">
-            {/* <SearchBar /> */}
+          <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -190,8 +248,8 @@ function SuppliersList() {
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((farmer) => (
+                {filteredDataList.length ? (
+                  filteredDataList.map((farmer) => (
                     <tr key={farmer._id}>
                       <td>{farmer.NIC}</td>
                       <td>{farmer.username}</td>
@@ -203,12 +261,14 @@ function SuppliersList() {
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
+                            title="Edit"
                             onClick={() => handleEditModalOpen(farmer)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
                           <button
                             className="btn btn-delete"
+                            title="Delete"
                             onClick={() => handleDelete(farmer._id)}
                           >
                             <i className="bi bi-trash-fill"></i>

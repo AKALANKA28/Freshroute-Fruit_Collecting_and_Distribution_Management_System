@@ -64,10 +64,31 @@ const updateCategory = async (req, res) => {
   }
 };
 
+const getFruitNames = async (req, res) => {
+  try {
+    const fruitNames = await Category.distinct("fruit");
+    res.json(fruitNames);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const getSubCategoriesByFruit = async (req, res) => {
+  const fruit = req.params.fruit;
+  try {
+    const subCategories = await Category.distinct("category", { fruit: fruit });
+    res.json(subCategories);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addCategory,
   getAllCategories,
   getOneCategory,
   deleteCategory,
   updateCategory,
+  getFruitNames,
+  getSubCategoriesByFruit,
 };

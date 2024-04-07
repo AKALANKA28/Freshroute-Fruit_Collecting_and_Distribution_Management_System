@@ -2,18 +2,19 @@ import React from 'react'
 import avatar from '../../../../assests/heshan.jpg'
 
 function NavAvatar () {
+  
   return (
     <div>
      <li className='nav-item dropdown pe-3'>
       <a className='nav-link nav-profile d-flex align-items-center pe-8' href='#' data-bs-toggle="dropdown">
        <img src={avatar} alt='profile' className='rounded-circle' /> 
-        <span className='d-none d-md-block dropdown-toggle ps-2'>Heshan Chamika</span>
+        <span className='d-none d-md-block dropdown-toggle ps-2'>Supplier's Name</span>
       </a>
 
       <ul className='dropdown-menu dropdown-menu-end dropdown-menu-arrow profile'>
         <li className='dropdown-header'>
-          <h6>Heshan Chamika</h6>
-          <span>Supplier Manager</span>
+          <h6>Supplier's Name</h6>
+          <span>Supplier</span>
         </li>
 
         <li>
