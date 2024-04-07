@@ -1,0 +1,41 @@
+const mongoose = require("mongoose");
+
+const FruitDetailSchema = new mongoose.Schema({
+  fruit: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  weight: {
+    type: String,
+  },
+  price: {
+    type: String,
+  },
+  quality: {
+    type: String,
+  },
+  qualityDesc: {
+    type: String,
+  },
+  storageCond: {
+    type: String,
+  },
+  qualityStatus: {
+    // 0 - quality has not defined     1 - quality has defined
+    type: Number,
+    required: true,
+    default: 0,
+  },
+});
+
+const FruitDetail = mongoose.model("FruitDetail", FruitDetailSchema);
+
+module.exports = FruitDetail;

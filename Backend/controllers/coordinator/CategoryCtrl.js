@@ -1,5 +1,4 @@
-// .Backend/controllers/coordinator/CategoryCtrl
-const Category = require("../../models/coordinator/Category");
+const Category = require("../../models/coordinator/FruitDetail");
 
 const addCategory = async (req, res) => {
   const { fruit, category, date, weight, quality, price } = req.body;

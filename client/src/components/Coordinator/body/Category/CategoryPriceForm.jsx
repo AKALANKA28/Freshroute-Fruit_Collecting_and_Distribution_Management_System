@@ -30,20 +30,7 @@ const CategoryPriceForm = ({ handleSubmit, initialData }) => {
   return (
     <div>
       <form onSubmit={handleFormSubmit}>
-        <div className="mb-3">
-          <label htmlFor="weight" className="form-label">
-            Weight(kg)
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="weight"
-            placeholder="Weight"
-            onChange={handleChange}
-            value={formData.weight}
-            
-          />
-        </div>
+        
         
         <div className="mb-3">
           <label htmlFor="price" className="form-label">

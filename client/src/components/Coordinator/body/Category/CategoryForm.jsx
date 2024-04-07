@@ -60,20 +60,6 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Date
-          </label>
-          <input
-            type="date"
-            className="form-control"
-            name="date"
-            placeholder="Date"
-            onChange={handleChange}
-            value={formData.date}
-            required
-          />
-        </div>
-        <div className="mb-3">
          <label htmlFor="quality" className="form-label">Quality</label>
          <select
              className="form-select"
@@ -88,6 +74,21 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
            <option value="C">C</option>
          </select>
         </div>
+        <div className="mb-3">
+          <label htmlFor="date" className="form-label">
+            Date
+          </label>
+          <input
+            type="date"
+            className="form-control"
+            name="date"
+            placeholder="Date"
+            onChange={handleChange}
+            value={formData.date}
+            required
+          />
+        </div>
+        
 
         <button type="submit" className="btn btn-success">Submit</button>
       </form>
