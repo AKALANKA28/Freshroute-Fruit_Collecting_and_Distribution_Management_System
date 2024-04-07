@@ -163,22 +163,22 @@ function SuppliersList() {
             </div>
             <ul className="table-top-head" style={{ float: "right" }}>
               <li>
-                <div className="button-container">
+                <div className="button-container" title="Generate Report as PDF">
                   <a onClick={handleShowReportModal}>
                     <img src={Pdf} alt="Pdf Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
+                <div className="button-container" title="Generate Report as Excel">
+                  <a onClick={handleButtonClick}>
                     <img src={Excel} alt="Excel Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleRefreshClick}>
+                <div className="button-container" title="Refresh">
+                  <a onClick={handleRefreshClick}>
                     <img src={Refresh} alt="Refresh Icon" className="icon" />
                   </a>
                 </div>
@@ -261,12 +261,14 @@ function SuppliersList() {
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
+                            title="Edit"
                             onClick={() => handleEditModalOpen(farmer)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
                           <button
                             className="btn btn-delete"
+                            title="Delete"
                             onClick={() => handleDelete(farmer._id)}
                           >
                             <i className="bi bi-trash-fill"></i>
