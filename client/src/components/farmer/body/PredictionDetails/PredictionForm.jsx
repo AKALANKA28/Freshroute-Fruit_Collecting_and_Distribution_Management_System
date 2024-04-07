@@ -105,7 +105,7 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
           className={`form-control ${formErrors.subCategory && "is-invalid"}`}
           name="subCategory"
           id="subCategory"
-          placeholder="Enter Name of Fruit"
+          placeholder="Enter Sub Category"
           required
           onChange={handleChange}
           value={formData.subCategory}
