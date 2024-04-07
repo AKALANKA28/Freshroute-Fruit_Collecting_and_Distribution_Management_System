@@ -24,6 +24,15 @@ const getAllNotices = async (req, res) => {
   }
 };
 
+const getNoticesCount = async (req, res) => {
+  try {
+    const notices = await Notice.find();
+    res.json({ count: notices.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 const getOneNotice = async (req, res) => {
   const id = req.params.id;
   try {
@@ -65,4 +74,5 @@ module.exports = {
   getOneNotice,
   deleteNotice,
   updateNotice,
+  getNoticesCount,
 };
