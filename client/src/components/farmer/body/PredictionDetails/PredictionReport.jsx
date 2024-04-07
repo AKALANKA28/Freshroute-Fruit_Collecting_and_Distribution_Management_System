@@ -59,8 +59,8 @@ const PredictionReport = ({ dataList }) => {
               <Text style={styles.tableColHeader}>Sub Category</Text>
               <Text style={styles.tableColHeader}>Quality</Text>
               <Text style={styles.tableColHeader}>Quantity</Text>
-              <Text style={styles.tableColHeader}>Price</Text>
-              <Text style={styles.tableColHeader}>Date can be given</Text>
+              <Text style={styles.tableColHeader}>Price for One</Text>
+              <Text style={styles.tableColHeader}>Date Can Be Given</Text>
             </View>
             {dataList.map((prediction, index) => (
               <View key={index} style={styles.tableRow}>
