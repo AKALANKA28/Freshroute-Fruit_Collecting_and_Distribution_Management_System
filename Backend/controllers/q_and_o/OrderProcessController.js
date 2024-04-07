@@ -1,120 +1,110 @@
 const mockController = require("./mockController")
 const Order = require('../../models/q_and_o/OrderExecutionDetail');
+const MockOrderDetail = require("../../models/q_and_o/MockOrderDetail");
 
 //temp
 exports.addToMock = async (req, res) => {
     await mockController.addMockOrder(req, res);
 };
 
-
-// Controller for adding a new order
-exports.addOrder = async (req, res) => {
+exports.getSupplierList = async (req, res) => {
     try {
-        const {
-            opName,
-            customer,
-            fruitCategory,
-            grade,
-            quantity,
-            placedDate,
-            dueDate,
-            executionHistory
-        } = req.body;
-
-        const newOrder = new Order({
-            opName,
-            customer,
-            fruitCategory,
-            grade,
-            quantity,
-            placedDate,
-            dueDate,
-            executionHistory
-        });
-
-        await newOrder.save();
-        res.json("Order Added");
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error adding order", error: err.message });
-    }
-};
-
-// Controller for retrieving all orders
-exports.getAllOrders = async (req, res) => {
-    try {
-        const allOrders = await Order.find();
-        res.json(allOrders);
+        const { fruit, category, quality } = req.body;
+        // const filter = { fruit:fruit, category:category, quality:quality}
+        // const supplierList = await Supplier.find(filter);
+        const supplierList = [
+            {name:"AA", quantity: 1000, price: 100},
+            {name:"BB", quantity: 500, price: 100},
+            {name:"CC", quantity: 5000, price: 100},
+            {name:"DD", quantity: 785, price: 100},
+            {name:"EE", quantity: 3689, price: 100},
+        ]
+        res.json(supplierList);
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error retrieving orders", error: err.message });
     }
 };
 
-// Controller for retrieving a specific order by ID
-exports.getOrderById = async (req, res) => {
-    try {
-        const orderId = req.params.id;
-        const foundOrder = await Order.findById(orderId);
-        
-        if (!foundOrder) {
-            return res.status(404).json({ status: "Order not found" });
-        }
-        
-        res.status(200).json({ status: "Order fetched", order: foundOrder });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error retrieving order", error: err.message });
+exports.getAssignedOrderList = async (req, res) => {
+    const filter = { orderStatus: "ASSIGNED" };
+    await getOrderListByFilter(res, filter);
+};
+
+exports.getOngoingOrderList = async (req, res) => {
+    const filter = { orderStatus: "IN_PROGRESS" };
+    await getOrderListByFilter(res, filter);
+};
+
+exports.getCompletedOrderList = async (req, res) => {
+    const filter = { orderStatus: "COMPLETED" };
+    await getOrderListByFilter(res, filter);
+};
+exports.getAssignedOrderListByFilter = async (req, res) => {
+    const filter = createFilterFromRequest(req);
+    if (filter) {
+        filter.orderStatus = "PENDING";
+        await getOrderListByFilter(res, filter);
+    } else {
+        res.status(400).json({ message: 'Invalid filter type' });
     }
 };
 
-// Controller for updating an order
-exports.updateOrder = async (req, res) => {
-    try {
-        const orderId = req.params.id;
-        const {
-            opName,
-            customer,
-            fruitCategory,
-            grade,
-            quantity,
-            placedDate,
-            dueDate,
-            executionHistory
-        } = req.body;
-
-        const updateOrder = {
-            opName,
-            customer,
-            fruitCategory,
-            grade,
-            quantity,
-            placedDate,
-            dueDate,
-            executionHistory
-        };
-
-        const updatedOrder = await Order.findByIdAndUpdate(orderId, updateOrder, { new: true });
-
-        if (!updatedOrder) {
-            return res.status(404).json({ status: "Order not found" });
-        }
-
-        res.status(200).json({ status: "Order updated", updatedOrder });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error updating order", error: err.message });
+exports.getOngoingOrderListByFilter = async (req, res) => {
+    const filter = createFilterFromRequest(req);
+    if (filter) {
+        filter.$or = [{ orderStatus: "ASSIGNED" }, { orderStatus: "IN_PROGRESS" }];
+        await getOrderListByFilter(res, filter);
+    } else {
+        res.status(400).json({ message: 'Invalid filter type' });
     }
 };
 
-// Controller for deleting an order
-exports.deleteOrder = async (req, res) => {
-    try {
-        const orderId = req.params.id;
-        await Order.findByIdAndDelete(orderId);
-        res.status(200).json({ status: "Order deleted" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error deleting order", error: err.message });
+exports.getCompletedOrderListByFilter = async (req, res) => {
+    const filter = createFilterFromRequest(req);
+    if (filter) {
+        filter.orderStatus = "COMPLETED";
+        await getOrderListByFilter(res, filter);
+    } else {
+        res.status(400).json({ message: 'Invalid filter type' });
     }
 };
+
+const createFilterFromRequest = (req) => {
+    const filterType = req.body.filterType;
+    const filterValue = req.body.filterValue;
+    let filter;
+    switch (filterType) {
+        case 'fruit':
+            filter = { fruit: new RegExp(filterValue, 'i') };
+            break;
+        case 'category':
+            filter = { category: new RegExp(filterValue, 'i') };
+            break;
+        case 'quality':
+            filter = { quality: new RegExp(filterValue, 'i') };
+            break;
+        case 'customer':
+            filter = { customer: new RegExp(filterValue, 'i') };
+            break;
+        case 'placedDate':
+            filter = { placedDate: new Date(filterValue) };
+            break;
+        case 'dueDate':
+            filter = { dueDate: new Date(filterValue) };
+            break;
+        default:
+            return null;
+    }
+    return filter;
+}
+
+const getOrderListByFilter = async (res, filter) => {
+    try {
+        const pendingOrderList = await Order.find(filter);
+        res.json(pendingOrderList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+}

@@ -4,18 +4,17 @@ const orderProcessController = require('../../controllers/q_and_o/OrderProcessCo
 
 // Add a new quality record
 // router.post("/add", orderProcessController.addQuality);
-router.post("/mock/add", orderProcessController.addToMock); // Corrected function name
+router.post("/mock/add", orderProcessController.addToMock);
 
-// Retrieve all quality records
-// router.get("/", orderProcessController.getAllQualities); // Corrected function name
+// Retrieve supplier list
+router.get("/supplierList", orderProcessController.getSupplierList);
 
-// Retrieve a specific quality record by ID
-// router.get("/get/:id", orderProcessController.getQualityById);
+router.get("/pendingOrderList", orderProcessController.getAssignedOrderList);
+router.get("/ongoingOrderList", orderProcessController.getOngoingOrderList);
+router.get("/completedOrderList", orderProcessController.getCompletedOrderList);
 
-// Update a quality record
-// router.put("/update/:id", orderProcessController.updateQuality);
-
-// Delete a quality record
-// router.delete("/delete/:id", orderProcessController.deleteQuality);
+router.post("/pendingOrderList", orderProcessController.getAssignedOrderListByFilter);
+router.post("/ongoingOrderList", orderProcessController.getOngoingOrderListByFilter);
+router.post("/completedOrderList", orderProcessController.getCompletedOrderListByFilter);
 
 module.exports = router;
