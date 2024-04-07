@@ -40,4 +40,5 @@ router.get("/processorList", orderManageController.getOrderProcessorList);
 
 // Assign order to order processor
 router.post("/assignOrder", orderManageController.assignOrder);
+router.delete("/unAssignOrder/:orderId", orderManageController.unAssignOrder);
 module.exports = router;

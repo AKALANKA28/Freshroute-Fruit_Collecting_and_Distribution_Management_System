@@ -103,7 +103,6 @@ exports.getOrderProcessorList = async (req, res) => {
 
 exports.assignOrder = async (req, res) => {
     const {orderId, opName, opId } = req.body;
-    console.log(orderId);
     try {
         const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
             $set: {
@@ -118,7 +117,7 @@ exports.assignOrder = async (req, res) => {
             orderId: orderId,
             opName : opName,
             opId : opId,
-            customer : order.customer,
+            customer : order.customerName,
             category: order.category,
             quality: order.quality,
             quantity: order.quantity,
@@ -129,6 +128,30 @@ exports.assignOrder = async (req, res) => {
         await orderExecutionRecord.save();
 
         res.status(200).json({ status: "Order assigned successfully", orderExecutionRecord });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error occurred while assigning the order", error: err.message });
+    }
+};
+
+
+exports.unAssignOrder = async (req, res) => {
+    const orderId = req.params.orderId;
+
+
+    try {
+        const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
+            $set: {
+                orderStatus: "PENDING",
+            }
+        }, { new: true });
+
+        if (!order) {
+            return res.status(404).json({ status: "Order not found" });
+        }
+        const orderExecutionRecord = await OrderExecutionDetail.find({orderId: orderId});
+        await OrderExecutionDetail.findByIdAndDelete(orderExecutionRecord[0]._id)
+        res.status(200).json({ status: "Order removed from " +orderExecutionRecord.opName});
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error occurred while assigning the order", error: err.message });
