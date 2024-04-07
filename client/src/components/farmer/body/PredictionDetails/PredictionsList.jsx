@@ -6,6 +6,8 @@ import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import SearchBar from './SearchBar';
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
 
@@ -40,8 +42,31 @@ function PredictionsList() {
     window.location.reload();
   };
 
+  const generateExcelFile = () => {
+    // Rearrange the order of properties for each prediction object
+    const rearrangedDataList = dataList.map(prediction => ({
+      fruit: prediction.fruit,
+      subCategory: prediction.subCategory,
+      quality: prediction.quality,
+      quantity: prediction.quantity,
+      price: prediction.price,
+      dateCanBeGiven: prediction.dateCanBeGiven
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Predictions Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "predictions_report.xlsx");
+  };
+  
   const handleButtonClick = () => {
-    getFetchData();
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
