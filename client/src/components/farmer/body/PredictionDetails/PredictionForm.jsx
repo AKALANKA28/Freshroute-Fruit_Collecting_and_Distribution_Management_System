@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const PredictionForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
@@ -19,14 +20,43 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
     dateCanBeGiven: "",
   });
 
+  const [fruitList, setFruitList] = useState([]);
+  const [subCategoryList, setSubCategoryList] = useState([]);
+
+  useEffect(() => {
+    fetchFruitNames();
+  }, []);
+
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
+      fetchSubCategories(initialData.fruit);
     }
   }, [initialData]);
 
+  const fetchFruitNames = async () => {
+    try {
+      const response = await axios.get("/Category/fruitdetails");
+      setFruitList(response.data);
+    } catch (error) {
+      console.error("Error fetching fruit names:", error);
+    }
+  };
+
+  const fetchSubCategories = async (selectedFruit) => {
+    try {
+      const response = await axios.get(`/Category/subcategories/${selectedFruit}`);
+      setSubCategoryList(response.data);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "fruit") {
+      fetchSubCategories(value);
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -76,23 +106,27 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
   };
 
   const today = new Date().toISOString().split("T")[0]; // Get today's date
-
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
         <label htmlFor="fruit" className="form-label">
           Fruit
         </label>
-        <input
-          type="text"
-          className={`form-control ${formErrors.fruit && "is-invalid"}`}
+        <select
+          className="form-select"
           name="fruit"
           id="fruit"
-          placeholder="Enter Name of Fruit"
-          required
-          onChange={handleChange}
           value={formData.fruit}
-        />
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Fruit</option>
+          {fruitList.map((fruit) => (
+            <option key={fruit} value={fruit}>
+              {fruit}
+            </option>
+          ))}
+        </select>
         {formErrors.fruit && <div className="invalid-feedback">{formErrors.fruit}</div>}
       </div>
       
@@ -100,24 +134,29 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
         <label htmlFor="subCategory" className="form-label">
           Sub Category
         </label>
-        <input
-          type="text"
-          className={`form-control ${formErrors.subCategory && "is-invalid"}`}
+        <select
+          className="form-select"
           name="subCategory"
           id="subCategory"
-          placeholder="Enter Sub Category"
-          required
-          onChange={handleChange}
           value={formData.subCategory}
-        />
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Sub Category</option>
+          {subCategoryList.map((subCategory) => (
+            <option key={subCategory} value={subCategory}>
+              {subCategory}
+            </option>
+          ))}
+        </select>
         {formErrors.subCategory && <div className="invalid-feedback">{formErrors.subCategory}</div>}
       </div>
 
       <div className="mb-3">
-            <label htmlFor="quality" className="form-label">
-            Quality
-            </label>
-            <input
+             <label htmlFor="quality" className="form-label">
+             Quality
+             </label>
+             <input
             type="text"
             className="form-control"
             name="quality"
@@ -127,9 +166,9 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
             value={formData.quality}
           />
           {formErrors.quality && <div className="invalid-feedback">{formErrors.quality}</div>}
-        </div>
+      </div>
 
-        <div className="mb-3">
+      <div className="mb-3">
           <label htmlFor="quantity" className="form-label">
           Quantity
           </label>
@@ -143,9 +182,9 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
             value={formData.quantity}
           />
           {formErrors.quantity && <div className="invalid-feedback">{formErrors.quantity}</div>}
-        </div>
+      </div>
 
-        <div className="mb-3">
+      <div className="mb-3">
           <label htmlFor="priceForOne" className="form-label">
             Price of One
           </label>
@@ -177,7 +216,7 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
           />
           {formErrors.dateCanBeGiven && <div className="invalid-feedback">{formErrors.dateCanBeGiven}</div>}
         </div>
-
+      
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
