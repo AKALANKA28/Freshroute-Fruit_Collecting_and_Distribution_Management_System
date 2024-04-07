@@ -14,6 +14,7 @@ const morgan = require("morgan")
 
 const authRouter = require('./routes/authRoute.js');
 const productRouter = require('./routes/productRoute.js');
+const categoryRouter = require('./routes/categoryRoute.js');
 
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
@@ -51,6 +52,8 @@ connection.once("open", () => {
 // Use the routes
 app.use('/user', authRouter);
 app.use('/product', productRouter);
+app.use('/productCategory', categoryRouter);
+
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
@@ -74,7 +77,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
 
-  console.log("\nDatabase Connected 😌");
+  console.log("\nDatabase Connected 😎");
 
   console.log(`Server is up and running on port: ${PORT}`);
 });

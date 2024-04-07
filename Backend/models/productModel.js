@@ -25,18 +25,16 @@ var productSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    quantity:{
-        type: String,
+    quantity: {
+        type: Number,
         required: true,
     },
     sold: {
         type: Number,
         default: 0,
-        select: false,
     },
-    images: {
-        type: Array,
-    },
+    images: [],
+    
     color: {
         type: String,
     },
