@@ -261,3 +261,8 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.btn-action {
+  width: 80px; /* Adjust the width as needed */
+  white-space: nowrap; /* Prevent text wrapping */
+}

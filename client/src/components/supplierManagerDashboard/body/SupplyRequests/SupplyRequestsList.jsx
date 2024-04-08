@@ -92,30 +92,30 @@ function SupplyRequestsList() {
                 </tr>
               </thead>
               <tbody>
-                {supplyRequests.map((request) => (
-                  <tr key={request._id}>
-                    <td>{request.fruit}</td>
-                    <td>{request.subCategory}</td>
-                    <td>{request.quality}</td>
-                    <td>{request.quantity}</td>
-                    <td>{request.price}</td>
-                    <td>{request.dateCanBeGiven}</td>
-                    <td>
-                      <button
-                        className="btn btn-success"
-                        onClick={() => handleShowModal(request)}
-                      >
-                        Accept
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleDeclineRequest(request._id)} // Pass only the ID
-                      >
-                        Decline
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+              {supplyRequests.map((request) => (
+                <tr key={request._id}>
+                  <td>{request.fruit}</td>
+                  <td>{request.subCategory}</td>
+                  <td>{request.quality}</td>
+                  <td>{request.quantity}</td>
+                  <td>{request.price}</td>
+                  <td>{request.dateCanBeGiven}</td>
+                  <td>
+                    <button
+                      className="btn btn-action btn-success"
+                      onClick={() => handleShowModal(request)}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="btn btn-action btn-danger"
+                      onClick={() => handleDeclineRequest(request._id)} // Pass only the ID
+                    >
+                      Decline
+                    </button>
+                  </td>
+                </tr>
+              ))}
               </tbody>
             </table>
           </div>

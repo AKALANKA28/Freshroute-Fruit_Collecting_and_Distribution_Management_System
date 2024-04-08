@@ -5,11 +5,13 @@ const addPrediction = async (req, res) => {
   const { fruit, subCategory, quality, quantity, price, dateCanBeGiven } = req.body;
   try {
     const newPrediction = await Prediction.create({ fruit, subCategory, quality, quantity, price, dateCanBeGiven });
-    res.json("New Supply Prediction Added");
+    res.status(201).json(newPrediction); // Return the newly created prediction
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Failed to add prediction" });
   }
 };
+
 
 const getAllPredictions = async (req, res) => {
   try {

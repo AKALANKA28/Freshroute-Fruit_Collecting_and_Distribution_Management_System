@@ -68,7 +68,6 @@ app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
-app.use('/Farmer', router);
 
 app.use("/Promotion", PromotionRouter);
 app.use("/Compaign", CompaignRouter);
