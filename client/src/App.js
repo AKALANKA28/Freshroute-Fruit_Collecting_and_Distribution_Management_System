@@ -40,8 +40,10 @@ import RequestedOrder from './components/RequestedOrder/RequestedOrder';
 import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
+
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
+import ResourcePage from "./components/researchDashboard/ResourcePage";
 
 //import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
 //import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
@@ -267,6 +269,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <CompaignPage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ResourcePage",
+    element: (
+      <div>
+        <ResourcePage />
       </div>
     ),
   },
