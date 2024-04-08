@@ -6,6 +6,8 @@ import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import FruitTypeForm from "./FruitTypeForm";
 import FruitTypeReport from "./FruitTypeReport";
 import "./FruitType.css";
@@ -50,8 +52,29 @@ function FruitType() {
     getFetchData();
   };
 
+  const generateExcelFile = () => {
+    // Rearrange the order of properties for each prediction object
+    const rearrangedDataList = dataList.map(fruitType => ({
+      Name: fruitType.name,
+      Date: fruitType.date,
+      Description: fruitType.description,
+      
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Fruit Type Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "fruitType_report.xlsx");
+  };
+  
   const handleButtonClick = () => {
-    getFetchData();
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
