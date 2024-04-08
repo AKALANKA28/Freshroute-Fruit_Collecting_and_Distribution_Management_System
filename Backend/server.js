@@ -27,6 +27,10 @@ const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningReques
 const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
 
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
+
+const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
+
+
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 
@@ -58,10 +62,17 @@ app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
 app.use("/Category", CategoryRouter);
 app.use("/Salary", SalaryRouter);
-app.use("/schedule", scheduleRouter);
-app.use("/vehicle", vehicleRouter);
-app.use("/process", processRouter);
-app.use("/coverings", coveringsRouter);
+
+
+app.use('/schedule', scheduleRouter);
+app.use('/vehicle', vehicleRouter);
+app.use('/process', processRouter);
+app.use('/coverings', coveringsRouter);
+app.use('/Farmer', router);
+
+app.use("/Promotion", PromotionRouter);
+app.use("/Compaign", CompaignRouter);
+
 
 
 //Heshan
