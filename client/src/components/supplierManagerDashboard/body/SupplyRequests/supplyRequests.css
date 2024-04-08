@@ -262,7 +262,14 @@
   display: block;
 }
 
+/* Add this CSS to ensure consistent sizing and spacing for buttons */
 .btn-action {
-  width: 80px; /* Adjust the width as needed */
-  white-space: nowrap; /* Prevent text wrapping */
+  padding: 5px 10px; /* Adjust padding as needed */
+  margin-right: 5px; /* Add a gap between buttons */
+  border-radius: 5px; /* Apply border radius for button shape */
+}
+
+.btn-success,
+.btn-danger {
+  width: 100px; /* Set a fixed width for both buttons to ensure they have the same size */
 }

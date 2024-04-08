@@ -79,7 +79,8 @@ function SupplyRequestsList() {
           </div>
 
           <div className="table-container">
-            <table className="table table-borderless datatable">
+          <table className="table datatable">
+            {/* <table className="table table-borderless datatable"> */}
               <thead className="table-light">
                 <tr>
                   <th scope="col">Fruit</th>
@@ -87,7 +88,7 @@ function SupplyRequestsList() {
                   <th scope="col">Quality</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Price</th>
-                  <th scope="col">DateCanBeGiven</th>
+                  <th scope="col">Date Can Be Given</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -101,18 +102,20 @@ function SupplyRequestsList() {
                   <td>{request.price}</td>
                   <td>{request.dateCanBeGiven}</td>
                   <td>
-                    <button
-                      className="btn btn-action btn-success"
+                    <Button
+                      className="btn-action btn-approve"
+                      variant="success"
                       onClick={() => handleShowModal(request)}
                     >
-                      Accept
-                    </button>
-                    <button
-                      className="btn btn-action btn-danger"
-                      onClick={() => handleDeclineRequest(request._id)} // Pass only the ID
+                      Approve
+                    </Button>
+                    <Button
+                      className="btn-action btn-decline"
+                      variant="danger"
+                      onClick={() => handleDeclineRequest(request._id)}
                     >
                       Decline
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
