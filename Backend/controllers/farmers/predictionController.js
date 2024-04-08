@@ -54,11 +54,11 @@ const updatePrediction = async (req, res) => {
 const acceptPrediction = async (req, res) => {
   const id = req.params.id;
   try {
-    const prediction = await Prediction.findByIdAndUpdate(id, { status: 'approved' }, { new: true });
+    const prediction = await Prediction.findByIdAndUpdate(id, { status: 'Approved' }, { new: true });
     if (!prediction) {
       return res.status(404).json({ message: "Prediction not found" });
     }
-    res.status(200).json({ message: "Prediction approved" });
+    res.status(200).json({ message: "Prediction Approved" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -66,11 +66,11 @@ const acceptPrediction = async (req, res) => {
 const declinePrediction = async (req, res) => {
   const id = req.params.id;
   try {
-    const prediction = await Prediction.findByIdAndUpdate(id, { status: 'declined' }, { new: true });
+    const prediction = await Prediction.findByIdAndUpdate(id, { status: 'Declined' }, { new: true });
     if (!prediction) {
       return res.status(404).json({ message: "Prediction not found" });
     }
-    res.status(200).json({ message: "Prediction declined" });
+    res.status(200).json({ message: "Prediction Declined" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

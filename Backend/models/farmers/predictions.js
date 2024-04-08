@@ -27,7 +27,7 @@ const PredictionSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['approved', 'pending'],
+        enum: ['Approved', 'Pending', 'Declined'],
         default: 'pending'
     }
 });
