@@ -7,12 +7,6 @@ function PageTitle  ({page})  {
         <h1>{page}</h1>
         <nav>
             <ol className="breadcumb">
-                <li className="breadcumb-item">
-                    <a href='/'>
-                        <i className="bi bi-house-door"></i>
-                    </a>
-                </li>
-                <li className='breadcumb-item active'>{page}</li>
             </ol>
         </nav>
     </div>

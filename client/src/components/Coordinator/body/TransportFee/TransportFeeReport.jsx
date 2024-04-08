@@ -1,11 +1,10 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import './farmers.css';
+import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FFFFFF",
   },
   section: {
     margin: 10,
@@ -47,27 +46,26 @@ const styles = StyleSheet.create({
   },
 });
 
-const SupplierReport = ({ dataList }) => {
+const SalaryReport = ({ dataList }) => {
   return (
     <Document>
-      <Page size="Letter" style={styles.page}>
+      <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Freshroute - Supplier Details Report</Text>
+          <Text style={styles.heading}>Salary Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>NIC</Text>
-              <Text style={styles.tableColHeader}>Supplier Name</Text>
-              <Text style={styles.tableColHeader}>Username</Text>
-              <Text style={styles.tableColHeader}>Email</Text>
-              <Text style={styles.tableColHeader}>City</Text>
+              <Text style={styles.tableColHeader}>Vehicle Type</Text>
+              <Text style={styles.tableColHeader}>Date</Text>
+              <Text style={styles.tableColHeader}> MaxWeight(kg)</Text>
+              <Text style={styles.tableColHeader}> Price per km(Rs)</Text>
+            
             </View>
-            {dataList.map((supplier, index) => (
+            {dataList.map((transportFee, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{supplier.NIC}</Text>
-                <Text style={styles.tableCol}>{supplier.name}</Text>
-                <Text style={styles.tableCol}>{supplier.username}</Text>
-                <Text style={styles.tableCol}>{supplier.email}</Text>
-                <Text style={styles.tableCol}>{supplier.city}</Text>
+                <Text style={styles.tableCol}>{transportFee.vehicletype}</Text>
+                <Text style={styles.tableCol}>{transportFee.date}</Text>
+                <Text style={styles.tableCol}>{transportFee.maxweight}</Text>
+                <Text style={styles.tableCol}>{transportFee.pricepkm}</Text>
               </View>
             ))}
           </View>
@@ -77,4 +75,4 @@ const SupplierReport = ({ dataList }) => {
   );
 };
 
-export default SupplierReport;
+export default SalaryReport;

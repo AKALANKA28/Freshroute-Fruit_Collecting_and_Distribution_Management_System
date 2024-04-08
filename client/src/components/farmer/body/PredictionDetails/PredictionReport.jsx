@@ -56,14 +56,16 @@ const PredictionReport = ({ dataList }) => {
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
+              <Text style={styles.tableColHeader}>Sub Category</Text>
               <Text style={styles.tableColHeader}>Quality</Text>
               <Text style={styles.tableColHeader}>Quantity</Text>
-              <Text style={styles.tableColHeader}>Price</Text>
-              <Text style={styles.tableColHeader}>Date can be given</Text>
+              <Text style={styles.tableColHeader}>Price for One</Text>
+              <Text style={styles.tableColHeader}>Date Can Be Given</Text>
             </View>
             {dataList.map((prediction, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{prediction.fruitType}</Text>
+                <Text style={styles.tableCol}>{prediction.fruit}</Text>
+                <Text style={styles.tableCol}>{prediction.subCategory}</Text>
                 <Text style={styles.tableCol}>{prediction.quality}</Text>
                 <Text style={styles.tableCol}>{prediction.quantity}</Text>
                 <Text style={styles.tableCol}>{prediction.price}</Text>

@@ -16,10 +16,15 @@ function CalculateSalary() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedCalculateSalary, setSelectedCalculateSalary] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]);
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -28,6 +33,15 @@ function CalculateSalary() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((employee) => {
+      const fullName = `${employee.name} ${employee.jobrole} ${employee.nic} ${employee.accno} ${employee.bankname}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
   };
 
   const handleRefreshClick = () => {
@@ -141,7 +155,7 @@ function CalculateSalary() {
 
               <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Employee Details</Modal.Title>
+              <Modal.Title>Salary Calculator</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <CalculateSalaryForm
@@ -152,7 +166,7 @@ function CalculateSalary() {
           </Modal>
 
         <div className="table-container">
-        <SearchBar/>
+        <SearchBar onSearch={handleSearch} />
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -168,8 +182,8 @@ function CalculateSalary() {
               </tr>
             </thead>
             <tbody>
-              {dataList.length ? (
-                dataList.map((employee) => (
+            {filteredDataList.length ? (
+                  filteredDataList.map((employee) => (
                   <tr key={employee._id}>
                     <td>{employee.name}</td>
                     <td>{employee.jobrole}</td>

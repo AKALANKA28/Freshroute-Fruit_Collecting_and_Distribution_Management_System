@@ -1,110 +1,222 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const PredictionForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
-    fruitType: "",
+    fruit: "",
+    subCategory: "",
     quality: "",
     quantity: "",
     price: "",
     dateCanBeGiven: "",
   });
 
+  const [formErrors, setFormErrors] = useState({
+    fruit: "",
+    subCategory: "",
+    quality: "",
+    quantity: "",
+    price: "",
+    dateCanBeGiven: "",
+  });
+
+  const [fruitList, setFruitList] = useState([]);
+  const [subCategoryList, setSubCategoryList] = useState([]);
+
+  useEffect(() => {
+    fetchFruitNames();
+  }, []);
+
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
+      fetchSubCategories(initialData.fruit);
     }
   }, [initialData]);
 
+  const fetchFruitNames = async () => {
+    try {
+      const response = await axios.get("/Category/fruitdetails");
+      setFruitList(response.data);
+    } catch (error) {
+      console.error("Error fetching fruit names:", error);
+    }
+  };
+
+  const fetchSubCategories = async (selectedFruit) => {
+    try {
+      const response = await axios.get(`/Category/subcategories/${selectedFruit}`);
+      setSubCategoryList(response.data);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "fruit") {
+      fetchSubCategories(value);
+    }
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
+    }));
+    // Validate input on change
+    validateInput(name, value);
+  };
+
+  const validateInput = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "fruit":
+        error = value.trim().length === 0 ? "Name of Fruit is required" : "";
+        break;
+      case "subCategory":
+        error = value.trim().length === 0 ? "Sub Category is required" : "";
+        break;
+      case "quality":
+        error = value.trim().length === 0 ? "Quality is required" : "";
+        break;
+      case "quantity":
+        error = value.trim().length === 0 ? "Quantity is required" : "";
+        break;
+      case "price":
+        error = value.trim().length === 0 ? "Price is required" : "";
+        break;
+      case "dateCanBeGiven":
+        error = value.trim().length === 0 ? "Date can be given is required" : "";
+        break;
+      default:
+        break;
+    }
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: error,
     }));
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(formData);
+    // Check if there are any errors before submitting
+    if (Object.values(formErrors).every((error) => error === "")) {
+      handleSubmit(formData);
+    } else {
+      alert("Please fill out the form correctly");
+    }
   };
 
+  const today = new Date().toISOString().split("T")[0]; // Get today's date
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
-           <label htmlFor="name" className="form-label">
-               Fruit Type
-           </label>
-           <input
-            type="text"
-            className="form-control"
-            name="fruitType"
-            id="fruitType"
-            placeholder="Fruit Type"
-            required
-            onChange={handleChange}
-            value={formData.fruitType}
-          />
-        </div>
+        <label htmlFor="fruit" className="form-label">
+          Fruit
+        </label>
+        <select
+          className="form-select"
+          name="fruit"
+          id="fruit"
+          value={formData.fruit}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Fruit</option>
+          {fruitList.map((fruit) => (
+            <option key={fruit} value={fruit}>
+              {fruit}
+            </option>
+          ))}
+        </select>
+        {formErrors.fruit && <div className="invalid-feedback">{formErrors.fruit}</div>}
+      </div>
+      
+      <div className="mb-3">
+        <label htmlFor="subCategory" className="form-label">
+          Sub Category
+        </label>
+        <select
+          className="form-select"
+          name="subCategory"
+          id="subCategory"
+          value={formData.subCategory}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Sub Category</option>
+          {subCategoryList.map((subCategory) => (
+            <option key={subCategory} value={subCategory}>
+              {subCategory}
+            </option>
+          ))}
+        </select>
+        {formErrors.subCategory && <div className="invalid-feedback">{formErrors.subCategory}</div>}
+      </div>
 
-        <div className="mb-3">
-           <label htmlFor="date" className="form-label">
-           Quality
-           </label>
-           <input
+      <div className="mb-3">
+             <label htmlFor="quality" className="form-label">
+             Quality
+             </label>
+             <input
             type="text"
             className="form-control"
             name="quality"
-            placeholder="Quality"
+            placeholder="Enter Quality"
             required
             onChange={handleChange}
             value={formData.quality}
           />
-        </div>
+          {formErrors.quality && <div className="invalid-feedback">{formErrors.quality}</div>}
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
+      <div className="mb-3">
+          <label htmlFor="quantity" className="form-label">
           Quantity
           </label>
           <input
             type="text"
             className="form-control"
             name="quantity"
-            placeholder="Quantity"
+            placeholder="Enter Quantity"
             required
             onChange={handleChange}
             value={formData.quantity}
           />
-        </div>
+          {formErrors.quantity && <div className="invalid-feedback">{formErrors.quantity}</div>}
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Price
+      <div className="mb-3">
+          <label htmlFor="priceForOne" className="form-label">
+            Price of One
           </label>
           <input
             type="text"
             className="form-control"
             name="price"
-            placeholder="Price"
+            placeholder="Enter Price of One"
             required
             onChange={handleChange}
             value={formData.price}
           />
+          {formErrors.price && <div className="invalid-feedback">{formErrors.price}</div>}
         </div>
+
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">
+          <label htmlFor="dateCanBeGiven" className="form-label">
           Date Can Be Given
           </label>
           <input
-            type="Date"
+            type="date"
             className="form-control"
             name="dateCanBeGiven"
             placeholder="Date Can Be Given"
+            min={today}
             required
             onChange={handleChange}
             value={formData.dateCanBeGiven}
           />
+          {formErrors.dateCanBeGiven && <div className="invalid-feedback">{formErrors.dateCanBeGiven}</div>}
         </div>
-
+      
       <button type="submit" className="btn btn-primary">
         Submit
       </button>

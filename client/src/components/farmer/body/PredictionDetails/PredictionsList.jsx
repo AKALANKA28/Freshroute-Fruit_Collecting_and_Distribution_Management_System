@@ -5,6 +5,9 @@ import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import SearchBar from './SearchBar';
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
 
@@ -15,10 +18,16 @@ function PredictionsList() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedPrediction, setSelectedPrediction] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [searchAttribute, setSearchAttribute] = useState('fruit'); // Initialize with 'fruit'
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,11 +39,34 @@ function PredictionsList() {
   };
 
   const handleRefreshClick = () => {
-    getFetchData();
+    window.location.reload();
   };
 
+  const generateExcelFile = () => {
+    // Rearrange the order of properties for each prediction object
+    const rearrangedDataList = dataList.map(prediction => ({
+      fruit: prediction.fruit,
+      subCategory: prediction.subCategory,
+      quality: prediction.quality,
+      quantity: prediction.quantity,
+      price: prediction.price,
+      dateCanBeGiven: prediction.dateCanBeGiven
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Predictions Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "predictions_report.xlsx");
+  };
+  
   const handleButtonClick = () => {
-    getFetchData();
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
@@ -55,13 +87,15 @@ function PredictionsList() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/Prediction/delete/${id}`);
-      alert("Successfully Deleted");
-      window.location.reload();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
+    const confirmDelete = window.confirm("Are you sure you want to delete this prediction?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(`/Prediction/delete/${id}`);
+        alert("Successfully Deleted");
+        getFetchData();
+      } catch (err) {
+        alert(err.message);
+      }
     }
   };
 
@@ -86,6 +120,28 @@ function PredictionsList() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((prediction) => {
+      // Check the selected search attribute and filter accordingly
+      switch (searchAttribute) {
+        case 'fruit':
+          const fruit = `${prediction.fruit} ${prediction.subCategory}`;
+          return fruit.toLowerCase().includes(query.toLowerCase());
+        case 'quality':
+          return prediction.quality.toLowerCase().includes(query.toLowerCase());
+        default:
+          return false;
+      }
+    });
+    setFilteredDataList(filteredList);
+  };
+
+  // Function to handle search attribute change
+  const handleSearchAttributeChange = (event) => {
+    setSearchAttribute(event.target.value);
   };
 
   const [showReportModal, setShowReportModal] = useState(false);
@@ -113,14 +169,14 @@ function PredictionsList() {
               </li>
               <li>
                 <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
+                  <a onClick={handleButtonClick}>
                     <img src={Excel} alt="Excel Icon" className="icon" />
                   </a>
                 </div>
               </li>
               <li>
                 <div className="button-container">
-                  <a href="#" onClick={handleRefreshClick}>
+                  <a onClick={handleRefreshClick}>
                     <img src={Refresh} alt="Refresh Icon" className="icon" />
                   </a>
                 </div>
@@ -176,11 +232,16 @@ function PredictionsList() {
           </Modal>
 
           <div className="table-container">
-            {/* <SearchBar /> */}
+            <SearchBar
+              onSearch={handleSearch}
+              searchAttribute={searchAttribute}
+              onSearchAttributeChange={handleSearchAttributeChange}
+            />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">Fruit Type</th>
+                  <th scope="col">Fruit</th>
+                  <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Price</th>
@@ -189,10 +250,11 @@ function PredictionsList() {
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((prediction) => (
+                {filteredDataList.length ? (
+                  filteredDataList.map((prediction) => (
                     <tr key={prediction._id}>
-                      <td>{prediction.fruitType}</td>
+                      <td>{prediction.fruit}</td>
+                      <td>{prediction.subCategory}</td>
                       <td>{prediction.quality}</td>
                       <td>{prediction.quantity}</td>
                       <td>{prediction.price}</td>
@@ -217,7 +279,7 @@ function PredictionsList() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5">No Data</td>
+                    <td colSpan="6">No Data</td>
                   </tr>
                 )}
               </tbody>
