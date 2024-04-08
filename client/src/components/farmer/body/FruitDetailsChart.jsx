@@ -1,12 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as echarts from 'echarts';
 
 const FruitDetailsChart = ({ predictionData }) => {
+  const [aggregatedData, setAggregatedData] = useState({});
+
   useEffect(() => {
     if (predictionData && predictionData.length > 0) {
-      const fruitTypes = predictionData.map(prediction => prediction.fruitType);
+      const fruits = predictionData.map(prediction => prediction.fruit);
       const quantities = predictionData.map(prediction => prediction.quantity);
 
+      // Aggregate quantities for each fruit
+      const aggregated = {};
+      fruits.forEach((fruit, index) => {
+        if (aggregated[fruit]) {
+          aggregated[fruit] += quantities[index];
+        } else {
+          aggregated[fruit] = quantities[index];
+        }
+      });
+
+      setAggregatedData(aggregated);
+    }
+  }, [predictionData]);
+
+  useEffect(() => {
+    // Initialize or update the pie chart whenever aggregatedData changes
+    if (Object.keys(aggregatedData).length > 0) {
       echarts.init(document.querySelector('#trafficChart')).setOption({
         tooltip: {
           trigger: 'item',
@@ -32,19 +51,18 @@ const FruitDetailsChart = ({ predictionData }) => {
                 fontWeight: 'bold',
               },
             },
-
             labelLine: {
               show: false,
             },
-            data: fruitTypes.map((fruitType, index) => ({
-              value: quantities[index],
-              name: fruitType,
+            data: Object.entries(aggregatedData).map(([fruit, quantity]) => ({
+              value: quantity,
+              name: fruit,
             })),
           },
         ],
       });
     }
-  }, [predictionData]);
+  }, [aggregatedData]);
 
   return (
     <div id='trafficChart' style={{ minHeight: '480px' }} className='echart'></div>

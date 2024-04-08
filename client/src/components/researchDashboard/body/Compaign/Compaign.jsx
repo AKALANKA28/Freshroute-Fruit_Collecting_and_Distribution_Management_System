@@ -6,75 +6,38 @@ import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-import * as XLSX from "xlsx";
-import { writeFile } from "xlsx";
-import FruitTypeForm from "./FruitTypeForm";
-import FruitTypeReport from "./FruitTypeReport";
-import "./FruitType.css";
+import CompaignForm from "./CompaignForm";
+import CompaignReport from "./CompaignReport";
+import "./Compaign.css";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function FruitType() {
+function Compaign() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
-  const [selectedFruitType, setSelectedFruitType] = useState(null);
-  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [selectedCompaign, setSelectedCompaign] = useState(null);
 
   useEffect(() => {
     getFetchData();
   }, []);
 
-  useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
-  }, [dataList]);
-
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/FruitType/");
+      const response = await axios.get("/Compaign/");
       setDataList(response.data);
     } catch (err) {
       alert(err.message);
     }
   };
 
-  // Search functionality
-  const handleSearch = (query) => {
-    const filteredList = dataList.filter((fruittype) => {
-      const fullName = `${fruittype.name} ${fruittype.date}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
-    });
-    setFilteredDataList(filteredList);
-  };
-
   const handleRefreshClick = () => {
     getFetchData();
   };
 
-  const generateExcelFile = () => {
-    // Rearrange the order of properties for each prediction object
-    const rearrangedDataList = dataList.map(fruitType => ({
-      Name: fruitType.name,
-      Date: fruitType.date,
-      Description: fruitType.description,
-      
-    }));
-  
-    // Define the worksheet
-    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
-    
-    // Define the workbook
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Fruit Type Report");
-    
-    // Generate the Excel file
-    writeFile(wb, "fruitType_report.xlsx");
-  };
-  
   const handleButtonClick = () => {
-    getFetchData(); // Fetch the latest data if needed
-    generateExcelFile();
+    getFetchData();
   };
 
   const handleAddModalOpen = () => {
@@ -85,8 +48,8 @@ function FruitType() {
     setAddModalOpen(false);
   };
 
-  const handleEditModalOpen = (fruitType) => {
-    setSelectedFruitType(fruitType);
+  const handleEditModalOpen = (compaign) => {
+    setSelectedCompaign(compaign);
     setEditModalOpen(true);
   };
 
@@ -96,7 +59,7 @@ function FruitType() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/FruitType/delete/${id}`);
+      await axios.delete(`/Compaign/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
@@ -106,8 +69,8 @@ function FruitType() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/FruitType/add", formData);
-      alert("Fruit Type Added");
+      await axios.post("/Compaign/add", formData);
+      alert("Compaign Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -117,8 +80,8 @@ function FruitType() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/FruitType/update/${formData._id}`, formData);
-      alert("Fruit Type Updated");
+      await axios.put(`/Compaign/update/${formData._id}`, formData);
+      alert("Compaign Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -142,8 +105,8 @@ function FruitType() {
               <div class="add-item d-flex">
 
               <div class="card-title">
-                  Fruit Details
-                  <h6>Manage fruit details</h6>
+                  Active Campaigns
+                  <h6>Manage Campaign details</h6>
                 </div>
               </div>
 
@@ -155,11 +118,11 @@ function FruitType() {
                       </a>
                       <Modal show={showReportModal} onHide={handleCloseReportModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Salary Details Report</Modal.Title>
+            <Modal.Title>Active campaigns Report</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <PDFViewer width="100%" height="500px">
-              <FruitTypeReport dataList={dataList} />
+              <CompaignReport dataList={dataList} />
             </PDFViewer>
           </Modal.Body>
           <Modal.Footer>
@@ -191,27 +154,27 @@ function FruitType() {
                 className="btn btn-added"
                 onClick={handleAddModalOpen}
               >
-                <i className="bi bi-plus-circle"></i> Add Fruit Type
+                <i className="bi bi-plus-circle"></i> Add Campaign
               </button>
       </div>
       </div>
       <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Add Fruit Type</Modal.Title>
+              <Modal.Title>Add Campaign</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FruitTypeForm handleSubmit={handleAddSubmit} />
+              <CompaignForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Fruit Type</Modal.Title>
+              <Modal.Title>Edit Campaign</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FruitTypeForm
+              <CompaignForm
                 handleSubmit={handleEditSubmit}
-                initialData={selectedFruitType}
+                initialData={selectedCompaign}
               />
             </Modal.Body>
           </Modal>
@@ -221,35 +184,40 @@ function FruitType() {
 
        
 <div className="table-container">
-<SearchBar onSearch={handleSearch} />
+      <SearchBar/>
         <table className="table table-borderless datatable">
 
           <thead className="table-light">
             <tr>
-              <th scope="col">Name</th>
+              <th scope="col">Campaign Title</th>
               <th scope="col">Date</th>
-              <th scope="col" >Description</th>
+              <th scope="col" >Objective</th>
+              <th scope="col" >Target audience</th>
+              <th scope="col" >Budjet(Rs)</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-          {filteredDataList.length ? (
-                  filteredDataList.map((fruitType) => (
-                <tr key={fruitType._id}>
-                  <td>{fruitType.name}</td>
-                  <td>{fruitType.date}</td>
-                  <td className="description">{fruitType.description}</td>
+            {dataList.length ? (
+              dataList.map((compaign) => (
+                <tr key={compaign._id}>
+                  <td>{compaign.compaign_title}</td>
+                  <td>{compaign.date}</td>
+                  <td>{compaign.objective}</td>
+                  <td>{compaign.target_aud}</td>
+                  <td>{compaign.budjet}</td>
+                  
                   <td>
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
-                        onClick={() =>handleEditModalOpen(fruitType)}
+                        onClick={() =>handleEditModalOpen(compaign)}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>
                       <button
                         className="btn btn-delete"
-                        onClick={() => handleDelete(fruitType._id)}
+                        onClick={() => handleDelete(compaign._id)}
                       >
                        <i className="bi bi-trash-fill"></i>
                       </button>
@@ -271,4 +239,4 @@ function FruitType() {
   );
 }
 
-export default FruitType;
+export default Compaign;

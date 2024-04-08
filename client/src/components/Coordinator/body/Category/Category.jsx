@@ -19,15 +19,22 @@ function Category() {
   const [priceModalOpen, setPriceModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [filteredDataList, setFilteredDataList] = useState([]);
+  const [sortColumn, setSortColumn] = useState("fruit");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [fruitNames, setFruitNames] = useState([]);
+  const [selectedFruit, setSelectedFruit] = useState("all");
+  const [selectedQuality, setSelectedQuality] = useState("all");
 
   useEffect(() => {
     getFetchData();
+    fetchFruitNames();
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
-  }, [dataList]);
+    filterDataList(selectedFruit, selectedQuality);
+  }, [dataList, selectedFruit, selectedQuality]);
 
   const getFetchData = async () => {
     try {
@@ -38,19 +45,49 @@ function Category() {
     }
   };
 
-  // Search functionality
+  const fetchFruitNames = async () => {
+    try {
+      const response = await axios.get("/fruitType/");
+      setFruitNames(response.data.map(fruit => fruit.name));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleQualitySelect = (quality) => {
+    setSelectedQuality(quality);
+  };
+
+  const handleFruitSelect = (fruit) => {
+    setSelectedFruit(fruit);
+  };
+
+  const filterDataList = (fruit, quality) => {
+    if (fruit === "all" && quality === "all") {
+      setFilteredDataList(dataList);
+    } else if (fruit === "all") {
+      const filteredList = dataList.filter((category) => category.quality === quality);
+      setFilteredDataList(filteredList);
+    } else if (quality === "all") {
+      const filteredList = dataList.filter((category) => category.fruit === fruit);
+      setFilteredDataList(filteredList);
+    } else {
+      const filteredList = dataList.filter((category) => category.fruit === fruit && category.quality === quality);
+      setFilteredDataList(filteredList);
+    }
+  };
+
   const handleSearch = (query) => {
     const filteredList = dataList.filter((category) => {
-      const fullName = `${category.fruit} ${category.category} ${category.date} ${category.quality}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+      const fullName = `${category.fruit} ${category.category} ${category.date} ${category.quality}`;
+      return fullName.toLowerCase().includes(query.toLowerCase()) && 
+        (selectedQuality === "all" || category.quality === selectedQuality);
     });
     setFilteredDataList(filteredList);
   };
 
-
   const handleRefreshClick = () => {
-    getFetchData();
-    
+    window.location.reload();
   };
 
   const handleButtonClick = () => {
@@ -126,46 +163,64 @@ function Category() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
+  const handleSort = (column) => {
+    if (sortColumn === column) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(column);
+      setSortOrder("asc");
+    }
+  };
 
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
+  const sortedDataList = [...filteredDataList].sort((a, b) => {
+    const columnA = a[sortColumn].toLowerCase();
+    const columnB = b[sortColumn].toLowerCase();
+    if (columnA < columnB) {
+      return sortOrder === "asc" ? -1 : 1;
+    }
+    if (columnA > columnB) {
+      return sortOrder === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
 
   return (
     <div id="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
-            <div class="add-item d-flex">
-              <div class="card-title">
-              Category Details
+            <div className="add-item d-flex">
+              <div className="card-title">
+                Category Details
                 <h6>Manage Category Details</h6>
               </div>
             </div>
-            <ul class="table-top-head">
-            <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Category Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <CategoryReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
+            <ul className="table-top-head">
+              <li>
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Category Details Report</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PDFViewer width="100%" height="500px">
+                        <CategoryReport dataList={dataList} />
+                      </PDFViewer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseReportModal}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              </li>
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
@@ -181,7 +236,7 @@ function Category() {
                 </div>
               </li>
             </ul>
-            <div class="page-btn">
+            <div className="page-btn">
               <button
                 type="button"
                 className="btn btn-added"
@@ -225,65 +280,94 @@ function Category() {
             </Modal.Body>
           </Modal>
 
-
-      <div className="table-container">
-      <SearchBar onSearch={handleSearch} />
-        <table className="table table-borderless datatable">
-          <thead className="table-light">
-            <tr>
-              <th scope="col">Fruit</th>
-              <th scope="col">Category</th>
-              <th scope="col">Date</th>
-              <th scope="col">Weight</th>
-              <th scope="col">Quality</th>
-              <th scope="col">Price</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-          {filteredDataList.length ? (
-                  filteredDataList.map((category) => (
-                <tr key={category._id}>
-                  <td>{category.fruit}</td>
-                  <td>{category.category}</td>
-                  <td>{category.date}</td>
-                  <td>{category.weight}</td>
-                  <td>{category.quality}</td>
-                  <td>{category.price}</td>
-                  <td className="action">
-                    <div className="buttons">
-
-                    <button
-                        className="btn btn-edit"
-                        onClick={() => handlePriceModalOpen(category)}
-                      >
-                        <i class="bi bi-calculator-fill"></i>
-                      </button>
-
-                      <button
-                        className="btn btn-edit"
-                        onClick={() => handleEditModalOpen(category)}
-                      >
-                        <i className="bi bi-pencil-square"></i>
-                      </button>
-                      <button
-                        className="btn btn-delete"
-                        onClick={() => handleDelete(category._id)}
-                      >
-                        <i className="bi bi-trash-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7">No Data</td>
-              </tr>
-            )}
-         </tbody>
-            </table>
+          <div className="search-dropdown-container">
+            <SearchBar onSearch={handleSearch} />
+            {/* Dropdown for fruit names */}
+            <div className="dropdown">
+              <select
+                className="form-select"
+                name="fruit"
+                onChange={(e) => handleFruitSelect(e.target.value)}
+                value={selectedFruit}
+                required
+              >
+                <option value="all">All Fruits</option>
+                {fruitNames.map((fruit, index) => (
+                  <option key={index} value={fruit}>{fruit}</option>
+                ))}
+              </select>
+            </div>
+            {/* Dropdown for quality */}
+            <div className="dropdown">
+              <select
+                className="form-select"
+                name="quality"
+                onChange={(e) => handleQualitySelect(e.target.value)}
+                value={selectedQuality}
+                required
+              >
+                <option value="all">All Qualities</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
           </div>
+
+          {/* Table */}
+          <table className="table table-borderless datatable">
+            <thead className="table-light">
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col" onClick={() => handleSort("fruit")}>Fruit</th>
+                <th scope="col" onClick={() => handleSort("category")}>Category</th>
+                <th scope="col">Quality</th>
+                <th scope="col">Quality Description</th>
+                <th scope="col">Price(1KG)</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedDataList.length ? (
+                sortedDataList.map((category) => (
+                  <tr key={category._id}>
+                    <td>{category.date}</td>
+                    <td>{category.fruit}</td>
+                    <td>{category.category}</td>
+                    <td>{category.quality}</td>
+                    <td>{category.qualityDesc}</td>
+                    <td>{category.price}</td>
+                    <td className="action">
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                          onClick={() => handlePriceModalOpen(category)}
+                        >
+                          <i className="bi bi-calculator-fill"></i>
+                        </button>
+                        <button
+                          className="btn btn-edit"
+                          onClick={() => handleEditModalOpen(category)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                          onClick={() => handleDelete(category._id)}
+                        >
+                          <i className="bi bi-trash-fill"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7">No Data</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
