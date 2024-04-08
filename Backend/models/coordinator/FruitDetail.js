@@ -13,9 +13,7 @@ const FruitDetailSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  weight: {
-    type: String,
-  },
+
   price: {
     type: String,
   },
