@@ -13,7 +13,6 @@ import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
 import QualityList from "./components/orderManagement/body/QualityList/QualityList";
-import ReqOrder from "./components/orderManagement/body/ReqOrders/ReqOrder";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
@@ -58,6 +57,7 @@ import PredictionDetails from "./components/farmer/PredictionDetails";
 import Website from "./Website/Website";
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
 import OPDashboard from "./components/orderProcessor/body/OPDashboard";
+import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
 
 const router = createBrowserRouter([
   {
@@ -148,9 +148,9 @@ const router = createBrowserRouter([
         element: <QualityList/>,
       },
       {
-        path: "/OMDashboard/ReqOrders",
-        element: <ReqOrder/>,
-      },
+        path: "/OMDashboard/RequestedOrderList",
+        element: <RequestedOrderList/>,
+      }
 
     ]
   },

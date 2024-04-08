@@ -36,7 +36,7 @@ const Sidebar = () => {
                 <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
                     
                     <li>
-                        <a href='/OMDashboard/ReqOrders'>
+                        <a href='/OMDashboard/RequestedOrderList'>
                             <i className='bi bi-circle'>
                                 <span>Requested Orders</span>
                             </i>
