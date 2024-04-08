@@ -1,64 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import { PDFViewer } from "@react-pdf/renderer";
-// import { Button, Modal } from "react-bootstrap";
-// import Excel from "../../../../assests/img/icons/excel.png";
-// import Pdf from "../../../../assests/img/icons/pdf.png";
-// import Refresh from "../../../../assests/img/icons/refresh.png";
-// import SearchBar from './SearchBar';
-// import FarmerForm from "./FarmerForm";
-// import SupplierReport from "./SupplierReport";
-// import * as XLSX from "xlsx";
-// import { writeFile } from "xlsx";
-// import './supplyRequests.css';
-
-// axios.defaults.baseURL = "http://localhost:8070/";
-
-// function SupplyRequestsList() {
-  
-
-//   return (
-//     <div id="main col-8">
-//       <div className="card recent-sales overflow-auto">
-//         <div className="card-body">
-//           <div className="page-header">
-//             <div className="add-item d-flex">
-//               <div className="card-title">
-//                 Supply Requests
-//                 <h6>Manage Supply Requests</h6>
-//               </div>
-//             </div>
-//           </div>
-
-          
-
-//           <div className="table-container">
-//             <table className="table table-borderless datatable">
-//               <thead className="table-light">
-//                 <tr>
-//                   <th scope="col">Fruit</th>
-//                   <th scope="col">Sub Category</th>
-//                   <th scope="col">Quality</th>
-//                   <th scope="col">Quantity</th>
-//                   <th scope="col">Price</th>
-//                   <th scope="col">DateCanBeGiven</th>
-//                   <th>Action</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-                
-//               </tbody>
-//             </table>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default SupplyRequestsList;
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
@@ -104,12 +43,15 @@ function SupplyRequestsList() {
 
   const handleDeclineRequest = async (id) => {
     try {
-      await axios.put(`/Prediction/decline/${id}`);
-      alert("Prediction declined");
+      // Update backend to mark the prediction request as declined
+      await axios.put(`/Prediction/decline/${id}`); // Assuming there's an endpoint to handle declining predictions
+    
+      // Refetch supply requests after declining
       fetchSupplyRequests();
+      handleCloseModal();
+      alert("Request Declined");
     } catch (error) {
       console.error("Error declining request:", error);
-      alert("Error declining prediction. Please try again later.");
     }
   };
 
@@ -167,7 +109,7 @@ function SupplyRequestsList() {
                       </button>
                       <button
                         className="btn btn-danger"
-                        onClick={() => handleDeclineRequest(request._id)}
+                        onClick={() => handleDeclineRequest(request._id)} // Pass only the ID
                       >
                         Decline
                       </button>
