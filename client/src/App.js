@@ -26,6 +26,7 @@ import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
 import SupplierRequests from "./components/supplierManagerDashboard/SupplierRequests";
 import FDashboard from "./components/farmer/FDashboard";
+import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
@@ -176,6 +177,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <PredictionDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplyRequests",
+    element: (
+      <div>
+        <SupplyRequests />
       </div>
     ),
   },

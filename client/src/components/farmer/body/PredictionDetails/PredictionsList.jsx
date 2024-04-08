@@ -246,6 +246,7 @@ function PredictionsList() {
                   <th scope="col">Quantity</th>
                   <th scope="col">Price</th>
                   <th scope="col">Date Can Be Given</th>
+                  <th scope="col">Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -259,6 +260,7 @@ function PredictionsList() {
                       <td>{prediction.quantity}</td>
                       <td>{prediction.price}</td>
                       <td>{prediction.dateCanBeGiven}</td>
+                      <td>{prediction.status}</td>
                       <td className="action">
                         <div className="buttons">
                           <button

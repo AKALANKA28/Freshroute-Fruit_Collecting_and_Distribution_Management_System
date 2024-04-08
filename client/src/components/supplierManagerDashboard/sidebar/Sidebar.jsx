@@ -43,12 +43,10 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
+                <a className='nav-link collapsed' data-bs-target='#forms-nav' href='SupplyRequests'>
                     <i className='bi bi-journal-text'></i>
-                    <span>Predict Details</span>
+                    <span>Supply Requests</span>
                 </a>
-
-                
             </li>
 
             <li className='nav-item'>

@@ -153,27 +153,30 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
       </div>
 
       <div className="mb-3">
-             <label htmlFor="quality" className="form-label">
-             Quality
-             </label>
-             <input
-            type="text"
-            className="form-control"
+          <label htmlFor="quality" className="form-label">
+            Quality
+          </label>
+          <select
+            className="form-select"
             name="quality"
-            placeholder="Enter Quality"
-            required
             onChange={handleChange}
             value={formData.quality}
-          />
+            required
+          >
+            <option value="">Select Quality</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
           {formErrors.quality && <div className="invalid-feedback">{formErrors.quality}</div>}
-      </div>
+        </div>
 
       <div className="mb-3">
           <label htmlFor="quantity" className="form-label">
           Quantity
           </label>
           <input
-            type="text"
+            type="Number"
             className="form-control"
             name="quantity"
             placeholder="Enter Quantity"
@@ -186,10 +189,10 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
 
       <div className="mb-3">
           <label htmlFor="priceForOne" className="form-label">
-            Price of One
+            Price for 1kg (Rs)
           </label>
           <input
-            type="text"
+            type="Number"
             className="form-control"
             name="price"
             placeholder="Enter Price of One"
