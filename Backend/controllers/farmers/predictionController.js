@@ -65,6 +65,7 @@ const acceptPrediction = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 const declinePrediction = async (req, res) => {
   const id = req.params.id;
   try {

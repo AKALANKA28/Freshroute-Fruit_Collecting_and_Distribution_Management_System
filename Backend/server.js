@@ -25,6 +25,7 @@ const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
 const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
 const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
+const declinedSupplyRouter = require("./routes/farmers/declinedSuppliesRoutes");
 
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
 
@@ -79,7 +80,7 @@ app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
 app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
 app.use("/acceptedSupply", acceptedSupplyRouter);
-
+app.use("/declinedSupply", declinedSupplyRouter);
 
 app.use(itemRouter);
 

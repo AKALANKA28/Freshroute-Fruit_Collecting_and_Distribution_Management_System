@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import './supplyRequests.css';
+import ApprovedSupplies from "./ApprovedSupplies";
+import DeclinedSupplies from "./DeclinedSupplies";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -9,30 +11,48 @@ function SupplyRequestsList() {
   const [supplyRequests, setSupplyRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [declineModalShow, setDeclineModalShow] = useState(false);
+  const [approvedSupplies, setApprovedSupplies] = useState([]);
+  const [declinedSupplies, setDeclinedSupplies] = useState([]);
 
   useEffect(() => {
     fetchSupplyRequests();
+    fetchApprovedSupplies();
+    fetchDeclinedSupplies();
   }, []);
 
   const fetchSupplyRequests = async () => {
     try {
-      const response = await axios.get("/Prediction"); // Assuming this is the endpoint to fetch supply predictions
+      const response = await axios.get("/Prediction");
       setSupplyRequests(response.data);
     } catch (error) {
       console.error("Error fetching supply requests:", error);
     }
   };
 
+  const fetchApprovedSupplies = async () => {
+    try {
+      const response = await axios.get("/acceptedSupply");
+      setApprovedSupplies(response.data);
+    } catch (error) {
+      console.error("Error fetching approved supplies:", error);
+    }
+  };
+
+  const fetchDeclinedSupplies = async () => {
+    try {
+      const response = await axios.get("/declinedSupply");
+      setDeclinedSupplies(response.data);
+    } catch (error) {
+      console.error("Error fetching declined supplies:", error);
+    }
+  };
+
   const handleAcceptRequest = async () => {
     if (!selectedRequest) return;
     try {
-      // Update backend to mark the prediction request as accepted
       await axios.put(`/Prediction/accept/${selectedRequest._id}`);
-      
-      // Store the accepted supply prediction in the "acceptedSupplies" collection
       await axios.post('/acceptedSupply/add', selectedRequest);
-      
-      // Refetch supply requests after accepting
       fetchSupplyRequests();
       handleCloseModal();
       alert("Supply Added");
@@ -41,14 +61,13 @@ function SupplyRequestsList() {
     }
   };
 
-  const handleDeclineRequest = async (id) => {
+  const handleDeclineRequest = async () => {
+    if (!selectedRequest) return;
     try {
-      // Update backend to mark the prediction request as declined
-      await axios.put(`/Prediction/decline/${id}`); // Assuming there's an endpoint to handle declining predictions
-    
-      // Refetch supply requests after declining
+      await axios.put(`/Prediction/decline/${selectedRequest._id}`);
+      await axios.post('/declinedSupply/add', selectedRequest);
       fetchSupplyRequests();
-      handleCloseModal();
+      handleCloseDeclineModal();
       alert("Request Declined");
     } catch (error) {
       console.error("Error declining request:", error);
@@ -63,6 +82,16 @@ function SupplyRequestsList() {
   const handleCloseModal = () => {
     setSelectedRequest(null);
     setShowModal(false);
+  };
+
+  const handleShowDeclineModal = (request) => {
+    setSelectedRequest(request);
+    setDeclineModalShow(true);
+  };
+  
+  const handleCloseDeclineModal = () => {
+    setSelectedRequest(null);
+    setDeclineModalShow(false);
   };
 
   return (
@@ -80,7 +109,6 @@ function SupplyRequestsList() {
 
           <div className="table-container">
           <table className="table datatable">
-            {/* <table className="table table-borderless datatable"> */}
               <thead className="table-light">
                 <tr>
                   <th scope="col">Fruit</th>
@@ -109,13 +137,12 @@ function SupplyRequestsList() {
                     >
                       Approve
                     </Button>
-                    <Button
-                      className="btn-action btn-decline"
-                      variant="danger"
-                      onClick={() => handleDeclineRequest(request._id)}
+                    <button
+                      className="btn btn-action btn-danger"
+                      onClick={() => handleShowDeclineModal(request)}
                     >
                       Decline
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -125,13 +152,12 @@ function SupplyRequestsList() {
         </div>
       </div>
 
-      {/* Modal for accepting/declining request */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Action</Modal.Title>
+          <Modal.Title>Approve Request</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to accept/decline this request?
+          Are you sure you want to approve this request?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
@@ -140,11 +166,28 @@ function SupplyRequestsList() {
           <Button variant="success" onClick={handleAcceptRequest}>
             Accept
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Decline Request</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to decline this request?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeclineModal}>
+            Cancel
+          </Button>
           <Button variant="danger" onClick={handleDeclineRequest}>
             Decline
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <ApprovedSupplies approvedSupplies={approvedSupplies} />
+      <DeclinedSupplies declinedSupplies={declinedSupplies} />
     </div>
   );
 }
