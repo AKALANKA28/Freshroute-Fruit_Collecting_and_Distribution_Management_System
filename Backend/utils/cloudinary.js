@@ -23,8 +23,7 @@ cloudinary.config({
     });
   };
 
-
-  exportscloudinaryDeleteImg = async (fileToDelete) => {
+  exports.cloudinaryDeleteImg = async (fileToDelete) => {
     return new Promise((resolve) => {
       cloudinary.uploader.destroy(fileToDelete, (result) => {
         resolve(

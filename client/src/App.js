@@ -3,6 +3,9 @@ import "remixicon/fonts/remixicon.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
@@ -38,12 +41,12 @@ import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from './Website/Home';
 import About from "./Website/About";
 import Shop from "./Website/Shop";
 import Contact from "./Website/Contact";
+import SingleProduct from "./Website/Shop/Products/SingleProduct";
 
 const router = createBrowserRouter([
 
@@ -83,7 +86,14 @@ const router = createBrowserRouter([
     ),
   },
 
-
+  {
+    path: "/product",
+    element: (
+      <div>
+        <SingleProduct />
+      </div>
+    ),
+  },
 
   {
     path: "/login",

@@ -15,6 +15,7 @@ const morgan = require("morgan")
 const authRouter = require('./routes/authRoute.js');
 const productRouter = require('./routes/productRoute.js');
 const categoryRouter = require('./routes/categoryRoute.js');
+const enqRouter = require('./routes/enqRoute.js');
 
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
@@ -53,6 +54,7 @@ connection.once("open", () => {
 app.use('/user', authRouter);
 app.use('/product', productRouter);
 app.use('/productCategory', categoryRouter);
+app.use('/enq', enqRouter);
 
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
