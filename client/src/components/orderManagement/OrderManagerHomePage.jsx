@@ -2,21 +2,19 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
+
 import Footer from './footer/Footer'
-import QualityListBody from './body/QualityList/QualityListBody'
+import {Outlet} from 'react-router-dom'
 
-
-
-
-const QualityList = () => {
+const OrderManagerHomePage = () => {
   return (
     <div>
       <Header />
       <Sidebar />
-      <QualityListBody />
+      <Outlet/>
       <Footer />
     </div>
   )
 }
 
-export default QualityList
+export default OrderManagerHomePage
