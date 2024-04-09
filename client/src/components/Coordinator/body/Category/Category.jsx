@@ -41,7 +41,7 @@ function Category() {
       const response = await axios.get("/Category/");
       setDataList(response.data);
     } catch (err) {
-      alert(err.message);
+      console.error("Error fetching data:", err);
     }
   };
 
@@ -50,7 +50,7 @@ function Category() {
       const response = await axios.get("/fruitType/");
       setFruitNames(response.data.map(fruit => fruit.name));
     } catch (err) {
-      alert(err.message);
+      console.error("Error fetching fruit names:", err);
     }
   };
 
@@ -87,11 +87,11 @@ function Category() {
   };
 
   const handleRefreshClick = () => {
-    window.location.reload();
+    getFetchData();
   };
 
   const handleButtonClick = () => {
-    getFetchData();
+    // Logic for handling Excel export
   };
 
   const handleAddModalOpen = () => {
@@ -126,7 +126,7 @@ function Category() {
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error deleting category:", err);
     }
   };
 
@@ -137,7 +137,7 @@ function Category() {
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error adding category:", err);
     }
   };
 
@@ -148,7 +148,7 @@ function Category() {
       handleEditModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error updating category:", err);
     }
   };
 
@@ -159,7 +159,7 @@ function Category() {
       handlePriceModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error pricing category:", err);
     }
   };
 
@@ -210,7 +210,7 @@ function Category() {
                     </Modal.Header>
                     <Modal.Body>
                       <PDFViewer width="100%" height="500px">
-                        <CategoryReport dataList={dataList} />
+                        <CategoryReport dataList={filteredDataList} />
                       </PDFViewer>
                     </Modal.Body>
                     <Modal.Footer>
@@ -258,7 +258,7 @@ function Category() {
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Pricing for Category</Modal.Title>
+              <Modal.Title>Edit Category</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <CategoryForm
@@ -282,7 +282,6 @@ function Category() {
 
           <div className="search-dropdown-container">
             <SearchBar onSearch={handleSearch} />
-            {/* Dropdown for fruit names */}
             <div className="dropdown">
               <select
                 className="form-select"
@@ -297,7 +296,6 @@ function Category() {
                 ))}
               </select>
             </div>
-            {/* Dropdown for quality */}
             <div className="dropdown">
               <select
                 className="form-select"
@@ -314,7 +312,6 @@ function Category() {
             </div>
           </div>
 
-          {/* Table */}
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -323,7 +320,7 @@ function Category() {
                 <th scope="col" onClick={() => handleSort("category")}>Category</th>
                 <th scope="col">Quality</th>
                 <th scope="col">Quality Description</th>
-                <th scope="col">Price(1KG)</th>
+                <th scope="col">Price per Kg(Rs)</th>
                 <th>Action</th>
               </tr>
             </thead>
