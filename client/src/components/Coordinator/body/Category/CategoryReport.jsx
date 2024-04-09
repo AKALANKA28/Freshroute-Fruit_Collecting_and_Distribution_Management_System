@@ -1,5 +1,5 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
@@ -54,21 +54,23 @@ const CategoryReport = ({ dataList }) => {
           <Text style={styles.heading}>Category Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
+            <Text style={styles.tableColHeader}>Date</Text>
               <Text style={styles.tableColHeader}>Fruit</Text>
               <Text style={styles.tableColHeader}>Category</Text>
-              <Text style={styles.tableColHeader}>Date</Text>
-              <Text style={styles.tableColHeader}>Weight</Text>
               <Text style={styles.tableColHeader}>Quality</Text>
-              <Text style={styles.tableColHeader}>Price</Text>
+              <Text style={styles.tableColHeader}>Description</Text>
+              
+              <Text style={styles.tableColHeader}>Price per Kg(Rs)</Text>
             
             </View>
             {dataList.map((category, index) => (
               <View key={index} style={styles.tableRow}>
+                <Text style={styles.tableCol}>{category.date}</Text>
                 <Text style={styles.tableCol}>{category.fruit}</Text>
                 <Text style={styles.tableCol}>{category.category}</Text>
-                <Text style={styles.tableCol}>{category.date}</Text>
-                <Text style={styles.tableCol}>{category.weight}</Text>
                 <Text style={styles.tableCol}>{category.quality}</Text>
+                <Text style={styles.tableCol}>{category.qualityDesc}</Text>
+                
                 <Text style={styles.tableCol}>{category.price}</Text>
               </View>
             ))}
