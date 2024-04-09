@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-const FruitTypeForm = ({ handleSubmit, initialData }) => {
+const ResourceForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    date: "",
-    description: ""
+    resource_type: "",
+    description: "",
+    qty: ""
   });
 
   useEffect(() => {
@@ -12,21 +12,6 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
       setFormData(initialData);
     }
   }, [initialData]);
-
-  useEffect(() => {
-    const getCurrentDate = () => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    };
-
-    setFormData(prevState => ({
-      ...prevState,
-      date: getCurrentDate()
-    }));
-  }, []); // Empty dependency array to run only once after the component mounts
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,44 +29,47 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
-        <label htmlFor="name" className="form-label">
-          Fruit Name
+        <label htmlFor="resource_type" className="form-label">
+        Resource Type
         </label>
         <input
           type="text"
           className="form-control"
-          name="name"
-          placeholder="Fruit Name"
+          id="resource_type"
+          name="resource_type"
+          placeholder="Resource Type"
+          value={formData.resource_type}
           onChange={handleChange}
-          value={formData.name}
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="date" className="form-label">
-          Date
-        </label>
-        <input
-          type="date"
-          className="form-control"
-          name="date"
-          placeholder="Date"
-          onChange={handleChange}
-          value={formData.date}
           required
         />
       </div>
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
-          Description
+        Description
         </label>
         <input
           type="text"
           className="form-control"
+          id="description"
           name="description"
           placeholder="Description"
-          onChange={handleChange}
           value={formData.description}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="qty" className="form-label">
+        Quantity Available
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="qty"
+          name="qty"
+          placeholder="Available Resources"
+          value={formData.qty}
+          onChange={handleChange}
           required
         />
       </div>
@@ -92,4 +80,4 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
   );
 };
 
-export default FruitTypeForm;
+export default ResourceForm;

@@ -83,6 +83,16 @@ const getSubCategoriesByFruit = async (req, res) => {
   }
 };
 
+const getQualityFruit = async (req, res) => {
+  const fruit = req.params.fruit;
+  try {
+    const qualities = await FruitDetail.distinct("quality", { fruit });
+    res.json(qualities);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   addCategory,
   getAllCategories,
@@ -91,4 +101,5 @@ module.exports = {
   updateCategory,
   getFruitNames,
   getSubCategoriesByFruit,
+  getQualityFruit,
 };

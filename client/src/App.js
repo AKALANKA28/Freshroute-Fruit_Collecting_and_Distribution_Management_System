@@ -11,7 +11,8 @@ import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
-import OMDashboard from "./components/orderManagement/OMDashboard";
+import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
+import QualityList from "./components/orderManagement/body/QualityList/QualityList";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
@@ -30,8 +31,10 @@ import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-import OPDashboard from "./components/orderProcessor/OPDashboard";
-import QualityList from "./components/orderManagement/QualityList";
+import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
+import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -41,8 +44,10 @@ import RequestedOrder from './components/RequestedOrder/RequestedOrder';
 import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
+
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
+import ResourcePage from "./components/researchDashboard/ResourcePage";
 
 //import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
 //import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
@@ -54,6 +59,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import Website from "./Website/Website";
+import OMDashboard from "./components/orderManagement/body/OMDashboard";
+import OPDashboard from "./components/orderProcessor/body/OPDashboard";
+import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
 
 const router = createBrowserRouter([
   {
@@ -131,11 +139,54 @@ const router = createBrowserRouter([
   {
     path: "/OMDashboard",
     element: (
-      <div>
-        <OMDashboard />
-      </div>
+        <div>
+          <OrderManagerHomePage />
+        </div>
     ),
+    children: [ {
+        path: "/OMDashboard/",
+        element: <OMDashboard/>,
+      },
+      {
+        path: "/OMDashboard/QualityList",
+        element: <QualityList/>,
+      },
+      {
+        path: "/OMDashboard/RequestedOrderList",
+        element: <RequestedOrderList/>,
+      }
+
+    ]
   },
+
+  {
+    path: "/OPDashboard",
+    element: (
+        <div>
+          <OrderProcessorHomePage />
+        </div>
+    ),
+    children: [
+      {
+        path: "/OPDashboard/",
+        element: <OPDashboard/>,
+      },
+      {
+        path: "/OPDashboard/AssignedOrders",
+        element: <AssignedOrder/>,
+      },
+      {
+        path: "/OPDashboard/OngoingOrders",
+        element: <OngoingOrder/>,
+      },
+      {
+        path: "/OPDashboard/CompletedOrders",
+        element: <CompletedOrder/>,
+      },
+
+    ]
+  },
+
 
   {
     path: "/SMDashboard",
@@ -281,6 +332,15 @@ const router = createBrowserRouter([
     ),
   },
 
+  {
+    path: "/ResourcePage",
+    element: (
+      <div>
+        <ResourcePage />
+      </div>
+    ),
+  },
+
 
   {
     path: "/TransportFee",
@@ -345,14 +405,6 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/OPDashboard",
-    element: (
-      <div>
-        <OPDashboard />
-      </div>
-    ),
-  },
   {
     path: "/QualityList",
     element: (

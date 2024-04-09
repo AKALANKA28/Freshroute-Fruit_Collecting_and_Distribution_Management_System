@@ -1,5 +1,5 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
@@ -46,32 +46,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const CategoryReport = ({ dataList }) => {
+const ResourceReport = ({ dataList }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Category Details Report</Text>
+          <Text style={styles.heading}>Available Resources Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
-            <Text style={styles.tableColHeader}>Date</Text>
-              <Text style={styles.tableColHeader}>Fruit</Text>
-              <Text style={styles.tableColHeader}>Category</Text>
-              <Text style={styles.tableColHeader}>Quality</Text>
+              <Text style={styles.tableColHeader}>Resource Type</Text>
               <Text style={styles.tableColHeader}>Description</Text>
-              
-              <Text style={styles.tableColHeader}>Price per Kg(Rs)</Text>
+              <Text style={styles.tableColHeader}>Available Resources</Text>
             
             </View>
-            {dataList.map((category, index) => (
+            {dataList.map((resource, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{category.date}</Text>
-                <Text style={styles.tableCol}>{category.fruit}</Text>
-                <Text style={styles.tableCol}>{category.category}</Text>
-                <Text style={styles.tableCol}>{category.quality}</Text>
-                <Text style={styles.tableCol}>{category.qualityDesc}</Text>
-                
-                <Text style={styles.tableCol}>{category.price}</Text>
+                <Text style={styles.tableCol}>{resource.resource_type}</Text>
+                <Text style={styles.tableCol}>{resource.description}</Text>
+                <Text style={styles.tableCol}>{resource.qty}</Text>
               </View>
             ))}
           </View>
@@ -81,4 +73,4 @@ const CategoryReport = ({ dataList }) => {
   );
 };
 
-export default CategoryReport;
+export default ResourceReport;

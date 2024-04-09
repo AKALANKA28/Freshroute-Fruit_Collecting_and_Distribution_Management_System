@@ -200,10 +200,3 @@
 .search-form i{
     color: #012970;
 }
-
-.tab-height {
-    height: 45px!important;
-}
-.tab-height:hover {
-    border-bottom: 0;
-}

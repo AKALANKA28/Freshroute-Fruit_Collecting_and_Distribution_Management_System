@@ -22,30 +22,66 @@ function Category() {
   const [filteredDataList, setFilteredDataList] = useState([]);
   const [sortColumn, setSortColumn] = useState("fruit");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [showReportModal, setShowReportModal] = useState(false); // Define showReportModal state variable
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [fruitNames, setFruitNames] = useState([]);
+  const [selectedFruit, setSelectedFruit] = useState("all");
+  const [selectedQuality, setSelectedQuality] = useState("all");
 
   useEffect(() => {
     getFetchData();
+    fetchFruitNames();
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
-  }, [dataList]);
+    filterDataList(selectedFruit, selectedQuality);
+  }, [dataList, selectedFruit, selectedQuality]);
 
   const getFetchData = async () => {
     try {
       const response = await axios.get("/Category/");
       setDataList(response.data);
     } catch (err) {
-      alert(err.message);
+      console.error("Error fetching data:", err);
     }
   };
 
-  // Search functionality
+  const fetchFruitNames = async () => {
+    try {
+      const response = await axios.get("/fruitType/");
+      setFruitNames(response.data.map(fruit => fruit.name));
+    } catch (err) {
+      console.error("Error fetching fruit names:", err);
+    }
+  };
+
+  const handleQualitySelect = (quality) => {
+    setSelectedQuality(quality);
+  };
+
+  const handleFruitSelect = (fruit) => {
+    setSelectedFruit(fruit);
+  };
+
+  const filterDataList = (fruit, quality) => {
+    if (fruit === "all" && quality === "all") {
+      setFilteredDataList(dataList);
+    } else if (fruit === "all") {
+      const filteredList = dataList.filter((category) => category.quality === quality);
+      setFilteredDataList(filteredList);
+    } else if (quality === "all") {
+      const filteredList = dataList.filter((category) => category.fruit === fruit);
+      setFilteredDataList(filteredList);
+    } else {
+      const filteredList = dataList.filter((category) => category.fruit === fruit && category.quality === quality);
+      setFilteredDataList(filteredList);
+    }
+  };
+
   const handleSearch = (query) => {
     const filteredList = dataList.filter((category) => {
-      const fullName = `${category.fruit} ${category.category} ${category.date} ${category.quality}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+      const fullName = `${category.fruit} ${category.category} ${category.date} ${category.quality}`;
+      return fullName.toLowerCase().includes(query.toLowerCase()) && 
+        (selectedQuality === "all" || category.quality === selectedQuality);
     });
     setFilteredDataList(filteredList);
   };
@@ -55,7 +91,7 @@ function Category() {
   };
 
   const handleButtonClick = () => {
-    getFetchData();
+    // Logic for handling Excel export
   };
 
   const handleAddModalOpen = () => {
@@ -90,7 +126,7 @@ function Category() {
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error deleting category:", err);
     }
   };
 
@@ -101,7 +137,7 @@ function Category() {
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error adding category:", err);
     }
   };
 
@@ -112,7 +148,7 @@ function Category() {
       handleEditModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error updating category:", err);
     }
   };
 
@@ -123,7 +159,7 @@ function Category() {
       handlePriceModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error pricing category:", err);
     }
   };
 
@@ -135,6 +171,9 @@ function Category() {
       setSortOrder("asc");
     }
   };
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
 
   const sortedDataList = [...filteredDataList].sort((a, b) => {
     const columnA = a[sortColumn].toLowerCase();
@@ -148,9 +187,6 @@ function Category() {
     return 0;
   });
 
-  const handleCloseReportModal = () => setShowReportModal(false); // Define handleCloseReportModal function
-  const handleShowReportModal = () => setShowReportModal(true); // Define handleShowReportModal function
-
   return (
     <div id="main">
       <div className="card recent-sales overflow-auto">
@@ -158,7 +194,7 @@ function Category() {
           <div className="page-header">
             <div className="add-item d-flex">
               <div className="card-title">
-              Category Details
+                Category Details
                 <h6>Manage Category Details</h6>
               </div>
             </div>
@@ -174,7 +210,7 @@ function Category() {
                     </Modal.Header>
                     <Modal.Body>
                       <PDFViewer width="100%" height="500px">
-                        <CategoryReport dataList={dataList} />
+                        <CategoryReport dataList={filteredDataList} />
                       </PDFViewer>
                     </Modal.Body>
                     <Modal.Footer>
@@ -222,7 +258,7 @@ function Category() {
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Pricing for Category</Modal.Title>
+              <Modal.Title>Edit Category</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <CategoryForm
@@ -244,62 +280,91 @@ function Category() {
             </Modal.Body>
           </Modal>
 
-          <div className="table-container">
+          <div className="search-dropdown-container">
             <SearchBar onSearch={handleSearch} />
-            <table className="table table-borderless datatable">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col" >Date</th>
-                  <th scope="col" onClick={() => handleSort("fruit")}>Fruit</th>
-                  <th scope="col" onClick={() => handleSort("category")}>Category</th>
-                  <th scope="col" >Quality</th>
-                  <th scope="col" >Quality Description</th>
-                  <th scope="col" >Price(1KG)</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedDataList.length ? (
-                  sortedDataList.map((category) => (
-                    <tr key={category._id}>
-                      <td>{category.date}</td>
-                      <td>{category.fruit}</td>
-                      <td>{category.category}</td>
-                      <td>{category.quality}</td>
-                      <td>{category.qualityDesc}</td>
-                      <td>{category.price}</td>
-                      <td className="action">
-                        <div className="buttons">
-                          <button
-                            className="btn btn-edit"
-                            onClick={() => handlePriceModalOpen(category)}
-                          >
-                            <i className="bi bi-calculator-fill"></i>
-                          </button>
-                          <button
-                            className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(category)}
-                          >
-                            <i className="bi bi-pencil-square"></i>
-                          </button>
-                          <button
-                            className="btn btn-delete"
-                            onClick={() => handleDelete(category._id)}
-                          >
-                            <i className="bi bi-trash-fill"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="7">No Data</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            <div className="dropdown">
+              <select
+                className="form-select"
+                name="fruit"
+                onChange={(e) => handleFruitSelect(e.target.value)}
+                value={selectedFruit}
+                required
+              >
+                <option value="all">All Fruits</option>
+                {fruitNames.map((fruit, index) => (
+                  <option key={index} value={fruit}>{fruit}</option>
+                ))}
+              </select>
+            </div>
+            <div className="dropdown">
+              <select
+                className="form-select"
+                name="quality"
+                onChange={(e) => handleQualitySelect(e.target.value)}
+                value={selectedQuality}
+                required
+              >
+                <option value="all">All Qualities</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
           </div>
+
+          <table className="table table-borderless datatable">
+            <thead className="table-light">
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col" onClick={() => handleSort("fruit")}>Fruit</th>
+                <th scope="col" onClick={() => handleSort("category")}>Category</th>
+                <th scope="col">Quality</th>
+                <th scope="col">Quality Description</th>
+                <th scope="col">Price per Kg(Rs)</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedDataList.length ? (
+                sortedDataList.map((category) => (
+                  <tr key={category._id}>
+                    <td>{category.date}</td>
+                    <td>{category.fruit}</td>
+                    <td>{category.category}</td>
+                    <td>{category.quality}</td>
+                    <td>{category.qualityDesc}</td>
+                    <td>{category.price}</td>
+                    <td className="action">
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                          onClick={() => handlePriceModalOpen(category)}
+                        >
+                          <i className="bi bi-calculator-fill"></i>
+                        </button>
+                        <button
+                          className="btn btn-edit"
+                          onClick={() => handleEditModalOpen(category)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                          onClick={() => handleDelete(category._id)}
+                        >
+                          <i className="bi bi-trash-fill"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7">No Data</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -28,17 +28,17 @@ const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
 const declinedSupplyRouter = require("./routes/farmers/declinedSuppliesRoutes");
 
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
-
 const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
+const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
 
 
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
-
-const qualityRoute = require("./routes/q_and_o/qualityRoute");
-
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
+
+const orderMangerRoute = require("./routes/q_and_o/OrderManagerRoute");
+const orderProcessorRoute = require("./routes/q_and_o/OrderProcessorRoute");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -64,7 +64,6 @@ app.use("/FruitType", FruitTypeRouter);
 app.use("/Category", CategoryRouter);
 app.use("/Salary", SalaryRouter);
 
-
 app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
@@ -72,6 +71,7 @@ app.use('/coverings', coveringsRouter);
 
 app.use("/Promotion", PromotionRouter);
 app.use("/Compaign", CompaignRouter);
+app.use("/Resource", ResourceRouter);
 
 
 
@@ -88,11 +88,10 @@ app.use("/Promotion", PromotionRouter);
 
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
-
-app.use("/quality", qualityRoute);
-
 app.use("/CalculateSalary", CalculateSalaryRouter);
 app.use("/Notice", NoticeRouter);
+app.use("/om", orderMangerRoute);
+app.use("/op", orderProcessorRoute);
 
 // Start the server
 const PORT = process.env.PORT || 8070;

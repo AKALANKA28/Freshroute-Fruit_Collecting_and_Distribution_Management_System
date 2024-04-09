@@ -230,3 +230,9 @@
 .search-form i{
   color: #012970;
 }
+
+.dropdown {
+  flex-shrink: 0; 
+  margin-left: 10px; 
+  margin-top: 10px;
+}
