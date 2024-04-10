@@ -1,25 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import React from "react";
 
-axios.defaults.baseURL = "http://localhost:8070/";
-
-function ApprovedSupplies({ approvedSupplies, setApprovedSupplies }) {
-
-  const [supplyRequests, setSupplyRequests] = useState([]);
-
-  useEffect(() => {
-    fetchSupplyRequests();
-  }, []);
-
-  const fetchSupplyRequests = async () => {
-    try {
-      const response = await axios.get("/Prediction");
-      setSupplyRequests(response.data);
-    } catch (error) {
-      console.error("Error fetching supply requests:", error);
-    }
-  };
-
+const ApprovedSuppliesTable = ({ approvedSupplies }) => {
   return (
     <div id="main col-8">
       <div className="card recent-sales overflow-auto">
@@ -39,9 +20,9 @@ function ApprovedSupplies({ approvedSupplies, setApprovedSupplies }) {
                   <th>Fruit</th>
                   <th>Sub Category</th>
                   <th>Quality</th>
-                  <th>Quantity</th>
-                  <th>Price for 1kg</th>
-                  <th>Total Price</th>
+                  <th>Total Quantity(kg)</th>
+                  <th>Price for 1kg(Rs)</th>
+                  <th>Total Price(Rs)</th>
                   <th>Date Can Be Given</th>
                 </tr>
               </thead>
@@ -66,4 +47,4 @@ function ApprovedSupplies({ approvedSupplies, setApprovedSupplies }) {
   );
 }
 
-export default ApprovedSupplies;
+export default ApprovedSuppliesTable;

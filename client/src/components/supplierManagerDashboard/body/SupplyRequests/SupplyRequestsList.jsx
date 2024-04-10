@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import './supplyRequests.css';
-import ApprovedSupplies from "./ApprovedSupplies";
-import DeclinedSupplies from "./DeclinedSupplies";
+import ApprovedSuppliesTable from "./ApprovedSuppliesTable";
+import DeclinedSupplies from "./DeclinedSuppliesTable";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -114,9 +114,9 @@ function SupplyRequestsList() {
                   <th scope="col">Fruit</th>
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price for 1kg</th>
-                  <th scope="col">Total Price</th>
+                  <th scope="col">Total Quantity(kg)</th>
+                  <th scope="col">Price for 1kg(Rs)</th>
+                  <th scope="col">Total Price(Rs)</th>
                   <th scope="col">Date Can Be Given</th>
                   <th>Action</th>
                 </tr>
@@ -188,7 +188,7 @@ function SupplyRequestsList() {
         </Modal.Footer>
       </Modal>
 
-      <ApprovedSupplies approvedSupplies={approvedSupplies} setApprovedSupplies={setApprovedSupplies} />
+      <ApprovedSuppliesTable approvedSupplies={approvedSupplies} setApprovedSupplies={setApprovedSupplies} />
       <DeclinedSupplies declinedSupplies={declinedSupplies} />
     </div>
   );

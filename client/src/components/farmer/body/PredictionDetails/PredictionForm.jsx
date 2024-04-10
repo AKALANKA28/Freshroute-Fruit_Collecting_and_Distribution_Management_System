@@ -173,7 +173,7 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
 
       <div className="mb-3">
           <label htmlFor="quantity" className="form-label">
-          Quantity
+          Total Quantity(kg)
           </label>
           <input
             type="Number"

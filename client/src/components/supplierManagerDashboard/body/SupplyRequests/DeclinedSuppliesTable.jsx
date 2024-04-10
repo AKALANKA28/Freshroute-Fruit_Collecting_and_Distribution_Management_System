@@ -20,9 +20,9 @@ function DeclinedSupplies({ declinedSupplies }) {
             <th>Fruit</th>
             <th>Sub Category</th>
             <th>Quality</th>
-            <th>Quantity</th>
-            <th>Price for 1kg</th>
-            <th>Total Price</th>
+            <th>Total Quantity(kg)</th>
+            <th>Price for 1kg(Rs)</th>
+            <th>Total Price(Rs)</th>
             <th>Date Can Be Given</th>
           </tr>
         </thead>

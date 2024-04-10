@@ -272,5 +272,5 @@
 
 .btn-success,
 .btn-danger {
-  width: 80px; /* Set a fixed width for both buttons to ensure they have the same size */
+  width: 75px; /* Set a fixed width for both buttons to ensure they have the same size */
 }

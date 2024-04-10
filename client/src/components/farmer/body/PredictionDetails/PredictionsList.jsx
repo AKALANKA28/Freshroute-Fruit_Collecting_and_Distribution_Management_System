@@ -272,9 +272,9 @@ const getStatusClassName = (status) => {
                   <th scope="col">Fruit</th>
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
-                  <th scope="col">Quantity</th>
+                  <th scope="col">Total Quantity(kg)</th>
                   <th scope="col">Price for 1kg</th>
-                  <th scope="col">Total Price</th>
+                  <th scope="col">Total Price(Rs)</th>
                   <th scope="col">Date Can Be Given</th>
                   <th scope="col">Status</th>
                   <th>Action</th>
