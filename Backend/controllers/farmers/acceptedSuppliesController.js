@@ -1,9 +1,9 @@
 const AcceptedSupply = require("../../models/farmers/acceptedSupplies");
 
 const addAcceptedSupply = async (req, res) => {
-  const { fruit, subCategory, quality, quantity, price, dateCanBeGiven } = req.body;
+  const { fruit, subCategory, quality, quantity, price, dateCanBeGiven, predictionID } = req.body;
   try {
-    const newAcceptedSupply = await AcceptedSupply.create({ fruit, subCategory, quality, quantity, price, dateCanBeGiven });
+    const newAcceptedSupply = await AcceptedSupply.create({ fruit, subCategory, quality, quantity, price, dateCanBeGiven, predictionID });
     res.json("New Supply Added");
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -41,9 +41,9 @@ const deleteAcceptedSupply = async (req, res) => {
 
 const updateAcceptedSupply = async (req, res) => {
   const id = req.params.id;
-  const { fruit, subCategory, quality, quantity, price, dateCanBeGiven } = req.body;
+  const { fruit, subCategory, quality, quantity, price, dateCanBeGiven, predictionID } = req.body;
   try {
-    await AcceptedSupply.findByIdAndUpdate(id, { fruit, subCategory, quality, quantity, price, dateCanBeGiven });
+    await AcceptedSupply.findByIdAndUpdate(id, { fruit, subCategory, quality, quantity, price, dateCanBeGiven, predictionID });
     res.status(200).json({ message: "Supply updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -1,6 +1,47 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import { Button, Modal } from "react-bootstrap";
 
 const ApprovedSuppliesTable = ({ approvedSupplies }) => {
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [declineModalShow, setDeclineModalShow] = useState(false);
+
+  const handleDeclineRequest = async () => {
+    if (!selectedRequest) return;
+    try {
+      await axios.post('/declinedSupply/add', selectedRequest);
+      // Update the prediction status to "Declined"
+      await axios.put(`/Prediction/decline/${selectedRequest.predictionID}`);
+
+      // Delete the accepted supply
+      await axios.delete(`/acceptedSupply/delete/${selectedRequest._id}`);
+      fetchApprovedSupplies();
+      handleCloseDeclineModal();
+      alert("Supply Request Declined");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error declining request:", error);
+    }
+  };
+
+  const handleShowDeclineModal = (request) => {
+    setSelectedRequest(request);
+    setDeclineModalShow(true);
+  };
+          
+  const handleCloseDeclineModal = () => {
+    setSelectedRequest(null);
+    setDeclineModalShow(false);
+  };
+
+  const fetchApprovedSupplies = async () => {
+    try {
+      await axios.get("/acceptedSupply");
+    } catch (error) {
+      console.error("Error fetching approved supplies:", error);
+    }
+  };
+
   return (
     <div id="main col-8">
       <div className="card recent-sales overflow-auto">
@@ -24,6 +65,7 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
                   <th>Price for 1kg(Rs)</th>
                   <th>Total Price(Rs)</th>
                   <th>Date Can Be Given</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -36,6 +78,14 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
                     <td>{request.price}</td>
                     <td>{request.price * request.quantity}</td>
                     <td>{request.dateCanBeGiven}</td>
+                    <td>
+                      <Button
+                        className="btn btn-action btn-danger"
+                        onClick={() => handleShowDeclineModal(request)}
+                      >
+                        Decline
+                      </Button>
+                    </td>  
                   </tr>
                 ))}
               </tbody>
@@ -43,6 +93,24 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
           </div>
         </div>
       </div>
+
+      <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
+         <Modal.Header closeButton>
+           <Modal.Title>Decline Request</Modal.Title>
+         </Modal.Header>
+         <Modal.Body>
+           Are you sure you want to decline this request?
+         </Modal.Body>
+         <Modal.Footer>
+           <Button variant="" onClick={handleCloseDeclineModal}>
+             Cancel
+           </Button>
+           <Button variant="danger" onClick={handleDeclineRequest}>
+             Decline
+           </Button>
+         </Modal.Footer>
+       </Modal>
+
     </div>
   );
 };

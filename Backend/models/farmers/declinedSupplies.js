@@ -31,6 +31,10 @@ const DeclinedSupplySchema = new mongoose.Schema({
         type : String,
         required: true
     },
+    predictionID : {
+        type : String,
+        required: true
+    },
 });
 
 const DeclinedSupply = mongoose.model("DeclinedSupply", DeclinedSupplySchema);

@@ -31,6 +31,10 @@ const AcceptedSupplySchema = new mongoose.Schema({
         type : String,
         required: true
     },
+    predictionID : {
+        type : String,
+        required: true
+    },
 });
 
 const AcceptedSupply = mongoose.model("AcceptedSupply", AcceptedSupplySchema);

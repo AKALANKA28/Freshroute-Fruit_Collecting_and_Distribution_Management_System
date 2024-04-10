@@ -9,7 +9,7 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
 
   useEffect(() => {
     fetchSupplyRequests();
-  }, );
+  }, []);
       
   const fetchSupplyRequests = async () => {
     try {
@@ -23,8 +23,9 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
   const handleAcceptRequest = async () => {
     if (!selectedRequest) return;
     try {
+      const acceptedSupplyData = { ...selectedRequest, predictionID: selectedRequest._id }; // Store prediction ID in acceptedSupplyData
       await axios.put(`/Prediction/accept/${selectedRequest._id}`);
-      await axios.post('/acceptedSupply/add', selectedRequest);
+      await axios.post('/acceptedSupply/add', acceptedSupplyData);
       fetchSupplyRequests();
       handleCloseModal();
       alert("Supply Request Added");
@@ -37,8 +38,9 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
   const handleDeclineRequest = async () => {
     if (!selectedRequest) return;
     try {
+      const declinedSupplyData = { ...selectedRequest, predictionID: selectedRequest._id };
       await axios.put(`/Prediction/decline/${selectedRequest._id}`);
-      await axios.post('/declinedSupply/add', selectedRequest);
+      await axios.post('/declinedSupply/add', declinedSupplyData);
       fetchSupplyRequests();
       handleCloseDeclineModal();
       alert("Supply Request Declined");
@@ -101,12 +103,12 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
                 >
                   Approve
                 </Button>
-                <button
+                <Button
                   className="btn btn-action btn-danger"
                   onClick={() => handleShowDeclineModal(request)}
                 >
                   Decline
-                </button>
+                </Button>
               </td>
             </tr>
           ))}

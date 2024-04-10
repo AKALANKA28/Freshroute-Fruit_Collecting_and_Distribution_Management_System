@@ -1,6 +1,47 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import { Button, Modal } from "react-bootstrap";
 
 function DeclinedSuppliesTable({ declinedSupplies }) {
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleAcceptRequest = async () => {
+    if (!selectedRequest) return;
+    try {
+      await axios.post('/acceptedSupply/add', selectedRequest);
+      // Update the prediction status to "Approved"
+      await axios.put(`/Prediction/accept/${selectedRequest.predictionID}`);
+
+      // Delete the declined supply
+      await axios.delete(`/declinedSupply/delete/${selectedRequest._id}`);
+      fetchDeclinedSupplies();
+      handleCloseModal();
+      alert("Supply Request Approved");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error declining request:", error);
+    }
+  };
+
+  const handleShowModal = (request) => {
+    setSelectedRequest(request);
+    setShowModal(true);
+  };
+        
+  const handleCloseModal = () => {
+    setSelectedRequest(null);
+    setShowModal(false);
+  };
+
+  const fetchDeclinedSupplies = async () => {
+    try {
+      await axios.get("/declinedSupply");
+    } catch (error) {
+      console.error("Error fetching declined supplies:", error);
+    }
+  };
+
   return (
     <div id="main col-8">
       <div className="card recent-sales overflow-auto">
@@ -24,18 +65,27 @@ function DeclinedSuppliesTable({ declinedSupplies }) {
             <th>Price for 1kg(Rs)</th>
             <th>Total Price(Rs)</th>
             <th>Date Can Be Given</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {declinedSupplies.map((supply) => (
-            <tr key={supply._id}>
-              <td>{supply.fruit}</td>
-              <td>{supply.subCategory}</td>
-              <td>{supply.quality}</td>
-              <td>{supply.quantity}</td>
-              <td>{supply.price}</td>
-              <td>{supply.price * supply.quantity}</td>
-              <td>{supply.dateCanBeGiven}</td>
+          {declinedSupplies.map((request) => (
+            <tr key={request._id}>
+              <td>{request.fruit}</td>
+              <td>{request.subCategory}</td>
+              <td>{request.quality}</td>
+              <td>{request.quantity}</td>
+              <td>{request.price}</td>
+              <td>{request.price * request.quantity}</td>
+              <td>{request.dateCanBeGiven}</td>
+              <td>
+                <Button
+                  className="btn-action btn-approve"
+                  variant="success"
+                  onClick={() => handleShowModal(request)}
+                >
+                  Approve
+                </Button></td>
             </tr>
           ))}
         </tbody>
@@ -43,6 +93,24 @@ function DeclinedSuppliesTable({ declinedSupplies }) {
           </div>
         </div>
       </div>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Approve Request</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to approve this request?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="success" onClick={handleAcceptRequest}>
+            Approve
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 }
