@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const ApprovedSuppliesTable = ({ approvedSupplies }) => {
   return (
@@ -45,6 +45,6 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ApprovedSuppliesTable;

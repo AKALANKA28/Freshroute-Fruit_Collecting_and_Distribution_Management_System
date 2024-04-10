@@ -1,6 +1,6 @@
 import React from 'react';
 
-function DeclinedSupplies({ declinedSupplies }) {
+function DeclinedSuppliesTable({ declinedSupplies }) {
   return (
     <div id="main col-8">
       <div className="card recent-sales overflow-auto">
@@ -47,4 +47,4 @@ function DeclinedSupplies({ declinedSupplies }) {
   );
 }
 
-export default DeclinedSupplies;
+export default DeclinedSuppliesTable;
