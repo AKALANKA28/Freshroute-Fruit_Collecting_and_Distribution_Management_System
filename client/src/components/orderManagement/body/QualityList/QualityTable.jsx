@@ -33,6 +33,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
             <tr>
               <th className="col">Fruit Type</th>
               <th className="col">Fruit Category</th>
+              <th className="col">Grade</th>
               <th className="col">Quality Description</th>
               <th className="col">Storage Conditions</th>
               <th className="col">Action</th>
@@ -45,6 +46,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
                 <tr key={item._id}>
                   <td>{item.fruit}</td>
                   <td>{item.category}</td>
+                  <td>{item.quality}</td>
                   <td >{item.qualityDesc}</td>
                   <td >{item.storageCond}</td>
                   <td>

@@ -7,6 +7,12 @@ import SearchBar from '../SearchBar'
 import QualityTable from "./QualityTable";
 import axios from 'axios';
 import QualityPopupForm from "./QualityPopupForm";
+import { PDFViewer } from "@react-pdf/renderer";
+import QualityReport from "./QualityReport";
+import { Button, Modal } from "react-bootstrap";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
+
 axios.defaults.baseURL = "http://localhost:8070/";
 const QualityList = () => {
 
@@ -127,6 +133,29 @@ const QualityList = () => {
         setTableData(items.filter((item) => item.quality === value))
     }
 
+    //pdf
+    const [showReportModal, setShowReportModal] = useState(false);
+    const handleCloseReportModal = () => setShowReportModal(false);
+    const handleShowReportModal = () => setShowReportModal(true);
+
+    //excel
+    const generateExcelFile = () => {
+        // Define the worksheet
+        const ws = XLSX.utils.json_to_sheet(items);
+      
+        // Define the workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+      
+        // Generate the Excel file
+        writeFile(wb, "suppliers_report.xlsx");
+      };
+      
+      const handleExcelButtonClick = () => {
+        getQualityList(); // Fetch the latest data if needed
+        generateExcelFile();
+      };
+
     return (
         <main className='main' id='main'>
           <div className="body" id='body'>
@@ -150,14 +179,18 @@ const QualityList = () => {
                               <li>
                                   <div className="button-container">
                                       <a href="#">
+                                        <a onClick={handleShowReportModal}>
                                           <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                        </a>
                                       </a>
                                   </div>
                               </li>
                               <li>
                                   <div className="button-container">
                                       <a href="#">
+                                      <a onClick={handleExcelButtonClick}>  
                                           <img src={Excel} alt="Excel Icon" className="icon"/>
+                                          </a>
                                       </a>
                                   </div>
                               </li>
@@ -169,6 +202,21 @@ const QualityList = () => {
                                   </div>
                               </li>
                           </ul>
+                          <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Quality Details Report</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <PDFViewer width="100%" height="500px">
+                                <QualityReport dataList={items} />
+                                </PDFViewer>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseReportModal}>
+                                Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
 
 
                           {/* --------------------add button------------------ */}
