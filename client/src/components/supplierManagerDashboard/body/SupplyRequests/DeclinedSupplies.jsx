@@ -21,7 +21,8 @@ function DeclinedSupplies({ declinedSupplies }) {
             <th>Sub Category</th>
             <th>Quality</th>
             <th>Quantity</th>
-            <th>Price</th>
+            <th>Price for 1kg</th>
+            <th>Total Price</th>
             <th>Date Can Be Given</th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@ function DeclinedSupplies({ declinedSupplies }) {
               <td>{supply.quality}</td>
               <td>{supply.quantity}</td>
               <td>{supply.price}</td>
+              <td>{supply.price * supply.quantity}</td>
               <td>{supply.dateCanBeGiven}</td>
             </tr>
           ))}

@@ -273,7 +273,8 @@ const getStatusClassName = (status) => {
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
                   <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">Price for 1kg</th>
+                  <th scope="col">Total Price</th>
                   <th scope="col">Date Can Be Given</th>
                   <th scope="col">Status</th>
                   <th>Action</th>
@@ -288,6 +289,7 @@ const getStatusClassName = (status) => {
                     <td>{prediction.quality}</td>
                     <td>{prediction.quantity}</td>
                     <td>{prediction.price}</td>
+                    <td>{prediction.price * prediction.quantity}</td>
                     <td>{prediction.dateCanBeGiven}</td>
                     <td>
                       <div
@@ -330,4 +332,3 @@ const getStatusClassName = (status) => {
 }
 
 export default PredictionsList;
-

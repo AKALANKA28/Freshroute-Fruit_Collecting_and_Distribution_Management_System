@@ -115,7 +115,8 @@ function SupplyRequestsList() {
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
                   <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">Price for 1kg</th>
+                  <th scope="col">Total Price</th>
                   <th scope="col">Date Can Be Given</th>
                   <th>Action</th>
                 </tr>
@@ -128,6 +129,7 @@ function SupplyRequestsList() {
                   <td>{request.quality}</td>
                   <td>{request.quantity}</td>
                   <td>{request.price}</td>
+                  <td>{request.price * request.quantity}</td>
                   <td>{request.dateCanBeGiven}</td>
                   <td>
                     <Button
@@ -160,11 +162,11 @@ function SupplyRequestsList() {
           Are you sure you want to approve this request?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="" onClick={handleCloseModal}>
             Cancel
           </Button>
           <Button variant="success" onClick={handleAcceptRequest}>
-            Accept
+            Approve
           </Button>
         </Modal.Footer>
       </Modal>
@@ -177,7 +179,7 @@ function SupplyRequestsList() {
           Are you sure you want to decline this request?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeclineModal}>
+          <Button variant="" onClick={handleCloseDeclineModal}>
             Cancel
           </Button>
           <Button variant="danger" onClick={handleDeclineRequest}>
@@ -186,7 +188,7 @@ function SupplyRequestsList() {
         </Modal.Footer>
       </Modal>
 
-      <ApprovedSupplies approvedSupplies={approvedSupplies} />
+      <ApprovedSupplies approvedSupplies={approvedSupplies} setApprovedSupplies={setApprovedSupplies} />
       <DeclinedSupplies declinedSupplies={declinedSupplies} />
     </div>
   );
