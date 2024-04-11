@@ -1,9 +1,9 @@
 import React from 'react'
 import "./products.css";
 import img from "../../assets/image1.jpg"
-import Navbar from '../../Navbar/Navbar';
 import Footer from '../../Footer/Footer';
 import { Link } from 'react-router-dom';
+import Container from '../../Container';
 
 const SingleProduct = () => {
   return (
@@ -25,8 +25,7 @@ const SingleProduct = () => {
       </nav>
       </div>
            
-        <div className="main-produc-wrapper py-5 home-wrapper-2">
-        <div className="container-xxl">
+        <Container className="main-product-wrapper py-5 home-wrapper-2">
           <div className="row">
             <div className="col-6">
               <div className="main-product-image">
@@ -222,8 +221,7 @@ const SingleProduct = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+      </Container>
       <Footer />
     </div>
   )

@@ -6,8 +6,7 @@ axios.defaults.baseURL = "http://localhost:8070/";
 
 
 const ExpenseTable = ({ items }) => {
-  const [showFormModal, setShowFormModal] = useState(false); // State variable for form modal visibility
-
+  const [showFormModal, setShowFormModal] = useState(false);
   const [dataEdit, setDataEdit] = useState({
     _id: "",
     date: '',
@@ -44,11 +43,8 @@ const ExpenseTable = ({ items }) => {
           console.log("Updating Expense with ID:", dataEdit._id);
         axios.patch(`http://localhost:8070/expense/update/${dataEdit._id}`, dataEdit)
         .then(() => {
-          setShowFormModal(false);
-
           alert("Expense Record Updated");
           window.location.reload();
-
           getFetchData();
 
         })
@@ -64,7 +60,7 @@ const ExpenseTable = ({ items }) => {
         
         }
 
-    const handleEditOnChange = async(e) => {
+    const handleOnChange = async(e) => {
       const {value,name} = e.target;
       setDataEdit((preve)=>{
         return{
@@ -77,7 +73,6 @@ const ExpenseTable = ({ items }) => {
 
     const handleEdit = (item) =>{
       setDataEdit(item)   
-      setShowFormModal(true); // Show the form modal
 
     };
 
@@ -105,9 +100,7 @@ const ExpenseTable = ({ items }) => {
 
 
   return (
-    <>
-
-      
+    <> 
       <div>
         <table className="table table-bordeless datatable">
           <thead className="table-light">
@@ -130,11 +123,9 @@ const ExpenseTable = ({ items }) => {
                   <td >{item.description}</td>
                   <td>
                     <div className="buttons">
-                      <button className="btn-table edit" data-bs-toggle="modal"  data-bs-target="#editExpenseModal" onClick={() => handleEdit(item)}>
+                      <button className="btn-table edit" data-bs-toggle="modal"  data-bs-target="#editExpenseModal" onClick={() =>handleEdit(item) && setShowFormModal(true)}>
                         <i className="bi bi-pencil-square"></i>
-                      </button>
-                      
-     
+                      </button>                     
                       <button className="btn-table delete" onClick={() => handleDelete(item._id)}>
                         <i className="bi bi-trash3-fill"></i>
                       </button>
@@ -148,14 +139,14 @@ const ExpenseTable = ({ items }) => {
     
       
         {/*---------- Form Popup ------------*/}
-        {showFormModal && (
         <ExpenseFormModal
+         show={showFormModal}
           handleClose={() => setShowFormModal(false)}
           handleSubmit={handleUpdate}
-          handleOnChange={handleEditOnChange}
+          handleOnChange={handleOnChange}
           rest={dataEdit}
+
         />
-      )}
     </>
   );
 };

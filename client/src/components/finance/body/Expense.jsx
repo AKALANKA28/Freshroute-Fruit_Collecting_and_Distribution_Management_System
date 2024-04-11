@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import CardFilter from './CardFilter';
-import WebTrafficChart from './WebTrafficChart';
+import ExpenseChart from './ExpenseChart';
 
 const WebTraffic = () => {
 
@@ -18,7 +18,7 @@ const WebTraffic = () => {
         <h5 className="card-title">
           Expenses<span>| {filter}</span>
         </h5>
-        <WebTrafficChart />
+        <ExpenseChart />
       </div>
     </div>
     </div>

@@ -3,6 +3,7 @@ import './website.css'
 import Card from './Shop/Products/Card'
 import Footer from './Footer/Footer'
 import { Link } from 'react-router-dom'
+import Container from './Container'
 
 const Shop = () => {
   return (
@@ -24,8 +25,7 @@ const Shop = () => {
       </nav>
       </div>
 
-    <div className='shop-wrapper home-wrapper-2 py-5'>
-      <div className="container-xxl">
+    <Container class1='shop-wrapper home-wrapper-2 py-5'>
         <div className="row">
           <div className="col-3">
             <div className="filter-card mb-3">
@@ -116,9 +116,14 @@ const Shop = () => {
                 <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex align-items-center gap-10">
                   <p className="mb-0 d-block" style={{width: "100px"}}>Sort By</p>
-                  <select name="" id="" className="form-control form-select">
+
+                  <select 
+                     name="" 
+                     id="" 
+                     className="form-control form-select">
+
                     <option value="manual">Featured</option>
-                    <option value="best-selling" selected="selected">Featured</option>
+                    <option value="best-selling">Featured</option>
                     <option value="title-ascending">Alphabetically, A-Z</option>
                     <option value="title-descending">Alphabetically, Z-A</option>
                     <option value="price-ascending">Price, high to low</option>
@@ -146,8 +151,7 @@ const Shop = () => {
 
           </div>
         </div>             
-      </div>
-    </div>
+    </Container>
     <Footer />
    </>
   )

@@ -1,11 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import "./products.css"
 
 import img1 from "../../assets/image1.jpg"
 
 
 const Card = () => {
+
+  let location = useLocation();
   return (
     
     <div className='col-3'>
@@ -15,7 +17,14 @@ const Card = () => {
             <i class="bi bi-heart"></i>
           </Link>
         </div>
-        <Link to=":id">
+        <Link to={`${
+          
+          location.pathname !== '/' 
+          ? 'product/:id'  
+          : location.pathname=="/product/:id"
+          ? "product/1"
+          : ":id"
+          }`}>
           <div className="product-img">
             <img 
               src={img1} 

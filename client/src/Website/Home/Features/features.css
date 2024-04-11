@@ -67,10 +67,12 @@
 }
 
 .card-column .card{
-    margin-top: 1.6rem;
-    padding: 60px 30px;
-    border-radius: 30px;
-    box-shadow: -1px 2px 5px 0px rgba(0, 0, 0, 0.15);
+    margin-top: 1.6rem !important;
+    padding: 60px 30px !important;
+    border-radius: 30px !important;
+    color: black !important;
+    box-shadow: -1px 2px 5px 0px rgba(0, 0, 0, 0.15) !important;
+    transition: 0.3s ease-in-out;
     transition:0.3s ease-in-out; /* Add transition for smooth scaling */
 }
 

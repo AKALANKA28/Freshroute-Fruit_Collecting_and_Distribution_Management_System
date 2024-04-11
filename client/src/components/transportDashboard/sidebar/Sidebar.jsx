@@ -1,124 +1,61 @@
 import React from 'react'
 import '../../../App.css'
 import navList from './navItem';
+import { Link } from 'react-router-dom'; // Import Link from React Router
+
 import Logo from './Logo';
 
 
-
-
 const Sidebar = () => {
+
+    
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
-      <Logo />
-
+      <a href='/tdahsboard' className='logo d-flex align-items-center'>
+           <img src={Logo} alt='logo image'/>
+           <span className=''>FreshRoute.</span>
+        </a> 
         <ul className="sidebar-nav" id='sidebar-nav'>
 
             <li className='nav-item'>
-                <a className='nav-link' href='/'>
-                    <i className='bi bi-grid'></i>
+                <a className='nav-link ' href='/'>
+                    <i className='bi bi-grid-1x2-fill'></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-menu-button-wide'></i>
-                    <span>Documents</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <a className='nav-link collapsed' href='/vehicles'>
+                    <i className='bi bi-grid-1x2-fill'></i>
+                    <span>Vehicles</span>
                 </a>
-
-                <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Customers</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Customers</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Customers</span>
-                            </i>
-                        </a>
-                    </li>
-
-                </ul>
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-journal-text'></i>
-                    <span>Forms</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <a className='nav-link collapsed' href='/map'>
+                    <i className='bi bi-grid-1x2-fill'></i>
+                    <span>Map</span>
                 </a>
-
-                <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Application Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Release Form</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Cancellation Form</span>
-                            </i>
-                        </a>
-                    </li>
-
-                </ul>
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-layout-text-window-reverse'></i>
-                    <span>Documents</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <a className='nav-link collapsed' href='/route'>
+                    <i className='bi bi-grid-1x2-fill'></i>
+                    <span>Route</span>
                 </a>
-
-                <ul id='tables-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>General Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Data Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                   
-
-                </ul>
             </li>
 
-            <li className='nav-heading'>Pages</li>
-            <div className='navList'>
+            <li className='nav-item'>
+                <a className='nav-link collapsed' href='/schedule'>
+                    <i className='bi bi-grid-1x2-fill'></i>
+                    <span>Schedule</span>
+                </a>
+            </li>
+
+
+
+            <div className='mt-15'>
                 {navList.map(nav => (
                     <li className='nav-item' key={nav._id}>
                     <a className='nav-link collapsed' href ={'/login'}>

@@ -7,7 +7,7 @@ import RecentSales from './RecentSales'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import BudgetReport from './BudgetReport'
-import WebTraffic from './WebTraffic'
+import ExpenseReport from './Expense'
 import News from './News'
 import BackToTop from './BackToTop'
 
@@ -19,8 +19,8 @@ const Body = () => {
    <div> 
    <section className="body" id='body'>
         <div className="row">
-            <div className="col-lg-8">
-                <div className="row">
+            <div className="col-lg-8 ">
+                <div className="row gap-1">
                    
                       <Cards />
                     <div className="col-12">
@@ -30,15 +30,15 @@ const Body = () => {
                      <RecentSales />
                     </div>
                     <div className="col-12">
-                     <TopSellings />
+                     {/* <TopSellings /> */}
                     </div>
                 </div>
             </div>
             <div className="col-lg-4">
               <RecentActivity />
               <BudgetReport />
-              <WebTraffic />
-              <News />
+              <ExpenseReport />
+              {/* <News /> */}
             </div>
         </div>
         <BackToTop />

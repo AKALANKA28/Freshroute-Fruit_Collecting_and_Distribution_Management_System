@@ -79,7 +79,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
 
-  console.log("\nDatabase Connected 😎");
+  console.log("\nYes Whotto Yes🥳\nDatabase Connected 😎\n");
 
   console.log(`Server is up and running on port: ${PORT}`);
 });

@@ -47,6 +47,9 @@ import About from "./Website/About";
 import Shop from "./Website/Shop";
 import Contact from "./Website/Contact";
 import SingleProduct from "./Website/Shop/Products/SingleProduct";
+import Cart from "./Website/Shop/Cart/Cart";
+import Checkout from "./Website/Shop/Checkout/Checkout";
+import Map from "./components/transportDashboard/Map";
 
 const router = createBrowserRouter([
 
@@ -69,13 +72,34 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/shop",
+    path: "/product",
     element: (
       <div>
         <Shop />
       </div>
     ),
   },
+
+  {
+    path: "/cart",
+    element: (
+      <div>
+        <Cart />
+      </div>
+    ),
+  },
+
+  {
+    path: "/checkout",
+    element: (
+      <div>
+        <Checkout />
+      </div>
+    ),
+  },
+
+
+
 
   {
     path: "/contact",
@@ -87,7 +111,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/product",
+    path: "/:id",
     element: (
       <div>
         <SingleProduct />
@@ -130,6 +154,16 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/map",
+    element: (
+      <div>
+        <Map />
+      </div>
+    ),
+  },
+
 
   {
     path: "/BMDashboard",

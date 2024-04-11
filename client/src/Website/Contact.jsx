@@ -3,13 +3,19 @@ import Navbar from './Navbar/Navbar'
 import Footer from './Footer/Footer'
 
 import "./website.css"
+import Container from './Container'
+
+
 
 const Contact = () => {
+
+
+
+
   return (
     <div>
         <Navbar/>
-        <div className="contact-wrapper py-5 home-wrapper-2">
-          <div className="container-xxl">
+        <Container class1="contact-wrapper py-5 home-wrapper-2">
             <div className="row"> 
               <div className="col-12 mt-5 ">
                 <div className="contact-inner-wrapper d-flex justify-content-between">
@@ -41,15 +47,20 @@ const Contact = () => {
                     </form>
                   </div>
                   <div>
-                  <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d990.3165289405375!2d80.0249793073403!3d6.858675058899517!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2slk!4v1712599886975!5m2!1sen!2slk" 
-                      width="600" 
-                      height="450" 
+                    
+                
+           
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d990.3161028665752!2d80.02407676963402!3d6.858879999571241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNsKwNTEnMzIuMCJOIDgwwrAwMScyOS4wIkU!5e0!3m2!1sen!2slk!4v1712777684232!5m2!1sen!2slk" 
+                      width="600"
+                      height="450"
                       className='border-0 w-100 h-100'
                       allowFullScreen="" 
                       loading="lazy"
                       referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
+
+                    
                     {/* <div className='d-flex flex-row align-items-center justify-content-between mt-4 lower-contact '>
                         <div className="col-sm-4">
                           <h6><i className="bi bi-geo-alt-fill me-3"></i>Address:</h6>
@@ -71,10 +82,10 @@ const Contact = () => {
                   
                 </div>
               </div>
-            </div>
-          </div>
-          
-        </div>
+            </div>        
+        </Container>
+
+       
         <Footer />
 
       

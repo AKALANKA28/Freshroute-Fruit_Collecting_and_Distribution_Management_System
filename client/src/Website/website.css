@@ -6,7 +6,7 @@
 
 .section{
   padding: 5rem 8rem;
-  background: #f5f5f7;
+  background: white;
 }
 
 .flex_center {
@@ -66,9 +66,8 @@
   line-height: 28px;
   font-size: 12px;
   padding: 0.7rem 2rem;
-  border-radius: 1px;
   border: 1px solid var(--hoverColor);
-  border-radius: 10px;
+  border-radius: 50px;
   outline: none;
   cursor: pointer;
   transition: 0.48s ease;
@@ -234,6 +233,8 @@
 .lower-contact p{
   font-size: 16px;
 }
+
+
 /* --------------------contact us page end-------------------- */
 
 

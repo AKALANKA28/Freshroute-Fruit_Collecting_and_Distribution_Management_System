@@ -14,6 +14,9 @@
     z-index: 1000;
 }
 
+.nav:hover{
+    
+}
 .nav .nav-logo{
     display: flex;
     justify-content: flex-start;
@@ -63,6 +66,16 @@
     color: #ffffff;
 }
 
+/* .main-header:hover{
+    background-color: #fff;
+    color: black;
+}
+
+.main-header:hover a{
+    color: black;
+}
+
+ */
 
 .stricky-header {
     position: fixed;
@@ -73,7 +86,7 @@
     width: 100%;
     -webkit-transform: translateY();
     transform: translateY();
-    transition: transform 3s ease; /* Add transition for background-color */
+    /* transition: 3s ease;  */
 }
 
 .stricky-header::after{
