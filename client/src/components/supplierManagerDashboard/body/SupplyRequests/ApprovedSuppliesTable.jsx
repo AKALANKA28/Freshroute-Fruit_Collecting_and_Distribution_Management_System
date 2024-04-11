@@ -10,11 +10,12 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
     if (!selectedRequest) return;
     try {
       await axios.post('/declinedSupply/add', selectedRequest);
+      // Delete the accepted supply
+      await axios.delete(`/acceptedSupply/delete/${selectedRequest._id}`);
+
       // Update the prediction status to "Declined"
       await axios.put(`/Prediction/decline/${selectedRequest.predictionID}`);
 
-      // Delete the accepted supply
-      await axios.delete(`/acceptedSupply/delete/${selectedRequest._id}`);
       fetchApprovedSupplies();
       handleCloseDeclineModal();
       alert("Supply Request Declined");

@@ -24,6 +24,7 @@ const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
 const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
+const pendingSupplyRouter = require("./routes/farmers/pendingSuppliesRoutes");
 const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
 const declinedSupplyRouter = require("./routes/farmers/declinedSuppliesRoutes");
 
@@ -79,6 +80,7 @@ app.use("/Resource", ResourceRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
 app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
+app.use("/pendingSupply", pendingSupplyRouter);
 app.use("/acceptedSupply", acceptedSupplyRouter);
 app.use("/declinedSupply", declinedSupplyRouter);
 

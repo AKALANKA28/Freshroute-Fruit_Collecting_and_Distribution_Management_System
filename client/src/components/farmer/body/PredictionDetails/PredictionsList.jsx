@@ -92,6 +92,7 @@ function PredictionsList() {
     if (confirmDelete) {
       try {
         await axios.delete(`/Prediction/delete/${id}`);
+        await axios.delete(`/pendingSupply/deleteByPredictionID/${id}`);
         alert("Successfully Deleted");
         getFetchData();
       } catch (err) {
@@ -102,7 +103,19 @@ function PredictionsList() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Prediction/add", formData);
+      // Add supply prediction to the Prediction collection
+      const response = await axios.post("/Prediction/add", formData);
+      const predictionId = response.data._id;
+  
+      // Create payload to add supply prediction to the pendingSupplies collection
+      const pendingSupplyData = {
+        ...formData,
+        predictionID: predictionId
+      };
+  
+      // Add supply prediction to the pendingSupplies collection
+      await axios.post("/pendingSupply/add", pendingSupplyData);
+  
       alert("Prediction Added");
       window.location.reload();
       handleAddModalClose();

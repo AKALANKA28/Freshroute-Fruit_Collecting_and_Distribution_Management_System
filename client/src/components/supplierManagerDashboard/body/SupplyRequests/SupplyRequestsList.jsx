@@ -21,7 +21,7 @@ function SupplyRequestsList() {
 
   const fetchSupplyRequests = async () => {
     try {
-      const response = await axios.get("/Prediction");
+      const response = await axios.get("/pendingSupply");
       setSupplyRequests(response.data);
     } catch (error) {
       console.error("Error fetching supply requests:", error);
@@ -59,7 +59,7 @@ function SupplyRequestsList() {
           <Tab.Container defaultActiveKey="supplyRequests">
             <Nav variant="tabs" className="mb-3">
               <Nav.Item>
-                <Nav.Link eventKey="supplyRequests">Manage Requests</Nav.Link>
+                <Nav.Link eventKey="supplyRequests">Pending Requests</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="approvedSupplies">Approved Supplies</Nav.Link>
@@ -69,17 +69,13 @@ function SupplyRequestsList() {
               </Nav.Item>
             </Nav>
             <Tab.Content>
-              {/* <Tab.Pane eventKey="supplyRequests">
-                <SupplyRequestsTable supplyRequests={supplyRequests} />
-              </Tab.Pane> */}
               <Tab.Pane eventKey="supplyRequests">
                 <SupplyRequestsTable
                   supplyRequests={supplyRequests}
-                  fetchSupplyRequests={fetchSupplyRequests} // Pass fetchSupplyRequests function
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="approvedSupplies">
-                <ApprovedSuppliesTable approvedSupplies={approvedSupplies} setApprovedSupplies={setApprovedSupplies} />
+                <ApprovedSuppliesTable approvedSupplies={approvedSupplies} />
               </Tab.Pane>
               <Tab.Pane eventKey="declinedSupplies">
               <DeclinedSuppliesTable declinedSupplies={declinedSupplies} />

@@ -23,9 +23,9 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
   const handleAcceptRequest = async () => {
     if (!selectedRequest) return;
     try {
-      const acceptedSupplyData = { ...selectedRequest, predictionID: selectedRequest._id }; // Store prediction ID in acceptedSupplyData
-      await axios.put(`/Prediction/accept/${selectedRequest._id}`);
-      await axios.post('/acceptedSupply/add', acceptedSupplyData);
+      await axios.put(`/Prediction/accept/${selectedRequest.predictionID}`);
+      await axios.post('/acceptedSupply/add', selectedRequest);
+      await axios.delete(`/pendingSupply/delete/${selectedRequest._id}`); // Delete the request from pendingSupplies
       fetchSupplyRequests();
       handleCloseModal();
       alert("Supply Request Added");
@@ -38,9 +38,9 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
   const handleDeclineRequest = async () => {
     if (!selectedRequest) return;
     try {
-      const declinedSupplyData = { ...selectedRequest, predictionID: selectedRequest._id };
-      await axios.put(`/Prediction/decline/${selectedRequest._id}`);
-      await axios.post('/declinedSupply/add', declinedSupplyData);
+      await axios.put(`/Prediction/decline/${selectedRequest.predictionID}`);
+      await axios.post('/declinedSupply/add', selectedRequest);
+      await axios.delete(`/pendingSupply/delete/${selectedRequest._id}`); // Delete the request from pendingSupplies
       fetchSupplyRequests();
       handleCloseDeclineModal();
       alert("Supply Request Declined");
@@ -85,34 +85,42 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          {supplyRequests.map((request) => (
-            <tr key={request._id}>
-              <td>{request.fruit}</td>
-              <td>{request.subCategory}</td>
-              <td>{request.quality}</td>
-              <td>{request.quantity}</td>
-              <td>{request.price}</td>
-              <td>{request.price * request.quantity}</td>
-              <td>{request.dateCanBeGiven}</td>
-              <td>
-                <Button
-                  className="btn-action btn-approve"
-                  variant="success"
-                  onClick={() => handleShowModal(request)}
-                >
-                  Approve
-                </Button>
-                <Button
-                  className="btn btn-action btn-danger"
-                  onClick={() => handleShowDeclineModal(request)}
-                >
-                  Decline
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody style={{ marginTop: "10px" }}> {/* Adjust the marginTop value as needed */}
+  {supplyRequests.length === 0 ? (
+    <tr>
+      <td colSpan="8" style={{ textAlign: "center" }}>No pending requests</td>
+    </tr>
+  ) : (
+    supplyRequests.map((request) => (
+      <tr key={request._id} style={{ marginBottom: "10px" }}> {/* Adjust the marginBottom value as needed */}
+        <td>{request.fruit}</td>
+        <td>{request.subCategory}</td>
+        <td>{request.quality}</td>
+        <td>{request.quantity}</td>
+        <td>{request.price}</td>
+        <td>{request.price * request.quantity}</td>
+        <td>{request.dateCanBeGiven}</td>
+        <td>
+          <Button
+            className="btn-action btn-approve"
+            variant="success"
+            onClick={() => handleShowModal(request)}
+          >
+            Approve
+          </Button>
+          <Button
+            className="btn btn-action btn-danger"
+            onClick={() => handleShowDeclineModal(request)}
+          >
+            Decline
+          </Button>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
+
+
       </table>
 
       <Modal show={showModal} onHide={handleCloseModal}>
