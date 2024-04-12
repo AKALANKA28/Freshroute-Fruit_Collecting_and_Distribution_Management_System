@@ -24,6 +24,9 @@ const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
 const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
+const pendingSupplyRouter = require("./routes/farmers/pendingSuppliesRoutes");
+const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
+const declinedSupplyRouter = require("./routes/farmers/declinedSuppliesRoutes");
 
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
 const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
@@ -66,7 +69,6 @@ app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
-app.use('/Farmer', router);
 
 app.use("/Promotion", PromotionRouter);
 app.use("/Compaign", CompaignRouter);
@@ -78,6 +80,10 @@ app.use("/Resource", ResourceRouter);
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
 app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
+app.use("/pendingSupply", pendingSupplyRouter);
+app.use("/acceptedSupply", acceptedSupplyRouter);
+app.use("/declinedSupply", declinedSupplyRouter);
+
 app.use(itemRouter);
 
 app.use("/Promotion", PromotionRouter);

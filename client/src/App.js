@@ -27,6 +27,9 @@ import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
 import SupplierRequests from "./components/supplierManagerDashboard/SupplierRequests";
 import FDashboard from "./components/farmer/FDashboard";
+import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
+import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
+import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
@@ -228,6 +231,33 @@ const router = createBrowserRouter([
     element: (
       <div>
         <PredictionDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplyRequests",
+    element: (
+      <div>
+        <SupplyRequests />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ApprovedSupplies",
+    element: (
+      <div>
+        <ApprovedSupplies />
+      </div>
+    ),
+  },
+
+  {
+    path: "/DeclinedSupplies",
+    element: (
+      <div>
+        <DeclinedSupplies />
       </div>
     ),
   },

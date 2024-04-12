@@ -231,25 +231,46 @@
   color: #012970;
 }
 
-.status-box {
+
+
+.dropdown {
+  position: relative;
   display: inline-block;
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: bold;
 }
 
-.status-box.approved {
-  background-color: #4bb050;
-  color: white;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
-.status-box.declined {
-  background-color: #ff0000;
-  color: white;
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
-.status-box.pending {
-  background-color: #ffbb00;
-  color: white;
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Add this CSS to ensure consistent sizing and spacing for buttons */
+.btn-action {
+  padding: 5px 10px; /* Adjust padding as needed */
+  margin-right: 5px; /* Add a gap between buttons */
+  border-radius: 5px; /* Apply border radius for button shape */
+  font-size: 12px;
+}
+
+.btn-success,
+.btn-danger {
+  width: 75px; /* Set a fixed width for both buttons to ensure they have the same size */
 }
