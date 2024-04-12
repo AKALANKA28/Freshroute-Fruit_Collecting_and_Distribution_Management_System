@@ -725,11 +725,12 @@ header .search-form input:hover{
 
 /* # Page Title */
 .pagetitle{
+  margin-top: -10px;
   margin-bottom: 3rem;
 }
 
 .pagetitle h1{
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 0;
   font-weight: 600;
   color: #000000;
