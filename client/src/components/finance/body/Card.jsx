@@ -19,12 +19,12 @@ const Card = ({card}) => {
 
             <div className="d-flex align-items-center">
                 <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i className= {card.icon}></i>
+                    <i className= {`${card.icon} icon`} ></i>
                 </div>
                 <div className="ps-3">
-                    <h6>
-                        {card.name === 'Revenue'
-                          ? '$' + card.amount.toLocaleString('en-US')
+                    <h6 className='card-price'>
+                        {card.name === 'Revenue' || 'Sales'
+                          ? 'Rs. ' + card.amount.toLocaleString('en-US')
                           : card.amount.toLocaleString('en-US')}
                     </h6>
                     <span className= {`${

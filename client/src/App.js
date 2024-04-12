@@ -3,6 +3,9 @@ import "remixicon/fonts/remixicon.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
@@ -38,17 +41,80 @@ import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Website from './Website/Website';
+import Home from './Website/Home';
+import About from "./Website/About";
+import Shop from "./Website/Shop";
+import Contact from "./Website/Contact";
+import SingleProduct from "./Website/Shop/Products/SingleProduct";
+import Cart from "./Website/Shop/Cart/Cart";
+import Checkout from "./Website/Shop/Checkout/Checkout";
+import Map from "./components/transportDashboard/Map";
 
 const router = createBrowserRouter([
 
   {
-    path: "/freshroute",
+    path: "/home",
     element: (
       <div>
-        <Website />
+        <Home />
+      </div>
+    ),
+  },
+
+  {
+    path: "/about",
+    element: (
+      <div>
+        <About />
+      </div>
+    ),
+  },
+
+  {
+    path: "/product",
+    element: (
+      <div>
+        <Shop />
+      </div>
+    ),
+  },
+
+  {
+    path: "/cart",
+    element: (
+      <div>
+        <Cart />
+      </div>
+    ),
+  },
+
+  {
+    path: "/checkout",
+    element: (
+      <div>
+        <Checkout />
+      </div>
+    ),
+  },
+
+
+
+
+  {
+    path: "/contact",
+    element: (
+      <div>
+        <Contact />
+      </div>
+    ),
+  },
+
+  {
+    path: "/:id",
+    element: (
+      <div>
+        <SingleProduct />
       </div>
     ),
   },
@@ -88,6 +154,16 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/map",
+    element: (
+      <div>
+        <Map />
+      </div>
+    ),
+  },
+
 
   {
     path: "/BMDashboard",

@@ -3,6 +3,7 @@ import React from "react";
 const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
   const { date, category, amount, description } = rest;
 
+
   return (
     <div>
       <form onSubmit={handleSubmit}>

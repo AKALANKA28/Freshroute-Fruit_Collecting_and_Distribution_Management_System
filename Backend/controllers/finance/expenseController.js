@@ -7,7 +7,7 @@ exports.addExpense = async (req, res) => {
         const { date, category, amount, description,} = req.body;
 
         const newExpense = new Expense({
-            date: new Date(date), // Convert date string to Date object
+            date, 
             category,
             amount,
             description,
@@ -64,7 +64,7 @@ exports.updateExpense = async (req, res) => {
         const { date, category, amount, description, } = req.body;
 
         const updateExpense = {
-            date: new Date(date), // Convert date string to Date object
+            date, // Convert date string to Date object
             category,
             amount,
             description,

@@ -1,17 +1,20 @@
 import React from 'react'
 import '../../../App.css'
 import navList from './navItem';
-import { Link } from 'react-router-dom'; // Import Link from React Router
-
+import { Link } from 'react-router-dom';
+import logo from '../../../assests/logo.png'
 
 
 const Sidebar = () => {
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
+        <a href='/' className='logo d-flex align-items-center'>
+           <img src={logo} alt='logo image'/>
+           <span className=''>FreshRoute.</span>
+        </a> 
 
         <ul className="sidebar-nav" id='sidebar-nav'>
-
             <li className='nav-item'>
                 <a className='nav-link' href='/'>
                     <i className='bi bi-grid-1x2-fill'></i>
@@ -20,7 +23,7 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <Link className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' to='/SalesPage'>
+                <Link  to='/SalesPage' className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse'>
                     <i className='bi bi-menu-button-wide'></i>
                     <span>Reports</span>
                     <i className='bi bi-chevron-down ms-auto'></i>

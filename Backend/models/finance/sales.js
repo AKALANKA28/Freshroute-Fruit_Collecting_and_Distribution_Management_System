@@ -6,17 +6,18 @@ const salesSchema = mongoose.Schema({
     customer_name : {
         type : String,
         required: true,
-        trim: true
     },
 
     date: {
-        type: Date,
-        required: true
+        type: String,
+        required: true,
+
     },
 
     fruit_name: {
         type: String,
-        required: true
+        required: true,
+
     },
 
     amount: {
