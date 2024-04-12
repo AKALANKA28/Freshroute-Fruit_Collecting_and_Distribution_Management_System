@@ -11,7 +11,7 @@ const Sidebar = () => {
       <aside id='sidebar' className='sidebar'>
         <a href='/' className='logo d-flex align-items-center'>
            <img src={logo} alt='logo image'/>
-           <span className=''>FreshRoute.</span>
+           <span className=''>FreshRoute</span>
         </a> 
 
         <ul className="sidebar-nav" id='sidebar-nav'>
