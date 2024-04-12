@@ -2,7 +2,7 @@
 import React from "react";
 import Header from "./header/header";
 import Sidebar from "./sidebar/Sidebar";
-import TransportFee from "./body/TransportFee";
+import TransportFee from "./body/TransportFee/TransportFee";
 import Footer from "./footer/Footer";
 
 const Coordinator = () => {

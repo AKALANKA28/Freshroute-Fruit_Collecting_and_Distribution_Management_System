@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from './header/header';
 import Sidebar from './sidebar/Sidebar';
-import Salary from './body/Salary'; 
+import Salary from './body/Salary/Salary'; 
 import Footer from './footer/Footer';
 
 const Coordinator = () => {

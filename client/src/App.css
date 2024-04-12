@@ -112,7 +112,7 @@ body{
   -webkit-animation-name: dropdown-animate;
   animation-name: dropdown-animate;
   -webkit-animation-duration: 0.2s;
-  animation-duration: 0.2 s;
+  animation-duration: 0.2s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   border: 0;
@@ -473,7 +473,7 @@ header .search-form input:hover{
 }
 
 .header-nav .profile .dropdown-header span{
-  font-size: 14x;
+  font-size: 14px;
 }
 
 .header-nav .profile .dropdown-item{
@@ -584,7 +584,7 @@ header .search-form input:hover{
   font-size: 16px;
   font-weight: 500;
   color: var(--textColor);
-  transition: 0.3;
+  transition: 0.3s;
   background: #f6fde8;
   padding: 10px 15px;
   border-radius: 4px;
@@ -652,7 +652,7 @@ header .search-form input:hover{
   font-size: 14px;
   font-weight: 500;
   color: var(--textColor);
-  transition: 0.3;
+  transition: 0.3s;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
   text-decoration: none;   
