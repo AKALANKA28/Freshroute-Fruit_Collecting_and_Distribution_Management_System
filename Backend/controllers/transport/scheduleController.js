@@ -3,7 +3,7 @@ const Schedule = require('../../models/transport/schedule');
 // Add a new schedule record
 exports.addSchedule = async (req, res) => {
     try {
-        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, time, quantity} = req.body;
+        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, quantity} = req.body;
 
         const newSchedule = new Schedule({
             schedule_ID,
@@ -12,7 +12,6 @@ exports.addSchedule = async (req, res) => {
             pickup_location,
             destination,
             date: new Date(date),
-            time,
             quantity,
       
         });
@@ -58,7 +57,7 @@ exports.getScheduleById = async (req, res) => {
 exports.updateSchedule = async (req, res) => {
     try {
         const scheduleId = req.params.id;
-        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, time, quantity } = req.body;
+        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, quantity } = req.body;
 
         const updateSchedule = {
             schedule_ID,
@@ -67,7 +66,6 @@ exports.updateSchedule = async (req, res) => {
             pickup_location,
             destination,
             date: new Date(date),
-            time,
             quantity,
         };
 

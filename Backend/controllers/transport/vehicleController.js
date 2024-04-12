@@ -3,7 +3,7 @@ const Vehicle = require('../../models/transport/vehicle');
 // Add a new vehicle record
 exports.addVehicle = async (req, res) => {
     try {
-        const {vehicle_no, type,conditions, capacity, owner_name, nic, email, phone, account_no } = req.body;
+        const {vehicle_no, type,conditions, capacity, owner_name, nic, email, phone, account_no, Bank, Branch} = req.body;
 
         const newVehicle = new Vehicle({
             vehicle_no,
@@ -15,6 +15,8 @@ exports.addVehicle = async (req, res) => {
             email,
             phone,
             account_no,
+            Bank,
+            Branch,
         });
 
         await newVehicle.save();
@@ -57,7 +59,7 @@ exports.getVehicleById = async (req, res) => {
 exports.updateVehicle = async (req, res) => {
     try {
         const vehicleId = req.params.id;
-        const { vehicle_no, type,conditions, capacity, owner_name, nic, email, phone, account_no } = req.body;
+        const { vehicle_no, type,conditions, capacity, owner_name, nic, email, phone, account_no, Bank, Branch} = req.body;
 
         const updateVehicle = {
                 vehicle_no,
@@ -69,6 +71,8 @@ exports.updateVehicle = async (req, res) => {
                 email,
                 phone,
                 account_no,
+                Bank,
+                Branch,
         };
 
         const updatedVehicle = await Vehicle.findByIdAndUpdate(vehicleId, updateVehicle, { new: true });

@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import CardFilter from './CardFilter';
-import WebTrafficChart from './WebTrafficChart';
+import DeliverymetricsChart from './DeliverymetricsChart';
 
-const WebTraffic = () => {
+const Deliverymetrics = () => {
 
     const [filter, setFilter] = useState('Today');
     const handleFilterChange = filter => {
@@ -16,13 +16,13 @@ const WebTraffic = () => {
 
       <div className="card-body pb-0">
         <h5 className="card-title">
-          Website Traffic<span>| {filter}</span>
+          Delivery Metrics<span>| {filter}</span>
         </h5>
-        <WebTrafficChart />
+        <DeliverymetricsChart />
       </div>
     </div>
     </div>
   )
 }
 
-export default WebTraffic
+export default Deliverymetrics

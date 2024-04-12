@@ -24,7 +24,7 @@ const ScheduleForm = ({ handleSubmit, handleOnChange, rest, isEditMode }) => {
             Vehicle Number
           </label>
           <input
-            type="Number"
+            type="text"
             className="form-control"
             name="vehicle_no"
             placeholder="vehicle number"
@@ -94,22 +94,6 @@ const ScheduleForm = ({ handleSubmit, handleOnChange, rest, isEditMode }) => {
             readOnly={isEditMode}
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-             Time
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="time"
-            placeholder="time"
-            required
-            onChange={handleOnChange}
-            value={rest.time}
-            readOnly={isEditMode}
-          />
-        </div>
-       
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
             Quantity

@@ -19,6 +19,8 @@ function VehicleDetailsList() {
     nic:"",
     email:"",
     phone:"",
+    Bank:"",
+    Branch:"",
     account_no:"",
 
   });
@@ -48,6 +50,8 @@ function VehicleDetailsList() {
     nic:"",
     email:"",
     phone:"",
+    Bank:"",
+    Branch:"",
     account_no:"",
 
       });
@@ -66,6 +70,8 @@ function VehicleDetailsList() {
     nic:"",
     email:"",
     phone:"",
+    Bank:"",
+    Branch:"",
     account_no:"",
 
       });
@@ -170,6 +176,8 @@ const handleEdit = (vehicle) =>{
                  <th scope="col">NIC</th>
                  <th scope="col">Email</th>
                  <th scope="col">Phone</th>
+                 <th scope="col">Bank</th>
+                 <th scope="col">Branch</th>
                  <th scope="col">Account_No</th>
                  <th>Action</th>
                </tr>
@@ -186,6 +194,8 @@ const handleEdit = (vehicle) =>{
                      <td>{vehicle.nic}</td>
                      <td>{vehicle.email}</td>
                      <td>{vehicle.phone}</td>
+                     <td>{vehicle.Bank}</td>
+                     <td>{vehicle.Branch}</td>
                      <td>{vehicle.account_no}</td>
                     
                      <td>

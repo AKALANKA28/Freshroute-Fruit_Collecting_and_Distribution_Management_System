@@ -7,7 +7,7 @@ import RecentSales from './RecentSales'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import BudgetReport from './BudgetReport'
-import WebTraffic from './WebTraffic'
+import Deliverymetrics from './Deliverymetrics'
 import News from './News'
 import BackToTop from './BackToTop'
 
@@ -36,7 +36,7 @@ const Body = () => {
             <div className="col-lg-4">
               <RecentActivity />
               <BudgetReport />
-              <WebTraffic />
+              <Deliverymetrics />
               <News />
             </div>
         </div>

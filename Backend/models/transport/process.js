@@ -9,7 +9,7 @@ const process = mongoose.Schema({
         required: true
     },
     vehicle_no: {
-        type: Number,
+        type: String,
         required: true
     },
     driver_name : {

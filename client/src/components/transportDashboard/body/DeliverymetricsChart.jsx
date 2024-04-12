@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
 import * as echarts from 'echarts'
 
-const WebTrafficChart = () => {
+const DeliverymetricsChart = () => {
 
     useEffect(()=> {
-        echarts.init(document.querySelector('#trafficChart')).setOption({
+        echarts.init(document.querySelector('#metricsChart')).setOption({
             tooltip: {
                trigger: 'item',
             },
@@ -35,24 +35,18 @@ const WebTrafficChart = () => {
                     },
                     data: [
                         {
-                            value: 1048,   // only this from backend
-                            name: 'Search Engine', //from backend
+                            value: 1783,   // only this from backend
+                            name: 'On Time', //from backend
                         },
-                        {
-                            value: 735,
-                            name: 'Direct',
-                        },
+                        
                         {
                             value: 484,
-                            name: 'Email',
+                            name: 'Late Delivery',
                         },
+                        
                         {
-                            value: 300,
-                            name: 'Union Ads',
-                        },
-                        {
-                            value: 700,
-                            name: 'Video Ads',
+                            value: 1000,
+                            name: 'On The Road ',
                         },
                     ],
                
@@ -63,11 +57,11 @@ const WebTrafficChart = () => {
 
   return (
     <div
-        id='trafficChart'
+        id='metricsChart'
         style={{minHeight: '480px'}}
         className='echart'> 
     </div>
   );
 }
 
-export default WebTrafficChart
+export default DeliverymetricsChart

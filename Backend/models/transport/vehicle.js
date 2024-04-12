@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const vehicle = mongoose.Schema({
     vehicle_no: {
-        type: Number,
+        type: String,
         required: true
     },
     type: {
@@ -43,10 +43,19 @@ const vehicle = mongoose.Schema({
         type: String,
         required: true
     },
+    Bank: {
+        type: String,
+        required: true
+    },
+    Branch: {
+        type: String,
+        required: true
+    },
     account_no: {
         type: Number,
         required: true
     },
+    
    
 })
 

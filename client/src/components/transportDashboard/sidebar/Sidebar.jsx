@@ -65,26 +65,20 @@ const Sidebar = () => {
                 <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
                     
                     <li>
-                        <a href='#'>
+                        <a href='/VehicleDetails'>
                             <i className='bi bi-circle'>
-                                <span>Application Form</span>
+                                <span>Vehicle  Form</span>
                             </i>
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='/ScheduleDetails'>
                             <i className='bi bi-circle'>
-                                <span>Release Form</span>
+                                <span>Schedule Form</span>
                             </i>
                         </a>
                     </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Cancellation Form</span>
-                            </i>
-                        </a>
-                    </li>
+                    
 
                 </ul>
             </li>

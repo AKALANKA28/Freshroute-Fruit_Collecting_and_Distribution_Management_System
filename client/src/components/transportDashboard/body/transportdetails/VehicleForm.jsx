@@ -9,7 +9,7 @@ const vehicleForm = ({ handleSubmit, handleOnChange, rest }) => {
             Vehicle Number
           </label>
           <input
-            type="Number"
+            type="text"
             className="form-control"
             name="vehicle_no"
             placeholder="vehicle number"
@@ -119,6 +119,35 @@ const vehicleForm = ({ handleSubmit, handleOnChange, rest }) => {
             value={rest.phone}
           />
         </div>
+        <div className="mb-3">
+          <label htmlFor="date" className="form-label">
+             Bank
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="Bank"
+            placeholder="Bank"
+            required
+            onChange={handleOnChange}
+            value={rest.Bank}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="date" className="form-label">
+             Branch
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="Branch"
+            placeholder="Branch"
+            required
+            onChange={handleOnChange}
+            value={rest.Branch}
+          />
+        </div>
+        
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
             Owner Account Number
