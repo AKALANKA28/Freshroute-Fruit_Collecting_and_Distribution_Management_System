@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../../App.css'
-import './header.css';
+// import './header.css';
 import Logo from './Logo';
 import Nav from './nav/Nav'
 

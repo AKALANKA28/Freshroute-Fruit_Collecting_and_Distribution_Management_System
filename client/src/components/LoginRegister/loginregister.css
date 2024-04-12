@@ -114,6 +114,49 @@ video {
   box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 
+
+.sign-in-options{
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+.signin a i {
+    margin-right: 10px;
+}
+
+.signin a {
+    display: inline-block;
+    margin-right: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.signin a:hover {
+    color: #555;
+}
+
+.signin a.google {
+    width: 178px;
+    height: var(--48, 48px);
+    flex-shrink: 0;
+    border-radius: 48px;
+    border: 1px solid #EEE;
+    background: #FAFAFA;
+}
+
+.signin a.facebook {
+    width: 178px;
+    height: var(--48, 48px);
+    flex-shrink: 0;
+    border-radius: 48px;
+    border: 1px solid #EEE;
+    background: #FAFAFA;
+}
+
+
 /* .text{
     position: absolute;
     top: 50%;

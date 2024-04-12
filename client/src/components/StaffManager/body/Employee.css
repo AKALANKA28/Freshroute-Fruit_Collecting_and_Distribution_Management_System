@@ -1,0 +1,73 @@
+.container {
+  margin-bottom: 20px;
+  position: relative;
+  /* Make container positioning context */
+}
+
+.btn-add {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  position: inherit;
+  width: 25%;
+}
+
+.table-container {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+}
+
+.table .table-light th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.btn-edit {
+  border: none;
+  padding: 5px 10px;
+  /* margin-right: 5px;
+  margin-bottom: 5px; */
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #ff0019;
+}
+
+.btn-success {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  position: inherit;
+  width: 25%;
+}
