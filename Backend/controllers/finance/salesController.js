@@ -2,9 +2,9 @@ const Sales = require('../../models/finance/sales');
 
 // Add a new sales record
 exports.addSale = async (req, res) => {
+
     try {
         const { customer_name, date, fruit_name, amount, paid, due, status } = req.body;
-
 
         const newSale = new Sales({
             customer_name,
@@ -15,7 +15,6 @@ exports.addSale = async (req, res) => {
             due,
             status
         });
-
         await newSale.save();
         res.json("Sales Added");
     } catch (err) {
