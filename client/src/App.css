@@ -56,13 +56,13 @@ body{
 @media (min-width: 1200px){
   #main,
   #footer{
-      margin-left: 265px;
+      margin-left: 275px;
   }
 }
 
 
 .main{
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 20px 30px;
   transition: all 0.3s;
   /* background-color: #f6f6fe80; */
@@ -79,7 +79,7 @@ body{
 @media (min-width: 1200px){
   .main,
   #footer{
-      margin-left: 265px;
+      margin-left: 275px;
   }
 }
 
@@ -98,6 +98,7 @@ body{
 .btn-success{
   color: #FFFFFF;
   background-color: var(--hoverColor);
+  width: 150px !important;
 }
 
 /*----------------------------------------------------
@@ -533,7 +534,7 @@ header .search-form input:hover{
   top: 0;
   left: 0;
   bottom: 0;
-  width: 265px;
+  width: 275px;
   background-color: #ffffff;
   transition: all 0.3s;
   padding: 20px;
@@ -682,10 +683,6 @@ header .search-form input:hover{
 .sidebar-nav .nav-content a.active i{
   background-color: var(--hoverColor);
 }
-
-
-
-
 
 
 

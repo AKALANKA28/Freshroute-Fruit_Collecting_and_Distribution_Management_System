@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './sidebar.css'
 import navList from './navItem';
 import { Modal, Button } from 'react-bootstrap';
 import PredictionForm from '../body/PredictionDetails/PredictionForm'

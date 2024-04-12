@@ -62,10 +62,8 @@ import ResourcePage from "./components/researchDashboard/ResourcePage";
 //import EditOrder from "./components/NormalOrder/EditOrder";
 
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
-import Website from "./Website/Website";
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
 import OPDashboard from "./components/orderProcessor/body/OPDashboard";
 import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
