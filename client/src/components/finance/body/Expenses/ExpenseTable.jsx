@@ -123,10 +123,10 @@ const ExpenseTable = ({ items }) => {
                   <td >{item.description}</td>
                   <td>
                     <div className="buttons">
-                      <button className="btn-table edit" data-bs-toggle="modal"  data-bs-target="#editExpenseModal" onClick={() =>handleEdit(item) && setShowFormModal(true)}>
+                      <button className="btn btn-edit" data-bs-toggle="modal"  data-bs-target="#editExpenseModal" onClick={() =>handleEdit(item) && setShowFormModal(true)}>
                         <i className="bi bi-pencil-square"></i>
                       </button>                     
-                      <button className="btn-table delete" onClick={() => handleDelete(item._id)}>
+                      <button className="btn btn-delete" onClick={() => handleDelete(item._id)}>
                         <i className="bi bi-trash3-fill"></i>
                       </button>
                     </div>

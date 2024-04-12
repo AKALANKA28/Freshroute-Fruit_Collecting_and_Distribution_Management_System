@@ -5,9 +5,10 @@ exports.addSale = async (req, res) => {
     try {
         const { customer_name, date, fruit_name, amount, paid, due, status } = req.body;
 
+
         const newSale = new Sales({
             customer_name,
-            date: new Date(date), // Convert date string to Date object
+            date,
             fruit_name,
             amount,
             paid,
@@ -59,7 +60,7 @@ exports.updateSale = async (req, res) => {
 
         const updateSale = {
             customer_name,
-            date: new Date(date), // Convert date string to Date object
+            date,
             fruit_name,
             amount,
             paid,

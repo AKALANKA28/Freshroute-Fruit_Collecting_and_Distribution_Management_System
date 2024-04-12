@@ -71,6 +71,12 @@ body{
   margin-top: 15rem;
 }
 
+
+.btn-success{
+  color: #FFFFFF;
+  background-color: var(--hoverColor);
+}
+
 /*----------------------------------------------------
 #overrride some default bootsstrap styling
 -----------------------------------------------------*/

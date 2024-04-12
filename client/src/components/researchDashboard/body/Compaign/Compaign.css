@@ -1,41 +1,53 @@
-
-.body .recent-sales{
+#main{
+    margin-top: 95px;
+    padding: 20px 30px;
+    transition: all 0.3s;
+  }
+  
+  
+  @media(max-width: 1199px){
+    #main{
+        padding: 0px;
+    }
+  }
+  
+  .body .recent-sales{
     font-size: 14px;
-}
-
-.body .recent-sales .table thead{
+  }
+  
+  .body .recent-sales .table thead{
     background: #f6f6fe !important;
-}
-
-.body .recent-sales .table thead th{
+  }
+  
+  .body .recent-sales .table thead th{
     border: 0;
-}
-
-.body .recent-sales .datatable-top{
+  }
+  
+  .body .recent-sales .datatable-top{
     padding: 0 0 10px 0;
-}
-
-.body .recent-sales .datatable-bottom{
+  }
+  
+  .body .recent-sales .datatable-bottom{
     padding: 10px 0 0 0;
-}
-
-.table {
+  }
+  
+  .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
     white-space: normal; /* Enable text wrapping */
     word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
     padding: 8px;
-
-}
-
-.table th, .table td {
+  
+  }
+  
+  .table th, .table td {
     padding: 8px;
     /* border: 1px solid #ddd; */
     width: 100px;
   }
-
-.page-header {
+  
+  .page-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,97 +55,54 @@
     margin-bottom: 24px;
     margin-right: 40px;
     border-bottom: solid #E6EFF5 1px;
-}
-
-.page-header .add-item.d-flex {
+  }
+  
+  .page-header .add-item.d-flex {
     margin-right: auto;
-}
-
-.button-container {
+  }
+  
+  .button-container {
     border: 2px solid #000; /* Example border style */
     padding: 5px; /* Example padding */
     border-radius: 5px; /* Example border radius */
     margin-right: 10px;
     background: #ECECEC;
     border: 1px solid #DDDDDD;
-}
-
-.btn-added {
+  }
+  
+  .btn-added {
     padding: 0.8rem;
     background: var(--primaryColor);
     border-radius: 10px;
     color: #FFFFFF;
     margin: auto;
     font-size: 16px;
-    width: 100%;
+    width: 250px;
     transition: .3s ease;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-}
-
-.btn-edit{
-    padding: 5px 10px; 
-    background: #ffffff;
-    border: 1px solid #DDDDDD;
-    border-radius: 10px;
-    color: #ffbb00;
-    align-items: center;
-    /* margin: auto; */
-    justify-content: center;
-    font-size: 16px;  
-    gap: 0.5rem;
-    transition: .3s ease;
-}
-
-.btn-edit:hover{
-    background: #ffbb00;
-    border: 1px solid #ffbb00;
-    color: #ffffff;
   
-}
-
-.btn-delete{
-    padding: 5px 10px; 
-    background: #ffffff;
-    border: 1px solid #DDDDDD;
-    border-radius: 10px;
-    color: #ff0000;
-    align-items: center;
-    /* margin: auto; */
-    justify-content: center;
-    font-size: 16px;  
-    gap: 0.5rem;
-    transition: .3s ease;
-}
-
-.btn-delete:hover{
-    background: #ff0000;
-    border: 1px solid #ff0000;
-    color: #ffffff;
+  }
   
-}
-
-.btn-secondary {  
+  .btn-secondary {
+    
     background: var(--primaryColor);
     border: 0px;
     color: #FFFFFF;
     font-size: 16px;
     width: 25%;
     transition: .3s ease;
-
-}
-
-
-
-.btn-added:hover{
+  
+  }
+  
+  .btn-added:hover{
     background: var(--hoverColor);
     color: #ffffff;}
-.icon {
+  .icon {
     width: 30px; /* Set the width of the image */
     height: 30px; /* Set the height of the image */
-}
-
-.table-top-head {
+  }
+  
+  .table-top-head {
     
     display: flex;
     align-items: center;
@@ -142,45 +111,102 @@
     justify-content: center;
     -ms-flex-pack: center;
     margin-top: 1rem;
-}
-
-@media (max-width: 991.98px){
+  }
+  
+  @media (max-width: 991.98px){
     .page-header h6 {
         font-size: 12px;
     }
-}    
-.page-header .card-title h6 {
+  }    
+  .page-header .card-title h6 {
     font-size: 14px;
     color: #495057;
     font-weight: 400;
-}
-
-
-.buttons {
+  }
+  
+  
+  .buttons {
     display: flex; /* Use flexbox to align items horizontally */
     gap: 10px; /* Adjust the gap between buttons */
-}
-
-
-.buttons button {
+  }
+  
+  
+  .buttons button {
     align-self: center;
-}
-
-
-
-/*-------------------------------- Searchbar ------------------------------------*/
-
-.search-bar{
+  }
+  
+  .btn-delete{ border: none;
+    padding: 5px 10px; 
+    background: #ff0000;
+    border: 1px solid #DDDDDD;
+    border-radius: 10px;
+    color: #FFFFFF;
+    align-items: center;
+    /* margin: auto; */
+    justify-content: center;
+    font-size: 16px;
+  
+    gap: 0.5rem;
+    transition: .3s ease;}
+  
+  .btn-edit{
+    border: none;
+    padding: 5px 10px; 
+    background: #ffbb00;
+    border: 1px solid #DDDDDD;
+    border-radius: 10px;
+    color: #FFFFFF;
+    align-items: center;
+    /* margin: auto; */
+    justify-content: center;
+    font-size: 16px;
+    gap: 0.5rem;
+    transition: .3s ease;
+  }
+  
+  .btn-table {
+    border: none;
+    padding: 5px 10px; 
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 10px;
+    color: #FFFFFF;
+    align-items: center;
+    /* margin: auto; */
+    justify-content: center;
+    font-size: 16px;
+    gap: 0.5rem;
+    transition: .3s ease;
+  }
+  
+  .table .description{
+    padding: 8px;
+    /* border: 1px solid #ddd; */
+    width: 600px;
+   
+  }
+  
+  .btn-table .bi-pencil-square{
+    color: #ffbb00;
+  }
+  
+  .btn-table .bi-trash3-fill{
+    color: #000000;
+  }
+  
+  /*-------------------------------- Searchbar ------------------------------------*/
+  
+  .search-bar{
     min-width: 360px;
     padding: 0 20px;
-}
-
-.search-form{
+  }
+  
+  .search-form{
     width: 30%;
-
-}
-
-.search-form input{
+  
+  }
+  
+  .search-form input{
     border: 0;
     font-size: 14px;
     color: #012970;
@@ -189,23 +215,23 @@
     padding: 7px 40px 7px 20px;
     width: 100%;
     transition: 0.3s;
-
-}
-
-.search-form input:focus,
-.search-form input:hover{
+  
+  }
+  
+  .search-form input:focus,
+  .search-form input:hover{
     outline: none;
     box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
     border: 1px solid rgba(1, 41, 112, 0.3);
-}
-
-.search-form button{
+  }
+  
+  .search-form button{
     border: 0;
     padding: 0;
     margin-left: -30px;
     background: none;
-}
-
-.search-form i{
+  }
+  
+  .search-form i{
     color: #012970;
-}
+  }
