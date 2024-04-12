@@ -72,6 +72,7 @@ function SupplyRequestsList() {
               <Tab.Pane eventKey="supplyRequests">
                 <SupplyRequestsTable
                   supplyRequests={supplyRequests}
+                  fetchSupplyRequests={fetchSupplyRequests}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="approvedSupplies">

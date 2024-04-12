@@ -9,11 +9,11 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
 
   useEffect(() => {
     fetchSupplyRequests();
-  }, []);
+  }, );
       
   const fetchSupplyRequests = async () => {
     try {
-      const response = await axios.get("/Prediction");
+      const response = await axios.get("/pendingSupply");
       setSupplyRequests(response.data);
     } catch (error) {
       console.error("Error fetching supply requests:", error);
