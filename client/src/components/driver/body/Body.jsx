@@ -1,48 +1,43 @@
 import React from 'react'
-import './main.css'
+// import './main.css'
 
 import Cards from './Cards'
-import Reports from './Reports'
 import RecentSales from './RecentSales'
 import TopSellings from './TopSellings'
-import RecentActivity from './RecentActivity'
+import RecentActivity from './AssingedOrders'
 import BudgetReport from './BudgetReport'
-import WebTraffic from './WebTraffic'
-import News from './News'
+// import ExpenseReport from './Expense'
+import News from './Transactions'
 import BackToTop from './BackToTop'
+import Map from '../Components/map/Map'
 
 const Body = () => {
 
 
    
   return (
-    <div> 
+   <div> 
    <section className="body" id='body'>
         <div className="row">
-            <div className="col-lg-8">
-                <div className="row">
-                    <Cards />
-                    <div className="col-12">
-                        <Reports />
+            <div >
+                <div className="row gap-1">
+                  <div className="">
+                  <Cards />
+                  </div>
+                  <div className="col-12">
+                    <div className='card map-card'>
+                      <Map />
                     </div>
-                    <div className="col-12">
-                     <RecentSales />
-                    </div>
-                    <div className="col-12">
-                     <TopSellings />
-                    </div>
+                  </div>
+                    
                 </div>
             </div>
-            <div className="col-lg-4">
+            {/* <div className="col-lg-4 bg-white">
               <RecentActivity />
-              <BudgetReport />
-              <WebTraffic />
-              <News />
-            </div>
+            </div> */}
         </div>
         <BackToTop />
    </section>
-
    </div>
   )
 }

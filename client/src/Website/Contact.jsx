@@ -3,7 +3,8 @@ import Navbar from './Navbar/Navbar'
 import Footer from './Footer/Footer'
 
 import "./website.css"
-import Container from './Container'
+import Container from './Components/Container'
+import { Link } from 'react-router-dom'
 
 
 
@@ -13,9 +14,25 @@ const Contact = () => {
 
 
   return (
-    <div>
-        <Navbar/>
-        <Container class1="contact-wrapper py-5 home-wrapper-2">
+          <div>
+            <div className="product-header">
+            <nav className='nav'>
+              <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>
+                <ul className='nav-menu'>
+                  <li className='nav-list'><a href='/home'>Home</a></li>
+                  <li className='nav-list'><a href='/about'>About</a></li>
+                  <li className='nav-list'><a href='/shop'>Shop</a></li>
+                  <li className='nav-list'><a href='/contact'>Contact</a></li>
+                  <li className='nav-login'>
+                      <Link to='/Login'>
+                          <span>Login</span>
+                      </Link>
+                  </li>
+                </ul> 
+            </nav>
+            </div>  
+      
+            <Container class1="contact-wrapper py-5 home-wrapper-2">
             <div className="row"> 
               <div className="col-12 mt-5 ">
                 <div className="contact-inner-wrapper d-flex justify-content-between">

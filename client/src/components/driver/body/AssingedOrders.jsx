@@ -1,16 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import CardFilter from './CardFilter'
-import RecentActivityItem from './RecentActivityItem'
+import RecentActivityItem from './AssingedOrdersItem'
 
 
 const RecentActivity = () => {
 
     const [items, setItems] = useState([])
-    const [filter, setFilter] = useState('Today');
-    const handleFilterChange = filter => {
-        setFilter(filter)
-    };
-
+   
 
     const fetchData = () => {
         fetch("")
@@ -27,10 +23,9 @@ const RecentActivity = () => {
  
   return (
     <div className='card'>
-      <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Recent Activity<span>| {filter}</span>
+          Assigned Orders
         </h5>
 
         <div className="activity">

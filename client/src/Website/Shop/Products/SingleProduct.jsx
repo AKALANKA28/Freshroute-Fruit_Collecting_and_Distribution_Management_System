@@ -3,7 +3,7 @@ import "./products.css";
 import img from "../../assets/image1.jpg"
 import Footer from '../../Footer/Footer';
 import { Link } from 'react-router-dom';
-import Container from '../../Container';
+import Container from '../../Components/Container';
 
 const SingleProduct = () => {
   return (
@@ -25,7 +25,7 @@ const SingleProduct = () => {
       </nav>
       </div>
            
-        <Container className="main-product-wrapper py-5 home-wrapper-2">
+        <Container class1="main-product-wrapper py-5 home-wrapper-2">
           <div className="row">
             <div className="col-6">
               <div className="main-product-image">

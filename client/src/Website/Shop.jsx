@@ -3,7 +3,7 @@ import './website.css'
 import Card from './Shop/Products/Card'
 import Footer from './Footer/Footer'
 import { Link } from 'react-router-dom'
-import Container from './Container'
+import Container from './Components/Container'
 
 const Shop = () => {
   return (

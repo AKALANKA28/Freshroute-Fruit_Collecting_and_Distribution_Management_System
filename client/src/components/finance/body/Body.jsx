@@ -20,8 +20,7 @@ const Body = () => {
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8 ">
-                <div className="row gap-1">
-                   
+                <div className="row gap-1">  
                       <Cards />
                     <div className="col-12">
                         <Reports />

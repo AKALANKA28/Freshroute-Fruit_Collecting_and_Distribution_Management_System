@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import img from "../../assets/image1.jpg"
 import './checkout.css'
 import Footer from '../../Footer/Footer'
-import Container from '../../Container'
+import Container from '../../Components/Container'
 const Checkout = () => {
   return (
     <div> 

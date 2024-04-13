@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import CardFilter from './CardFilter';
-import NewsPostItem from './NewsPostItem';
+import NewsPostItem from './TransactionsPostItem';
 
 const News = () => {
 
@@ -27,12 +27,11 @@ const News = () => {
 
   return (
     <div>
-      <div className='card'>
-      <CardFilter filterChange={handleFilterChange} />
-
+      <div className='card transaction-card'>
+        <CardFilter filterChange={handleFilterChange} />
       <div className="card-body pb-0">
         <h5 className="card-title">
-          News &amp; Updates <span>| {filter}</span>
+           Transactions <span>| {filter}</span>
         </h5>
 
         <div className='news'>

@@ -10,6 +10,8 @@ import './features.css'
 
 const Features = () => {
   return (
+<>
+   
     <div className='section feature-section'>
       <div className="container flex_center">
         <div className="row text-center">
@@ -79,6 +81,9 @@ const Features = () => {
         </div>
       </div>
     </div>
+    
+</>
+    
   )
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import './cart.css'
 import img from "../../assets/image1.jpg"
 import { Link } from 'react-router-dom'
-import Container from '../../Container'
+import Container from '../../Components/Container'
 
 
 const Cart = () => {
