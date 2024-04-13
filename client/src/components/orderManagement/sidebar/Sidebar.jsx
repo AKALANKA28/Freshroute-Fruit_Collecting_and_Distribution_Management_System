@@ -43,16 +43,16 @@ const Sidebar = () => {
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='/OMDashboard/AssignedOrderList'>
                             <i className='bi bi-circle'>
-                                <span>Completed Orders</span>
+                                <span>Assigned Orders</span>
                             </i>
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='/OMDashboard/CompletedOrderList'>
                             <i className='bi bi-circle'>
-                                <span>#</span>
+                                <span>Completed Orders</span>
                             </i>
                         </a>
                     </li>

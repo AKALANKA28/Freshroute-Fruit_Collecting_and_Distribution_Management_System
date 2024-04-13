@@ -56,9 +56,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import Website from "./Website/Website";
+
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
 import OPDashboard from "./components/orderProcessor/body/OPDashboard";
-import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
+import RequestedOrderList from "./components/orderManagement/body/RequestedOrderList/RequestedOrderList";
+import AssignedOrderList from "./components/orderManagement/body/AssignedOrderList/AssignedOrderList";
+import CompletedOrderList from "./components/orderManagement/body/CompletedOrderList/CompletedOrderList";
 
 const router = createBrowserRouter([
   {
@@ -151,6 +154,14 @@ const router = createBrowserRouter([
       {
         path: "/OMDashboard/RequestedOrderList",
         element: <RequestedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/AssignedOrderList",
+        element: <AssignedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/CompletedOrderList",
+        element: <CompletedOrderList/>,
       }
 
     ]

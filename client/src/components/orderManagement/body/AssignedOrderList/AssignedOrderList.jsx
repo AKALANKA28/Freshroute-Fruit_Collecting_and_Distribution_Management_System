@@ -6,9 +6,10 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import SearchBar from '../SearchBar'
 import axios from 'axios';
 import OrderAssignForm from "./OrderAssignForm";
-import RequestedOrderTable from "./RequestedOrderTable";
+import AssignedOrderTable from "./AssignedOrderTable";
 axios.defaults.baseURL = "http://localhost:8070/";
-const RequestedOrderList = () => {
+
+const AssignedOrderList = () => {
 
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -114,8 +115,8 @@ const RequestedOrderList = () => {
                             <div className="add-item d-flex">
 
                               {/* --------------------------table name ---------------------------*/}
-                                <div className="card-title">Requested Order Details
-                                    <h6>Manage Quality</h6>
+                                <div className="card-title">Assigned Order Details
+                                    <h6>Manage Order Processors</h6>
                                 </div>
                             </div>
 
@@ -178,7 +179,7 @@ const RequestedOrderList = () => {
                                 />
                             </div>
                             <div className="scrollable-content-x">
-                                <RequestedOrderTable items={items} updateTable={getOrderList} handleAssign={handleAssign}/>
+                                <AssignedOrderTable items={items} updateTable={getOrderList} handleAssign={handleAssign}/>
                             </div>
                         </div>
                         <div>
@@ -196,4 +197,4 @@ const RequestedOrderList = () => {
         </main>
     )
 }
-export default RequestedOrderList;
+export default AssignedOrderList;

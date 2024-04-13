@@ -8,7 +8,7 @@ const dateFormat = (dateString) => {
   return  date.toLocaleString();
 }
 
-const RequestedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {
+const CompletedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {
 
   return (
       <>
@@ -39,7 +39,7 @@ const RequestedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => 
                   <td>
                     <div className="buttons">
                       <button type="button" className="btn btn-warning" onClick={() => handleAssign(item)} >
-                        Assign
+                        Un 
                       </button>
                     </div>
                   </td>
@@ -52,4 +52,4 @@ const RequestedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => 
   );
 };
 
-export default RequestedOrderTable;
+export default CompletedOrderTable;
