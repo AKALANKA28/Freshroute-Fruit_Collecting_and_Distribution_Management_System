@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 export default function () {
@@ -9,6 +10,8 @@ export default function () {
     const [quantity, setQuantity] = useState("");
     const [quality, setQuality] = useState("");
     const [date, setDate] = useState("");
+    const navigate = useNavigate();
+    
     
 
     function sendData(a){
@@ -27,6 +30,8 @@ export default function () {
       
           axios.post("http://localhost:8070/request/save", newOrder).then(() =>{
               alert("Order Record Added") 
+              navigate("/BuyerDashboard");
+              window.location.reload();
           }).catch((err)=>{
               alert(err)
           })
@@ -51,8 +56,8 @@ export default function () {
   }, []);
     
   return (
-    <div>
-         <div className='container' style={{marginLeft:"20px", marginTop:"-100px"}}>
+    <div id="main">
+         <div className='container' >
         <div className='row'>
             <div className="col">
             <div class="card" style={{width: "18rem"}}>
@@ -118,8 +123,8 @@ export default function () {
         >
   <option selected>Open this select menu</option>
   <option value="banana">Banana</option>
-  <option value="papaya">Papaya</option>
-  <option value="apple">Apple</option>
+  <option value="mango">Mango</option>
+  <option value="pineapple">Pineapple</option>
 </select>
 </div>
 
