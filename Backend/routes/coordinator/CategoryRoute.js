@@ -7,5 +7,8 @@ router.get("/", CategoryCtrl.getAllCategories);
 router.get("/get/:id", CategoryCtrl.getOneCategory);
 router.delete("/delete/:id", CategoryCtrl.deleteCategory);
 router.put("/update/:id", CategoryCtrl.updateCategory);
+router.get("/fruitdetails", CategoryCtrl.getFruitNames);
+router.get("/subcategories/:fruit", CategoryCtrl.getSubCategoriesByFruit);
+router.get("/qualities/:fruit", CategoryCtrl.getQualityFruit);
 
 module.exports = router;

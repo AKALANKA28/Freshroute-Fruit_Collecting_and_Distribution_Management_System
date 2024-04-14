@@ -1,31 +1,35 @@
-mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const PredictionSchema = new mongoose.Schema({
-
-    fruitType : {
-        type : String,
+    fruit: {
+        type: String,
         required: true
     },
-
-    quality : {
-        type : String,
+    subCategory: {
+        type: String,
         required: true
     },
-
-    quantity : {
-        type : Number,
+    quality: {
+        type: String,
         required: true
     },
-
-    price : {
-        type : String,
+    quantity: {
+        type: Number,
         required: true
     },
-
-    dateCanBeGiven : {
-        type : String,
+    price: {
+        type: String,
         required: true
     },
+    dateCanBeGiven: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['approved', 'pending', 'declined'],
+        default: 'pending'
+    }
 });
 
 const Prediction = mongoose.model("Prediction", PredictionSchema);

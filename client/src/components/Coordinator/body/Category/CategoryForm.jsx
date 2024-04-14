@@ -1,22 +1,75 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const CategoryForm = ({ handleSubmit, handleOnChange, data }) => {
+axios.defaults.baseURL = "http://localhost:8070/";
+
+const CategoryForm = ({ handleSubmit, initialData }) => {
+  const [dataList, setDataList] = useState([]);
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  const getFetchData = async () => {
+    try {
+      const response = await axios.get("/FruitType/");
+      setDataList(response.data);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    fruit: "",
+    category: "",
+    date: "",
+    quality: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="fruit" className="form-label">
             Fruit
           </label>
-          <input
-            type="text"
-            className="form-control"
+          <select
+            className="form-select"
             name="fruit"
-            placeholder="Fruit"
-            onChange={handleOnChange}
-            value={data.fruit}
+            onChange={handleChange}
+            value={formData.fruit}
             required
-          />
+          >
+            <option value="">Select Fruit</option>
+            {dataList.length ? (
+              dataList.map((fruit, index) => (
+                <option key={index} value={fruit.name}>
+                  {fruit.name}
+                </option>
+              ))
+            ) : (
+              <option value="">No fruits</option>
+            )}
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="category" className="form-label">
@@ -27,10 +80,27 @@ const CategoryForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="category"
             placeholder="Category"
-            onChange={handleOnChange}
-            value={data.category}
+            onChange={handleChange}
+            value={formData.category}
             required
           />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="quality" className="form-label">
+            Quality
+          </label>
+          <select
+            className="form-select"
+            name="quality"
+            onChange={handleChange}
+            value={formData.quality}
+            required
+          >
+            <option value="">Select Quality</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
@@ -41,15 +111,17 @@ const CategoryForm = ({ handleSubmit, handleOnChange, data }) => {
             className="form-control"
             name="date"
             placeholder="Date"
-            onChange={handleOnChange}
-            value={data.date}
+            onChange={handleChange}
+            value={formData.date}
             required
           />
         </div>
-        <button type="submit" className="btn btn-success">Submit</button>
+        <button type="submit" className="btn btn-success">
+          Submit
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default CategoryForm;

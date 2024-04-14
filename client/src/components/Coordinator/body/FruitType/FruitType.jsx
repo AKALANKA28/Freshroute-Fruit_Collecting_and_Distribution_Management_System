@@ -6,6 +6,8 @@ import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import FruitTypeForm from "./FruitTypeForm";
 import FruitTypeReport from "./FruitTypeReport";
 import "./FruitType.css";
@@ -18,10 +20,15 @@ function FruitType() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFruitType, setSelectedFruitType] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -32,12 +39,42 @@ function FruitType() {
     }
   };
 
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((fruittype) => {
+      const fullName = `${fruittype.name} ${fruittype.date}`; // Customize this according to your data structure
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
   const handleRefreshClick = () => {
     getFetchData();
   };
 
+  const generateExcelFile = () => {
+    // Rearrange the order of properties for each prediction object
+    const rearrangedDataList = dataList.map(fruitType => ({
+      Name: fruitType.name,
+      Date: fruitType.date,
+      Description: fruitType.description,
+      
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Fruit Type Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "fruitType_report.xlsx");
+  };
+  
   const handleButtonClick = () => {
-    getFetchData();
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
@@ -96,7 +133,7 @@ function FruitType() {
 
 
   return (
-    <div id="main">
+    <div className="main">
     <div className="card recent-sales overflow-auto">
      
           <div className="card-body">
@@ -184,7 +221,7 @@ function FruitType() {
 
        
 <div className="table-container">
-      <SearchBar/>
+<SearchBar onSearch={handleSearch} />
         <table className="table table-borderless datatable">
 
           <thead className="table-light">
@@ -196,8 +233,8 @@ function FruitType() {
             </tr>
           </thead>
           <tbody>
-            {dataList.length ? (
-              dataList.map((fruitType) => (
+          {filteredDataList.length ? (
+                  filteredDataList.map((fruitType) => (
                 <tr key={fruitType._id}>
                   <td>{fruitType.name}</td>
                   <td>{fruitType.date}</td>

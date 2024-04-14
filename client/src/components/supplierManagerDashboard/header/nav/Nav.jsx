@@ -2,7 +2,7 @@ import React from 'react'
 
 import NavMessage from './NavMessage'
 import NavAvatar from './NavAvatar'
-import NavNotification from './NavNotification'
+import NavNotification from '../../../Coordinator/header/nav/NavNotification'
 import SearchBar from './SearchBar'
 
 

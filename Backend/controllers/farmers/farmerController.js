@@ -1,4 +1,3 @@
-///Users/heshan/Desktop/ITP/Untitled/Backend/controllers/farmers/farmerController.js
 const Farmer = require("../../models/farmers/farmers");
 
 const addFarmer = async (req, res) => {

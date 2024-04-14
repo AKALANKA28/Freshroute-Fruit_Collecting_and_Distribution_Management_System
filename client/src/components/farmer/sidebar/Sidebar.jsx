@@ -1,8 +1,33 @@
-import React from 'react'
-import './sidebar.css'
+import React, { useState } from "react";
+import axios from "axios";
 import navList from './navItem';
+import { Modal, Button } from 'react-bootstrap';
+import PredictionForm from '../body/PredictionDetails/PredictionForm'
+
 
 const Sidebar = () => {
+
+    const [addModalOpen, setAddModalOpen] = useState(false);
+
+    const handleAddModalOpen = () => {
+      setAddModalOpen(true);
+    };
+  
+    const handleAddModalClose = () => {
+      setAddModalOpen(false);
+    };
+  
+    const handleSubmit = async (formData) => {
+      try {
+        await axios.post("/Prediction/add", formData);
+        alert("Prediction Added");
+        handleAddModalClose();
+        window.location.reload();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
@@ -26,7 +51,7 @@ const Sidebar = () => {
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
                     <li>
-                        <a href='#'>
+                        <a onClick={handleAddModalOpen}>
                             <i className='bi bi-circle'>
                                 <span>Add Supply Prediction</span>
                             </i>
@@ -84,9 +109,25 @@ const Sidebar = () => {
             
 
         </ul>
+
+            {/* Modal for adding supply prediction */}
+            <Modal show={addModalOpen} onHide={handleAddModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Supply Prediction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PredictionForm handleSubmit={handleSubmit} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleAddModalClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       </aside>
     </div>
   )
 }
 
-export default Sidebar
+export default Sidebar;
