@@ -1,15 +1,4 @@
-#main{
-  margin-top: 95px;
-  padding: 20px 30px;
-  transition: all 0.3s;
-}
 
-
-@media(max-width: 1199px){
-  #main{
-      padding: 0px;
-  }
-}
 
 .body .recent-sales{
   font-size: 14px;
@@ -229,4 +218,27 @@
 
 .search-form i{
   color: #012970;
+}
+
+.status-box {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status-box.approved {
+  background-color: #4bb050;
+  color: white;
+}
+
+.status-box.declined {
+  background-color: #ff0000;
+  color: white;
+}
+
+.status-box.pending {
+  background-color: #ffbb00;
+  color: white;
 }

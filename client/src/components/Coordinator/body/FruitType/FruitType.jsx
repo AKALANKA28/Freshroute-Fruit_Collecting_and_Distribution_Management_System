@@ -133,7 +133,7 @@ function FruitType() {
 
 
   return (
-    <div id="main">
+    <div className="main">
     <div className="card recent-sales overflow-auto">
      
           <div className="card-body">

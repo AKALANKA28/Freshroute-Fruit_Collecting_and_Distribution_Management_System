@@ -56,10 +56,6 @@ const Expense = () => {
      
     }
 
- 
-  
-   
-  
     const handleFilterChange = filter => {
         setFilter(filter)
     };

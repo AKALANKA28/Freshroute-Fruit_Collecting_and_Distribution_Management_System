@@ -29,13 +29,13 @@ const ReportCharts = () => {
             markers: {
                 size: 4,
             },
-            colors: ['#4154f1', '#2eca6a', '#ff771d'],
+            colors: ['#283739', '#a2c11c', '#f8b400'],
             fill: {
                 type: 'gradient',
                 gradient: {
                     shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.4,
+                    opacityFrom: 0.4,
+                    opacityTo: 0.1,
                     stops: [0, 90, 100]
                 },
             },
