@@ -24,7 +24,8 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
         handleOnChange(event);
     };
 
-    const handleOnSubmit = () => {
+    const handleOnSubmit = (event) => {
+        event.preventDefault()
         handleSubmit();
         onHide();
     };

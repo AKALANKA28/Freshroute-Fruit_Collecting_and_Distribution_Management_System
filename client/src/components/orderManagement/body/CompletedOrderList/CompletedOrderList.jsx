@@ -13,24 +13,8 @@ const CompletedOrderList = () => {
 
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
-    const [formData, setFormData] = useState({
-        orderId: "",
-        fruit: "",
-        category: "",
-        quality: "",
-        customer:"",
-        quantity: "",
-        placedDate: "",
-        dueDate: "",
-        opId: "",
-        opName: ""
-    });
+    const [formData, setFormData] = useState({});
 
-    const handleOnInputChange = (event) => {
-        const { opName, opId } = event.target;
-        setFormData( (prevState) =>{ return {...prevState, opName: opName, opId: opId}})
-        console.log(formData)
-    };
 
     const handleClosePopup = () => setShowPopup(false);
 
@@ -41,7 +25,7 @@ const CompletedOrderList = () => {
 
     const getOrderList = async () => {
         try {
-            const response = await axios.get("/om/pendingOrderList");
+            const response = await axios.get("/om/completedOrderList");
             const responseData = response.data;
             setItems(responseData);
 
@@ -55,29 +39,10 @@ const CompletedOrderList = () => {
 
     };
 
-    const handleSubmit = async()=>{
-
-        try {
-            const request = {
-                orderId: formData.orderId,
-                opName: formData.opName,
-                opId: formData.opId
-            };
-            const response = await axios.post(`/om/assignOrder`, request);
-            alert("Successful");
-        } catch (err) {
-            if (err.response && err.response.data && err.response.data.error) {
-                alert(err.response.data.error);
-            } else {
-                alert("An error occurred while assigning the order");
-            }
-        }
-        getOrderList();
-    }
 
     const handleSearchOnClick = async (filterData) => {
         try {
-            const response = await axios.post("/om/quality/filteredQualities", filterData);
+            const response = await axios.post("/om/getCompletedOrderListByFilter", filterData);
             setItems(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -88,18 +53,18 @@ const CompletedOrderList = () => {
         }
     }
 
-    const handleAssign = (item) =>{
+    const handleView = (item) =>{
         setFormData({
             orderId: item._id,
             fruit: item.fruit,
             category: item.category,
             quality: item.quality,
             quantity: item.quantity,
-            customer: item.customer,
+            customer: item.customerName,
             placedDate: item.placedDate,
             dueDate: item.dueDate,
-            opId: "",
-            opName: ""
+            opId: item.opId,
+            opName: item.opName,
         })
         setShowPopup(true);
     };
@@ -116,7 +81,6 @@ const CompletedOrderList = () => {
 
                               {/* --------------------------table name ---------------------------*/}
                                 <div className="card-title">Completed Order Details
-                                    <h6>#</h6>
                                 </div>
                             </div>
 
@@ -179,7 +143,7 @@ const CompletedOrderList = () => {
                                 />
                             </div>
                             <div className="scrollable-content-x">
-                                <CompletedOrderTable items={items} updateTable={getOrderList} handleAssign={handleAssign}/>
+                                <CompletedOrderTable items={items} handleView={handleView}/>
                             </div>
                         </div>
                         <div>
@@ -187,8 +151,6 @@ const CompletedOrderList = () => {
                                 show={showPopup}
                                 onHide={handleClosePopup}
                                 formData={formData}
-                                handleSubmit={handleSubmit}
-                                handleOnChange={handleOnInputChange}
                             />
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import "./OrderList.css"
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange }) {
+function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange, isEdit }) {
 
     const [orderProcessor, setOrderProcessor] = useState([]);
 
@@ -25,7 +25,8 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
         handleOnChange(event);
     };
 
-    const handleOnSubmit = () => {
+    const handleOnSubmit = (event) => {
+        event.preventDefault()
         handleSubmit();
         onHide();
     };
@@ -50,7 +51,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Assign Order</Modal.Title>
+                <Modal.Title>{isEdit ? "Edit Order Processor" : "Un Assign Order"}</Modal.Title>
             </Modal.Header>
             <Form onSubmit={handleOnSubmit}>
                 <Modal.Body>
@@ -84,7 +85,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="fromOrderProcessor">
                             <Form.Label>Order Processor</Form.Label>
-                            <Form.Select name="orderProcessor" required onChange={handleOrderProcessorChange} value={formData.opId}>
+                            <Form.Select name="orderProcessor" required onChange={handleOrderProcessorChange} value={formData.opId} disabled={!isEdit}>
                                 <option value="">Select Order Processor</option>
                                 {orderProcessor.map((op, index) => (
                                     <option key={index} value={op.id}>
@@ -100,7 +101,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
                         Close
                     </Button>
                     <Button variant="secondary" type="submit">
-                        Assign
+                        {isEdit? "Save" : "Un Assign"}
                     </Button>
                 </Modal.Footer>
             </Form>

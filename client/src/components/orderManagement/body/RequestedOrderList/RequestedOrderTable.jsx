@@ -38,7 +38,7 @@ const RequestedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => 
                   <td >{dateFormat(item.dueDate)}</td>
                   <td>
                     <div className="buttons">
-                      <button type="button" className="btn btn-warning" onClick={() => handleAssign(item)} >
+                      <button type="button" className="btn btn-outline-warning" onClick={() => handleAssign(item)} >
                         Assign
                       </button>
                     </div>

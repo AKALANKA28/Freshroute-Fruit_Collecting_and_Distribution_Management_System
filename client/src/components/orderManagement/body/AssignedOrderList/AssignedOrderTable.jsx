@@ -8,7 +8,7 @@ const dateFormat = (dateString) => {
   return  date.toLocaleString();
 }
 
-const AssignedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {
+const AssignedOrderTable = ({ items, handleUnAssign, handleEdit }) => {
 
   return (
       <>
@@ -38,7 +38,10 @@ const AssignedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {
                   <td >{dateFormat(item.dueDate)}</td>
                   <td>
                     <div className="buttons">
-                      <button type="button" className="btn btn-warning" onClick={() => handleAssign(item)} >
+                      <button className="btn-table edit" onClick={() => handleEdit(item)}>
+                        <i className="bi bi-pencil-square"></i>
+                      </button>
+                      <button type="button" className="btn btn-outline-warning" onClick={() => handleUnAssign(item)}>
                         Un Assign
                       </button>
                     </div>
@@ -46,9 +49,9 @@ const AssignedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {
                 </tr>
               ))}
           </tbody>
-        </table>
-      </div>
-    </>
+          </table>
+        </div>
+      </>
   );
 };
 

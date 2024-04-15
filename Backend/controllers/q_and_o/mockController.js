@@ -3,7 +3,7 @@ const MockOrderDetail = require('../../models/q_and_o/MockOrderDetail');
 // Add a new vehicle record
 exports.addMockOrder = async (req, res) => {
     try {
-        const { customerName, customerId, fruit, category, quality, quantity, placedDate, dueDate, orderStatus } = req.body;
+        const { customerName, customerId, fruit, category, quality, quantity, placedDate, dueDate, orderStatus, opName, opId } = req.body;
 
         const newMockOrderDetail = new MockOrderDetail({
             customerName,
@@ -14,7 +14,9 @@ exports.addMockOrder = async (req, res) => {
             quantity,
             placedDate,
             dueDate,
-            orderStatus
+            orderStatus,
+            opName,
+            opId
         });
 
         await newMockOrderDetail.save();

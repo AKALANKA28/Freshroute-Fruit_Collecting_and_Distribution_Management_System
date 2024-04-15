@@ -2,57 +2,15 @@ import React, {useEffect, useState} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import "./OrderList.css"
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8070/";
 
-function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange }) {
-
-    const [orderProcessor, setOrderProcessor] = useState([]);
-
-    useEffect(() => {
-        if (show) {
-            getOrderProcessor()
-        }
-    }, [show])
-
-    const handleOrderProcessorChange = (event) => {
-        const { value } = event.target;
-        orderProcessor.map((op) => {
-            if (op.id === value) {
-                event.target.opName = op.name;
-                event.target.opId = value;
-            }
-        })
-        handleOnChange(event);
-    };
-
-    const handleOnSubmit = () => {
-        handleSubmit();
-        onHide();
-    };
-
-    const getOrderProcessor = async () => {
-        try {
-            const response = await axios.get("/om/processorList");
-            const orderProcessorList = response.data;
-            if (orderProcessorList) {
-                setOrderProcessor(orderProcessorList.opList);
-            }
-        } catch (err) {
-            if (err.response && err.response.data && err.response.data.error) {
-                alert(err.response.data.error);
-            } else {
-                alert("An error occurred while getting categorized quality list");
-            }
-        }
-    }
-
+function OrderAssignForm({ show, onHide, formData }) {
 
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
                 <Modal.Title>Assign Order</Modal.Title>
             </Modal.Header>
-            <Form onSubmit={handleOnSubmit}>
+            <Form onSubmit={(event)=>{event.preventDefault(); onHide();}}>
                 <Modal.Body>
                     <div className="scrollable-content-y" >
                         <Form.Group className="mb-3" controlId="formOrderId" hidden={true} >
@@ -84,13 +42,8 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="fromOrderProcessor">
                             <Form.Label>Order Processor</Form.Label>
-                            <Form.Select name="orderProcessor" required onChange={handleOrderProcessorChange} value={formData.opId}>
-                                <option value="">Select Order Processor</option>
-                                {orderProcessor.map((op, index) => (
-                                    <option key={index} value={op.id}>
-                                        {op.name}
-                                    </option>
-                                ))}
+                            <Form.Select name="orderProcessor" disabled={true} >
+                                <option value="">{formData.opId}</option>
                             </Form.Select>
                         </Form.Group>
                     </div>
@@ -98,9 +51,6 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
                 <Modal.Footer>
                     <Button variant="Success" onClick={onHide}>
                         Close
-                    </Button>
-                    <Button variant="secondary" type="submit">
-                        Assign
                     </Button>
                 </Modal.Footer>
             </Form>

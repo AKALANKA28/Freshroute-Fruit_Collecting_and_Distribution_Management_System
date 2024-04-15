@@ -94,7 +94,7 @@ const RequestedOrderList = () => {
             category: item.category,
             quality: item.quality,
             quantity: item.quantity,
-            customer: item.customer,
+            customer: item.customerName,
             placedDate: item.placedDate,
             dueDate: item.dueDate,
             opId: "",

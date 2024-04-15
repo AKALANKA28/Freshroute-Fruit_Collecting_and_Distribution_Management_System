@@ -107,7 +107,9 @@ exports.assignOrder = async (req, res) => {
         const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "ASSIGNED",
-            }
+                opId : opId,
+                opName : opName,
+            },
         }, { new: true });
 
         if (!order) {
@@ -134,6 +136,34 @@ exports.assignOrder = async (req, res) => {
     }
 };
 
+exports.editAssignOrder = async (req, res) => {
+    const {orderId, opName, opId } = req.body;
+    try {
+        const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
+            $set: {
+                orderStatus: "ASSIGNED",
+                opId : opId,
+                opName : opName,
+            },
+        }, { new: true });
+
+        if (!order) {
+            return res.status(404).json({ status: "Order not found" });
+        }
+        const orderExecutionRecord = await OrderExecutionDetail.find({orderId: orderId});
+        await OrderExecutionDetail.findByIdAndUpdate(orderExecutionRecord[0]._id, {
+            $set: {
+                opName: opName,
+                opId: opId
+            }
+        })
+
+        res.status(200).json({ status: "Order assigned successfully", orderExecutionRecord });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error occurred while assigning the order", error: err.message });
+    }
+};
 
 exports.unAssignOrder = async (req, res) => {
     const orderId = req.params.orderId;
@@ -143,7 +173,11 @@ exports.unAssignOrder = async (req, res) => {
         const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "PENDING",
-            }
+            },
+            $unset: {
+                opId: "",
+                opName: "",
+            },
         }, { new: true });
 
         if (!order) {

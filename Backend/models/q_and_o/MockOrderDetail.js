@@ -46,8 +46,9 @@ const MockOrderDetailSchema = mongoose.Schema({
         type: String,
         required: true,
         default: "PENDING",
-    }
-    
+    },
+    opName: String,
+    opId: String
 })
 
 const MockOrderDetail = mongoose.model("MockOrderDetail", MockOrderDetailSchema);

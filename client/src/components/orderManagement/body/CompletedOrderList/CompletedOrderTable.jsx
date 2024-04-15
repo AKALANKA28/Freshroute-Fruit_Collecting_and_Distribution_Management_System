@@ -8,7 +8,7 @@ const dateFormat = (dateString) => {
   return  date.toLocaleString();
 }
 
-const CompletedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {
+const CompletedOrderTable = ({ items, handleView }) => {
 
   return (
       <>
@@ -22,10 +22,11 @@ const CompletedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => 
               <th className="col">Quantity</th>
               <th className="col date-field">Placed Date</th>
               <th className="col date-field">Due Date</th>
+              <th className="col">Order Processor Name</th>
               <th className="col">Action</th>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             {items &&
               items.length > 0 &&
               items.map((item) => (
@@ -36,10 +37,11 @@ const CompletedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => 
                   <td >{item.quantity}</td>
                   <td >{dateFormat(item.placedDate)}</td>
                   <td >{dateFormat(item.dueDate)}</td>
+                  <td>{item.opName}</td>
                   <td>
                     <div className="buttons">
-                      <button type="button" className="btn btn-warning" onClick={() => handleAssign(item)} >
-                        Un 
+                      <button type="button" className="btn btn-outline-warning" onClick={() => handleView(item)}>
+                        <i className="bi bi-arrow-up-right-square"></i>
                       </button>
                     </div>
                   </td>

@@ -233,7 +233,7 @@ const QualityList = () => {
                       <div className="w-100">
 
                       </div>
-                      <ul className="nav nav-tabs m-0 mt-2 justify-content-start" id="myTab" role="tablist">
+                      <ul className="nav nav-tabs m-0 mt-2 justify-content-start tab-container" id="myTab" role="tablist">
                           <li className="nav-item m-0 " role="presentation">
                               <button className="nav-link active tab-height" id="home-tab" data-bs-toggle="tab"
                                       data-bs-target="#home-tab-pane" type="button" role="tab"

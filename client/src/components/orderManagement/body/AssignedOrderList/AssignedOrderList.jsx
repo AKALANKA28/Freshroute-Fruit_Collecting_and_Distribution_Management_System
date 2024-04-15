@@ -13,18 +13,8 @@ const AssignedOrderList = () => {
 
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
-    const [formData, setFormData] = useState({
-        orderId: "",
-        fruit: "",
-        category: "",
-        quality: "",
-        customer:"",
-        quantity: "",
-        placedDate: "",
-        dueDate: "",
-        opId: "",
-        opName: ""
-    });
+    const [isEdit, setIsEdit] = useState(false);
+    const [formData, setFormData] = useState({ });
 
     const handleOnInputChange = (event) => {
         const { opName, opId } = event.target;
@@ -41,7 +31,7 @@ const AssignedOrderList = () => {
 
     const getOrderList = async () => {
         try {
-            const response = await axios.get("/om/pendingOrderList");
+            const response = await axios.get("/om/ongoingOrderList");
             const responseData = response.data;
             setItems(responseData);
 
@@ -56,20 +46,31 @@ const AssignedOrderList = () => {
     };
 
     const handleSubmit = async()=>{
-
-        try {
-            const request = {
-                orderId: formData.orderId,
-                opName: formData.opName,
-                opId: formData.opId
-            };
-            const response = await axios.post(`/om/assignOrder`, request);
-            alert("Successful");
-        } catch (err) {
-            if (err.response && err.response.data && err.response.data.error) {
-                alert(err.response.data.error);
-            } else {
-                alert("An error occurred while assigning the order");
+        if (isEdit) {
+            try {
+                const request = {
+                    orderId: formData.orderId,
+                    opName: formData.opName,
+                    opId: formData.opId
+                };
+                const response = await axios.post(`/om/editAssignOrder`, request);
+                alert("Successful");
+            } catch (err) {
+                if (err.response && err.response.data && err.response.data.error) {
+                    alert(err.response.data.error);
+                } else {
+                    alert("An error occurred while assigning the order");
+                }
+            }
+        } else {
+            try {
+                const response = await axios.delete(`/om/unAssignOrder/${formData.orderId}`);
+            } catch (err) {
+                if (err.response && err.response.data && err.response.data.error) {
+                    alert(err.response.data.error);
+                } else {
+                    alert("An error occurred while removing the order");
+                }
             }
         }
         getOrderList();
@@ -88,20 +89,38 @@ const AssignedOrderList = () => {
         }
     }
 
-    const handleAssign = (item) =>{
+    const handleUnAssign = (item) =>{
         setFormData({
             orderId: item._id,
             fruit: item.fruit,
             category: item.category,
             quality: item.quality,
             quantity: item.quantity,
-            customer: item.customer,
+            customer: item.customerName,
             placedDate: item.placedDate,
             dueDate: item.dueDate,
-            opId: "",
-            opName: ""
+            opId: item.opId,
+            opName: item.opName
         })
         setShowPopup(true);
+        setIsEdit(false);
+    };
+
+    const handleEdit = (item) =>{
+        setFormData({
+            orderId: item._id,
+            fruit: item.fruit,
+            category: item.category,
+            quality: item.quality,
+            quantity: item.quantity,
+            customer: item.customerName,
+            placedDate: item.placedDate,
+            dueDate: item.dueDate,
+            opId: item.opId,
+            opName: item.opName
+        })
+        setShowPopup(true);
+        setIsEdit(true);
     };
 
     return (
@@ -179,7 +198,7 @@ const AssignedOrderList = () => {
                                 />
                             </div>
                             <div className="scrollable-content-x">
-                                <AssignedOrderTable items={items} updateTable={getOrderList} handleAssign={handleAssign}/>
+                                <AssignedOrderTable items={items} updateTable={getOrderList} handleUnAssign={handleUnAssign} handleEdit={handleEdit}/>
                             </div>
                         </div>
                         <div>
@@ -188,6 +207,7 @@ const AssignedOrderList = () => {
                                 onHide={handleClosePopup}
                                 formData={formData}
                                 handleSubmit={handleSubmit}
+                                isEdit={isEdit}
                                 handleOnChange={handleOnInputChange}
                             />
                         </div>

@@ -29,7 +29,7 @@ router.get("/pendingOrderList", orderManageController.getPendingOrderList);
 router.get("/ongoingOrderList", orderManageController.getOngoingOrderList);
 router.get("/completedOrderList", orderManageController.getCompletedOrderList);
 
-//Get Order List from Buyer Manager
+//Get filtered Order List from Buyer Manager
 router.post("/pendingOrderList", orderManageController.getPendingOrderListByFilter);
 router.post("/ongoingOrderList", orderManageController.getOngoingOrderListByFilter);
 router.post("/completedOrderList", orderManageController.getCompletedOrderListByFilter);
@@ -40,5 +40,6 @@ router.get("/processorList", orderManageController.getOrderProcessorList);
 
 // Assign order to order processor
 router.post("/assignOrder", orderManageController.assignOrder);
+router.post("/editAssignOrder", orderManageController.editAssignOrder);
 router.delete("/unAssignOrder/:orderId", orderManageController.unAssignOrder);
 module.exports = router;
