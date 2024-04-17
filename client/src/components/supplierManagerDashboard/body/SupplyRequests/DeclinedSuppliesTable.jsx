@@ -75,9 +75,9 @@ function DeclinedSuppliesTable({ declinedSupplies }) {
               <td>{request.fruit}</td>
               <td>{request.subCategory}</td>
               <td>{request.quality}</td>
-              <td>{request.quantity}</td>
-              <td>{request.price}</td>
-              <td>{request.price * request.quantity}</td>
+              <td>{request.quantity} kg</td>
+              <td>Rs. {request.price}</td>
+              <td>Rs. {request.price * request.quantity}</td>
               <td>{request.dateCanBeGiven}</td>
               <td>
                 <Button
