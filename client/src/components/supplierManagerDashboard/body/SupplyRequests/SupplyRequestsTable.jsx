@@ -103,13 +103,12 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
         <td>
           <Button
             className="btn-action btn-approve"
-            variant="success"
             onClick={() => handleShowModal(request)}
           >
             Approve
           </Button>
           <Button
-            className="btn btn-action btn-danger"
+            className="btn-action btn-danger"
             onClick={() => handleShowDeclineModal(request)}
           >
             Decline
