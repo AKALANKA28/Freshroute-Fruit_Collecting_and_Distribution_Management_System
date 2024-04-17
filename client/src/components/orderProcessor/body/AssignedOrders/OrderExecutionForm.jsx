@@ -5,7 +5,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChange, isEdit}) {
+function OrderExecutionForm({show, onHide, formData}) {
 
     const [supplier, setSupplier] = useState(null);
     const [supplierList, setSupplierList] = useState([]);
@@ -36,13 +36,10 @@ function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChang
         setTimeout(()=>{
             quantityInputRef.current.focus();
         },5)
-        setQuantity(NaN)
-        // handleOnChange(event);
+        setQuantity('')
     };
     const changeSupplier = (id) => {
-        console.log(id)
         const selectedSupplier = supplierList.find(sp => sp._id === id);
-        console.log(selectedSupplier);
         if (selectedSupplier) {
             setSupplier({
                 supplierName: selectedSupplier.name,
@@ -51,13 +48,7 @@ function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChang
                 price: selectedSupplier.price
             });
         }
-        console.log(supplier)
     }
-    const handleOnSubmit = (event) => {
-        event.preventDefault()
-        handleSubmit();
-        onHide();
-    };
 
     const getSupplierList = async () => {
         try {
@@ -121,6 +112,28 @@ function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChang
             setExecutionDetails([...executionDetails, exeRecord])
         }
     }
+    const handleDelete = (item) => {
+
+        const updatedSupplierList = supplierList.map((sp) => {
+            if (sp._id === item.supplierId) {
+                const newQty = parseFloat(sp.quantity) + parseFloat(item.quantity);
+                if (supplier.supplierId === item.supplierId) {
+                    setSupplier({...supplier, quantity:newQty})
+                }
+                return {...sp, quantity: newQty}
+            } else {
+                return sp;
+            }
+        })
+        setSupplierList(updatedSupplierList);
+        removeExecutionDetailRecord(item.supplierId);
+    }
+    const removeExecutionDetailRecord = (supplierId) => {
+        const remainingRecords = executionDetails.filter((item, index) => item.supplierId !== supplierId);
+        if (remainingRecords) {
+            setExecutionDetails(remainingRecords);
+        }
+    }
 
     const handleQuantityChange = (event) => {
         const maxSupQty = parseFloat(supplier.quantity);
@@ -131,6 +144,13 @@ function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChang
         } else {
             setInvalidQuantity(false)
         }
+    }
+
+
+    const handleSaveExecution = (event) =>{
+        event.preventDefault();
+
+        onHide();
     }
 
 
@@ -245,7 +265,7 @@ function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChang
                                     <td>{parseFloat(item.quantity) * parseFloat(item.price)}</td>
                                     <td>
                                         <div className="buttons">
-                                            <button className="btn-table delete" type="button">
+                                            <button className="btn-table delete" type="button" onClick={() =>handleDelete(item)}>
                                                 <i className="bi bi-trash3-fill"></i>
                                             </button>
                                         </div>
@@ -261,7 +281,10 @@ function OrderExecutionForm({show, onHide, formData, handleSubmit, handleOnChang
                 <Button variant="Success" onClick={onHide}>
                     Close
                 </Button>
-                <Button variant="secondary" type="submit">
+                <Button variant="secondary"
+                        type="button"
+                        disabled={executionDetails.length<=0}
+                        onClick={handleSaveExecution}>
                     Save
                 </Button>
             </Modal.Footer>
