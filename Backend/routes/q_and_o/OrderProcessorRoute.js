@@ -7,7 +7,7 @@ const orderProcessController = require('../../controllers/q_and_o/OrderProcessCo
 router.post("/mock/add", orderProcessController.addToMock);
 
 // Retrieve supplier list
-router.get("/supplierList", orderProcessController.getSupplierList);
+router.post("/supplierList", orderProcessController.getSupplierList);
 
 router.get("/pendingOrderList", orderProcessController.getAssignedOrderList);
 router.get("/ongoingOrderList", orderProcessController.getOngoingOrderList);

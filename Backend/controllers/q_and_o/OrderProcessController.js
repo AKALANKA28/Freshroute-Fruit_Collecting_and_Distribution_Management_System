@@ -12,13 +12,15 @@ exports.getSupplierList = async (req, res) => {
         const { fruit, category, quality } = req.body;
         // const filter = { fruit:fruit, category:category, quality:quality}
         // const supplierList = await Supplier.find(filter);
-        const supplierList = [
-            {name:"AA", quantity: 1000, price: 100},
-            {name:"BB", quantity: 500, price: 100},
-            {name:"CC", quantity: 5000, price: 100},
-            {name:"DD", quantity: 785, price: 100},
-            {name:"EE", quantity: 3689, price: 100},
-        ]
+        const supplierList ={
+            supplierList:[
+                {_id: "1", name:"AA", quantity: 1000, price: 100},
+                {_id: "2", name:"BB", quantity: 500, price: 100},
+                {_id: "3", name:"CC", quantity: 5000, price: 100},
+                {_id: "4", name:"DD", quantity: 785, price: 100},
+                {_id: "5", name:"EE", quantity: 3689, price: 100},
+            ]
+        }
         res.json(supplierList);
     } catch (err) {
         console.error(err);
