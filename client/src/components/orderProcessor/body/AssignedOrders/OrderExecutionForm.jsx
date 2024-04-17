@@ -105,7 +105,7 @@ function OrderExecutionForm({show, onHide, formData}) {
             const updatedExeDetails = executionDetails.map((exe) => {
                 if (exe.supplierId === supplier.supplierId) {
                     const qty = parseFloat(exe.quantity) + parseFloat(fillingQty);
-                    return {...exe, quantity: qty}
+                    return {...exe, quantity: qty, time: new Date()}
                 } else {
                     return exe;
                 }
@@ -116,7 +116,8 @@ function OrderExecutionForm({show, onHide, formData}) {
                 supplierId: supplier.supplierId,
                 supplierName: supplier.supplierName,
                 quantity: fillingQty,
-                price: supplier.price
+                price: supplier.price,
+                time: new Date()
             }
             setExecutionDetails([...executionDetails, exeRecord])
         }
@@ -158,7 +159,8 @@ function OrderExecutionForm({show, onHide, formData}) {
 
     const handleSaveExecution = (event) =>{
         event.preventDefault();
-
+        //supplier should update
+        //execution record
         onHide();
     }
 
@@ -247,7 +249,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                                    />
                         </div>
                         <div className="col-3 d-flex flex-row">
-                            <button type="button" disabled={!supplier || invalidQuantity || totalFilledQuantity >= formData.quantity}
+                            <button type="button" disabled={!supplier || invalidQuantity || quantity ==='' || totalFilledQuantity >= formData.quantity}
                                     className="btn btn-primary align-self-end w-100" onClick={handleAdd}> ADD +
                             </button>
                         </div>
