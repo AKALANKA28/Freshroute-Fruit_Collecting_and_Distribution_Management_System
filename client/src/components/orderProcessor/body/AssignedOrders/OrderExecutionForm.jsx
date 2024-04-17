@@ -13,6 +13,7 @@ function OrderExecutionForm({show, onHide, formData}) {
     const [invalidQuantity, setInvalidQuantity] = useState(false);
     const [quantity, setQuantity] = useState(0);
     const quantityInputRef = useRef(null);
+    const [ totalFilledQuantity,setTotalFiledQuantity ] = useState(0);
 
     useEffect(() => {
         if (show) {
@@ -20,6 +21,7 @@ function OrderExecutionForm({show, onHide, formData}) {
             setInvalidQuantity(false);
             setSupplier(null);
             setExecutionDetails([]);
+            setTotalFiledQuantity(0);
             getSupplierList();
         }
     }, [show]);
@@ -72,11 +74,17 @@ function OrderExecutionForm({show, onHide, formData}) {
     }
 
     const handleAdd = (event) => {
+        let fillingQty = parseFloat(quantity);
+        let totalFilledQty = parseFloat(totalFilledQuantity) + fillingQty;
+        if (totalFilledQty > formData.quantity) {
+            fillingQty= parseFloat(formData.quantity)-parseFloat(totalFilledQuantity);
+            totalFilledQty = parseFloat(formData.quantity);
+            setQuantity(0);
+        }
         let remainingQty;
-
         const updatedSupplierList = supplierList.map((sp) => {
             if (sp._id === supplier.supplierId) {
-                remainingQty = parseFloat(sp.quantity) - quantity;
+                remainingQty = parseFloat(sp.quantity) - fillingQty;
                 setSupplier({...supplier, quantity:remainingQty})
                 return {...sp, quantity: remainingQty}
             } else {
@@ -84,18 +92,19 @@ function OrderExecutionForm({show, onHide, formData}) {
             }
         })
         setSupplierList(updatedSupplierList);
-        createExecutionDetailRecord();
+        createExecutionDetailRecord(fillingQty);
         if ((parseFloat(quantity) > remainingQty)) {
             setInvalidQuantity(true);
         }
+        setTotalFiledQuantity(totalFilledQty)
     }
 
-    const createExecutionDetailRecord = () => {
+    const createExecutionDetailRecord = (fillingQty) => {
         const existingRecord = executionDetails.find(exe => exe.supplierId === supplier.supplierId);
         if (existingRecord) {
             const updatedExeDetails = executionDetails.map((exe) => {
                 if (exe.supplierId === supplier.supplierId) {
-                    const qty = parseFloat(exe.quantity) + parseFloat(quantity);
+                    const qty = parseFloat(exe.quantity) + parseFloat(fillingQty);
                     return {...exe, quantity: qty}
                 } else {
                     return exe;
@@ -106,7 +115,7 @@ function OrderExecutionForm({show, onHide, formData}) {
             const exeRecord = {
                 supplierId: supplier.supplierId,
                 supplierName: supplier.supplierName,
-                quantity: quantity,
+                quantity: fillingQty,
                 price: supplier.price
             }
             setExecutionDetails([...executionDetails, exeRecord])
@@ -172,7 +181,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                             marginLeft: '50px'
                         }}>Filled Quantity : </label>
                         <input className="form-control" style={{width: '200px'}} type="text" name="orderId"
-                               value='0' readOnly={true}/>
+                               value={totalFilledQuantity} readOnly={true}/>
                     </div>
                 </div>
                 <div className="scrollable-content-y">
@@ -232,13 +241,13 @@ function OrderExecutionForm({show, onHide, formData}) {
                             <label className="form-label">Enter Quantity:</label>
                             <input className={`form-control  error ${invalidQuantity ? 'is-invalid' : ''}`} type="number" name="fillingQuantity"
                                    value={quantity}
-                                   disabled={!supplier}
+                                   disabled={!supplier || totalFilledQuantity>= formData.quantity}
                                    onChange={handleQuantityChange}
                                    ref={quantityInputRef}
                                    />
                         </div>
                         <div className="col-3 d-flex flex-row">
-                            <button type="button" disabled={!supplier || invalidQuantity}
+                            <button type="button" disabled={!supplier || invalidQuantity || totalFilledQuantity >= formData.quantity}
                                     className="btn btn-primary align-self-end w-100" onClick={handleAdd}> ADD +
                             </button>
                         </div>
