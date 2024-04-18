@@ -28,10 +28,33 @@ const requestschema = new mongoose.Schema({
         required: true,
     },
 
-    date: {
+    placedDate: {
+        type: Date,
+        required: true
+    },
+
+    dueDate: {
+        type: Date,
+        required: true
+    },
+
+    customerId : {
+        type : String,
+        required: true,   
+    },
+
+    customerName : {
+        type : String,
+        required: true,   
+    },
+
+    orderStatus: {   // PENDING  ASSIGNED IN_PROGRESS  COMPLETED
         type: String,
         required: true,
+        default: "PENDING",
     },
+    opName: String,
+    opId: String
 
    
 });
