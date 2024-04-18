@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -8,7 +8,7 @@ const dateFormat = (dateString) => {
     return date.toLocaleString();
 }
 
-const AssignedOrderTable = ({items, handleUnAssign, handleEdit}) => {
+const AssignedOrderTable = ({items, handleExecute}) => {
 
     return (
         <>
@@ -38,12 +38,9 @@ const AssignedOrderTable = ({items, handleUnAssign, handleEdit}) => {
                                 <td>{dateFormat(item.dueDate)}</td>
                                 <td>
                                     <div className="buttons">
-                                        <button className="btn-table edit" onClick={() => handleEdit(item)}>
-                                            <i className="bi bi-pencil-square"></i>
-                                        </button>
                                         <button type="button" className="btn btn-outline-warning"
-                                                onClick={() => handleUnAssign(item)}>
-                                            Un Assign
+                                                onClick={() => handleExecute(item)}>
+                                            Execute
                                         </button>
                                     </div>
                                 </td>

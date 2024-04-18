@@ -1,4 +1,4 @@
-// ./Backend/routes/coordinator/FruitTypeRoute.js
+// D:\FreshRoute\MERN_Project\Backend\routes\coordinator\FruitTypeRoute.js
 const router = require("express").Router();
 const FruitTypeCtrl = require("../../controllers/coordinator/FruitTypeCtrl");
 

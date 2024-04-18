@@ -20,8 +20,8 @@ function OrderExecutionForm({show, onHide, formData}) {
             setQuantity(0);
             setInvalidQuantity(false);
             setSupplier(null);
-            setExecutionDetails([]);
-            setTotalFiledQuantity(0);
+            setExecutionDetails(formData.executionHistory);
+            setTotalFiledQuantity(formData.filledQuantity);
             getSupplierList();
         }
     }, [show]);
@@ -127,7 +127,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         const updatedSupplierList = supplierList.map((sp) => {
             if (sp._id === item.supplierId) {
                 const newQty = parseFloat(sp.quantity) + parseFloat(item.quantity);
-                if (supplier.supplierId === item.supplierId) {
+                if (supplier && supplier.supplierId === item.supplierId) {
                     setSupplier({...supplier, quantity:newQty})
                 }
                 return {...sp, quantity: newQty}
@@ -172,7 +172,6 @@ function OrderExecutionForm({show, onHide, formData}) {
         }
         try {
             const response = await axios.post("/op/executeOrder", data);
-            alert("Success");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
