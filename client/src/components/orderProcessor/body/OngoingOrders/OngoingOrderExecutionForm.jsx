@@ -172,7 +172,6 @@ function OrderExecutionForm({show, onHide, formData}) {
         }
         try {
             const response = await axios.post("/op/executeOrder", data);
-            alert("Success");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);

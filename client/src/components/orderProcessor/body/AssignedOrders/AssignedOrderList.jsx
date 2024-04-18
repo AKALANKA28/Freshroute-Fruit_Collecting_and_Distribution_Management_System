@@ -13,7 +13,6 @@ const AssignedOrderList = () => {
 
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
     const [formData, setFormData] = useState({ });
 
 
@@ -23,6 +22,12 @@ const AssignedOrderList = () => {
     useEffect(() => {
         getOrderList();  // load data initially
     }, []);
+
+    useEffect(() => {
+        if (!showPopup) {
+            getOrderList();
+        }
+    }, [showPopup]);
 
     const getOrderList = async () => {
         try {
@@ -40,9 +45,6 @@ const AssignedOrderList = () => {
 
     };
 
-    const handleSubmit = async()=>{
-        getOrderList();
-    }
 
     const handleSearchOnClick = async (filterData) => {
         try {
@@ -72,25 +74,8 @@ const AssignedOrderList = () => {
             opName: item.opName
         })
         setShowPopup(true);
-        setIsEdit(false);
     };
 
-    const handleEdit = (item) =>{
-        setFormData({
-            orderId: item._id,
-            fruit: item.fruit,
-            category: item.category,
-            quality: item.quality,
-            quantity: item.quantity,
-            customer: item.customerName,
-            placedDate: item.placedDate,
-            dueDate: item.dueDate,
-            opId: item.opId,
-            opName: item.opName
-        })
-        setShowPopup(true);
-        setIsEdit(true);
-    };
 
     return (
         <main className='main' id='main'>
