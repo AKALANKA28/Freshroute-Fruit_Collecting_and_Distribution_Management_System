@@ -57,7 +57,7 @@ const AssignedOrderList = () => {
         }
     }
 
-    const handleUnAssign = (item) =>{
+    const handleExecute = (item) =>{
         setFormData({
             id: item._id,
             orderId: item.orderId,
@@ -167,7 +167,7 @@ const AssignedOrderList = () => {
                                 />
                             </div>
                             <div className="scrollable-content-x">
-                                <AssignedOrderTable items={items} updateTable={getOrderList} handleUnAssign={handleUnAssign} handleEdit={handleEdit}/>
+                                <AssignedOrderTable items={items} updateTable={getOrderList} handleExecute={handleExecute}/>
                             </div>
                         </div>
                         <div>
