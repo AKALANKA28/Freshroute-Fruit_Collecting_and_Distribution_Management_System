@@ -10,24 +10,6 @@ const dateFormat = (dateString) => {
 
 const OngoingOrderTable = ({items, handleExecute}) => {
 
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/quality/delete/${id}`);
-            updateQualityList();
-            alert('Successfully Deleted');
-
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.error) {
-                alert(error.response.data.error);
-            } else {
-                alert("An error occurred while deleting the quality record");
-            }
-        }
-    };
-
-    const handleEdit = (itemData) => {
-        editItem(itemData);
-    }
     return (
         <>
             <div>
