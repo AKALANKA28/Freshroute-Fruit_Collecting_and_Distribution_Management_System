@@ -1,11 +1,7 @@
-const mockController = require("./mockController")
 const MockOrderDetail = require("../../models/q_and_o/MockOrderDetail");
 const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
 
-//temp
-exports.addToMock = async (req, res) => {
-    await mockController.addMockOrder(req, res);
-};
+
 
 exports.getSupplierList = async (req, res) => {
     try {
