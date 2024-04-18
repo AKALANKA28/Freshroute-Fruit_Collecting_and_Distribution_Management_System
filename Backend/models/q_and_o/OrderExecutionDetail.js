@@ -48,7 +48,11 @@ const OrderExecutionDetailSchema = mongoose.Schema({
         required: true,
         default: "ASSIGNED",
     },
-    executionHistory:[{}]
+    executionHistory:[{}],
+    filledQuantity: {
+        type: Number,
+        default: 0
+    }
    
 });
 

@@ -69,7 +69,9 @@ const OngoingOrderList = () => {
             placedDate: item.placedDate,
             dueDate: item.dueDate,
             opId: item.opId,
-            opName: item.opName
+            opName: item.opName,
+            executionHistory: item.executionHistory,
+            filledQuantity: item.filledQuantity,
         })
         setShowPopup(true);
         setIsEdit(false);

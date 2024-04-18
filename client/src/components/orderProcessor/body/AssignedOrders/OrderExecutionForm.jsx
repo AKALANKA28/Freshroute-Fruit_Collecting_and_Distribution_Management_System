@@ -159,11 +159,16 @@ function OrderExecutionForm({show, onHide, formData}) {
 
     const handleSaveExecution = async (event) =>{
         event.preventDefault();
+        let status = "IN_PROGRESS"
+        if (parseFloat(totalFilledQuantity) === parseFloat(formData.quantity)) {
+            status = "COMPLETED"
+        }
         const data= {
             id: formData.id,
             orderId: formData.orderId,
             executionDetails: executionDetails,
-            status:"IN_PROGRESS"
+            status:status,
+            filledQuantity: totalFilledQuantity
         }
         try {
             const response = await axios.post("/op/executeOrder", data);
