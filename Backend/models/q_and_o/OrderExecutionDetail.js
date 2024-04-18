@@ -9,6 +9,10 @@ const OrderExecutionDetailSchema = mongoose.Schema({
         type : String,
         required: true,   
     },
+    fruit:{
+        type : String,
+        required: true,
+    },
     opId : {
         type : String,
         required: true,

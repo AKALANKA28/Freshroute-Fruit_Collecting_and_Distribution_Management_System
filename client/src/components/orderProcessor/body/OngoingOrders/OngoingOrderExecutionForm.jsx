@@ -127,7 +127,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         const updatedSupplierList = supplierList.map((sp) => {
             if (sp._id === item.supplierId) {
                 const newQty = parseFloat(sp.quantity) + parseFloat(item.quantity);
-                if (supplier.supplierId === item.supplierId) {
+                if (supplier && supplier.supplierId === item.supplierId) {
                     setSupplier({...supplier, quantity:newQty})
                 }
                 return {...sp, quantity: newQty}
