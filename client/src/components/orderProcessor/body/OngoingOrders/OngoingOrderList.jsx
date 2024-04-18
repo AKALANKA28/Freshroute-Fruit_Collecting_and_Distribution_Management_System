@@ -1,20 +1,20 @@
-import React,{useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import '../OrderList.css'
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import SearchBar from '../SearchBar'
 import axios from 'axios';
-import OrderExecutionForm from "./OrderExecutionForm";
-import AssignedOrderTable from "./AssignedOrderTable";
-axios.defaults.baseURL = "http://localhost:8070/";
+import OngoingOrderTable from "./OngoingOrderTable";
+import OngoingOrderExecutionForm from "./OngoingOrderExecutionForm";
 
-const AssignedOrderList = () => {
+axios.defaults.baseURL = "http://localhost:8070/";
+const OngoingOrderList = () => {
 
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [formData, setFormData] = useState({ });
+    const [formData, setFormData] = useState({});
 
 
     const handleClosePopup = () => setShowPopup(false);
@@ -26,7 +26,7 @@ const AssignedOrderList = () => {
 
     const getOrderList = async () => {
         try {
-            const response = await axios.get("/op/pendingOrderList");
+            const response = await axios.get("/op/ongoingOrderList");
             const responseData = response.data;
             setItems(responseData);
 
@@ -40,7 +40,7 @@ const AssignedOrderList = () => {
 
     };
 
-    const handleSubmit = async()=>{
+    const handleSubmit = async () => {
         getOrderList();
     }
 
@@ -57,7 +57,7 @@ const AssignedOrderList = () => {
         }
     }
 
-    const handleExecute = (item) =>{
+    const handleExecute = (item) => {
         setFormData({
             id: item._id,
             orderId: item.orderId,
@@ -75,7 +75,7 @@ const AssignedOrderList = () => {
         setIsEdit(false);
     };
 
-    const handleEdit = (item) =>{
+    const handleEdit = (item) => {
         setFormData({
             orderId: item._id,
             fruit: item.fruit,
@@ -102,13 +102,13 @@ const AssignedOrderList = () => {
                         <div className="page-header">
                             <div className="add-item d-flex">
 
-                              {/* --------------------------table name ---------------------------*/}
+                                {/* --------------------------table name ---------------------------*/}
                                 <div className="card-title">Assigned Order Details
                                     <h6>Manage Order Processors</h6>
                                 </div>
                             </div>
 
-                          {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
+                            {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
                             <ul className="table-top-head">
                                 <li>
                                     <div className="button-container">
@@ -133,45 +133,46 @@ const AssignedOrderList = () => {
                                 </li>
                             </ul>
 
-                          {/* --------------------imported search bar and table data ------------------------*/}
+                            {/* --------------------imported search bar and table data ------------------------*/}
                         </div>
                         <div className="w-100">
                             <div className="w-25"></div>
-                            <div className="text-end" style={{marginRight:'30px'}}>
+                            <div className="text-end" style={{marginRight: '30px'}}>
                                 <SearchBar enableFilterType={true}
-                                     filterColumns={
-                                         [
-                                             {
-                                                 name: "Fruit Type",
-                                                 tag: "fruit"
-                                             },
-                                             {
-                                                 name: "Fruit Category",
-                                                 tag: "category"
-                                             },
-                                             {
-                                                 name: "Grade",
-                                                 tag: "quality"
-                                             },
-                                             {
-                                                 name: "Quality Description",
-                                                 tag: "qualityDesc"
-                                             },
-                                             {
-                                                 name: "Storage Conditions",
-                                                 tag: "storageCond"
-                                             }
-                                         ]
-                                     }
-                                     handleSearch={handleSearchOnClick}
+                                           filterColumns={
+                                               [
+                                                   {
+                                                       name: "Fruit Type",
+                                                       tag: "fruit"
+                                                   },
+                                                   {
+                                                       name: "Fruit Category",
+                                                       tag: "category"
+                                                   },
+                                                   {
+                                                       name: "Grade",
+                                                       tag: "quality"
+                                                   },
+                                                   {
+                                                       name: "Quality Description",
+                                                       tag: "qualityDesc"
+                                                   },
+                                                   {
+                                                       name: "Storage Conditions",
+                                                       tag: "storageCond"
+                                                   }
+                                               ]
+                                           }
+                                           handleSearch={handleSearchOnClick}
                                 />
                             </div>
                             <div className="scrollable-content-x">
-                                <AssignedOrderTable items={items} updateTable={getOrderList} handleExecute={handleExecute}/>
+                                <OngoingOrderTable items={items} updateTable={getOrderList}
+                                                    handleExecute={handleExecute}/>
                             </div>
                         </div>
                         <div>
-                            <OrderExecutionForm
+                            <OngoingOrderExecutionForm
                                 show={showPopup}
                                 onHide={handleClosePopup}
                                 formData={formData}
@@ -183,4 +184,4 @@ const AssignedOrderList = () => {
         </main>
     )
 }
-export default AssignedOrderList;
+export default OngoingOrderList
