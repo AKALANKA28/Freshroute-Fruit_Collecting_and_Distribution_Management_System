@@ -22,6 +22,7 @@ const AssignedOrderTable = ({ items, handleUnAssign, handleEdit }) => {
               <th className="col">Quantity</th>
               <th className="col date-field">Placed Date</th>
               <th className="col date-field">Due Date</th>
+              <th className="col">Order Processor</th>
               <th className="col">Action</th>
             </tr>
           </thead>
@@ -36,6 +37,7 @@ const AssignedOrderTable = ({ items, handleUnAssign, handleEdit }) => {
                   <td >{item.quantity}</td>
                   <td >{dateFormat(item.placedDate)}</td>
                   <td >{dateFormat(item.dueDate)}</td>
+                  <td>{item.opName}</td>
                   <td>
                     <div className="buttons">
                       <button className="btn-table edit" onClick={() => handleEdit(item)}>

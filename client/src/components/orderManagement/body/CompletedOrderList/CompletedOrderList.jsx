@@ -136,6 +136,10 @@ const CompletedOrderList = () => {
                                             {
                                                 name: "Due Date",
                                                 tag: "dueDate"
+                                            },
+                                            {
+                                                name: "Order Processor",
+                                                tag: "opName"
                                             }
                                          ]
                                      }
