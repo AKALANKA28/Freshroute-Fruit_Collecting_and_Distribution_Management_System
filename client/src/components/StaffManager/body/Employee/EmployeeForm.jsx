@@ -1,6 +1,105 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
 
-const EmployeeForm =  ({ handleSubmit, initialData }) => {
+// axios.defaults.baseURL = "http://localhost:8070/";
+
+// const EmployeeForm =  ({ handleSubmit, initialData }) => {
+
+//   const [dataList, setDataList] = useState([]);
+
+//   useEffect(() => {
+//     getFetchData();
+//   }, []);
+
+//   const getFetchData = async () => {
+//     try {
+//       const response = await axios.get("/Salary/");
+//       setDataList(response.data);
+//     } catch (err) {
+//       alert(err.message);
+//     }
+//   };
+
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     jobrole: "",
+//     nic: "",
+//     address: "",
+//     email: "",
+//     accno: "",
+//     bankname: "",
+//     qualifications: "",
+//     joineddate: "",
+//   });
+
+//   useEffect(() => {
+//     if (initialData) {
+//       setFormData(initialData);
+//     }
+//   }, [initialData]);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       [name]: value
+//     }));
+//   };
+
+//   const handleFormSubmit = (e) => {
+//     e.preventDefault();
+//     handleSubmit(formData);
+//   };
+
+//   useEffect(() => {
+//     const getCurrentDate = () => {
+//       const now = new Date();
+//       const year = now.getFullYear();
+//       const month = String(now.getMonth() + 1).padStart(2, '0');
+//       const day = String(now.getDate()).padStart(2, '0');
+//       return `${year}-${month}-${day}`;
+//     };
+//     setFormData(prevState => ({
+//       ...prevState,
+//       joineddate: getCurrentDate()
+//     }));
+//   }, []);
+
+//   return (
+//       <form onSubmit={handleFormSubmit}>
+
+//         
+//         <button type="submit" className="btn btn-success">
+//           Submit
+//         </button>
+//       </form>
+    
+//   );
+// };
+
+// export default EmployeeForm;
+
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:8070/";
+
+const EmployeeForm = ({ handleSubmit, initialData }) => {
+  const [dataList, setDataList] = useState([]);
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  const getFetchData = async () => {
+    try {
+      const response = await axios.get("/Salary/");
+      setDataList(response.data);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +123,7 @@ const EmployeeForm =  ({ handleSubmit, initialData }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -33,13 +132,30 @@ const EmployeeForm =  ({ handleSubmit, initialData }) => {
     handleSubmit(formData);
   };
 
+  useEffect(() => {
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+    setFormData((prevState) => ({
+      ...prevState,
+      joineddate: getCurrentDate(),
+    }));
+  }, []);
+
   return (
-      <form onSubmit={handleFormSubmit}>
-        <div className="mb-3">
+    <form onSubmit={handleFormSubmit}>
+      <div className="row">
+        <div className="col-md-6">
+          {/* Left section of the form */}
+                   <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Employee Name
-          </label>
-          <input
+           </label>
+           <input
             type="text"
             className="form-control"
             name="name"
@@ -52,17 +168,26 @@ const EmployeeForm =  ({ handleSubmit, initialData }) => {
 
         <div className="mb-3">
           <label htmlFor="jobrole" className="form-label">
-            Job Role
+            Job role
           </label>
-          <input
-            type="text"
-            className="form-control"
+          <select
+            className="form-select"
             name="jobrole"
-            placeholder="Job Role"
             onChange={handleChange}
             value={formData.jobrole}
             required
-          />
+          >
+            <option value="">Select Job Role</option>
+            {dataList.length ? (
+              dataList.map((emp, index) => (
+                <option key={index} value={emp.jobrole}>
+                  {emp.jobrole}
+                </option>
+              ))
+            ) : (
+              <option value="">No Job Roles</option>
+            )}
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="nic" className="form-label">
@@ -106,11 +231,17 @@ const EmployeeForm =  ({ handleSubmit, initialData }) => {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="accno" className="form-label">
-            Account Number
-          </label>
-          <input
+
+         
+        </div>
+        <div className="col-md-6">
+          {/* Right section of the form */}
+          
+          <div className="mb-3">
+           <label htmlFor="accno" className="form-label">
+             Account Number
+           </label>
+           <input
             type="number"
             className="form-control"
             name="accno"
@@ -162,11 +293,16 @@ const EmployeeForm =  ({ handleSubmit, initialData }) => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-success">
-          Submit
-        </button>
-      </form>
-    
+        
+        </div>
+      </div>
+      
+      <div className="d-flex justify-content-center">
+  <button type="submit" className="btn btn-success">
+    Submit
+  </button>
+</div>
+    </form>
   );
 };
 
