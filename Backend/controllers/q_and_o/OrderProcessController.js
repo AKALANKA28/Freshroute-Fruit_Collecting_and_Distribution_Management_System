@@ -1,6 +1,6 @@
 const mockController = require("./mockController")
-const Order = require('../../models/q_and_o/OrderExecutionDetail');
 const MockOrderDetail = require("../../models/q_and_o/MockOrderDetail");
+const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
 
 //temp
 exports.addToMock = async (req, res) => {
@@ -103,10 +103,35 @@ const createFilterFromRequest = (req) => {
 
 const getOrderListByFilter = async (res, filter) => {
     try {
-        const pendingOrderList = await Order.find(filter);
+        const pendingOrderList = await OrderExecutionDetail.find(filter);
         res.json(pendingOrderList);
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 }
+
+exports.executeOrder = async (req, res) => {
+    const { orderId, executionDetails, status, id } = req.body;
+    console.log(executionDetails);
+    await MockOrderDetail.findByIdAndUpdate(orderId, {
+        $set: {
+            status:status
+        }
+    });
+
+    const executionOrders = await OrderExecutionDetail.find({ orderId:orderId});
+    // console.log(executionOrders);
+    const updatedOrder = await OrderExecutionDetail.findByIdAndUpdate(id, {
+        $set: {
+            executionHistory: executionDetails,
+            orderStatus: status
+        }
+    })
+
+    if (updatedOrder) {
+        res.json(updatedOrder)
+    } else {
+        res.status(400).json({ message: 'Invalid execution' });
+    }
+};

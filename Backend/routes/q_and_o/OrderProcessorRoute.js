@@ -17,4 +17,8 @@ router.post("/pendingOrderList", orderProcessController.getAssignedOrderListByFi
 router.post("/ongoingOrderList", orderProcessController.getOngoingOrderListByFilter);
 router.post("/completedOrderList", orderProcessController.getCompletedOrderListByFilter);
 
+
+router.post("/executeOrder", orderProcessController.executeOrder);
+
+
 module.exports = router;

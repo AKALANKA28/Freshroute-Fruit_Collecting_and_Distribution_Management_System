@@ -157,10 +157,24 @@ function OrderExecutionForm({show, onHide, formData}) {
     }
 
 
-    const handleSaveExecution = (event) =>{
+    const handleSaveExecution = async (event) =>{
         event.preventDefault();
-        //supplier should update
-        //execution record
+        const data= {
+            id: formData.id,
+            orderId: formData.orderId,
+            executionDetails: executionDetails,
+            status:"IN_PROGRESS"
+        }
+        try {
+            const response = await axios.post("/op/executeOrder", data);
+            alert("Success");
+        } catch (err) {
+            if (err.response && err.response.data && err.response.data.error) {
+                alert(err.response.data.error);
+            } else {
+                alert("An error occurred while adding");
+            }
+        }
         onHide();
     }
 

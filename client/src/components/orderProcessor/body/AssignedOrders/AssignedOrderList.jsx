@@ -16,11 +16,6 @@ const AssignedOrderList = () => {
     const [isEdit, setIsEdit] = useState(false);
     const [formData, setFormData] = useState({ });
 
-    const handleOnInputChange = (event) => {
-        const { opName, opId } = event.target;
-        setFormData( (prevState) =>{ return {...prevState, opName: opName, opId: opId}})
-        console.log(formData)
-    };
 
     const handleClosePopup = () => setShowPopup(false);
 
@@ -31,7 +26,7 @@ const AssignedOrderList = () => {
 
     const getOrderList = async () => {
         try {
-            const response = await axios.get("/om/ongoingOrderList");
+            const response = await axios.get("/op/pendingOrderList");
             const responseData = response.data;
             setItems(responseData);
 
@@ -64,7 +59,8 @@ const AssignedOrderList = () => {
 
     const handleUnAssign = (item) =>{
         setFormData({
-            orderId: item._id,
+            id: item._id,
+            orderId: item.orderId,
             fruit: item.fruit,
             category: item.category,
             quality: item.quality,

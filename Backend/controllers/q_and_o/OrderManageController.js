@@ -119,6 +119,7 @@ exports.assignOrder = async (req, res) => {
             orderId: orderId,
             opName : opName,
             opId : opId,
+            fruit: order.fruit,
             customer : order.customerName,
             category: order.category,
             quality: order.quality,
