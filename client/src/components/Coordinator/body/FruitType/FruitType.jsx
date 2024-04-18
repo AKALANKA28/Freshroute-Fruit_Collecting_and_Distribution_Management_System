@@ -1,3 +1,4 @@
+//D:\FreshRoute\MERN_Project\client\src\components\Coordinator\body\FruitType\FruitType.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -21,6 +22,7 @@ function FruitType() {
   const [dataList, setDataList] = useState([]);
   const [selectedFruitType, setSelectedFruitType] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
+  
 
   useEffect(() => {
     getFetchData();
@@ -106,7 +108,7 @@ function FruitType() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/FruitType/add", formData);
+      await axios.post("/FruitType/add", { ...formData, imageUrl: formData.imageUrl });
       alert("Fruit Type Added");
       handleAddModalClose();
       getFetchData();
@@ -114,10 +116,10 @@ function FruitType() {
       alert(err.message);
     }
   };
-
+  
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/FruitType/update/${formData._id}`, formData);
+      await axios.put(`/FruitType/update/${formData._id}`, { ...formData, imageUrl: formData.imageUrl });
       alert("Fruit Type Updated");
       handleEditModalClose();
       getFetchData();
@@ -226,6 +228,7 @@ function FruitType() {
 
           <thead className="table-light">
             <tr>
+            <th scope="col">Image</th>
               <th scope="col">Name</th>
               <th scope="col">Date</th>
               <th scope="col" >Description</th>
@@ -234,13 +237,22 @@ function FruitType() {
           </thead>
           <tbody>
           {filteredDataList.length ? (
-                  filteredDataList.map((fruitType) => (
-                <tr key={fruitType._id}>
-                  <td>{fruitType.name}</td>
-                  <td>{fruitType.date}</td>
-                  <td className="description">{fruitType.description}</td>
-                  <td>
-                    <div className="buttons">
+  filteredDataList.map((fruitType) => (
+    <tr key={fruitType._id}>
+      <td>
+        {fruitType.imageUrl && (
+          <img
+            src={fruitType.imageUrl}
+            alt="Fruit Image"
+            style={{ width: "50px", height: "50px" }}
+          />
+        )}
+      </td>
+      <td>{fruitType.name}</td>
+      <td>{fruitType.date}</td>
+      <td className="description">{fruitType.description}</td>
+      <td>
+        <div className="buttons">
                       <button
                         className="btn btn-edit"
                         onClick={() =>handleEditModalOpen(fruitType)}

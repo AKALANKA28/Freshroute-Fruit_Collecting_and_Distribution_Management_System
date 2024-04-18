@@ -1,11 +1,46 @@
 import React, { useState, useEffect } from "react";
+import storage from "../../../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const FruitTypeForm = ({ handleSubmit, initialData }) => {
+  const [img, setImg] = useState(undefined);
+  const [imgPerc, setImgPerc] = useState(0);
   const [formData, setFormData] = useState({
+    imageUrl: "",
     name: "",
     date: "",
     description: ""
   });
+
+  useEffect(() => {
+    img && uploadFile(img, "imageUrl");
+  }, [img]);
+
+  const uploadFile = (file, fileType) => {
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, 'images/' + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImgPerc(Math.round(progress));
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('DownloadURL - ', downloadURL);
+          setFormData((prev) => ({
+            ...prev,
+            [fileType]: downloadURL
+          }));
+        });
+      }
+    );
+  };
 
   useEffect(() => {
     if (initialData) {
@@ -26,7 +61,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
       ...prevState,
       date: getCurrentDate()
     }));
-  }, []); // Empty dependency array to run only once after the component mounts
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +78,17 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
 
   return (
     <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+        <label htmlFor="imageUrl" className="form-label">{imgPerc > 0 && "Uploading: "+ imgPerc+ "%"}
+          Image
+        </label>
+        <input
+         type="file"
+          className="form-control"
+          name="imageUrl"
+         onChange={(e) => setImg(e.target.files[0])}
+/>
+      </div>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Fruit Name
