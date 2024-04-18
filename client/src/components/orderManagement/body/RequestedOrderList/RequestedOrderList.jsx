@@ -76,7 +76,7 @@ const RequestedOrderList = () => {
 
     const handleSearchOnClick = async (filterData) => {
         try {
-            const response = await axios.post("/om/quality/filteredQualities", filterData);
+            const response = await axios.post("/om/PendingOrderList", filterData);
             setItems(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -152,26 +152,26 @@ const RequestedOrderList = () => {
                                 <SearchBar enableFilterType={true}
                                      filterColumns={
                                          [
-                                             {
-                                                 name: "Fruit Type",
-                                                 tag: "fruit"
-                                             },
-                                             {
-                                                 name: "Fruit Category",
-                                                 tag: "category"
-                                             },
-                                             {
-                                                 name: "Grade",
-                                                 tag: "quality"
-                                             },
-                                             {
-                                                 name: "Quality Description",
-                                                 tag: "qualityDesc"
-                                             },
-                                             {
-                                                 name: "Storage Conditions",
-                                                 tag: "storageCond"
-                                             }
+                                            {
+                                                name: "Fruit Type",
+                                                tag: "fruit"
+                                            },
+                                            {
+                                                name: "Fruit Category",
+                                                tag: "category"
+                                            },
+                                            {
+                                                name: "Quality",
+                                                tag: "quality"
+                                            },
+                                            {
+                                                name: "Placed Date",
+                                                tag: "placedDate"
+                                            },
+                                            {
+                                                name: "Due Date",
+                                                tag: "dueDate"
+                                            }
                                          ]
                                      }
                                      handleSearch={handleSearchOnClick}

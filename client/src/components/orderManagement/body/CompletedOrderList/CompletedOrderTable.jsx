@@ -22,7 +22,7 @@ const CompletedOrderTable = ({ items, handleView }) => {
               <th className="col">Quantity</th>
               <th className="col date-field">Placed Date</th>
               <th className="col date-field">Due Date</th>
-              <th className="col">Order Processor Name</th>
+              <th className="col">Order Processor</th>
               <th className="col">Action</th>
             </tr>
             </thead>

@@ -78,7 +78,7 @@ const AssignedOrderList = () => {
 
     const handleSearchOnClick = async (filterData) => {
         try {
-            const response = await axios.post("/om/quality/filteredQualities", filterData);
+            const response = await axios.post("/om/OngoingOrderList", filterData);
             setItems(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -181,16 +181,20 @@ const AssignedOrderList = () => {
                                                  tag: "category"
                                              },
                                              {
-                                                 name: "Grade",
+                                                 name: "Quality",
                                                  tag: "quality"
                                              },
                                              {
-                                                 name: "Quality Description",
-                                                 tag: "qualityDesc"
+                                                 name: "Placed Date",
+                                                 tag: "placedDate"
                                              },
                                              {
-                                                 name: "Storage Conditions",
-                                                 tag: "storageCond"
+                                                 name: "Due Date",
+                                                 tag: "dueDate"
+                                             },
+                                             {
+                                                 name: "Order Processor",
+                                                 tag: "opName"
                                              }
                                          ]
                                      }
