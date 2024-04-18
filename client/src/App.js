@@ -39,7 +39,7 @@ import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupp
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
-import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
 import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
 import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
 

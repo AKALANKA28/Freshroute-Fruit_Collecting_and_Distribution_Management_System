@@ -1,3 +1,15 @@
+#main{
+    margin-top: 95px;
+    padding: 20px 30px;
+    transition: all 0.3s;
+}
+
+
+@media(max-width: 1199px){
+    #main{
+        padding: 0px;
+    }
+}
 
 .body .recent-sales{
     font-size: 14px;
@@ -33,7 +45,7 @@
     padding: 8px;
     /* border: 1px solid #ddd; */
     width: 100px;
-  }
+}
 
 .page-header {
     display: flex;
@@ -72,7 +84,7 @@
 }
 
 .btn-secondary {
-    
+
     background: var(--primaryColor);
     border: 0px;
     color: #FFFFFF;
@@ -91,7 +103,7 @@
 }
 
 .table-top-head {
-    
+
     display: flex;
     align-items: center;
     -webkit-box-align: center;
@@ -105,7 +117,7 @@
     .page-header h6 {
         font-size: 12px;
     }
-}    
+}
 .page-header .card-title h6 {
     font-size: 14px;
     color: #495057;
@@ -125,7 +137,7 @@
 
 .btn-table {
     border: none;
-    padding: 5px 10px; 
+    padding: 5px 10px;
     background: #FFFFFF;
     border: 1px solid #DDDDDD;
     border-radius: 10px;
@@ -187,4 +199,27 @@
 
 .search-form i{
     color: #012970;
+}
+
+.tab-height {
+    height: 45px!important;
+}
+.tab-height:hover {
+    border-bottom: 0;
+}
+
+.scrollable-content-y {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.scrollable-content-x {
+    max-height: 90%;
+    overflow-x: auto;
+}
+
+.date-field {
+    min-width: 120px;
 }
