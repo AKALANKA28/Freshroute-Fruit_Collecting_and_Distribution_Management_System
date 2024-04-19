@@ -3,53 +3,48 @@ import axios from 'axios';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
+const dateFormat = (dateString) => {
+  const date = new Date(dateString);
+  return  date.toLocaleString();
+}
 
-const CompletedOrderTable = ({ items, updateQualityList, editItem }) => {
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/quality/delete/${id}`);
-      updateQualityList();
-      alert('Successfully Deleted');
-
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error);
-      } else {
-        alert("An error occurred while deleting the quality record");
-      }
-    }
-  };
-
-  const handleEdit = (itemData) => {
-    editItem(itemData);
-  }
+const CompletedOrderTable = ({ items, handleView }) => {
 
   return (
-    <>
-      <div>
-        <table className="table table-bordeless datatable">
-          <thead className="table-light">
+      <>
+        <div>
+          <table className="table table-bordeless datatable">
+            <thead className="table-light">
             <tr>
-              <th className="col">Customer</th>
+              <th className="col">Fruit Type</th>
               <th className="col">Fruit Category</th>
               <th className="col">Quality</th>
-              <th className="col">Required Quantity</th>
-              <th className="col">Placed Date</th>
-              <th className="col">Due Date</th>
-              <th className="col">Supplier</th>
+              <th className="col">Quantity</th>
+              <th className="col date-field">Placed Date</th>
+              <th className="col date-field">Due Date</th>
+              <th className="col">Order Processor</th>
+              <th className="col">Action</th>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             {items &&
               items.length > 0 &&
               items.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.fruitCategory}</td>
-                  <td>{item.grade}</td>
-                  <td >{item.qualityDesc}</td>
-                  <td >{item.storageCond}</td>
-                  <td></td>
+                  <td>{item.fruit}</td>
+                  <td>{item.category}</td>
+                  <td>{item.quality}</td>
+                  <td >{item.quantity}</td>
+                  <td >{dateFormat(item.placedDate)}</td>
+                  <td >{dateFormat(item.dueDate)}</td>
+                  <td>{item.opName}</td>
+                  <td>
+                    <div className="buttons">
+                      <button type="button" className="btn btn-outline-warning" onClick={() => handleView(item)}>
+                        <i className="bi bi-arrow-up-right-square"></i>
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
           </tbody>

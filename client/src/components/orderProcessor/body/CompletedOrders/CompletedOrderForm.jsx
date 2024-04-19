@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import "./OrderList.css"
+import "../OrderList.css"
 import axios from "axios";
 
-function OrderAssignForm({ show, onHide, formData }) {
+function CompletedOrderForm({ show, onHide, formData }) {
 
     return (
         <Modal show={show} onHide={onHide}>
@@ -58,4 +58,4 @@ function OrderAssignForm({ show, onHide, formData }) {
     );
 }
 
-export default OrderAssignForm;
+export default CompletedOrderForm;
