@@ -80,26 +80,26 @@ function Employee() {
   };
 
   const handleAddSubmit = async (formData) => {
-    try {
-      await axios.post("/Employee/add", formData);
-      alert("Employee Added");
-      handleAddModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  try {
+    const response = await axios.post("/Employee/add", formData);
+    alert("Employee Added");
+    handleAddModalClose();
+    getFetchData();
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
-  const handleEditSubmit = async (formData) => {
-    try {
-      await axios.put(`/Employee/update/${formData._id}`, formData);
-      alert("Employee Updated");
-      handleEditModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+const handleEditSubmit = async (formData) => {
+  try {
+    const response = await axios.put(`/Employee/update/${formData._id}`, formData);
+    alert("Employee Updated");
+    handleEditModalClose();
+    getFetchData();
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
   const [showReportModal, setShowReportModal] = useState(false);
 
@@ -192,6 +192,7 @@ function Employee() {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
+                <th scope="col">Image</th>
                   <th scope="col">Name</th>
                   <th scope="col">Job Role</th>
                   <th scope="col">NIC</th>
@@ -205,42 +206,58 @@ function Employee() {
                 </tr>
               </thead>
               <tbody>
-                {filteredDataList.length ? (
-                  filteredDataList.map((employee) => (
-                    <tr key={employee._id}>
-                      <td>{employee.name}</td>
-                      <td>{employee.jobrole}</td>
-                      <td>{employee.nic}</td>
-                      <td>{employee.address}</td>
-                      <td>{employee.email}</td>
-                      <td>{employee.accno}</td>
-                      <td>{employee.bankname}</td>
-                      <td>{employee.qualifications}</td>
-                      <td>{employee.joineddate}</td>
-                      <td>
-                        <div className="buttons">
-                          <button
-                            className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(employee)}
-                          >
-                            <i className="bi bi-pencil-square"></i>
-                          </button>
-                          <button
-                            className="btn btn-delete"
-                            onClick={() => handleDelete(employee._id)}
-                          >
-                            <i className="bi bi-trash-fill"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="10">No Data</td>
-                  </tr>
-                )}
-              </tbody>
+              {filteredDataList.length ? (
+  filteredDataList.map((employee) => (
+    <tr key={employee._id}>
+      <td>
+        {employee.imageUrl && (
+          <img
+            src={employee.imageUrl}
+            alt="Employee Profile"
+            className="rounded-circle"
+            style={{ width: "50px", height: "50px" }}
+          />
+        )}
+      </td>
+      <td>{employee.name}</td>
+      <td>{employee.jobrole}</td>
+      <td>{employee.nic}</td>
+      <td>{employee.address}</td>
+      <td>{employee.email}</td>
+      <td>{employee.accno}</td>
+      <td>{employee.bankname}</td>
+      <td>
+        {employee.fileUrl && (
+          <a href={employee.fileUrl} target="_blank" rel="noopener noreferrer">
+            View Qualifications
+          </a>
+        )}
+      </td>
+      <td>{employee.joineddate}</td>
+      <td>
+        <div className="buttons">
+          <button
+            className="btn btn-edit"
+            onClick={() => handleEditModalOpen(employee)}
+          >
+            <i className="bi bi-pencil-square"></i>
+          </button>
+          <button
+            className="btn btn-delete"
+            onClick={() => handleDelete(employee._id)}
+          >
+            <i className="bi bi-trash-fill"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  ))
+) : (
+  <tr>
+    <td colSpan="10">No Data</td>
+  </tr>
+)}
+</tbody>
             </table>
           </div>
         </div>
