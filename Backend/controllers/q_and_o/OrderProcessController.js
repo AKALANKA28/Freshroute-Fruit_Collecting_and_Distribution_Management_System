@@ -119,18 +119,18 @@ const getOrderListByFilter = async (res, filter) => {
 }
 
 exports.executeOrder = async (req, res) => {
-    const { orderId, executionDetails, status, id } = req.body;
+    const { orderId, executionDetails, status, id, filledQuantity } = req.body;
     await OrderDetail.findByIdAndUpdate(orderId, {
         $set: {
             status:status
         }
     });
 
-    const executionOrders = await OrderExecutionDetail.find({ orderId:orderId});
     const updatedOrder = await OrderExecutionDetail.findByIdAndUpdate(id, {
         $set: {
             executionHistory: executionDetails,
-            orderStatus: status
+            orderStatus: status,
+            filledQuantity: filledQuantity
         }
     })
 
