@@ -18,7 +18,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
 
   const uploadFile = (file, fileType) => {
     const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, 'images/' + fileName);
+    const storageRef = ref(storage, 'images/fruits/' + fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
