@@ -4,8 +4,7 @@ const requestschema = new mongoose.Schema({
 
     rname : {
         type : String,
-        required: true,
-        
+        required: true,  
     },
 
     fruit: {
@@ -19,7 +18,7 @@ const requestschema = new mongoose.Schema({
     },
 
     quantity: {
-        type: String,
+        type: Number,
         required: true,
     },
 
@@ -28,12 +27,17 @@ const requestschema = new mongoose.Schema({
         required: true,
     },
 
+    dueDate: {
+        type: Date,
+        required: true
+    },
+
     placedDate: {
         type: Date,
         required: true
     },
 
-    dueDate: {
+    assignedDate: {
         type: Date,
         required: true
     },

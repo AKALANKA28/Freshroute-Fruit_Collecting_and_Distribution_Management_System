@@ -41,7 +41,7 @@ import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
 import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrderList"
-import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
+// import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -270,10 +270,10 @@ const router = createBrowserRouter([
         path: "/OPDashboard/OngoingOrders",
         element: <OngoingOrder/>,
       },
-      {
-        path: "/OPDashboard/CompletedOrders",
-        element: <CompletedOrder/>,
-      },
+      // {
+      //   path: "/OPDashboard/CompletedOrders",
+      //   element: <CompletedOrder/>,
+      // },
 
     ]
   },

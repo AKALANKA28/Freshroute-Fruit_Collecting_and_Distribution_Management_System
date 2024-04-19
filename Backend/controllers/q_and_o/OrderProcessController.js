@@ -1,4 +1,4 @@
-const MockOrderDetail = require("../../models/q_and_o/MockOrderDetail");
+const OrderDetail = require("../../models/q_and_o/MockOrderDetail");
 const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
 
 
@@ -110,7 +110,7 @@ const getOrderListByFilter = async (res, filter) => {
 exports.executeOrder = async (req, res) => {
     const { orderId, executionDetails, status, id } = req.body;
     console.log(executionDetails);
-    await MockOrderDetail.findByIdAndUpdate(orderId, {
+    await OrderDetail.findByIdAndUpdate(orderId, {
         $set: {
             status:status
         }

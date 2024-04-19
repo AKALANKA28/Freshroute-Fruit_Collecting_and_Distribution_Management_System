@@ -1,4 +1,4 @@
-const MockOrderDetail = require("../../models/q_and_o/MockOrderDetail");
+const OrderDetail = require("../../models/q_and_o/MockOrderDetail");
 const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
 
 exports.getPendingOrderList = async (req, res) => {
@@ -76,7 +76,7 @@ const createFilterFromRequest = (req) => {
 
 const getOrderListByFilter = async (res, filter) => {
     try {
-        const pendingOrderList = await MockOrderDetail.find(filter);
+        const pendingOrderList = await OrderDetail.find(filter);
         res.json(pendingOrderList);
     } catch (err) {
         console.error(err);
@@ -104,7 +104,7 @@ exports.getOrderProcessorList = async (req, res) => {
 exports.assignOrder = async (req, res) => {
     const {orderId, opName, opId } = req.body;
     try {
-        const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
+        const order = await OrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "ASSIGNED",
                 opId : opId,
@@ -143,7 +143,7 @@ exports.assignOrder = async (req, res) => {
 exports.editAssignOrder = async (req, res) => {
     const {orderId, opName, opId } = req.body;
     try {
-        const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
+        const order = await OrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "ASSIGNED",
                 opId : opId,
@@ -174,7 +174,7 @@ exports.unAssignOrder = async (req, res) => {
 
 
     try {
-        const order = await MockOrderDetail.findByIdAndUpdate(orderId, {
+        const order = await OrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "PENDING",
             },

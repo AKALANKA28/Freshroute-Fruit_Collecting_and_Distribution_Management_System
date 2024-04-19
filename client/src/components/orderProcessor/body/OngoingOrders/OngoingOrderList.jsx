@@ -89,8 +89,8 @@ const OngoingOrderList = () => {
                             <div className="add-item d-flex">
 
                                 {/* --------------------------table name ---------------------------*/}
-                                <div className="card-title">Assigned Order Details
-                                    <h6>Manage Order Processors</h6>
+                                <div className="card-title">Ongoing Orders
+                                    <h6></h6>
                                 </div>
                             </div>
 
