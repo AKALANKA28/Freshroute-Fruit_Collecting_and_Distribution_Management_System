@@ -41,6 +41,11 @@ const MockOrderDetailSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    
+    assignedDate: {
+        type: Date,
+        required: true
+    },
 
     orderStatus: {   // PENDING  ASSIGNED IN_PROGRESS  COMPLETED
         type: String,
