@@ -44,7 +44,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         const selectedSupplier = supplierList.find(sp => sp._id === id);
         if (selectedSupplier) {
             setSupplier({
-                supplierName: selectedSupplier.name,
+                supplierName: selectedSupplier.supplierName,
                 supplierId: selectedSupplier._id,
                 quantity: selectedSupplier.quantity,
                 price: selectedSupplier.price
@@ -172,7 +172,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         }
         try {
             const response = await axios.post("/op/executeOrder", data);
-            alert("Success");
+            const  supResponse = await axios.post("/op/updateSupplierDetails", {supplierList: supplierList})
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -251,7 +251,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                             <option value="">Select Supplier</option>
                             {supplierList.map((sp, index) => (
                                 <option key={index} value={sp._id}>
-                                    Supplier: {sp.name} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
+                                    Supplier: {sp.supplierName} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
                                 </option>
                             ))}
                         </select>

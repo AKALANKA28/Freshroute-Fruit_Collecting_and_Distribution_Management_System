@@ -1,26 +1,37 @@
 const OrderDetail = require("../../models/q_and_o/MockOrderDetail");
 const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
-
+const AcceptedSupply = require("../../models/farmers/acceptedSupplies")
 
 
 exports.getSupplierList = async (req, res) => {
     try {
         const { fruit, category, quality } = req.body;
-        // const filter = { fruit:fruit, category:category, quality:quality}
-        // const supplierList = await Supplier.find(filter);
-        const supplierList ={
-            supplierList:[
-                {_id: "1", name:"AA", quantity: 1000, price: 100},
-                {_id: "2", name:"BB", quantity: 500, price: 100},
-                {_id: "3", name:"CC", quantity: 5000, price: 100},
-                {_id: "4", name:"DD", quantity: 785, price: 100},
-                {_id: "5", name:"EE", quantity: 3689, price: 100},
-            ]
-        }
+        const filter = { fruit:fruit, category:category, quality:quality}
+        const supplierList = await AcceptedSupply.find(filter);
         res.json(supplierList);
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error retrieving orders", error: err.message });
+    }
+};
+
+exports.updateSuppliers = async (req, res) => {
+    try {
+        const { supplierList } = req.body;
+        if (supplierList) {
+            supplierList.map((supplier)=>{
+                AcceptedSupply.findByIdAndUpdate(supplier._id,{
+                    $set:{
+                        quantity: supplier.quantity
+                    }
+                })
+            })
+            res.status(200).json({status: "Quantity successfully updated"})
+        } else {
+            res.status(200).json({status: "There are no records to update"})
+        }
+    } catch (err) {
+        res.status(500).json({ status: "Error occurred while updating supplier quantity", error: err.message });
     }
 };
 
@@ -109,7 +120,6 @@ const getOrderListByFilter = async (res, filter) => {
 
 exports.executeOrder = async (req, res) => {
     const { orderId, executionDetails, status, id } = req.body;
-    console.log(executionDetails);
     await OrderDetail.findByIdAndUpdate(orderId, {
         $set: {
             status:status
@@ -117,7 +127,6 @@ exports.executeOrder = async (req, res) => {
     });
 
     const executionOrders = await OrderExecutionDetail.find({ orderId:orderId});
-    // console.log(executionOrders);
     const updatedOrder = await OrderExecutionDetail.findByIdAndUpdate(id, {
         $set: {
             executionHistory: executionDetails,
