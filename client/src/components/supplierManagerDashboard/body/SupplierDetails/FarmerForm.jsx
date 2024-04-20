@@ -1,36 +1,113 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
+const FarmerForm = ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    NIC: "",
+    username: "",
+    name: "",
+    email: "",
+    city: "",
+    lane: "",
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    NIC: "",
+    username: "",
+    name: "",
+    email: "",
+    city: "",
+    lane: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Validate input on change
+    validateInput(name, value);
+  };
+
+  const validateInput = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "NIC":
+        error = value.trim().length === 0 ? "NIC is required" : "";
+        break;
+      case "username":
+        error = value.trim().length === 0 ? "Username is required" : "";
+        break;
+      case "name":
+        error = value.trim().length === 0 ? "Name is required" : "";
+        break;
+      case "email":
+        error = !value.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)
+          ? "Invalid email address"
+          : "";
+        break;
+      case "city":
+        error = value.trim().length === 0 ? "City is required" : "";
+        break;
+      case "lane":
+        error = value.trim().length === 0 ? "Lane is required" : "";
+        break;
+      default:
+        break;
+    }
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // Check if there are any errors before submitting
+    if (Object.values(formErrors).every((error) => error === "")) {
+      handleSubmit(formData);
+    } else {
+      alert("Please fill out the form correctly");
+    }
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Farmer NIC
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="NIC"
-            placeholder="Farmer NIC"
-            required
-            onChange={handleOnChange}
-            value={rest.NIC}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Username
-          </label>
-          <input
+    <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+        <label htmlFor="NIC" className="form-label">
+          Farmer NIC
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.NIC && "is-invalid"}`}
+          name="NIC"
+          placeholder="Enter NIC"
+          id="NIC"
+          required
+          onChange={handleChange}
+          value={formData.NIC}
+        />
+        {formErrors.NIC && <div className="invalid-feedback">{formErrors.NIC}</div>}
+      </div>
+      
+      <div className="mb-3">
+            <label htmlFor="date" className="form-label">
+              Username
+            </label>
+            <input
             type="text"
             className="form-control"
             name="username"
-            placeholder="Username"
+            placeholder="Enter Username"
             required
-            onChange={handleOnChange}
-            value={rest.username}
+            onChange={handleChange}
+            value={formData.username}
           />
         </div>
 
@@ -42,10 +119,10 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             type="text"
             className="form-control"
             name="name"
-            placeholder="name"
+            placeholder="Enter Name"
             required
-            onChange={handleOnChange}
-            value={rest.name}
+            onChange={handleChange}
+            value={formData.name}
           />
         </div>
 
@@ -57,10 +134,10 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             type="text"
             className="form-control"
             name="email"
-            placeholder="Email"
+            placeholder="example@domain.com"
             required
-            onChange={handleOnChange}
-            value={rest.email}
+            onChange={handleChange}
+            value={formData.email}
           />
         </div>
         <div className="mb-3">
@@ -71,10 +148,10 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             type="text"
             className="form-control"
             name="city"
-            placeholder="City"
+            placeholder="Enter City"
             required
-            onChange={handleOnChange}
-            value={rest.city}
+            onChange={handleChange}
+            value={formData.city}
           />
         </div>
 
@@ -86,16 +163,17 @@ const FarmerForm = ({ handleSubmit, handleOnChange, rest }) => {
             type="text"
             className="form-control"
             name="lane"
-            placeholder="Lane"
+            placeholder="Enter Lane"
             required
-            onChange={handleOnChange}
-            value={rest.lane}
+            onChange={handleChange}
+            value={formData.lane}
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
-    </div>
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
   );
 };
 

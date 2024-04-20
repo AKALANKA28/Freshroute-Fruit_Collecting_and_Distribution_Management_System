@@ -1,71 +1,98 @@
-// ./client/src/components/Coordinator/body/TransportFeeForm.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const TransportFeeForm = ({ handleSubmit, handleOnChange, data }) => {
+const TransportFeeForm =  ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    vehicle_no:"",
+    type:"",
+    conditions:"",
+    capacity : "",
+    price: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    
+      <form onSubmit={handleFormSubmit}>
+        
         <div className="mb-3">
-          <label htmlFor="vehicletype" className="form-label">
+          <label htmlFor="type" className="form-label">
             Vehicle Type
           </label>
           <input
             type="text"
             className="form-control"
-            name="vehicletype"
+            name="type"
             placeholder="Vehicle Type"
-            onChange={handleOnChange}
-            value={data.vehicletype}
-            required
+            onChange={handleChange}
+            value={formData.type}
+            disabled
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Date
+          <label htmlFor="conditions" className="form-label">
+            Conditions
           </label>
           <input
-            type="date"
+            type="text"
             className="form-control"
-            name="date"
-            placeholder="Date"
-            onChange={handleOnChange}
-            value={data.date}
-            required
+            name="conditions"
+            placeholder="Conditions"
+            onChange={handleChange}
+            value={formData.conditions}
+            disabled
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="maxweight" className="form-label">
-            MaxWeight(kg)
+          <label htmlFor="capacity" className="form-label">
+            Capacity(kg)
           </label>
           <input
             type="number"
             className="form-control"
-            name="maxweight"
-            placeholder="MaxWeight(kg)"
-            onChange={handleOnChange}
-            value={data.maxweight}
-            required
+            name="capacity"
+            placeholder="Capacity(kg)"
+            onChange={handleChange}
+            value={formData.capacity}
+            disabled
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="pricepkm" className="form-label">
+          <label htmlFor="price" className="form-label">
             Price per km(Rs)
           </label>
           <input
             type="number"
             className="form-control"
-            name="pricepkm"
+            name="price"
             placeholder="  Price per km(Rs)"
-            onChange={handleOnChange}
-            value={data.pricepkm}
-            required
+            onChange={handleChange}
+            value={formData.price}
+            
           />
         </div>
         <button type="submit" className="btn btn-success">
           Submit
         </button>
       </form>
-    </div>
+    
   );
 };
 

@@ -6,13 +6,20 @@ import logo from '../../../assests/logo.png'
 
 
 const Sidebar = () => {
+
+    const handleToggleSideBar = () => {
+        document.body.classList.toggle('toggle-sidebar');
+      }
+
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
         <a href='/' className='logo d-flex align-items-center'>
            <img src={logo} alt='logo image'/>
            <span className=''>FreshRoute</span>
-        </a> 
+        </a>        
+     {/* <i className='bi bi-list toggle-sidebar-btn' onClick={handleToggleSideBar}></i> */}
+
 
         <ul className="sidebar-nav" id='sidebar-nav'>
             <li className='nav-item'>

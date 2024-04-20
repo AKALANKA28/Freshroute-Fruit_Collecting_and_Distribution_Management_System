@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-
+const mongoose = require("mongoose");
 
 const vehicle = mongoose.Schema({
     vehicle_no: {
@@ -13,15 +11,15 @@ const vehicle = mongoose.Schema({
         trim: true
     },
 
-    conditions: {
-        type: String,
-        required: true
-    },
+  conditions: {
+    type: String,
+    required: true,
+  },
 
-    capacity: {
-        type: Number,
-        required: true
-    },
+  capacity: {
+    type: Number,
+    required: true,
+  },
 
     owner_name: {
         type: String,

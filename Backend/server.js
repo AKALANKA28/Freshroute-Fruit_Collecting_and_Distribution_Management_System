@@ -20,6 +20,7 @@ const enqRouter = require('./routes/enqRoute.js');
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
 const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
+const CategoryRouter = require("./routes/coordinator/CategoryRoute.js");
 const SalaryRouter = require("./routes/coordinator/SalaryRoute.js");
 const TransportFeeRouter = require("./routes/coordinator/TransportFeeRoute.js");
 const cardsRouter = require("./routes/finance/cardsRoute.js");
@@ -27,11 +28,29 @@ const scheduleRouter = require("./routes/transport/scheduleRoute.js");
 const vehicleRouter = require("./routes/transport/vehicleRoute.js");
 const processRouter = require("./routes/transport/processRoute.js");
 const coveringsRouter = require("./routes/transport/coveringsRoute.js");
-const router = require("./routes/farmers/farmerRoutes");
-const itemRouter = require("./routes/buyers/Bmanager")
+
+//Heshan
+const farmerRouter = require("./routes/farmers/farmerRoutes");
+const predictionRouter = require("./routes/farmers/predictionRoutes");
+const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
+const pendingSupplyRouter = require("./routes/farmers/pendingSuppliesRoutes");
+const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
+const declinedSupplyRouter = require("./routes/farmers/declinedSuppliesRoutes");
+
+const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
+const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
+const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
+
+
+const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
-const qualityRoute = require("./routes/q_and_o/qualityRoute");
+// const qualityRoute = require("./routes/q_and_o/qualityRoute");
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
+const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
+
+const orderMangerRoute = require("./routes/q_and_o/OrderManagerRoute");
+const orderProcessorRoute = require("./routes/q_and_o/OrderProcessorRoute");
+
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -60,17 +79,37 @@ app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
 app.use("/FruitType", FruitTypeRouter);
+app.use("/Category", CategoryRouter);
 app.use("/Salary", SalaryRouter);
+
 app.use('/schedule', scheduleRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/process', processRouter);
 app.use('/coverings', coveringsRouter);
-app.use('/Farmer', router);
+
+app.use("/Promotion", PromotionRouter);
+app.use("/Compaign", CompaignRouter);
+app.use("/Resource", ResourceRouter);
+
+
+
+//Heshan
+app.use("/Farmer", farmerRouter);
+app.use("/Prediction", predictionRouter);
+app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
+app.use("/pendingSupply", pendingSupplyRouter);
+app.use("/acceptedSupply", acceptedSupplyRouter);
+app.use("/declinedSupply", declinedSupplyRouter);
+
 app.use(itemRouter);
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
-app.use('/quality', qualityRoute);
+// app.use('/quality', qualityRoute);
 app.use("/CalculateSalary", CalculateSalaryRouter);
+app.use("/Notice", NoticeRouter);
+app.use("/om", orderMangerRoute);
+app.use("/op", orderProcessorRoute);
+
 
 
 app.use(notFound);

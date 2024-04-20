@@ -1,6 +1,8 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -14,26 +16,35 @@ import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
-import OMDashboard from "./components/orderManagement/OMDashboard";
+import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
+import QualityList from "./components/orderManagement/body/QualityList/QualityList";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
+import Category from "./components/Coordinator/Category";
 import Salary from "./components/Coordinator/Salary";
 import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
+import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
+import SupplierRequests from "./components/supplierManagerDashboard/SupplierRequests";
+import FDashboard from "./components/farmer/FDashboard";
+import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
+import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
+import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
+
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-import OPDashboard from './components/orderProcessor/OPDashboard';
-import QualityList from './components/orderManagement/QualityList';
+import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
+import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
-
-
 
 
 import RequestedOrder from './components/RequestedOrder/RequestedOrder';
@@ -41,6 +52,21 @@ import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
 import NormalOrder from './components/NormalOrder/NormalOrder';
 import EditOrder from './components/NormalOrder/EditOrder';
 
+import PromotionPage from "./components/researchDashboard/PromotionPage";
+import CompaignPage from "./components/researchDashboard/CompaignPage";
+import ResourcePage from "./components/researchDashboard/ResourcePage";
+
+//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+//import NormalOrder from "./components/NormalOrder/NormalOrder";
+//import EditOrder from "./components/NormalOrder/EditOrder";
+
+
+import PredictionDetails from "./components/farmer/PredictionDetails";
+
+import OMDashboard from "./components/orderManagement/body/OMDashboard";
+import OPDashboard from "./components/orderProcessor/body/OPDashboard";
+import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
 
 import Home from './Website/Home';
 import About from "./Website/About";
@@ -52,7 +78,6 @@ import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
 
 const router = createBrowserRouter([
-
   {
     path: "/home",
     element: (
@@ -195,11 +220,54 @@ const router = createBrowserRouter([
   {
     path: "/OMDashboard",
     element: (
-      <div>
-        <OMDashboard />
-      </div>
+        <div>
+          <OrderManagerHomePage />
+        </div>
     ),
+    children: [ {
+        path: "/OMDashboard/",
+        element: <OMDashboard/>,
+      },
+      {
+        path: "/OMDashboard/QualityList",
+        element: <QualityList/>,
+      },
+      {
+        path: "/OMDashboard/RequestedOrderList",
+        element: <RequestedOrderList/>,
+      }
+
+    ]
   },
+
+  {
+    path: "/OPDashboard",
+    element: (
+        <div>
+          <OrderProcessorHomePage />
+        </div>
+    ),
+    children: [
+      {
+        path: "/OPDashboard/",
+        element: <OPDashboard/>,
+      },
+      {
+        path: "/OPDashboard/AssignedOrders",
+        element: <AssignedOrder/>,
+      },
+      {
+        path: "/OPDashboard/OngoingOrders",
+        element: <OngoingOrder/>,
+      },
+      {
+        path: "/OPDashboard/CompletedOrders",
+        element: <CompletedOrder/>,
+      },
+
+    ]
+  },
+
 
   {
     path: "/SMDashboard",
@@ -215,6 +283,60 @@ const router = createBrowserRouter([
     element: (
       <div>
         <SupplierDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplierRequests",
+    element: (
+      <div>
+        <SupplierRequests />
+      </div>
+    ),
+  },
+
+  {
+    path: "/FDashboard",
+    element: (
+      <div>
+        <FDashboard />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PredictionDetails",
+    element: (
+      <div>
+        <PredictionDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplyRequests",
+    element: (
+      <div>
+        <SupplyRequests />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ApprovedSupplies",
+    element: (
+      <div>
+        <ApprovedSupplies />
+      </div>
+    ),
+  },
+
+  {
+    path: "/DeclinedSupplies",
+    element: (
+      <div>
+        <DeclinedSupplies />
       </div>
     ),
   },
@@ -238,26 +360,49 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/RequestedOrder',
-    element: <div><RequestedOrder/></div>
+    path: "/Category",
+    element: (
+      <div>
+        <Category />
+      </div>
+    ),
   },
 
   {
-    path: '/BuyerDashboard',
-    element: <div><BuyerDashBoard/></div>
+    path: "/RequestedOrder",
+    element: (
+      <div>
+        <RequestedOrder />
+      </div>
+    ),
   },
 
   {
-    path: '/NormalOrder',
-    element: <div><NormalOrder/></div>
+    path: "/BuyerDashboard",
+    element: (
+      <div>
+        <BuyerDashBoard />
+      </div>
+    ),
   },
 
   {
-    path: '/EditOrder/:id',
-    element: <div><EditOrder/></div>
+    path: "/NormalOrder",
+    element: (
+      <div>
+        <NormalOrder />
+      </div>
+    ),
   },
 
-
+  {
+    path: "/EditOrder/:id",
+    element: (
+      <div>
+        <EditOrder />
+      </div>
+    ),
+  },
 
   {
     path: "/Salary",
@@ -267,6 +412,34 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/PromotionPage",
+    element: (
+      <div>
+        <PromotionPage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/CompaignPage",
+    element: (
+      <div>
+        <CompaignPage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ResourcePage",
+    element: (
+      <div>
+        <ResourcePage />
+      </div>
+    ),
+  },
+
 
   {
     path: "/TransportFee",
@@ -305,6 +478,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/Notice",
+    element: (
+      <div>
+        <Notice />
+      </div>
+    ),
+  },
+
+  {
     path: "/SalesPage",
     element: (
       <div>
@@ -323,13 +505,12 @@ const router = createBrowserRouter([
   },
 
   {
-
-    path: '/OPDashboard',
-    element: <div><OPDashboard /></div>
-  },
-  {
-    path: '/QualityList',
-    element: <div><QualityList /></div>
+    path: "/QualityList",
+    element: (
+      <div>
+        <QualityList />
+      </div>
+    ),
   },
   {
     path: "/ExpensePage",
@@ -348,11 +529,9 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
 ]);
 
 function App() {
- 
   return (
     <div>
       <RouterProvider router={router} />

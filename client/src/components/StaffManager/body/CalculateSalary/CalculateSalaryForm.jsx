@@ -1,123 +1,172 @@
-// ./client/src/components/StaffManager/body/CalculateSalaryForm.js
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const CalculateSalaryForm = ({ handleSubmit, handleOnChange, rest }) => {
+axios.defaults.baseURL = "http://localhost:8070/";
+
+const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    jobrole: "",
+    nic: "",
+    salary: "", // This will be populated with the fetched salary value
+    allowance: "",
+    epfe: 8,
+    epfr: 12,
+    etf: 3,
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+      fetchSalaryData(initialData.jobrole); // Fetch salary data when initial data is provided
+    }
+  }, [initialData]);
+
+  const fetchSalaryData = async (jobrole) => {
+    try {
+      const response = await axios.get(`/api/salary/${jobrole}`); // Modify the endpoint URL as per your backend API
+      const { salary } = response.data;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        salary: salary // Set the salary in the form state
+      }));
+    } catch (error) {
+      console.error("Error fetching salary data:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Employee Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            placeholder="Employee Name"
-            onChange={handleOnChange}
-            value={rest.name}
-            required
-          />
-        </div>
+    <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">
+          Employee Name
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          name="name"
+          placeholder="Employee Name"
+          value={formData.name}
+          onChange={handleChange}
+          readOnly
+        />
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="jobrole" className="form-label">
-            Job Role
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="jobrole"
-            placeholder="Job Role"
-            onChange={handleOnChange}
-            value={rest.jobrole}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="salary" className="form-label">
-            Basic
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="salary"
-            placeholder="Basic"
-            onChange={handleOnChange}
-            value={rest.salary}
-            required
-          />
-        </div>
+      <div className="mb-3">
+        <label htmlFor="jobrole" className="form-label">
+          Job Role
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          name="jobrole"
+          placeholder="Job Role"
+          value={formData.jobrole}
+          onChange={handleChange}
+          readOnly
+        />
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="allowance" className="form-label">
-            Allowance
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="allowance"
-            placeholder="Allowance"
-            onChange={handleOnChange}
-            value={rest.allowance}
-            
-          />
-        </div>
+      <div className="mb-3">
+        <label htmlFor="salary" className="form-label">
+          Salary
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          name="salary"
+          placeholder="Salary"
+          value={formData.salary}
+          onChange={handleChange}
+          required
+          readOnly
+        />
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="epfe" className="form-label">
+      <div className="mb-3">
+        <label htmlFor="allowance" className="form-label">
+          Allowance
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          name="allowance"
+          placeholder="Allowance"
+          value={formData.allowance}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="epfe" className="form-label">
           EPF - Employee Contribution
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="epfe"
-            placeholder="EPF - Employee Contribution"
-            onChange={handleOnChange}
-            value={rest.epfe}
-            
-          />
-        </div>
+        </label>
+        <select
+          className="form-select"
+          name="epfe"
+          value={formData.epfe}
+          onChange={handleChange}
+        >
+          <option value="">Select EPF Employee Contribution</option>
+          <option value="8">8%</option>
+          <option value="10">10%</option>
+          <option value="12">12%</option>
+          
+        </select>
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="epfr" className="form-label">
+      <div className="mb-3">
+        <label htmlFor="epfr" className="form-label">
           EPF - Employer Contribution
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="epfr"
-            placeholder="EPF - Employer Contribution"
-            onChange={handleOnChange}
-            value={rest.epfr}
-            
-          />
-        </div>
+        </label>
+        <select
+          className="form-select"
+          name="epfr"
+          value={formData.epfr}
+          onChange={handleChange}
+        >
+          <option value="">Select EPF Employer Contribution</option>
+          <option value="8">8%</option>
+          <option value="10">10%</option>
+          <option value="12">12%</option>
+         
+        </select>
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="etf" className="form-label">
-          ETF -  Employer Contribution
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="etf"
-            placeholder="ETF -  Employer Contribution"
-            onChange={handleOnChange}
-            value={rest.etf}
-            
-          />
+      <div className="mb-3">
+        <label htmlFor="etf" className="form-label">
+          ETF - Employer Contribution
+        </label>
+        <select
+          className="form-select"
+          name="etf"
+          value={formData.etf}
+          onChange={handleChange}
+        >
+          <option value="">Select ETF Employer Contribution</option>
+          <option value="3">3%</option>
+          <option value="5">5%</option>
+          <option value="7">7%</option>
+          
+        </select>
         </div>
-       
-       
-        
-       
-        <button type="submit" className="btn btn-success">
-          Calculate
-          <i class="bi bi-calculator"></i>
-        </button>
-      </form>
-    </div>
+      <button type="submit" className="btn btn-success">
+        Calculate <i className="bi bi-calculator"></i>
+      </button>
+    </form>
   );
 };
 

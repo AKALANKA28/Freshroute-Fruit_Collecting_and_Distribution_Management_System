@@ -56,13 +56,13 @@ body{
 @media (min-width: 1200px){
   #main,
   #footer{
-      margin-left: 265px;
+      margin-left: 275px;
   }
 }
 
 
 .main{
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 20px 30px;
   transition: all 0.3s;
   /* background-color: #f6f6fe80; */
@@ -79,7 +79,7 @@ body{
 @media (min-width: 1200px){
   .main,
   #footer{
-      margin-left: 265px;
+      margin-left: 275px;
   }
 }
 
@@ -98,6 +98,7 @@ body{
 .btn-success{
   color: #FFFFFF;
   background-color: var(--hoverColor);
+  width: 150px !important;
 }
 
 /*----------------------------------------------------
@@ -112,7 +113,7 @@ body{
   -webkit-animation-name: dropdown-animate;
   animation-name: dropdown-animate;
   -webkit-animation-duration: 0.2s;
-  animation-duration: 0.2 s;
+  animation-duration: 0.2s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   border: 0;
@@ -473,7 +474,7 @@ header .search-form input:hover{
 }
 
 .header-nav .profile .dropdown-header span{
-  font-size: 14x;
+  font-size: 14px;
 }
 
 .header-nav .profile .dropdown-item{
@@ -533,7 +534,7 @@ header .search-form input:hover{
   top: 0;
   left: 0;
   bottom: 0;
-  width: 265px;
+  width: 275px;
   background-color: #ffffff;
   transition: all 0.3s;
   padding: 20px;
@@ -584,7 +585,7 @@ header .search-form input:hover{
   font-size: 16px;
   font-weight: 500;
   color: var(--textColor);
-  transition: 0.3;
+  transition: 0.3s;
   background: #f6fde8;
   padding: 10px 15px;
   border-radius: 4px;
@@ -652,7 +653,7 @@ header .search-form input:hover{
   font-size: 14px;
   font-weight: 500;
   color: var(--textColor);
-  transition: 0.3;
+  transition: 0.3s;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
   text-decoration: none;   
@@ -685,13 +686,9 @@ header .search-form input:hover{
 
 
 
-
-
-
-
 @media (min-width: 1199px){
   .toggle-sidebar .sidebar{
-      left: 0;
+      left: 60px;
   }
   
 }
@@ -699,11 +696,11 @@ header .search-form input:hover{
 @media (min-width: 1200px){
   .toggle-sidebar #main,
   .toggle-sidebar #footer{
-      margin-left: 0;
+      margin-left: 60px;
   }
 
   .toggle-sidebar .sidebar{
-      left: -300px;
+      left: -200px;
   }
   
 }
@@ -728,11 +725,12 @@ header .search-form input:hover{
 
 /* # Page Title */
 .pagetitle{
+  margin-top: -10px;
   margin-bottom: 3rem;
 }
 
 .pagetitle h1{
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 0;
   font-weight: 600;
   color: #000000;
