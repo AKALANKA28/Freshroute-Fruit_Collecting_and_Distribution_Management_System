@@ -1,8 +1,9 @@
 import React from 'react'
+import './body/main.css'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import ProcessDetailsBody from './body/processdetails/ProcessDetailsBody'
+import Process from './body/processdetails/Process'
 import Footer from './footer/Footer'
 
 
@@ -11,7 +12,7 @@ const ScheduleDetails = () => {
     <div>
       <Header />
       <Sidebar />
-      <ProcessDetailsBody />
+      <Process />
       <Footer />
     </div>
   )

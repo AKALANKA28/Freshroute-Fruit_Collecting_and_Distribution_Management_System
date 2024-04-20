@@ -181,13 +181,6 @@
   transition: .3s ease;
 }
 
-.table .description{
-  padding: 8px;
-  /* border: 1px solid #ddd; */
-  width: 600px;
- 
-}
-
 .btn-table .bi-pencil-square{
   color: #ffbb00;
 }
