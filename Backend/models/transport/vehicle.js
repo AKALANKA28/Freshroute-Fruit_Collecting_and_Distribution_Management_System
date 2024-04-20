@@ -27,10 +27,7 @@ const vehicle = mongoose.Schema({
         type: String,
         required: true
     },
-    owner_name: {
-        type: String,
-        required: true
-    },
+    
     nic: {
         type: String,
         required: true
