@@ -10,6 +10,7 @@ import SalesForm from "./SalesForm";
 import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
+import { ToastContainer } from "react-toastify";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -78,16 +79,6 @@ function Sales() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/sales/delete/${id}`);
-      alert("Successfully Deleted");
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/sales/add", formData);
@@ -98,6 +89,18 @@ function Sales() {
       alert(err.message);
     }
   };
+  
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/sales/delete/${id}`);
+      alert("Successfully Deleted");
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+
 
   const handleEditSubmit = async (formData) => {
     try {
@@ -250,6 +253,21 @@ function Sales() {
           </div>
         </div>
     </div>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      // transition: Bounce
+      />
+      {/* Same as */}
+    <ToastContainer />
   </div>
   );
 }

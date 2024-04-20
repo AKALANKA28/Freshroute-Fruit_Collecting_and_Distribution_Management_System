@@ -60,7 +60,7 @@ const BudgetChart = () => {
   return (
     <div
         id='budgetChart'
-        style={{minHeight: '480px'}}
+        style={{height: '480px'}}
         className='echart'>
     </div>
   );

@@ -1,30 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
-  const { date, category, amount, description } = rest;
+const ExpenseForm = ({ handleSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    date: "",
+    category: "",
+    amount: "",
+    description: "",
+    // status: "",
 
 
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+      <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
           <label htmlFor="date" className="form-label">
             Date
           </label>
           <input
-            type="text"
+            type="datetime-local"
             className="form-control"
             name="date"
             placeholder="Date"
-            required
-            onChange={handleOnChange}
-            value={date || ""}
+            onChange={handleChange}
+            value={formData.date}
+            
           />
-          {err.date && (
-            <div className="text-danger">hhhhhhh</div>
-          )}
         </div>
-
         <div className="mb-3">
           <label htmlFor="category" className="form-label">
             Category
@@ -32,8 +53,8 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
           <select
             name="category"
             className="form-control"
-            onChange={handleOnChange}
-            value={category || ""}
+            onChange={handleChange}
+            value={formData.category || ""}
           >
             
             <option value="">Select Category</option>
@@ -42,9 +63,7 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
             <option value="Research">Research</option>
             <option value="Promotion">Promotion</option>
           </select>
-          {err.category && (
-            <div className="text-danger">{err.category}</div>
-          )}
+         
         </div>
 
         <div className="mb-3">
@@ -57,12 +76,10 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
             name="amount"
             placeholder="Amount"
             required
-            onChange={handleOnChange}
-            value={amount || ""}
+            onChange={handleChange}
+            value={formData.amount || ""}
           />
-          {err.amount && (
-            <div className="text-danger">{err.amount}</div>
-          )}
+         
         </div>
 
         <div className="mb-3">
@@ -75,17 +92,16 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
             name="description"
             placeholder="Description"
             required
-            onChange={handleOnChange}
-            value={description || ""}
+            onChange={handleChange}
+            value={formData.description || ""}
           />
           
         </div>
-        {err.description && (
-            <div className="text-danger">{err.description}</div>
-          )}
-        {/* <button type="submit" className="btn btn-primary">
-          Submit
-        </button> */}
+     
+        <div className="d-flex justify-content-end border-top">
+          {/* <button type="submit" className="btn btn-secondary "> Cancel </button> */}
+          <button type="submit" className="btn btn-success"> Submit </button>
+       </div>
       </form>
     </div>
   );

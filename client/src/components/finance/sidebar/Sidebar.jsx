@@ -30,10 +30,10 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <Link  to='/SalesPage' className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse'>
+                <Link  to='/SalesPage' className='nav-link collapsed' >
                     <i className='bi bi-menu-button-wide'></i>
-                    <span>Reports</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                    <span>Sales</span>
+                    {/* <i className='bi bi-chevron-down ms-auto'></i> */}
                 </Link>
 
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
@@ -98,31 +98,12 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
+                <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='/salespage'>
                     <i className='bi bi-layout-text-window-reverse'></i>
                     <span>Sales</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
 
-                <ul id='tables-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>General Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Data Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                   
-
-                </ul>
+               
             </li>
 
             <li className='nav-heading'>Pages</li>

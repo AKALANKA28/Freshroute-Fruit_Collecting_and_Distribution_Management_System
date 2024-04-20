@@ -1,13 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./products.css";
 import img from "../../assets/image1.jpg"
 import Footer from '../../Footer/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Container from '../../Components/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSingleProduct } from '../../../features/products/productSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import { addToCart } from '../../../features/user/userSlice';
+// import Navbar from '../../Navbar/Navbar';
 
 const SingleProduct = () => {
+    const [quantity, setQuantity] = useState(1)
+    // console.log(quantity);
+    const location = useLocation()
+    const getProductId = location.pathname.split("/")[2]
+    // console.log(getProductId);
+
+    const dispatch = useDispatch();
+    const productState = useSelector(state => state.product.singleproduct)
+
+    useEffect(() => {
+      dispatch( getSingleProduct (getProductId))
+    }, [])
+
+
+    const addFruitToCart = () => {
+      dispatch(addToCart({productId:productState?._id, quantity, price:productState?.price}))
+    }
+    console.log(addFruitToCart);
+
   return (
     <div>
+      {/* <Navbar /> */}
       <div className="product-header">
       <nav className='nav'>
         <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>
@@ -36,11 +61,11 @@ const SingleProduct = () => {
               <div className="main-product-details">
                 <div className="">
                   <h3 className="title">
-                    Alponso <span>| Mango</span>
+                    {productState?.title} <span>| {productState?.category}</span>
                   </h3>
 
                   <div className="">
-                     <p className="price pt-3"> Rs. 1000 <span>/Per kg</span></p>
+                     <p className="price pt-3"> Rs. {productState?.price} <span>/Per kg</span></p>
                   </div>
                   <div className="py-3">
                   <div className="d-flex flex-column gap-2 pb-4">
@@ -58,13 +83,13 @@ const SingleProduct = () => {
                   <div className='d-flex flex-column gap-2 pb-4'>
                     <h3 className='product-heading'>Grade</h3>
                     <div className="d-flex flex-wrap gap-15 grade">
-                      <span className="badge border border-1 bg-white text-dark p-3">
+                      <span className="badge border border-1 text-dark p-3 button-select">
                         A
                       </span>
-                      <span className="badge border border-1 bg-white text-dark p-3">
+                      <span className="badge border border-1 text-dark p-3">
                         B
                       </span>
-                      <span className="badge border border-1 bg-white text-dark p-3">
+                      <span className="badge border border-1 text-dark p-3">
                         C
                       </span>
                     </div>
@@ -80,10 +105,15 @@ const SingleProduct = () => {
                         className='form-control'
                         style={{width: "70px", height: "40px"}}
                         id=''
+                        onChange={(e) => setQuantity(e.target.value)}
+                        value={quantity}
                       />
                     </div>
                     <div className='d-flex align-items-center gap-2'>
-                    <button className="product-button" type='submit'>Add to Cart</button>
+                    <button 
+                     className="product-button" 
+                     type='submit'
+                     onClick={() => {addFruitToCart(productState?._id)}}>Add to Cart</button>
                     <button className="product-button buy" type='submit'>Buy Now</button>
                   </div>
                   </div>
@@ -222,6 +252,21 @@ const SingleProduct = () => {
             </div>
           </div>
       </Container>
+      <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      // transition: Bounce
+      />
+      {/* Same as */}
+      <ToastContainer />
       <Footer />
     </div>
   )

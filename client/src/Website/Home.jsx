@@ -54,7 +54,7 @@ const Home = () => {
         <Partners />
         <Describe />
         <Contact />
-        <Blog />
+        {/* <Blog /> */}
         <Footer />
       </div>
         

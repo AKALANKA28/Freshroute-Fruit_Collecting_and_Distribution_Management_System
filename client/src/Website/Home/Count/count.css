@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     background-color: var(--hoverColor);
-    height: 90vh;
+    height: 80vh;
     position: relative;
 }
 
@@ -22,7 +22,7 @@
 
 
 .offersection img{
-    height: 90vh;
+    height: 80vh;
 }
 
 .offerCol{

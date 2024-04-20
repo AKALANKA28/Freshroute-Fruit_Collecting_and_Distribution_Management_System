@@ -56,7 +56,7 @@ body{
 @media (min-width: 1200px){
   #main,
   #footer{
-      margin-left: 275px;
+      margin-left: 115px;
   }
 }
 
@@ -79,7 +79,7 @@ body{
 @media (min-width: 1200px){
   .main,
   #footer{
-      margin-left: 275px;
+      margin-left: 115px;
   }
 }
 
@@ -94,11 +94,21 @@ body{
   margin-top: 15rem;
 }
 
+.gap-6{
+  gap: 6px;
+}
+
+
 
 .btn-success{
   color: #FFFFFF;
   background-color: var(--hoverColor);
   width: 150px !important;
+}
+
+.error{
+  color: red !important;
+  font-size: 12px !important;
 }
 
 /*----------------------------------------------------
@@ -534,7 +544,7 @@ header .search-form input:hover{
   top: 0;
   left: 0;
   bottom: 0;
-  width: 275px;
+  width: 115px;
   background-color: #ffffff;
   transition: all 0.3s;
   padding: 20px;

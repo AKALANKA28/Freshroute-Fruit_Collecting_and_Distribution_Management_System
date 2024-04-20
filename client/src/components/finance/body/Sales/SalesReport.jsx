@@ -15,34 +15,34 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 10,
     textAlign: "center",
+    color: "#333333",
   },
   table: {
-    display: "table",
     width: "100%",
     borderStyle: "solid",
     borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
+    borderColor: "#AAAAAA",
+    borderRadius: 5,
+    overflow: "hidden",
   },
-  tableRow: { 
+  tableRow: {
     flexDirection: "row",
-    backgroundColor: "#FFF",
+    backgroundColor: "#F0F0F0",
+    borderBottomWidth: 1,
+    borderBottomColor: "#AAAAAA",
   },
   tableColHeader: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
+    padding: 8,
     fontSize: 12,
+    fontWeight: "bold",
+    color: "#333333",
+    textAlign: "center",
   },
   tableCol: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
+    padding: 8,
     fontSize: 10,
+    color: "#333333",
+    textAlign: "center",
   },
 });
 
@@ -51,26 +51,24 @@ const CompaignReport = ({ dataList }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Sales  Report</Text>
+          <Text style={styles.heading}>Sales Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>Compaign Title</Text>
+              <Text style={styles.tableColHeader}>Campaign Title</Text>
               <Text style={styles.tableColHeader}>Date</Text>
               <Text style={styles.tableColHeader}>Objective</Text>
-              <Text style={styles.tableColHeader}>Target audience</Text>
-              <Text style={styles.tableColHeader}>Budjet</Text>
-            
+              <Text style={styles.tableColHeader}>Target Audience</Text>
+              <Text style={styles.tableColHeader}>Budget</Text>
             </View>
-            {dataList.map((compaign, index) => (
+            {dataList.map((campaign, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{compaign.compaign_title}</Text>
-                <Text style={styles.tableCol}>{compaign.date}</Text>
-                <Text style={styles.tableCol}>{compaign.objective}</Text>
-                <Text style={styles.tableCol}>{compaign.target_aud}</Text>
-                <Text style={styles.tableCol}>{compaign.budjet}</Text>
+                <Text style={styles.tableCol}>{campaign.compaign_title}</Text>
+                <Text style={styles.tableCol}>{campaign.date}</Text>
+                <Text style={styles.tableCol}>{campaign.objective}</Text>
+                <Text style={styles.tableCol}>{campaign.target_aud}</Text>
+                <Text style={styles.tableCol}>{campaign.budget}</Text>
               </View>
             ))}
-
           </View>
         </View>
       </Page>
