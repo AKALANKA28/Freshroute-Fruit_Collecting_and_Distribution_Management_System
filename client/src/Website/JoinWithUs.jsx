@@ -66,7 +66,7 @@ const JoinWithUs = () => {
   const handleSubmit = async (formData) => {
     try {
   
-      await axios.post("/JoiningRequest/add", { ...formData, landDeedUrl: formData.landDeedUrl });
+      await axios.post("/joiningRequest/add", { ...formData, landDeedUrl: formData.landDeedUrl });
       alert("Your request has been submitted successfully!");
   
     } catch (error) {
