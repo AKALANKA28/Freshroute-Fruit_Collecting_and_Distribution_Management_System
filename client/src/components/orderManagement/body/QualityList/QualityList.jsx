@@ -145,10 +145,10 @@ const QualityList = () => {
       
         // Define the workbook
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+        XLSX.utils.book_append_sheet(wb, ws, "Quality Report");
       
         // Generate the Excel file
-        writeFile(wb, "suppliers_report.xlsx");
+        writeFile(wb, "quality_report.xlsx");
       };
       
       const handleExcelButtonClick = () => {

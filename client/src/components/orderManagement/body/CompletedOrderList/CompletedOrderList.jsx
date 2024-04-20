@@ -7,6 +7,11 @@ import SearchBar from '../SearchBar'
 import axios from 'axios';
 import OrderAssignForm from "./OrderAssignForm";
 import CompletedOrderTable from './CompletedOrderTable';
+import { PDFViewer } from "@react-pdf/renderer";
+import CompletedOrderReport from "./CompletedOrderReport";
+import { Button, Modal } from "react-bootstrap";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const CompletedOrderList = () => {
@@ -69,6 +74,29 @@ const CompletedOrderList = () => {
         setShowPopup(true);
     };
 
+    //pdf
+    const [showReportModal, setShowReportModal] = useState(false);
+    const handleCloseReportModal = () => setShowReportModal(false);
+    const handleShowReportModal = () => setShowReportModal(true);
+
+     //excel
+     const generateExcelFile = () => {
+        // Define the worksheet
+        const ws = XLSX.utils.json_to_sheet(items);
+      
+        // Define the workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Completed Order Report");
+      
+        // Generate the Excel file
+        writeFile(wb, "completed_order_report.xlsx");
+      };
+      
+      const handleExcelButtonClick = () => {
+        getOrderList(); // Fetch the latest data if needed
+        generateExcelFile();
+      };
+
     return (
         <main className='main' id='main'>
             <div className="body" id='body'>
@@ -89,14 +117,18 @@ const CompletedOrderList = () => {
                                 <li>
                                     <div className="button-container">
                                         <a href="#">
-                                            <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                            <a onClick={handleShowReportModal}>
+                                                <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                            </a>
                                         </a>
                                     </div>
                                 </li>
                                 <li>
                                     <div className="button-container">
                                         <a href="#">
-                                            <img src={Excel} alt="Excel Icon" className="icon"/>
+                                            <a onClick={handleExcelButtonClick}>  
+                                                <img src={Excel} alt="Excel Icon" className="icon"/>
+                                            </a>
                                         </a>
                                     </div>
                                 </li>
@@ -108,7 +140,22 @@ const CompletedOrderList = () => {
                                     </div>
                                 </li>
                             </ul>
-
+                            <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Completed Order Details</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <PDFViewer width="100%" height="500px">
+                                <CompletedOrderReport dataList={items} />
+                                </PDFViewer>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseReportModal}>
+                                Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                        
                           {/* --------------------imported search bar and table data ------------------------*/}
                         </div>
                         <div className="w-100">
@@ -136,10 +183,6 @@ const CompletedOrderList = () => {
                                             {
                                                 name: "Due Date",
                                                 tag: "dueDate"
-                                            },
-                                            {
-                                                name: "Order Processor",
-                                                tag: "opName"
                                             }
                                          ]
                                      }

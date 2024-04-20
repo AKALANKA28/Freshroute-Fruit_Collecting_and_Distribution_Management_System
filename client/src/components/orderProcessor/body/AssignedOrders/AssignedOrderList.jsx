@@ -7,6 +7,9 @@ import SearchBar from '../SearchBar'
 import axios from 'axios';
 import OrderExecutionForm from "./OrderExecutionForm";
 import AssignedOrderTable from "./AssignedOrderTable";
+import { PDFViewer } from "@react-pdf/renderer";
+import AssignedOrderReport from './AssignedOrderReport';
+import { Button, Modal } from "react-bootstrap"
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const AssignedOrderList = () => {
@@ -48,7 +51,7 @@ const AssignedOrderList = () => {
 
     const handleSearchOnClick = async (filterData) => {
         try {
-            const response = await axios.post("/om/quality/filteredQualities", filterData);
+            const response = await axios.post("/op/pendingOrderList", filterData);
             setItems(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -76,6 +79,10 @@ const AssignedOrderList = () => {
         setShowPopup(true);
     };
 
+     //pdf
+     const [showReportModal, setShowReportModal] = useState(false);
+     const handleCloseReportModal = () => setShowReportModal(false);
+     const handleShowReportModal = () => setShowReportModal(true);
 
     return (
         <main className='main' id='main'>
@@ -98,7 +105,9 @@ const AssignedOrderList = () => {
                                 <li>
                                     <div className="button-container">
                                         <a href="#">
-                                            <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                            <a onClick={handleShowReportModal}>
+                                                <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                            </a>
                                         </a>
                                     </div>
                                 </li>
@@ -117,7 +126,22 @@ const AssignedOrderList = () => {
                                     </div>
                                 </li>
                             </ul>
-
+                            <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Assigned Order Details</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <PDFViewer width="100%" height="500px">
+                                <AssignedOrderReport dataList={items} />
+                                </PDFViewer>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseReportModal}>
+                                Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                        
                           {/* --------------------imported search bar and table data ------------------------*/}
                         </div>
                         <div className="w-100">
@@ -126,26 +150,30 @@ const AssignedOrderList = () => {
                                 <SearchBar enableFilterType={true}
                                      filterColumns={
                                          [
-                                             {
-                                                 name: "Fruit Type",
-                                                 tag: "fruit"
-                                             },
-                                             {
-                                                 name: "Fruit Category",
-                                                 tag: "category"
-                                             },
-                                             {
-                                                 name: "Grade",
-                                                 tag: "quality"
-                                             },
-                                             {
-                                                 name: "Quality Description",
-                                                 tag: "qualityDesc"
-                                             },
-                                             {
-                                                 name: "Storage Conditions",
-                                                 tag: "storageCond"
-                                             }
+                                            {
+                                                name: "Fruit Type",
+                                                tag: "fruit"
+                                            },
+                                            {
+                                                name: "Fruit Category",
+                                                tag: "category"
+                                            },
+                                            {
+                                                name: "Quality",
+                                                tag: "quality"
+                                            },
+                                            {
+                                                name: "Quantity",
+                                                tag: "quantity"
+                                            },
+                                            {
+                                                name: "Placed Date",
+                                                tag: "placedDate"
+                                            },
+                                            {
+                                                name: "Due Date",
+                                                tag: "dueDate"
+                                            }
                                          ]
                                      }
                                      handleSearch={handleSearchOnClick}

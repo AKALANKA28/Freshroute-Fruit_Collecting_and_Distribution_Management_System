@@ -7,6 +7,10 @@ import SearchBar from '../SearchBar'
 import axios from 'axios';
 import OrderAssignForm from "./OrderAssignForm";
 import AssignedOrderTable from "./AssignedOrderTable";
+import { PDFViewer } from "@react-pdf/renderer";
+import AssignedOrderReport from './AssignedOrderReport';
+import { Button, Modal } from "react-bootstrap";
+
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const AssignedOrderList = () => {
@@ -123,6 +127,11 @@ const AssignedOrderList = () => {
         setIsEdit(true);
     };
 
+    //pdf
+    const [showReportModal, setShowReportModal] = useState(false);
+    const handleCloseReportModal = () => setShowReportModal(false);
+    const handleShowReportModal = () => setShowReportModal(true);
+
     return (
         <main className='main' id='main'>
             <div className="body" id='body'>
@@ -144,7 +153,9 @@ const AssignedOrderList = () => {
                                 <li>
                                     <div className="button-container">
                                         <a href="#">
-                                            <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                            <a onClick={handleShowReportModal}>
+                                                <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                            </a>
                                         </a>
                                     </div>
                                 </li>
@@ -163,7 +174,22 @@ const AssignedOrderList = () => {
                                     </div>
                                 </li>
                             </ul>
-
+                            <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Assigned Order Details</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <PDFViewer width="100%" height="500px">
+                                <AssignedOrderReport dataList={items} />
+                                </PDFViewer>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseReportModal}>
+                                Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                        
                           {/* --------------------imported search bar and table data ------------------------*/}
                         </div>
                         <div className="w-100">
@@ -183,6 +209,10 @@ const AssignedOrderList = () => {
                                              {
                                                  name: "Quality",
                                                  tag: "quality"
+                                             },
+                                             {
+                                                 name: "Quantity",
+                                                 tag: "quantity"
                                              },
                                              {
                                                  name: "Placed Date",
