@@ -18,7 +18,7 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
       await axios.delete(`/Farmer/deleteFarmerByJoinRequestID/${selectedRequest.joinRequestId}`);
       fetchApprovedSupplies();
       handleCloseDeclineModal();
-      alert("Supply Request Declined");
+      alert("Supplier Request Declined");
       window.location.reload();
     } catch (error) {
       console.error("Error declining request:", error);
