@@ -60,10 +60,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                 quality: formData.quality
             }
             const response = await axios.post("/op/supplierList", request);
-            const supplierList = response.data;
-            if (supplierList) {
-                setSupplierList(supplierList.supplierList);
-            }
+            setSupplierList(response.data)
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);

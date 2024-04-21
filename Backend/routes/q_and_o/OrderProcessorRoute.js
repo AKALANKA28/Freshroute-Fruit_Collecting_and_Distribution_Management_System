@@ -3,8 +3,9 @@ const router = express.Router();
 const orderProcessController = require('../../controllers/q_and_o/OrderProcessController');
 
 
-// Retrieve supplier list
+// Retrieve filtered supplier
 router.post("/supplierList", orderProcessController.getSupplierList);
+// Retrieve All supplier
 router.post("/allSuppliers", orderProcessController.getAllSuppliers);
 router.post("/updateSupplierDetails", orderProcessController.updateSuppliers);
 
