@@ -2,6 +2,9 @@
 const mongoose = require("mongoose");
 
 const EmployeeSchema = new mongoose.Schema({
+  imageUrl: {
+    type: String,
+  },
   name: {
     type: String,
   },
@@ -23,7 +26,7 @@ const EmployeeSchema = new mongoose.Schema({
   bankname: {
     type: String,
   },
-  qualifications: {
+  fileUrl: {
     type: String,
   },
   joineddate: {

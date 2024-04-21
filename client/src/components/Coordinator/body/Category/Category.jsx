@@ -26,6 +26,8 @@ function Category() {
   const [fruitNames, setFruitNames] = useState([]);
   const [selectedFruit, setSelectedFruit] = useState("all");
   const [selectedQuality, setSelectedQuality] = useState("all");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     getFetchData();
@@ -120,11 +122,22 @@ function Category() {
     setPriceModalOpen(false);
   };
 
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Category/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal(); // Close the modal after successful deletion
     } catch (err) {
       console.error("Error deleting category:", err);
     }
@@ -280,6 +293,23 @@ function Category() {
             </Modal.Body>
           </Modal>
 
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <div className="search-dropdown-container">
             <SearchBar onSearch={handleSearch} />
             <div className="dropdown">
@@ -350,7 +380,7 @@ function Category() {
                         </button>
                         <button
                           className="btn btn-delete"
-                          onClick={() => handleDelete(category._id)}
+                          onClick={() => handleShowDeleteModal(category._id)}
                         >
                           <i className="bi bi-trash-fill"></i>
                         </button>

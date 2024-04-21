@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 
 const TransportFeeForm =  ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
-    vehicletype: "",
-    date: "",
-    maxweight: "",
-    pricepkm: "",
+    vehicle_no:"",
+    type:"",
+    conditions:"",
+    capacity : "",
+    price: "",
   });
 
   useEffect(() => {
@@ -30,60 +31,61 @@ const TransportFeeForm =  ({ handleSubmit, initialData }) => {
   return (
     
       <form onSubmit={handleFormSubmit}>
+        
         <div className="mb-3">
-          <label htmlFor="vehicletype" className="form-label">
+          <label htmlFor="type" className="form-label">
             Vehicle Type
           </label>
           <input
             type="text"
             className="form-control"
-            name="vehicletype"
+            name="type"
             placeholder="Vehicle Type"
             onChange={handleChange}
-            value={formData.vehicletype}
-            required
+            value={formData.type}
+            disabled
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Date
+          <label htmlFor="conditions" className="form-label">
+            Conditions
           </label>
           <input
-            type="date"
+            type="text"
             className="form-control"
-            name="date"
-            placeholder="Date"
+            name="conditions"
+            placeholder="Conditions"
             onChange={handleChange}
-            value={formData.date}
-            required
+            value={formData.conditions}
+            disabled
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="maxweight" className="form-label">
-            MaxWeight(kg)
+          <label htmlFor="capacity" className="form-label">
+            Capacity(kg)
           </label>
           <input
             type="number"
             className="form-control"
-            name="maxweight"
-            placeholder="MaxWeight(kg)"
+            name="capacity"
+            placeholder="Capacity(kg)"
             onChange={handleChange}
-            value={formData.maxweight}
-            required
+            value={formData.capacity}
+            disabled
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="pricepkm" className="form-label">
+          <label htmlFor="price" className="form-label">
             Price per km(Rs)
           </label>
           <input
             type="number"
             className="form-control"
-            name="pricepkm"
+            name="price"
             placeholder="  Price per km(Rs)"
             onChange={handleChange}
-            value={formData.pricepkm}
-            required
+            value={formData.price}
+            
           />
         </div>
         <button type="submit" className="btn btn-success">
