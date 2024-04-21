@@ -232,7 +232,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/OMDashboard/QualityList",
-        element: <QualityList/>,
+        element: <QualityList isViewOnly={false}/>,
       },
       {
         path: "/OMDashboard/RequestedOrderList",
@@ -274,6 +274,10 @@ const router = createBrowserRouter([
         path: "/OPDashboard/CompletedOrders",
         element: <CompletedOrder/>,
       },
+      {
+        path: "/OPDashboard/QualityList",
+        element: <QualityList isViewOnly={true}/>,
+      }
 
     ]
   },

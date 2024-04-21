@@ -14,7 +14,7 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 
 axios.defaults.baseURL = "http://localhost:8070/";
-const QualityList = () => {
+const QualityList = ({isViewOnly}) => {
 
     const [items, setItems] = useState([]);
     const [tableData, setTableData] = useState([]);
@@ -221,12 +221,12 @@ const QualityList = () => {
 
                           {/* --------------------add button------------------ */}
 
-                          <div className="page-btn">
+                          {!isViewOnly && <div className="page-btn">
                               <button type="button" className="btn btn-added" onClick={handleAddNew}>
                                   <i className="bi bi-plus-circle" style={{marginRight: '10px'}}></i>
                                   Add Quality
                               </button>
-                          </div>
+                          </div>}
 
                           {/* --------------------imported search bar and table data ------------------------*/}
                       </div>
@@ -283,7 +283,7 @@ const QualityList = () => {
                           </li>
                       </ul>
 
-                      <QualityTable items={tableData} updateQualityList={getQualityList} editItem={handleEdit}/>
+                      <QualityTable items={tableData} updateQualityList={getQualityList} editItem={handleEdit} isViewOnly={isViewOnly}/>
                   </div>
                   <div>
                       <QualityPopupForm

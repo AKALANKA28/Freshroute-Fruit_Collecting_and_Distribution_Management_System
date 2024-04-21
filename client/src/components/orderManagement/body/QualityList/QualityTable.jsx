@@ -4,7 +4,7 @@ import axios from 'axios';
 axios.defaults.baseURL = "http://localhost:8070/";
 
 
-const QualityTable = ({ items, updateQualityList, editItem }) => {
+const QualityTable = ({ items, updateQualityList, editItem, isViewOnly }) => {
 
   const handleDelete = async (id) => {
     try {
@@ -36,7 +36,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
               <th className="col">Grade</th>
               <th className="col">Quality Description</th>
               <th className="col">Storage Conditions</th>
-              <th className="col">Action</th>
+              {!isViewOnly && <th className="col">Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -49,7 +49,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
                   <td>{item.quality}</td>
                   <td >{item.qualityDesc}</td>
                   <td >{item.storageCond}</td>
-                  <td>
+                  {!isViewOnly && <td>
                     <div className="buttons">
                     <button className="btn-table edit"  onClick={() => handleEdit(item)}>
                         <i className="bi bi-pencil-square"></i>
@@ -58,7 +58,7 @@ const QualityTable = ({ items, updateQualityList, editItem }) => {
                         <i className="bi bi-trash3-fill"></i>
                       </button>
                     </div>
-                  </td>
+                  </td>}
                 </tr>
               ))}
           </tbody>

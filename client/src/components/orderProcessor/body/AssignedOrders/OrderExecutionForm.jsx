@@ -236,7 +236,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                     </div>
                     <div className="row mb-3 ">
                         <div className="col-6">
-                            <label className="form-label">Quantity</label>
+                            <label className="form-label">Quantity(kg)</label>
                             <input className="form-control" type="text" name="quantity" readOnly={true}
                                    value={formData.quantity}
                                    disabled={true}/>
@@ -249,7 +249,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                         <select className="form-select" name="supplier" required
                                 onChange={handleOrderSupplierChange} value={supplier? supplier.supplierId: ""}>
                             <option value="">Select Supplier</option>
-                            {supplierList.map((sp, index) => (
+                            { supplierList && supplierList.map((sp, index) => (
                                 <option key={index} value={sp._id}>
                                     Supplier: {sp.supplierName} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
                                 </option>

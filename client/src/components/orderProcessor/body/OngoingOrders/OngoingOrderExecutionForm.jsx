@@ -278,9 +278,9 @@ function OrderExecutionForm({show, onHide, formData}) {
                         <thead className="table-light">
                         <tr>
                             <th className="col">Supplier</th>
-                            <th className="col">Quantity</th>
+                            <th className="col">Quantity(kg)</th>
                             <th className="col">Price</th>
-                            <th className="col">Cost (Rs)</th>
+                            <th className="col">Cost(Rs)</th>
                             <th className="col">Action</th>
                         </tr>
                         </thead>

@@ -57,34 +57,18 @@ const Sidebar = ()=> {
                         </ul>
 
                     </li>
-
                     <li className='nav-item'>
-                        <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse'
-                           href='#'>
-                            <i className='bi bi-layout-text-window-reverse'></i>
+                        <a className='nav-link' href='/OPDashboard/Supplierlist'>
+                        <i class="bi bi-list-stars"></i>
                             <span>Suppliers</span>
-                            <i className='bi bi-chevron-down ms-auto'></i>
                         </a>
-
-                        <ul id='tables-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-
-                            <li>
-                                <a href='#'>
-                                    <i className='bi bi-circle'>
-                                        <span>#</span>
-                                    </i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href='#'>
-                                    <i className='bi bi-circle'>
-                                        <span>#</span>
-                                    </i>
-                                </a>
-                            </li>
-
-
-                        </ul>
+                    </li>
+                    
+                    <li className='nav-item'>
+                        <a className='nav-link' href='/OPDashboard/QualityList'>
+                        <i class="bi bi-list-stars"></i>
+                            <span>Quality List</span>
+                        </a>
                     </li>
 
                     <li className='nav-heading'>Pages</li>

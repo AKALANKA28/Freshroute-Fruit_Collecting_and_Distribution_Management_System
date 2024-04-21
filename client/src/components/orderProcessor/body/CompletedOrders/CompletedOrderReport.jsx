@@ -58,7 +58,7 @@ const CompletedOrderReport = ({ dataList }) => {
               <Text style={styles.tableColHeader}>Fruit Type</Text>
               <Text style={styles.tableColHeader}>Fruit Category</Text>
               <Text style={styles.tableColHeader}>Quality</Text>
-              <Text style={styles.tableColHeader}>Quantity</Text>
+              <Text style={styles.tableColHeader}>Quantity(kg)</Text>
               <Text style={styles.tableColHeader}>Placed Date</Text>
               <Text style={styles.tableColHeader}>Due Date</Text>
               

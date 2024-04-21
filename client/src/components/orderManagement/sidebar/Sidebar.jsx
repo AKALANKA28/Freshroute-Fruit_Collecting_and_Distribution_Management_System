@@ -30,7 +30,8 @@ const Sidebar = () => {
 
                     <li className='nav-item'>
                         <a className='nav-link ' href='/OMDashboard/QualityList'>
-                            <i className='bi bi-menu-button-wide'></i>
+                            <i class="bi bi-sliders"></i>
+
                             <span>Quality Control</span>
                         </a>
                     </li>

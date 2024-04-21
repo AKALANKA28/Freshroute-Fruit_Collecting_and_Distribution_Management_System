@@ -6,8 +6,10 @@ const AcceptedSupply = require("../../models/farmers/acceptedSupplies")
 exports.getSupplierList = async (req, res) => {
     try {
         const { fruit, category, quality } = req.body;
-        const filter = { fruit:fruit, category:category, quality:quality}
-        const supplierList = await AcceptedSupply.find(filter);
+        const filter = { fruit:fruit, category:category, quality:quality};
+        console.log(filter);
+        const supplierList = await AcceptedSupply.find();
+        console.log(supplierList);
         res.json(supplierList);
     } catch (err) {
         console.error(err);
