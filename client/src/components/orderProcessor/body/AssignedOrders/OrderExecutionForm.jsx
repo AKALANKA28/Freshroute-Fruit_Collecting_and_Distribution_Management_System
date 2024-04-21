@@ -111,12 +111,13 @@ function OrderExecutionForm({show, onHide, formData}) {
         } else {
             const exeRecord = {
                 supplierId: supplier.supplierId,
-                supplierName: supplier.supplierName,
+                supplierName: supplier.supplierName? supplier.supplierName: "No Name",
                 quantity: fillingQty,
                 price: supplier.price,
                 time: new Date()
             }
-            setExecutionDetails([...executionDetails, exeRecord])
+            const newExecutionHistory = [...executionDetails, exeRecord];
+            setExecutionDetails(newExecutionHistory);
         }
     }
     const handleDelete = (item) => {
@@ -134,6 +135,8 @@ function OrderExecutionForm({show, onHide, formData}) {
         })
         setSupplierList(updatedSupplierList);
         removeExecutionDetailRecord(item.supplierId);
+        const newTotalQuantity = parseFloat(totalFilledQuantity) - parseFloat(item.quantity);
+        setTotalFiledQuantity(newTotalQuantity);
     }
     const removeExecutionDetailRecord = (supplierId) => {
         const remainingRecords = executionDetails.filter((item, index) => item.supplierId !== supplierId);
@@ -243,12 +246,12 @@ function OrderExecutionForm({show, onHide, formData}) {
 
                     <div className="mb-3">
                         <label className="form-label">Supplier</label>
-                        <select className="form-select" name="supplier" required
-                                onChange={handleOrderSupplierChange} value={supplier? supplier.supplierId: ""}>
+                        <select className="form-select" name="supplier" required disabled={totalFilledQuantity >= formData.quantity}
+                                onChange={handleOrderSupplierChange} value={supplier? supplier.supplierId: "" }>
                             <option value="">Select Supplier</option>
                             { supplierList && supplierList.map((sp, index) => (
                                 <option key={index} value={sp._id}>
-                                    Supplier: {sp.supplierName} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
+                                    Supplier: {sp.supplierName? sp.supplierName: "No Name"} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
                                 </option>
                             ))}
                         </select>

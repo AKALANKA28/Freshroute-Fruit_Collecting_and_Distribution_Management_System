@@ -111,7 +111,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         } else {
             const exeRecord = {
                 supplierId: supplier.supplierId,
-                supplierName: supplier.supplierName,
+                supplierName: supplier.supplierName? supplier.supplierName: "No Name",
                 quantity: fillingQty,
                 price: supplier.price,
                 time: new Date()
