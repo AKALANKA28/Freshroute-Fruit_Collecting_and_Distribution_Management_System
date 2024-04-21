@@ -26,6 +26,14 @@ const Sidebar = () => {
 
             <ul id='supplier-details-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
+            <li>
+                <a href='SupplierRequests'>
+                  <i className='bi bi-circle'>
+                    <span>Supplier Requests</span>
+                  </i>
+                </a>
+              </li>
+
               <li>
                 <a href='SupplierDetails'>
                   <i className='bi bi-circle'>
@@ -33,13 +41,7 @@ const Sidebar = () => {
                   </i>
                 </a>
               </li>
-              <li>
-                <a href='SupplierRequests'>
-                  <i className='bi bi-circle'>
-                    <span>Supplier Requests</span>
-                  </i>
-                </a>
-              </li>
+              
             </ul>
           </li>
 
