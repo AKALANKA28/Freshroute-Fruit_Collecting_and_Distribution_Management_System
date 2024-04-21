@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
-import SearchBar from './SearchBar';
+import SearchBar from '../../components/SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
@@ -11,6 +11,8 @@ import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
 import { ToastContainer } from "react-toastify";
+import Pagination from "../../components/Pagination";
+import ReportModal from "../../components/ReportModal";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -22,7 +24,8 @@ function Sales() {
   const [selectedSales, setSelectedSales] = useState(null);
   const [filter, setFilter] = useState('Today');
   const [filteredDataList, setFilteredDataList] = useState([]); 
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6); // Number of items per page
 
   useEffect(() => {
     getFetchData();
@@ -51,8 +54,62 @@ function Sales() {
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
+    setCurrentPage(1); // Reset current page to 1 when a new search is performed
+
   };
 
+//Pagination 
+
+    // Calculate total number of pages
+    const totalPages = Math.ceil(filteredDataList.length / pageSize);
+
+    // Calculate the start and end index of items for the current page
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, filteredDataList.length);
+  
+    // Get the current page of items to display
+    const currentPageItems = filteredDataList.slice(startIndex, endIndex);
+  
+    // Function to handle next page
+    const handleNextPage = () => {
+      if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+  
+    // Function to handle previous page
+    const handlePreviousPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+  
+    // Function to handle page navigation
+    const handlePageChange = (page) => {
+      setCurrentPage(page);
+    };
+  
+    // Function to handle page size change
+    const handlePageSizeChange = (size) => {
+      setPageSize(size);
+      setCurrentPage(1); // Reset current page to 1 when page size changes
+    };
+
+ // Render pagination component
+ const renderPagination = () => {
+  // Generate an array of page numbers from 1 to totalPages
+  const pages = [...Array(totalPages).keys()].map((i) => i + 1);
+  return (
+    <div className="pagination">
+      <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
+      {pages.map((page) => (
+        <button key={page} onClick={() => handlePageChange(page)}>{page}</button>
+      ))}
+      <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+    </div>
+  );
+};
+    //Pagination End
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -122,7 +179,7 @@ function Sales() {
   return (
     <div className="main">
      <div className="card recent-sales overflow-auto">    
-        <div className="card-body">           
+        <div className="card-body table-body">           
           <div class="page-header">
             <div class="add-item d-flex">
               <div class="card-title">
@@ -139,21 +196,8 @@ function Sales() {
                     <img src={Pdf} alt="Pdf Icon"  className="icon"  />
                 </a>
 
-                <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Active campaigns Report</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <PDFViewer width="100%" height="500px">
-                      <SalesReport dataList={dataList} />
-                    </PDFViewer>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseReportModal}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
+                <ReportModal show={showReportModal} handleClose={handleCloseReportModal} dataList={dataList} />
+
 
             </div>
             </li>
@@ -184,12 +228,12 @@ function Sales() {
               </button>
             </div>
           </div>
-          <Modal show={addModalOpen} onHide={handleAddModalClose}>
+          <Modal show={addModalOpen} onHide={handleAddModalClose} className="p-0 m-0">
             
             <Modal.Header closeButton>
               <Modal.Title>Add Sales</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body >
               <SalesForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
@@ -224,9 +268,7 @@ function Sales() {
             </tr>
           </thead>
           <tbody>
-            {filteredDataList &&
-              filteredDataList.length > 0 &&
-              filteredDataList.map((sales) => (
+              {currentPageItems.map((sales) => (
                 <tr key={sales._id}>
                   <td>{sales.customer_name}</td>
                   <td>{sales.date}</td>
@@ -266,9 +308,14 @@ function Sales() {
       theme="light"
       // transition: Bounce
       />
-      {/* Same as */}
-    <ToastContainer />
-  </div>
+     {/* Render pagination */}
+     <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+        handlePageChange={handlePageChange}
+      />  </div>
   );
 }
 
