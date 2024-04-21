@@ -159,9 +159,9 @@ function OrderExecutionForm({show, onHide, formData}) {
 
     const handleSaveExecution = async (event) =>{
         event.preventDefault();
-        let status = "IN_PROGRESS"
+        let status = "IN_PROGRESS";
         if (parseFloat(totalFilledQuantity) === parseFloat(formData.quantity)) {
-            status = "COMPLETED"
+            status = "COMPLETED";
         }
         const data= {
             id: formData.id,

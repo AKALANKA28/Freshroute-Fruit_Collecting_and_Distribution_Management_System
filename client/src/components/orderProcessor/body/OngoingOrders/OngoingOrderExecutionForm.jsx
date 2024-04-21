@@ -60,7 +60,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                 quality: formData.quality
             }
             const response = await axios.post("/op/supplierList", request);
-            setSupplier(response.data);
+            setSupplierList(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -246,9 +246,9 @@ function OrderExecutionForm({show, onHide, formData}) {
                     <div className="mb-3">
                         <label className="form-label">Supplier</label>
                         <select className="form-select" name="supplier" required disabled={totalFilledQuantity >= formData.quantity}
-                                onChange={handleOrderSupplierChange} value={supplier? supplier.supplierId: ""}>
+                                onChange={handleOrderSupplierChange} value={supplier? supplier.supplierId: "" }>
                             <option value="">Select Supplier</option>
-                            {supplierList.map((sp, index) => (
+                            { supplierList && supplierList.map((sp, index) => (
                                 <option key={index} value={sp._id}>
                                     Supplier: {sp.supplierName? sp.supplierName: "No Name"} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
                                 </option>

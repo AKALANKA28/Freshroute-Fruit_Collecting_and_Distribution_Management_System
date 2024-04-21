@@ -25,7 +25,7 @@ const Sidebar = ()=> {
                     <li className='nav-item'>
                         <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse'
                            href='#'>
-                            <i className='bi bi-menu-button-wide'></i>
+                            <i class="bi bi-box-seam"></i>
                             <span>Orders</span>
                             <i className='bi bi-chevron-down ms-auto'></i>
                         </a>
@@ -59,7 +59,7 @@ const Sidebar = ()=> {
                     </li>
                     <li className='nav-item'>
                         <a className='nav-link' href='/OPDashboard/Supplierlist'>
-                        <i class="bi bi-list-stars"></i>
+                        <i class="bi bi-people"></i>
                             <span>Suppliers</span>
                         </a>
                     </li>

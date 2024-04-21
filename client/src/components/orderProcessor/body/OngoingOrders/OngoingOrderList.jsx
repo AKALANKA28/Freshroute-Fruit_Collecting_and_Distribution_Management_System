@@ -69,7 +69,7 @@ const OngoingOrderList = () => {
             category: item.category,
             quality: item.quality,
             quantity: item.quantity,
-            customer: item.customerName,
+            customer: item.customer,
             placedDate: item.placedDate,
             dueDate: item.dueDate,
             opId: item.opId,

@@ -1,5 +1,6 @@
 const OrderDetail = require("../../models/q_and_o/MockOrderDetail");
-const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");
+const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");  
+const Employee = require("../../models/StaffManager/Employee")
 
 exports.getPendingOrderList = async (req, res) => {
     const filter = { orderStatus: "PENDING" };
@@ -87,14 +88,9 @@ const getOrderListByFilter = async (res, filter) => {
 
 exports.getOrderProcessorList = async (req, res) => {
     try {
-        // const op = await StaffManager.find();
-        const op = { opList: [
-                {name: "Sasanka", id: "1233456"},
-                {name: "Sasanka1", id: "852665"},
-                {name: "Sasanka2", id: "855521"},
-                {name: "Sasanka3", id: "5585255"},
-            ]};
-        res.json(op);
+        const filter = { jobrole:"Order Processor"};
+        const opList = await Employee.find(filter);
+        res.json(opList);
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error retrieving order processor list", error: err.message });

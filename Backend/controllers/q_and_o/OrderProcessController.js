@@ -8,7 +8,6 @@ exports.getSupplierList = async (req, res) => {
         const { fruit, category, quality } = req.body;
         const filter = { fruit:fruit, subCategory:category, quality:quality};
         const supplierList = await AcceptedSupply.find(filter);
-        console.log(supplierList);
         res.json(supplierList);
     } catch (err) {
         console.error(err);
@@ -18,7 +17,6 @@ exports.getSupplierList = async (req, res) => {
 exports.getAllSuppliers = async (req, res) => {
     try {
         const supplierList = await AcceptedSupply.find();
-        console.log(supplierList);
         res.json(supplierList);
     } catch (err) {
         console.error(err);
@@ -29,13 +27,13 @@ exports.updateSuppliers = async (req, res) => {
     try {
         const { supplierList } = req.body;
         if (supplierList) {
-            supplierList.map((supplier)=>{
-                AcceptedSupply.findByIdAndUpdate(supplier._id,{
+            for( const supplier of supplierList){
+                await AcceptedSupply.findByIdAndUpdate(supplier._id,{
                     $set:{
                         quantity: supplier.quantity
                     }
                 })
-            })
+            }
             res.status(200).json({status: "Quantity successfully updated"})
         } else {
             res.status(200).json({status: "There are no records to update"})
@@ -62,7 +60,7 @@ exports.getCompletedOrderList = async (req, res) => {
 exports.getAssignedOrderListByFilter = async (req, res) => {
     const filter = createFilterFromRequest(req);
     if (filter) {
-        filter.orderStatus = "PENDING";
+        filter.orderStatus = "ASSIGNED";
         await getOrderListByFilter(res, filter);
     } else {
         res.status(400).json({ message: 'Invalid filter type' });
@@ -72,7 +70,7 @@ exports.getAssignedOrderListByFilter = async (req, res) => {
 exports.getOngoingOrderListByFilter = async (req, res) => {
     const filter = createFilterFromRequest(req);
     if (filter) {
-        filter.$or = [{ orderStatus: "ASSIGNED" }, { orderStatus: "IN_PROGRESS" }];
+        filter.$or = [ { orderStatus: "IN_PROGRESS" }];
         await getOrderListByFilter(res, filter);
     } else {
         res.status(400).json({ message: 'Invalid filter type' });

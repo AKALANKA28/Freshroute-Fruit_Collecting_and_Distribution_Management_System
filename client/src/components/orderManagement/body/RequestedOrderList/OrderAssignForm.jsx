@@ -16,7 +16,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
     const handleOrderProcessorChange = (event) => {
         const { value } = event.target;
         orderProcessor.map((op) => {
-            if (op.id === value) {
+            if (op._id === value) {
                 event.target.opName = op.name;
                 event.target.opId = value;
             }
@@ -35,7 +35,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
             const response = await axios.get("/om/processorList");
             const orderProcessorList = response.data;
             if (orderProcessorList) {
-                setOrderProcessor(orderProcessorList.opList);
+                setOrderProcessor(orderProcessorList);
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -78,7 +78,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
                                           disabled={true}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formQuantity">
-                            <Form.Label>Quantity(kg)</Form.Label>
+                            <Form.Label>Quantity (kg)</Form.Label>
                             <Form.Control type="text" name="quantity" readOnly={true} value={formData.quantity}
                                           disabled={true}/>
                         </Form.Group>
@@ -87,7 +87,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange 
                             <Form.Select name="orderProcessor" required onChange={handleOrderProcessorChange} value={formData.opId}>
                                 <option value="">Select Order Processor</option>
                                 {orderProcessor.map((op, index) => (
-                                    <option key={index} value={op.id}>
+                                    <option key={index} value={op._id}>
                                         {op.name}
                                     </option>
                                 ))}
