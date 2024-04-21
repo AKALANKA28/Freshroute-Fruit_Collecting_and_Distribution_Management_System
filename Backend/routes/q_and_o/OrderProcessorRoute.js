@@ -5,6 +5,7 @@ const orderProcessController = require('../../controllers/q_and_o/OrderProcessCo
 
 // Retrieve supplier list
 router.post("/supplierList", orderProcessController.getSupplierList);
+router.post("/allSuppliers", orderProcessController.getAllSuppliers());
 router.post("/updateSupplierDetails", orderProcessController.updateSuppliers);
 
 router.get("/pendingOrderList", orderProcessController.getAssignedOrderList);
