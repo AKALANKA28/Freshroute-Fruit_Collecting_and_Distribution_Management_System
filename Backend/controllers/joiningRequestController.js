@@ -1,21 +1,5 @@
-//C:\Users\User\OneDrive\Desktop\ITP\MERN_Project\Backend\controllers\joiningRequestController.js
 const JoiningRequest = require("../models/joiningRequests");
 const PendingSupplier = require("../models/farmers/pendingSuppliers");
-
-// const addJoiningRequest = async (req, res) => {
-//   const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl } = req.body;
-//   try {
-//     const newJoiningRequest = await JoiningRequest.create({ name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl });
-    
-//     const pendingSupplier = await PendingSupplier.create({
-//       ...newJoiningRequest.toObject(),
-//       joinRequestId: newJoiningRequest._id // Associate joining request ID with pending supplier
-//     });
-//     res.status(201).json(newJoiningRequest); // Return newly created joining request
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
 
 const addJoiningRequest = async (req, res) => {
   const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl } = req.body;

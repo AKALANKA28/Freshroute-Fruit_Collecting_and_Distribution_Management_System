@@ -22,6 +22,11 @@ const FarmerSchema = new mongoose.Schema({
         required: true
     },
 
+    mobile : {
+        type : String,
+        required: true
+    },
+
     city : {
         type : String,
         required: true
