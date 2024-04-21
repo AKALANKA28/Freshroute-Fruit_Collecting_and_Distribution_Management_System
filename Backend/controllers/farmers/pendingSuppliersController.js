@@ -60,11 +60,22 @@ const deletePendingSupplierByJoinRequestId = async (req, res) => {
   }
 };
 
+const getPendingSupplierByJoiningRequestId = async (req, res) => {
+  const joinRequestId = req.params.joinRequestId;
+  try {
+    const pendingSupplier = await PendingSupplier.findOne({ joinRequestId: joinRequestId });
+    res.status(200).json(pendingSupplier);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addPendingSupplier,
   getAllPendingSuppliers,
   getOnePendingSupplier,
   deletePendingSupplier,
   updatePendingSupplier,
-  deletePendingSupplierByJoinRequestId
+  deletePendingSupplierByJoinRequestId,
+  getPendingSupplierByJoiningRequestId
 };

@@ -1,8 +1,8 @@
 mongoose = require("mongoose");
 
-const AcceptedSupplierSchema = new mongoose.Schema({
+const DeclinedSupplierSchema = new mongoose.Schema({
   
-    name: {
+      name: {
         type: String,
         required: true,
       },
@@ -39,6 +39,6 @@ const AcceptedSupplierSchema = new mongoose.Schema({
     },
 });
 
-const AcceptedSupplier = mongoose.model("AcceptedSupplier", AcceptedSupplierSchema);
+const DeclinedSupplier = mongoose.model("DeclinedSupplier", DeclinedSupplierSchema);
 
-module.exports = AcceptedSupplier;
+module.exports = DeclinedSupplier;

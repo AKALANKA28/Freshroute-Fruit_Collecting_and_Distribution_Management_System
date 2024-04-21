@@ -23,7 +23,7 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
   const handleAcceptRequest = async () => {
     if (!selectedRequest) return;
     try {
-      await axios.put(`/JoinRequest/accept/${selectedRequest.joinRequestID}`);
+      await axios.put(`/JoiningRequest/accept/${selectedRequest.joinRequestId}`);
       await axios.post('/acceptedSupplier/add', selectedRequest);
       await axios.delete(`/pendingSupplier/delete/${selectedRequest._id}`);
       fetchSupplierRequests();
@@ -38,9 +38,9 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
   const handleDeclineRequest = async () => {
     if (!selectedRequest) return;
     try {
-      await axios.put(`/Prediction/decline/${selectedRequest.predictionID}`);
-      await axios.post('/declinedSupply/add', selectedRequest);
-      await axios.delete(`/pendingSupply/delete/${selectedRequest._id}`);
+      await axios.put(`/JoiningRequest/decline/${selectedRequest.joinRequestId}`);
+      await axios.post('/declinedSupplier/add', selectedRequest);
+      await axios.delete(`/pendingSupplier/delete/${selectedRequest._id}`);
       fetchSupplierRequests();
       handleCloseDeclineModal();
       alert("Supplier Request Declined");

@@ -2,20 +2,42 @@
 const JoiningRequest = require("../models/joiningRequests");
 const PendingSupplier = require("../models/farmers/pendingSuppliers");
 
+// const addJoiningRequest = async (req, res) => {
+//   const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl } = req.body;
+//   try {
+//     const newJoiningRequest = await JoiningRequest.create({ name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl });
+    
+//     const pendingSupplier = await PendingSupplier.create({
+//       ...newJoiningRequest.toObject(),
+//       joinRequestId: newJoiningRequest._id // Associate joining request ID with pending supplier
+//     });
+//     res.status(201).json(newJoiningRequest); // Return newly created joining request
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
+
 const addJoiningRequest = async (req, res) => {
   const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl } = req.body;
   try {
     const newJoiningRequest = await JoiningRequest.create({ name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl });
-
+    
+    // Check if there is already a pending supplier associated with the joining request
+    const existingPendingSupplier = await PendingSupplier.findOne({ joinRequestId: newJoiningRequest._id });
+    
+    if (!existingPendingSupplier) {
       const pendingSupplier = await PendingSupplier.create({
         ...newJoiningRequest.toObject(),
         joinRequestId: newJoiningRequest._id // Associate joining request ID with pending supplier
       });
-    alert("New Request Addedddd");
+    }
+    
+    res.status(201).json(newJoiningRequest); // Return newly created joining request
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 const getAllJoiningRequests = async (req, res) => {
   try {

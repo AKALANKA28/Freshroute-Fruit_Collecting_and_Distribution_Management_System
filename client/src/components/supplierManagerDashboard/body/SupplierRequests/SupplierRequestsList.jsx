@@ -5,6 +5,7 @@ import '../SupplyRequests/supplyRequests.css';
 import { Button, Modal } from "react-bootstrap";
 import SupplierRequestsTable from "./SupplierRequestsTable";
 import ApprovedSuppliersTable from "./ApprovedSuppliersTable";
+import DeclinedSuppliersTable from "./DeclinedSuppliersTable";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -56,8 +57,8 @@ const SupplierRequests = () => {
         <div className="card-body">
           <div className="page-header">
               <div className="card-title">
-                Supply Requests
-                <h6>Manage Supply Requests</h6>
+                Supplier Requests
+                <h6>Manage Supplier Requests</h6>
               </div>
           </div>
 
@@ -67,10 +68,10 @@ const SupplierRequests = () => {
                 <Nav.Link eventKey="supplierRequests">Pending Supplier Requests</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="approvedSupplies">Approved Suppliers</Nav.Link>
+                <Nav.Link eventKey="approvedSuppliers">Approved Suppliers</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="declinedSupplies">Declined Suppliers</Nav.Link>
+                <Nav.Link eventKey="declinedSuppliers">Declined Suppliers</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content>
@@ -84,7 +85,7 @@ const SupplierRequests = () => {
                 <ApprovedSuppliersTable approvedSuppliers={approvedSuppliers} />
               </Tab.Pane>
               <Tab.Pane eventKey="declinedSuppliers">
-              {/* <DeclinedSuppliersTable declinedSuppliers={declinedSuppliers} /> */}
+              <DeclinedSuppliersTable declinedSuppliers={declinedSuppliers} />
               </Tab.Pane>
             </Tab.Content>
           </Tab.Container>

@@ -14,8 +14,7 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
       await axios.delete(`/acceptedSupplier/delete/${selectedRequest._id}`);
 
       // Update the prediction status to "Declined"
-      await axios.put(`/JoiningRequest/decline/${selectedRequest.predictionID}`);
-
+      await axios.put(`/JoiningRequest/decline/${selectedRequest.joinRequestId}`);
       fetchApprovedSupplies();
       handleCloseDeclineModal();
       alert("Supply Request Declined");
@@ -37,7 +36,7 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
 
   const fetchApprovedSupplies = async () => {
     try {
-      await axios.get("/acceptedSupply");
+      await axios.get("/acceptedSupplier");
     } catch (error) {
       console.error("Error fetching approved supplies:", error);
     }
@@ -59,26 +58,31 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
             <table className="table datatable">
               <thead className="table-light">
                 <tr>
-                  <th>Fruit</th>
-                  <th>Sub Category</th>
-                  <th>Quality</th>
-                  <th>Total Quantity(kg)</th>
-                  <th>Price for 1kg(Rs)</th>
-                  <th>Total Price(Rs)</th>
-                  <th>Date Can Be Given</th>
-                  <th>Action</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">City</th>
+                <th scope="col">NIC</th>
+                <th scope="col">Land Address</th>
+                <th scope="col">Field Area</th>
+                <th scope="col">Land Deed</th>
+                <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {approvedSuppliers.map((request) => (
                   <tr key={request._id}>
-                    <td>{request.fruit}</td>
-                    <td>{request.subCategory}</td>
-                    <td>{request.quality}</td>
-                    <td>{request.quantity} kg</td>
-                    <td>Rs. {request.price}</td>
-                    <td>Rs. {request.price * request.quantity}</td>
-                    <td>{request.dateCanBeGiven}</td>
+                    <td>{request.name}</td>
+                    <td>{request.email}</td>
+                    <td>{request.mobile}</td>
+                    <td>{request.city}</td>
+                    <td>{request.NIC}</td>
+                    <td>{request.landAddress}</td>
+                    <td>{request.fieldArea}</td>
+                    <td>{request.landDeedUrl && (
+                      <a href={request.landDeedUrl} target="_blank" rel="noopener noreferrer">
+                        View Land Deed
+                      </a>
+                    )}</td>
                     <td>
                       <Button
                         className="btn btn-action btn-danger"
