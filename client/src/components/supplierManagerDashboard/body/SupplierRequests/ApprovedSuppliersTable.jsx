@@ -15,6 +15,7 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
 
       // Update the prediction status to "Declined"
       await axios.put(`/JoiningRequest/decline/${selectedRequest.joinRequestId}`);
+      await axios.delete(`/Farmer/deleteFarmerByJoinRequestID/${selectedRequest.joinRequestId}`);
       fetchApprovedSupplies();
       handleCloseDeclineModal();
       alert("Supply Request Declined");

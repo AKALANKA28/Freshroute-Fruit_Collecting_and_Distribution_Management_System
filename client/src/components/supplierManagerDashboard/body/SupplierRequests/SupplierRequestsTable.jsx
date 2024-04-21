@@ -10,7 +10,7 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
   useEffect(() => {
     fetchSupplierRequests();
   }, );
-      
+
   const fetchSupplierRequests = async () => {
     try {
       const response = await axios.get("/pendingSupplier");
@@ -26,6 +26,19 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
       await axios.put(`/JoiningRequest/accept/${selectedRequest.joinRequestId}`);
       await axios.post('/acceptedSupplier/add', selectedRequest);
       await axios.delete(`/pendingSupplier/delete/${selectedRequest._id}`);
+      await axios.post('/Farmer/add', {
+        NIC: selectedRequest.NIC,
+        username: "",
+        name: selectedRequest.name,
+        email: selectedRequest.email,
+        mobile: selectedRequest.mobile,
+        city: selectedRequest.city,
+        lane: "",
+        landAddress: selectedRequest.landAddress,
+        fieldArea: selectedRequest.fieldArea,
+        landDeedUrl: selectedRequest.landDeedUrl,
+        joinRequestId: selectedRequest.joinRequestId
+      });
       fetchSupplierRequests();
       handleCloseModal();
       alert("Supplier Request Added");
@@ -86,47 +99,46 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody style={{ marginTop: "10px" }}> {/* Adjust the marginTop value as needed */}
-  {supplierRequests.length === 0 ? (
-    <tr>
-      <td colSpan="8" style={{ textAlign: "center" }}>No pending requests</td>
-    </tr>
-  ) : (
-    supplierRequests.map((request) => (
-      <tr key={request._id} style={{ marginBottom: "10px" }}> {/* Adjust the marginBottom value as needed */}
-        <td>{request.name}</td>
-        <td>{request.email}</td>
-        <td>{request.mobile}</td>
-        <td>{request.city}</td>
-        <td>{request.NIC}</td>
-        <td>{request.landAddress}</td>
-        <td>{request.fieldArea}</td>
-        <td>{request.landDeedUrl && (
-          <a href={request.landDeedUrl} target="_blank" rel="noopener noreferrer">
-            View Land Deed
-          </a>
-        )}</td>
-        
-        <td>
-          <Button
-            className="btn-action btn-approve"
-            onClick={() => handleShowModal(request)}
-          >
-            Approve
-          </Button>
-          <Button
-            className="btn-action btn-danger"
-            onClick={() => handleShowDeclineModal(request)}
-          >
-            Decline
-          </Button>
-        </td>
-      </tr>
-    ))
-  )}
-</tbody>
-
-
+        <tbody style={{ marginTop: "10px" }}>
+          {supplierRequests.length === 0 ? (
+            <tr>
+              <td colSpan="8" style={{ textAlign: "center" }}>No pending requests</td>
+            </tr>
+          ) : (
+            supplierRequests.map((request, index) => (
+              <tr key={index} style={{ marginBottom: "10px" }}>
+                <td>{request.name}</td>
+                <td>{request.email}</td>
+                <td>{request.mobile}</td>
+                <td>{request.city}</td>
+                <td>{request.NIC}</td>
+                <td>{request.landAddress}</td>
+                <td>{request.fieldArea}</td>
+                <td>
+                  {request.landDeedUrl && (
+                    <a href={request.landDeedUrl} target="_blank" rel="noopener noreferrer">
+                      View Land Deed
+                    </a>
+                  )}
+                </td>
+                <td>
+                  <Button
+                    className="btn-action btn-approve"
+                    onClick={() => handleShowModal(request)}
+                  >
+                    Approve
+                  </Button>
+                  <Button
+                    className="btn-action btn-danger"
+                    onClick={() => handleShowDeclineModal(request)}
+                  >
+                    Decline
+                  </Button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
       </table>
 
       <Modal show={showModal} onHide={handleCloseModal}>

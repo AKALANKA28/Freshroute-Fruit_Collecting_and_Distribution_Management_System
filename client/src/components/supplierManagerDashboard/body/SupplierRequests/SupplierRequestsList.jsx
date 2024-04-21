@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Nav, Tab } from "react-bootstrap";
 import '../SupplyRequests/supplyRequests.css';
-import { Button, Modal } from "react-bootstrap";
 import SupplierRequestsTable from "./SupplierRequestsTable";
 import ApprovedSuppliersTable from "./ApprovedSuppliersTable";
 import DeclinedSuppliersTable from "./DeclinedSuppliersTable";

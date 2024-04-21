@@ -9,6 +9,19 @@ function DeclinedSuppliersTable({ declinedSuppliers }) {
   const handleAcceptRequest = async () => {
     if (!selectedRequest) return;
     try {
+      await axios.post('/Farmer/add', {
+        NIC: selectedRequest.NIC,
+        username: "",
+        name: selectedRequest.name,
+        email: selectedRequest.email,
+        mobile: selectedRequest.mobile,
+        city: selectedRequest.city,
+        lane: "",
+        landAddress: selectedRequest.landAddress,
+        fieldArea: selectedRequest.fieldArea,
+        landDeedUrl: selectedRequest.landDeedUrl,
+        joinRequestId: selectedRequest.joinRequestId
+      });
       await axios.post('/acceptedSupplier/add', selectedRequest);
       // Delete the declined supplier
       await axios.delete(`/declinedSupplier/delete/${selectedRequest._id}`);
