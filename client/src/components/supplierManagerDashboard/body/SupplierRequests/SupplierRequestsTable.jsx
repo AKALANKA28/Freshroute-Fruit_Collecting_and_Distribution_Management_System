@@ -13,7 +13,7 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
       
   const fetchSupplierRequests = async () => {
     try {
-      const response = await axios.get("/JoiningRequest");
+      const response = await axios.get("/pendingSupplier");
       setSupplierRequests(response.data);
     } catch (error) {
       console.error("Error fetching supplier requests:", error);
@@ -23,9 +23,9 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
   const handleAcceptRequest = async () => {
     if (!selectedRequest) return;
     try {
-      await axios.put(`/Prediction/accept/${selectedRequest.predictionID}`);
-      await axios.post('/acceptedSupply/add', selectedRequest);
-      await axios.delete(`/pendingSupply/delete/${selectedRequest._id}`);
+      await axios.put(`/JoinRequest/accept/${selectedRequest.joinRequestID}`);
+      await axios.post('/acceptedSupplier/add', selectedRequest);
+      await axios.delete(`/pendingSupplier/delete/${selectedRequest._id}`);
       fetchSupplierRequests();
       handleCloseModal();
       alert("Supplier Request Added");

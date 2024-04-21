@@ -1,3 +1,4 @@
+//C:\Users\User\OneDrive\Desktop\ITP\MERN_Project\Backend\models\joiningRequests.js
 const mongoose = require("mongoose");
 
 var JoiningRequestSchema = new mongoose.Schema({
@@ -32,11 +33,11 @@ var JoiningRequestSchema = new mongoose.Schema({
   landDeedUrl: {
     type: String,
   },
-//   status: {
-//     type: String,
-//     enum: ['approved', 'pending', 'declined'],
-//     default: 'pending'
-// }
+  status: {
+    type: String,
+    enum: ['approved', 'pending', 'declined'],
+    default: 'pending'
+  }
 });
 
 const JoiningRequest = mongoose.model("JoiningRequest", JoiningRequestSchema);

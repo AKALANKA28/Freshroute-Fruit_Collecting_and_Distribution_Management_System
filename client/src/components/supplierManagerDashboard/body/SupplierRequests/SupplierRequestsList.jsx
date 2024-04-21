@@ -4,6 +4,7 @@ import { Nav, Tab } from "react-bootstrap";
 import '../SupplyRequests/supplyRequests.css';
 import { Button, Modal } from "react-bootstrap";
 import SupplierRequestsTable from "./SupplierRequestsTable";
+import ApprovedSuppliersTable from "./ApprovedSuppliersTable";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -20,7 +21,7 @@ const SupplierRequests = () => {
 
   const fetchSupplierRequests = async () => {
     try {
-      const response = await axios.get("/JoiningRequest");
+      const response = await axios.get("/pendingSupplier");
       setSupplierRequests(response.data);
     } catch (error) {
       console.error("Error fetching supplier requests:", error);
@@ -66,10 +67,10 @@ const SupplierRequests = () => {
                 <Nav.Link eventKey="supplierRequests">Pending Supplier Requests</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="approvedSupplies">Approved Supplies</Nav.Link>
+                <Nav.Link eventKey="approvedSupplies">Approved Suppliers</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="declinedSupplies">Declined Supplies</Nav.Link>
+                <Nav.Link eventKey="declinedSupplies">Declined Suppliers</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content>
@@ -79,11 +80,11 @@ const SupplierRequests = () => {
                   fetchSupplierRequests={fetchSupplierRequests}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="approvedSupplies">
-                {/* <ApprovedSuppliesTable approvedSupplies={approvedSupplies} /> */}
+              <Tab.Pane eventKey="approvedSuppliers">
+                <ApprovedSuppliersTable approvedSuppliers={approvedSuppliers} />
               </Tab.Pane>
-              <Tab.Pane eventKey="declinedSupplies">
-              {/* <DeclinedSuppliesTable declinedSupplies={declinedSupplies} /> */}
+              <Tab.Pane eventKey="declinedSuppliers">
+              {/* <DeclinedSuppliersTable declinedSuppliers={declinedSuppliers} /> */}
               </Tab.Pane>
             </Tab.Content>
           </Tab.Container>
