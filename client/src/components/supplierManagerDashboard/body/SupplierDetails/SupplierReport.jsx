@@ -90,6 +90,7 @@ const SupplierReport = ({ dataList }) => {
               <Text style={styles.tableColHeader}>Supplier Name</Text>
               <Text style={styles.tableColHeader}>Username</Text>
               <Text style={styles.tableColHeader}>Email</Text>
+              <Text style={styles.tableColHeader}>Mobile</Text>
               <Text style={styles.tableColHeader}>City</Text>
               <Text style={styles.tableColHeader}>Lane</Text>
             </View>
@@ -99,6 +100,7 @@ const SupplierReport = ({ dataList }) => {
                 <Text style={styles.tableCol}>{supplier.name}</Text>
                 <Text style={styles.tableCol}>{supplier.username}</Text>
                 <Text style={styles.tableCol}>{supplier.email}</Text>
+                <Text style={styles.tableCol}>{supplier.mobile}</Text>
                 <Text style={styles.tableCol}>{supplier.city}</Text>
                 <Text style={styles.tableCol}>{supplier.lane}</Text>
               </View>
