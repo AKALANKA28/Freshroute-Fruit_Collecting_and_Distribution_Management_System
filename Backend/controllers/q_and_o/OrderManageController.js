@@ -170,7 +170,7 @@ exports.unAssignOrder = async (req, res) => {
 
 
     try {
-        const originalOrder = OrderDetail.findById(orderId);
+        const originalOrder = await OrderDetail.findById(orderId);
         if (!originalOrder) {
             res.status(200).json({ status: "Order Not Found"});
             return;
@@ -194,7 +194,7 @@ exports.unAssignOrder = async (req, res) => {
         }
         const orderExecutionRecord = await OrderExecutionDetail.find({orderId: orderId});
         await OrderExecutionDetail.findByIdAndDelete(orderExecutionRecord[0]._id)
-        res.status(200).json({ status: "Order removed from " +orderExecutionRecord.opName});
+        res.status(200).json({ status: "Successfully Un Assigned"});
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error occurred while assigning the order", error: err.message });

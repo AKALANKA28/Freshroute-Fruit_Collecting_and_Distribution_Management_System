@@ -130,7 +130,7 @@ exports.executeOrder = async (req, res) => {
     const { orderId, executionDetails, status, id, filledQuantity } = req.body;
     await OrderDetail.findByIdAndUpdate(orderId, {
         $set: {
-            status:status
+            orderStatus:status
         }
     });
 
