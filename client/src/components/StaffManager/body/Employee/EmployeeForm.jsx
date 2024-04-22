@@ -11,6 +11,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [dataList, setDataList] = useState([]);
+  const [nicError, setNicError] = useState("");
 
   useEffect(() => {
     getFetchData();
@@ -35,8 +36,8 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     bankname: "",
     qualifications: "",
     joineddate: "",
-    imageUrl: "", // Corrected key name for image URL
-    fileUrl: "", // Corrected key name for file URL
+    imageUrl: "",
+    fileUrl: "",
   });
 
   useEffect(() => {
@@ -84,15 +85,41 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "name" && /\d/.test(value)){
+      return;
+    
+    }
+    if (name === "bankname" && /\d/.test(value)){
+      return;
+    
+    }
+    if (name === "nic") {
+      validateNic(value);
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  const validateNic = (nic) => {
+    const nicRegex = /^(?:\d{9}[vV]|\d{12})$/;
+    
+    if (!nicRegex.test(nic)) {
+      setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
+    } else {
+      setNicError("");
+    }
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(formData);
+    if (nicError === "") {
+      handleSubmit(formData);
+    } else {
+      alert("Please correct the NIC error before submitting.");
+    }
   };
 
   useEffect(() => {
@@ -168,14 +195,16 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               NIC
             </label>
             <input
-              type="text"
+              type=""
               className="form-control"
               name="nic"
               placeholder="NIC"
               onChange={handleChange}
               value={formData.nic}
               required
+              maxLength={12}
             />
+            {nicError && <p className="text-danger">{nicError}</p>}
           </div>
           <div className="mb-3">
             <label htmlFor="address" className="form-label">
@@ -199,7 +228,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               Email Address
             </label>
             <input
-              type="text"
+              type="email"
               className="form-control"
               name="email"
               placeholder="Email Address"
