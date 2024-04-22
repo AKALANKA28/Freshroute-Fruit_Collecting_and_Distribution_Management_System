@@ -19,6 +19,7 @@ const AssignedOrderList = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [formData, setFormData] = useState({ });
+    const [clearFilter, setClearFilter] = useState(false);
 
     const handleOnInputChange = (event) => {
         const { opName, opId } = event.target;
@@ -168,7 +169,10 @@ const AssignedOrderList = () => {
                                 </li>
                                 <li>
                                     <div className="button-container">
-                                        <a href="#" onClick={() => getOrderList()}>
+                                        <a href="#" onClick={() => {
+                                            getOrderList();
+                                            setClearFilter(!clearFilter);
+                                        }}>
                                             <img src={Refresh} alt="Refresh Icon" className="icon"/>
                                         </a>
                                     </div>

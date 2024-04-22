@@ -15,6 +15,7 @@ const RequestedOrderList = () => {
 
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
+    const [clearFilter, setClearFilter] = useState(false);
     const [formData, setFormData] = useState({
         orderId: "",
         fruit: "",
@@ -147,7 +148,10 @@ const RequestedOrderList = () => {
                                 </li>
                                 <li>
                                     <div className="button-container">
-                                        <a href="#" onClick={() => getOrderList()}>
+                                        <a href="#" onClick={() => {
+                                            getOrderList();
+                                            setClearFilter(!clearFilter);
+                                        }}>
                                             <img src={Refresh} alt="Refresh Icon" className="icon"/>
                                         </a>
                                     </div>
@@ -204,6 +208,7 @@ const RequestedOrderList = () => {
                                              
                                          ]
                                      }
+                                     clearInputField={clearFilter}
                                      handleSearch={handleSearchOnClick}
                                 />
                             </div>

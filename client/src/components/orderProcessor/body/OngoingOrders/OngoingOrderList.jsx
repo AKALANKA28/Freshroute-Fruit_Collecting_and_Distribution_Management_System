@@ -17,6 +17,7 @@ const OngoingOrderList = () => {
     const [items, setItems] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [formData, setFormData] = useState({});
+    const [clearFilter, setClearFilter] = useState(false);
 
 
     const handleClosePopup = () => setShowPopup(false);
@@ -121,7 +122,10 @@ const OngoingOrderList = () => {
                                 </li>
                                 <li>
                                     <div className="button-container">
-                                        <a href="#" onClick={() => getOrderList()}>
+                                        <a href="#" onClick={() => {
+                                            getOrderList();
+                                            setClearFilter(!clearFilter);
+                                        }}>
                                             <img src={Refresh} alt="Refresh Icon" className="icon"/>
                                         </a>
                                     </div>
@@ -177,6 +181,7 @@ const OngoingOrderList = () => {
                                                 }
                                                ]
                                            }
+                                           clearInputField={clearFilter}
                                            handleSearch={handleSearchOnClick}
                                 />
                             </div>
