@@ -242,6 +242,7 @@ function SuppliersList() {
                   <th scope="col">Username</th>
                   <th scope="col">Name</th>
                   <th scope="col">Email</th>
+                  <th scope="col">Mobile</th>
                   <th scope="col">City</th>
                   <th scope="col">Lane</th>
                   <th>Action</th>
@@ -255,6 +256,7 @@ function SuppliersList() {
                       <td>{farmer.username}</td>
                       <td>{farmer.name}</td>
                       <td>{farmer.email}</td>
+                      <td>{farmer.mobile}</td>
                       <td>{farmer.city}</td>
                       <td>{farmer.lane}</td>
                       <td className="action">

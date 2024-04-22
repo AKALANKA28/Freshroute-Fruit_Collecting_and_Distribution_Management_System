@@ -300,9 +300,9 @@ const getStatusClassName = (status) => {
                     <td>{prediction.fruit}</td>
                     <td>{prediction.subCategory}</td>
                     <td>{prediction.quality}</td>
-                    <td>{prediction.quantity}</td>
-                    <td>{prediction.price}</td>
-                    <td>{prediction.price * prediction.quantity}</td>
+                    <td>{prediction.quantity} kg</td>
+                    <td>Rs. {prediction.price}</td>
+                    <td>Rs. {prediction.price * prediction.quantity}</td>
                     <td>{prediction.dateCanBeGiven}</td>
                     <td>
                       <div

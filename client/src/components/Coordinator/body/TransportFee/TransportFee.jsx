@@ -1,3 +1,4 @@
+//D:\FreshRoute\MERN_Project\client\src\components\Coordinator\body\TransportFee\TransportFee.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -29,7 +30,7 @@ function TransportFee() {
 
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/vehicle/");
+      const response = await axios.get("/TransportFee/");
       setDataList(response.data);
     } catch (err) {
       alert(err.message);
