@@ -254,11 +254,15 @@
 .btn-action {
   padding: 5px 10px; /* Adjust padding as needed */
   margin-right: 5px; /* Add a gap between buttons */
-  border-radius: 5px; /* Apply border radius for button shape */
-  font-size: 12px;
+  font-size: 15px;
 }
 
-.btn-success,
+.btn-approve {
+  background-color: #28a745; /* Set the background color for the approve button */
+  color: #fff; /* Set the text color for the approve button */
+}
+
+.btn-approve,
 .btn-danger {
-  width: 75px; /* Set a fixed width for both buttons to ensure they have the same size */
+  width: wrap; /* Set a fixed width for both buttons to ensure they have the same size */
 }

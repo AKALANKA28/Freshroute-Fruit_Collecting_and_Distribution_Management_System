@@ -1,7 +1,9 @@
-// .Backend/models/coordinator/FruitType.js
 const mongoose = require("mongoose");
 
 const FruitTypeSchema = new mongoose.Schema({
+  imageUrl: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,

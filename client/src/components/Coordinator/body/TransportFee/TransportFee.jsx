@@ -1,3 +1,4 @@
+//D:\FreshRoute\MERN_Project\client\src\components\Coordinator\body\TransportFee\TransportFee.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -39,7 +40,7 @@ function TransportFee() {
   // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((transportfee) => {
-      const fullName = `${transportfee.vehicletype} ${transportfee.pricepkm} ${transportfee.maxweight}`; // Customize this according to data structure
+      const fullName = `${transportfee.vehicle_no} ${transportfee.type} ${transportfee.price} ${transportfee.capacity}  ${transportfee.conditions}`; // Customize this according to data structure
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
@@ -55,13 +56,7 @@ function TransportFee() {
     getFetchData();
   };
 
-  const handleAddModalOpen = () => {
-    setAddModalOpen(true);
-  };
 
-  const handleAddModalClose = () => {
-    setAddModalOpen(false);
-  };
 
   const handleEditModalOpen = (transportFee) => {
     setSelectedTransportFee(transportFee);
@@ -72,31 +67,13 @@ function TransportFee() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/TransportFee/delete/${id}`);
-      alert("Successfully Deleted");
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
 
-  const handleAddSubmit = async (formData) => {
-    try {
-      await axios.post("/TransportFee/add", formData);
-      alert("Transport Fee Added");
-      handleAddModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/TransportFee/update/${formData._id}`, formData);
-      alert("Transport Fee Updated");
+      await axios.patch(`http://localhost:8070/vehicle/update/${formData._id}`, formData);
+      alert("Transport Fee Added");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -159,29 +136,14 @@ function TransportFee() {
                 </div>
               </li>
             </ul>
-            <div class="page-btn">
-              <button
-                type="button"
-                className="btn btn-added"
-                onClick={handleAddModalOpen}
-              >
-                <i className="bi bi-plus-circle"></i> Add Transport Fee
-              </button>
-            </div>
+           
           </div>
 
-          <Modal show={addModalOpen} onHide={handleAddModalClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Add Transport Fee</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <TransportFeeForm handleSubmit={handleAddSubmit} />
-            </Modal.Body>
-          </Modal>
+          
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Transport Fee</Modal.Title>
+              <Modal.Title>Add Transport Fee</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <TransportFeeForm
@@ -195,9 +157,10 @@ function TransportFee() {
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
+            <th scope="col">Vehicle No</th>
               <th scope="col">Vehicle Type</th>
-              <th scope="col">Date</th>
-              <th scope="col">MaxWeight(kg)</th>
+              <th scope="col">Conditions</th>
+              <th scope="col">Capacity</th>
               <th scope="col">Price per km (Rs)</th>
               <th>Action</th>
             </tr>
@@ -206,24 +169,20 @@ function TransportFee() {
           {filteredDataList.length ? (
                   filteredDataList.map((transportfee) => (
                 <tr key={transportfee._id}>
-                  <td>{transportfee.vehicletype}</td>
-                  <td>{transportfee.date}</td>
-                  <td>{transportfee.maxweight}</td>
-                  <td>{transportfee.pricepkm}</td>
+                  <td>{transportfee.vehicle_no}</td>
+                  <td>{transportfee.type}</td>
+                  <td>{transportfee.conditions}</td>
+                  <td>{transportfee.capacity}</td>
+                  <td>{transportfee.price}</td>
                   <td className="action">
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
                         onClick={() => handleEditModalOpen(transportfee)}
                       >
-                        <i className="bi bi-pencil-square"></i>
+                        <i className="bi bi-calculator"></i>
                       </button>
-                      <button
-                        className="btn btn-delete"
-                        onClick={() => handleDelete(transportfee._id)}
-                      >
-                        <i className="bi bi-trash-fill"></i>
-                      </button>
+                      
                     </div>
                   </td>
                 </tr>

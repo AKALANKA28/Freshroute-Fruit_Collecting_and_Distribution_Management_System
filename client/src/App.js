@@ -76,6 +76,7 @@ import SingleProduct from "./Website/Shop/Products/SingleProduct";
 import Cart from "./Website/Shop/Cart/Cart";
 import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
+import JoinWithUsSupplier from "./Website/JoinWithUs";
 
 const router = createBrowserRouter([
  
@@ -125,6 +126,14 @@ const router = createBrowserRouter([
   },
 
 
+  {
+    path: "/JoinWithUsSupplier",
+    element: (
+      <div>
+        <JoinWithUsSupplier />
+      </div>
+    ),
+  },
 
   {
     path: "/contact",
