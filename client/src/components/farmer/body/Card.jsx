@@ -30,7 +30,7 @@ const Card = () => {
               </div>
               <div className="ps-5">
                 <h6 className='card-price'>
-                  {totalFarmers}
+                  {totalFarmers} predictions
                 </h6>
               </div>
             </div>
