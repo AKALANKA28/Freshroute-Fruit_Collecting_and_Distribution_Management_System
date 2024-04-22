@@ -5,7 +5,7 @@ axios.defaults.baseURL = "http://localhost:8070/";
 
 const dateFormat = (dateString) => {
   const date = new Date(dateString);
-  return  date.toLocaleString();
+  return  date.toLocaleDateString();
 }
 
 const RequestedOrderTable = ({ items, updateTable, viewItem, handleAssign }) => {

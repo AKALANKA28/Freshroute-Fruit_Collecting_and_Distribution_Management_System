@@ -23,6 +23,15 @@ exports.getAllSuppliers = async (req, res) => {
         res.status(500).json({ status: "Error retrieving orders", error: err.message });
     }
 };
+exports.getAllSuppliersByFilter = async (req, res) => {
+    try {
+        const supplierList = await AcceptedSupply.find();
+        res.json(supplierList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving orders", error: err.message });
+    }
+};
 exports.updateSuppliers = async (req, res) => {
     try {
         const { supplierList } = req.body;

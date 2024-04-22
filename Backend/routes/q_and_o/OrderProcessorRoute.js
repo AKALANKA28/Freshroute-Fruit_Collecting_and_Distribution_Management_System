@@ -6,7 +6,9 @@ const orderProcessController = require('../../controllers/q_and_o/OrderProcessCo
 // Retrieve filtered supplier
 router.post("/supplierList", orderProcessController.getSupplierList);
 // Retrieve All supplier
-router.post("/allSuppliers", orderProcessController.getAllSuppliers);
+router.get("/allSuppliers", orderProcessController.getAllSuppliers);
+//Filtered Supplier List
+router.get("/allSuppliers", orderProcessController.getAllSuppliersByFilter);
 router.post("/updateSupplierDetails", orderProcessController.updateSuppliers);
 
 router.get("/pendingOrderList", orderProcessController.getAssignedOrderList);

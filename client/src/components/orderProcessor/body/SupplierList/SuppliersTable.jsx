@@ -5,7 +5,7 @@ axios.defaults.baseURL = "http://localhost:8070/";
 
 const dateFormat = (dateString) => {
   const date = new Date(dateString);
-  return  date.toLocaleString();
+  return  date.toLocaleDateString();
 }
 
 const SuppliersTable = ({ items, handleView }) => {
@@ -16,13 +16,12 @@ const SuppliersTable = ({ items, handleView }) => {
           <table className="table table-bordeless datatable">
             <thead className="table-light">
             <tr>
-                <th className="col">Supplier Name</th>  
+              <th className="col">Supplier Name</th>
               <th className="col">Fruit Type</th>
               <th className="col">Fruit Category</th>
               <th className="col">Quality</th>
               <th className="col">Total Quantity (kg)</th>
-              <th className="col date-field">Price for 1kg</th>
-              <th className="col date-field">Total Price (Rs)</th>
+              <th className="col ">Price for 1kg</th>
               <th className="col">Date Can Be Given</th>
               <th className="col">Contact No</th>
               <th className="col">Action</th>
@@ -33,13 +32,14 @@ const SuppliersTable = ({ items, handleView }) => {
               items.length > 0 &&
               items.map((item) => (
                 <tr key={item._id}>
+                  <td>{item.supplierName}</td>
                   <td>{item.fruit}</td>
-                  <td>{item.category}</td>
+                  <td>{item.subCategory}</td>
                   <td>{item.quality}</td>
                   <td >{item.quantity}</td>
-                  <td >{dateFormat(item.placedDate)}</td>
-                  <td >{dateFormat(item.dueDate)}</td>
-                  <td>{item.opName}</td>
+                  <td >{item.price}</td>
+                  <td >{dateFormat(item.dateCanBeGiven)}</td>
+                  <td >{item.contact? item.contact: ""}</td>
                   <td>
                     <div className="buttons">
                       <button type="button" className="btn btn-outline-warning" onClick={() => handleView(item)}>

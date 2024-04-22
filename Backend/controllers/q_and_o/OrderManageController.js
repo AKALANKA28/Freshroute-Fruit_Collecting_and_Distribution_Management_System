@@ -111,9 +111,6 @@ exports.assignOrder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ status: "Order not found" });
         }
-        console.log("//////////////////////////")
-        console.log(order.fruit)
-        console.log(order.customerName)
         const orderExecutionRecord = new OrderExecutionDetail({
             orderId: orderId,
             opName : opName,

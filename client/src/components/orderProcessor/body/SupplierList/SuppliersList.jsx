@@ -31,7 +31,7 @@ const SuppliersList = () => {
 
     const getOrderList = async () => {
         try {
-            const response = await axios.get("/op/completedOrderList");
+            const response = await axios.get("/op/allSuppliers");
             const responseData = response.data;
             setItems(responseData);
 
@@ -48,7 +48,7 @@ const SuppliersList = () => {
 
     const handleSearchOnClick = async (filterData) => {
         try {
-            const response = await axios.post("/op/CompletedOrderList", filterData);
+            const response = await axios.post("/op/allSuppliers", filterData);
             setItems(response.data);
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
