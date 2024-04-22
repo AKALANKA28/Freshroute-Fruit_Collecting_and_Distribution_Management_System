@@ -1,5 +1,5 @@
 
-const RecentActivity = () => {
+const QuickAccess = () => {
 
     
  
@@ -22,4 +22,4 @@ const RecentActivity = () => {
   )
 }
 
-export default RecentActivity
+export default QuickAccess

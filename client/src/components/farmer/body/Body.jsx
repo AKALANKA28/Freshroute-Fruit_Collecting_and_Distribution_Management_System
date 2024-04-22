@@ -2,7 +2,7 @@ import React from 'react'
 import './main.css'
 
 import Cards from './Cards'
-import RecentActivity from './RecentActivity'
+import QuickAccess from './QuickAccess'
 import WeatherReport from './WeatherReport'
 import FruitDetails from './FruitDetails'
 import BackToTop from './BackToTop'
@@ -27,7 +27,7 @@ const Body = () => {
                 </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
+              <QuickAccess />
               <WeatherReport />
               <FruitDetails />
             </div>
