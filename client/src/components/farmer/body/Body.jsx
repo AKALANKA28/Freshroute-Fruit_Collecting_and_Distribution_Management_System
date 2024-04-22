@@ -2,12 +2,9 @@ import React from 'react'
 import './main.css'
 
 import Cards from './Cards'
-import Reports from './Reports'
-import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import WeatherReport from './WeatherReport'
 import FruitDetails from './FruitDetails'
-import News from './News'
 import BackToTop from './BackToTop'
 import PredictionsDetailsListInDashboard from './PredictionsDetailsListInDashboard'
 
