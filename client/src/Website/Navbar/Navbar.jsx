@@ -34,6 +34,7 @@ const Navbar = () => {
                     <span>Login</span>
                 </Link>
             </li>
+            <li className='nav-list'><a href='/JoinWithUsSupplier'>Join With Us</a></li>
           </ul> 
       </nav>
     </div>

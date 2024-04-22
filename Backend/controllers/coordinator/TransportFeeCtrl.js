@@ -1,70 +1,75 @@
-// .Backend/controllers/coordinator/TransportFeeCtrl.js
-const TransportFee = require("../../models/coordinator/TransportFee");
-
-const addTransportFee = async (req, res) => {
-  const { vehicletype, date, maxweight, pricepkm } = req.body;
-  try {
-    const newTransportFee = await TransportFee.create({
-      vehicletype,
-      date,
-      maxweight,
-      pricepkm,
-    });
-    res.json("New TransportFee Added");
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+//Backend/controllers/coordinator/TransportFeeCtrl.js
+const TransportFee = require("../../models/transport/vehicle");
 
 const getAllTransportFees = async (req, res) => {
   try {
-    const transportfees = await TransportFee.find();
-    res.json(transportfees);
+    const transportFees = await TransportFee.find();
+    res.json(transportFees);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.log(err);
+    res.status(500).json({
+      status: "Error retrieving Transport Fee records",
+      error: err.message,
+    });
   }
 };
 
 const getOneTransportFee = async (req, res) => {
-  const id = req.params.id;
   try {
-    const oneTransportFee = await TransportFee.findById(id);
-    res.status(200).json(oneTransportFee);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+    const transportFeeId = req.params.id;
+    const transportFee = await TransportFee.findById(transportFeeId);
 
-const deleteTransportFee = async (req, res) => {
-  const id = req.params.id;
-  try {
-    await TransportFee.findByIdAndDelete(id);
-    res.status(200).json({ message: "TransportFee Deleted" });
+    if (!transportFee) {
+      return res.status(404).json({ status: "Transport Fee not found" });
+    }
+
+    res.status(200).json({ status: "Transport Fee fetched", transportFee });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.log(err);
+    res.status(500).json({
+      status: "Error retrieving Transport Fee record",
+      error: err.message,
+    });
   }
 };
 
 const updateTransportFee = async (req, res) => {
-  const id = req.params.id;
-  const { vehicletype, date, maxweight, pricepkm } = req.body;
   try {
-    await TransportFee.findByIdAndUpdate(id, {
-      vehicletype,
-      date,
-      maxweight,
-      pricepkm,
-    });
-    res.status(200).json({ message: "TransportFee Updated" });
+    const vehicleId = req.params.id;
+    const { vehicle_no, type, conditions, capacity, price } = req.body;
+
+    const updateTransportFee = {
+      vehicle_no,
+      type,
+      conditions,
+      capacity,
+      price,
+    };
+
+    const updatedTransportFee = await TransportFee.findByIdAndUpdate(
+      vehicleId,
+      updateTransportFee,
+      { new: true }
+    );
+
+    if (!updatedTransportFee) {
+      return res.status(404).json({ status: "Transport Fee not found" });
+    }
+
+    res
+      .status(200)
+      .json({ status: "Transport Fee Updated", updatedTransportFee });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.log(err);
+    res.status(500).json({
+      status: "Error updating Transport Fee record",
+      error: err.message,
+    });
   }
 };
 
 module.exports = {
-  addTransportFee,
   getAllTransportFees,
   getOneTransportFee,
-  deleteTransportFee,
   updateTransportFee,
 };
