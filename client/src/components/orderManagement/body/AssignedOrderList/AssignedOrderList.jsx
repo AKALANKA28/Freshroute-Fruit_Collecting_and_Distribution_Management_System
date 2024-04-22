@@ -70,6 +70,7 @@ const AssignedOrderList = () => {
         } else {
             try {
                 const response = await axios.delete(`/om/unAssignOrder/${formData.orderId}`);
+                alert(response.data.status);
             } catch (err) {
                 if (err.response && err.response.data && err.response.data.error) {
                     alert(err.response.data.error);

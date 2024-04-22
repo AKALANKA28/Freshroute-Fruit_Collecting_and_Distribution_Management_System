@@ -170,6 +170,15 @@ exports.unAssignOrder = async (req, res) => {
 
 
     try {
+        const originalOrder = OrderDetail.findById(orderId);
+        if (!originalOrder) {
+            res.status(200).json({ status: "Order Not Found"});
+            return;
+        }
+        if (originalOrder.orderStatus === "IN_PROGRESS") {
+            res.status(200).json({ status: "Order process has already stared. Un Assign Failed."});
+            return;
+        }
         const order = await OrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "PENDING",
