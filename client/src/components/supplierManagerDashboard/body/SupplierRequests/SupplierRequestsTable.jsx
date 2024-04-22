@@ -33,6 +33,8 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
         email: selectedRequest.email,
         mobile: selectedRequest.mobile,
         city: selectedRequest.city,
+        latitude: selectedRequest.latitude,
+        longitude: selectedRequest.longitude,
         lane: "",
         landAddress: selectedRequest.landAddress,
         fieldArea: selectedRequest.fieldArea,

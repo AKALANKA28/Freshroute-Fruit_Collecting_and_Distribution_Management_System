@@ -2,7 +2,7 @@ import React from 'react'
 import './main.css'
 
 import Cards from './Cards'
-import Reports from './Reports'
+import Map from './Map'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import BudgetReport from './BudgetReport'
@@ -23,7 +23,7 @@ const Body = () => {
                 <div className="row">
                     <Cards />
                     <div className="col-12">
-                        <Reports />
+                        <Map />
                     </div>
                     <div className="col-12">
                      <SuppliersDetailsListInDashboard />

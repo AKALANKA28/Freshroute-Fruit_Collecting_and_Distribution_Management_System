@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cityCoordinates from "./cityCoordinates.json"
 
 const FarmerForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,8 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     name: "",
     email: "",
     city: "",
+    latitude: "",
+    longitude: "",
     lane: "",
   });
 
@@ -18,6 +21,9 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     city: "",
     lane: "",
   });
+
+  const [citySuggestions, setCitySuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     if (initialData) {
@@ -33,6 +39,30 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     }));
     // Validate input on change
     validateInput(name, value);
+    // If city is changed, fetch coordinates
+    if (name === "city") {
+      fetchCoordinates(value);
+    }
+  };
+
+  const fetchCoordinates = async (city) => {
+    try {
+      const response = await fetch(`/api/cities?city=${city}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.length > 0) {
+          setFormData((prev) => ({
+            ...prev,
+            latitude: data[0].latitude,
+            longitude: data[0].longitude,
+          }));
+        }
+      } else {
+        throw new Error("City coordinates not found");
+      }
+    } catch (error) {
+      console.error("Error fetching city coordinates:", error);
+    }
   };
 
   const validateInput = (name, value) => {
@@ -77,6 +107,29 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     }
   };
 
+  const handleCityChange = (e) => {
+    const { value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      city: value,
+    }));
+    setShowSuggestions(true);
+    const filteredSuggestions = cityCoordinates.filter((city) =>
+      city.city.toLowerCase().startsWith(value.toLowerCase())
+    );
+    setCitySuggestions(filteredSuggestions);
+  };
+
+  const handleSuggestionClick = (city) => {
+    setFormData((prev) => ({
+      ...prev,
+      city: city.city,
+      latitude: city.latitude,
+      longitude: city.longitude,
+    }));
+    setShowSuggestions(false);
+  };
+
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
@@ -97,91 +150,111 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
       </div>
       
       <div className="mb-3">
-            <label htmlFor="date" className="form-label">
-              Username
-            </label>
-            <input
-            type="text"
-            className="form-control"
-            name="username"
-            placeholder="Enter Username"
-            required
-            onChange={handleChange}
-            value={formData.username}
-          />
-        </div>
+        <label htmlFor="username" className="form-label">
+          Username
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.username && "is-invalid"}`}
+          name="username"
+          placeholder="Enter Username"
+          required
+          onChange={handleChange}
+          value={formData.username}
+        />
+        {formErrors.username && <div className="invalid-feedback">{formErrors.username}</div>}
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            placeholder="Enter Name"
-            required
-            onChange={handleChange}
-            value={formData.name}
-          />
-        </div>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">
+          Name
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.name && "is-invalid"}`}
+          name="name"
+          placeholder="Enter Name"
+          required
+          onChange={handleChange}
+          value={formData.name}
+        />
+        {formErrors.name && <div className="invalid-feedback">{formErrors.name}</div>}
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Email
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="email"
-            placeholder="example@domain.com"
-            required
-            onChange={handleChange}
-            value={formData.email}
-          />
-        </div>
-        <div className="mb-3">
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">
+          Email
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.email && "is-invalid"}`}
+          name="email"
+          placeholder="example@domain.com"
+          required
+          onChange={handleChange}
+          value={formData.email}
+        />
+        {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
+      </div>
+
+      <div className="mb-3">
         <label htmlFor="mobile" className="form-label">
-            Mobile
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="mobile"
-            placeholder="Enter Mobile Number"
-            required
-            onChange={handleChange}
-            value={formData.mobile}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            City
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="city"
-            placeholder="Enter City"
-            required
-            onChange={handleChange}
-            value={formData.city}
-          />
-        </div>
+          Mobile
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          name="mobile"
+          placeholder="Enter Mobile Number"
+          required
+          onChange={handleChange}
+          value={formData.mobile}
+        />
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Lane
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="lane"
-            placeholder="Enter Lane"
-            onChange={handleChange}
-            value={formData.lane}
-          />
-        </div>
+      <div className="mb-3">
+        <label htmlFor="city" className="form-label">
+          City
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.city && "is-invalid"}`}
+          name="city"
+          placeholder="Enter City"
+          required
+          onChange={handleCityChange}
+          value={formData.city}
+        />
+        {showSuggestions && citySuggestions.length > 0 && (
+          <ul className="list-group">
+            {citySuggestions.map((city, index) => (
+              <li
+                key={index}
+                className="list-group-item list-group-item-action"
+                onClick={() => handleSuggestionClick(city)}
+              >
+                {city.city}
+              </li>
+            ))}
+          </ul>
+        )}
+        {formErrors.city && <div className="invalid-feedback">{formErrors.city}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="lane" className="form-label">
+          Lane
+        </label>
+        <input
+          type="text"
+          className={`form-control ${formErrors.lane && "is-invalid"}`}
+          name="lane"
+          placeholder="Enter Lane"
+          onChange={handleChange}
+          value={formData.lane}
+        />
+        {formErrors.lane && <div className="invalid-feedback">{formErrors.lane}</div>}
+      </div>
 
       <button type="submit" className="btn btn-primary">
         Submit

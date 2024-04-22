@@ -8,5 +8,6 @@ router.delete("/delete/:id", farmerController.deleteFarmer);
 router.put("/update/:id", farmerController.updateFarmer);
 router.delete("/deleteFarmerByJoinRequestID/:joinRequestId", farmerController.deleteFarmerByJoinRequestID);
 router.get("/totalCount", farmerController.getTotalFarmersCount);
+router.get("/cities", farmerController.getCities);
 
 module.exports = router;
