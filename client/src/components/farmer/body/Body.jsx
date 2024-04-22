@@ -22,22 +22,17 @@ const Body = () => {
             <div className="col-lg-8">
                 <div className="row">
                     <Cards />
-                    <div className="col-12">
-                        <Reports />
-                    </div>
+                    
                     <div className="col-12">
                      <PredictionsDetailsListInDashboard />
                     </div>
-                    <div className="col-12">
-                     <TopSellings />
-                    </div>
+                    
                 </div>
             </div>
             <div className="col-lg-4">
               <RecentActivity />
               <WeatherReport />
               <FruitDetails />
-              <News />
             </div>
         </div>
         <BackToTop />
