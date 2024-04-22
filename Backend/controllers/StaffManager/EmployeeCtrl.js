@@ -2,6 +2,7 @@ const Employee = require("../../models/StaffManager/Employee");
 
 const addEmployee = async (req, res) => {
   const {
+    imageUrl,
     name,
     jobrole,
     nic,
@@ -9,7 +10,7 @@ const addEmployee = async (req, res) => {
     email,
     accno,
     bankname,
-    qualifications,
+    fileUrl,
     joineddate,
     salary,
     allowance,
@@ -21,6 +22,7 @@ const addEmployee = async (req, res) => {
 
   try {
     const newEmployee = await Employee.create({
+      imageUrl,
       name,
       jobrole,
       nic,
@@ -28,7 +30,7 @@ const addEmployee = async (req, res) => {
       email,
       accno,
       bankname,
-      qualifications,
+      fileUrl,
       joineddate,
       salary: 0,
       allowance: 0,
@@ -75,6 +77,7 @@ const deleteEmployee = async (req, res) => {
 const updateEmployee = async (req, res) => {
   const id = req.params.id;
   const {
+    imageUrl,
     name,
     jobrole,
     nic,
@@ -82,11 +85,12 @@ const updateEmployee = async (req, res) => {
     email,
     accno,
     bankname,
-    qualifications,
+    fileUrl,
     joineddate,
   } = req.body;
   try {
     await Employee.findByIdAndUpdate(id, {
+      imageUrl,
       name,
       jobrole,
       nic,
@@ -94,7 +98,7 @@ const updateEmployee = async (req, res) => {
       email,
       accno,
       bankname,
-      qualifications,
+      fileUrl,
       joineddate,
     });
     res.status(200).json({ message: "Employee updated" });

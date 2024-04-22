@@ -75,14 +75,13 @@ function DeclinedSuppliesTable({ declinedSupplies }) {
               <td>{request.fruit}</td>
               <td>{request.subCategory}</td>
               <td>{request.quality}</td>
-              <td>{request.quantity}</td>
-              <td>{request.price}</td>
-              <td>{request.price * request.quantity}</td>
+              <td>{request.quantity} kg</td>
+              <td>Rs. {request.price}</td>
+              <td>Rs. {request.price * request.quantity}</td>
               <td>{request.dateCanBeGiven}</td>
               <td>
                 <Button
                   className="btn-action btn-approve"
-                  variant="success"
                   onClick={() => handleShowModal(request)}
                 >
                   Approve
@@ -106,7 +105,7 @@ function DeclinedSuppliesTable({ declinedSupplies }) {
           <Button variant="" onClick={handleCloseModal}>
             Cancel
           </Button>
-          <Button variant="success" onClick={handleAcceptRequest}>
+          <Button variant="approve" onClick={handleAcceptRequest}>
             Approve
           </Button>
         </Modal.Footer>

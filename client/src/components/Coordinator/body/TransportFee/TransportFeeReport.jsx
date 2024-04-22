@@ -54,18 +54,20 @@ const SalaryReport = ({ dataList }) => {
           <Text style={styles.heading}>Salary Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
+            <Text style={styles.tableColHeader}>Vehicle No</Text>
               <Text style={styles.tableColHeader}>Vehicle Type</Text>
-              <Text style={styles.tableColHeader}>Date</Text>
-              <Text style={styles.tableColHeader}> MaxWeight(kg)</Text>
+              <Text style={styles.tableColHeader}>Conditions</Text>
+              <Text style={styles.tableColHeader}> Capacity</Text>
               <Text style={styles.tableColHeader}> Price per km(Rs)</Text>
             
             </View>
             {dataList.map((transportFee, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{transportFee.vehicletype}</Text>
-                <Text style={styles.tableCol}>{transportFee.date}</Text>
-                <Text style={styles.tableCol}>{transportFee.maxweight}</Text>
-                <Text style={styles.tableCol}>{transportFee.pricepkm}</Text>
+                <Text style={styles.tableCol}>{transportFee.vehicle_no}</Text>
+                <Text style={styles.tableCol}>{transportFee.type}</Text>
+                <Text style={styles.tableCol}>{transportFee.conditions}</Text>
+                <Text style={styles.tableCol}>{transportFee.capacity}</Text>
+                <Text style={styles.tableCol}>{transportFee.price}</Text>
               </View>
             ))}
           </View>
