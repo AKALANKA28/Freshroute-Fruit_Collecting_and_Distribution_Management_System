@@ -9,7 +9,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange,
     const [orderProcessor, setOrderProcessor] = useState([]);
 
     useEffect(() => {
-        if (show) {
+        if (show && isEdit) {
             getOrderProcessor()
         }
     }, [show])
@@ -36,7 +36,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange,
             const response = await axios.get("/om/processorList");
             const orderProcessorList = response.data;
             if (orderProcessorList) {
-                setOrderProcessor(orderProcessorList.opList);
+                setOrderProcessor(orderProcessorList);
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -86,9 +86,9 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange,
                         <Form.Group className="mb-3" controlId="fromOrderProcessor">
                             <Form.Label>Order Processor</Form.Label>
                             <Form.Select name="orderProcessor" required onChange={handleOrderProcessorChange} value={formData.opId} disabled={!isEdit}>
-                                <option value="">Select Order Processor</option>
-                                {orderProcessor.map((op, index) => (
-                                    <option key={index} value={op.id}>
+                                <option value="">{isEdit? "Select Order Processor" : formData.opName}</option>
+                                {orderProcessor && orderProcessor.map((op, index) => (
+                                    <option key={index} value={op._id}>
                                         {op.name}
                                     </option>
                                 ))}
