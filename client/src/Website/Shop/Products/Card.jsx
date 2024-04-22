@@ -22,7 +22,7 @@ const Card = ({data}) => {
 
       
         return(
-          <div className='col-3'>
+          <div className='col-3' style={{width: "23.7%"}}>
           <div className="product-card position-relative">
             <div className="wishlist-icon position-absolute">
               <Link to={"/shop/"+item?._id}>
