@@ -23,7 +23,7 @@ const AssignedOrderList = () => {
 
     const handleOnInputChange = (event) => {
         const { opName, opId } = event.target;
-        setFormData( (prevState) =>{ return {...prevState, opName: opName, opId: opId}})
+        setFormData(  {...formData, opName: opName, opId: opId})
         console.log(formData)
     };
 
@@ -233,6 +233,7 @@ const AssignedOrderList = () => {
                                              }
                                          ]
                                      }
+                                     clearInputField={clearFilter}
                                      handleSearch={handleSearchOnClick}
                                 />
                             </div>

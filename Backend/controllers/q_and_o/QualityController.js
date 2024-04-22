@@ -108,23 +108,24 @@ exports.getFilteredQualities = async (req, res) => {
 
         switch (filterType) {
             case 'fruit':
-                filter = { fruit: new RegExp(filterValue, 'i') };
+                filter = { fruit: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'category':
-                filter = { category: new RegExp(filterValue, 'i') };
+                filter = { category: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'quality':
-                filter = { quality: new RegExp(filterValue, 'i') };
+                filter = { quality: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'qualityDesc':
-                filter = { qualityDesc: new RegExp(filterValue, 'i') };
+                filter = { qualityDesc: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'storageCond':
-                filter = { storageCond: new RegExp(filterValue, 'i') };
+                filter = { storageCond: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             default:
                 return res.status(400).json({ message: 'Invalid filter type' });
         }
+
         const filteredQualities = await FruitDetail.find(filter);
         res.json(filteredQualities);
     } catch (err) {

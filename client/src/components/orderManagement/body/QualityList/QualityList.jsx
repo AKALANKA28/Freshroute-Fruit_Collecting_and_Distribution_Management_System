@@ -269,10 +269,6 @@ const QualityList = ({isViewOnly}) => {
                                                      tag: "category"
                                                  },
                                                  {
-                                                     name: "Grade",
-                                                     tag: "quality"
-                                                 },
-                                                 {
                                                      name: "Quality Description",
                                                      tag: "qualityDesc"
                                                  },
