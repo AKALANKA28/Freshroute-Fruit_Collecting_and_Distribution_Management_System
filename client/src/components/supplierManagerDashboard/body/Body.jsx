@@ -3,11 +3,8 @@ import './main.css'
 
 import Cards from './Cards'
 import Map from './Map'
-import TopSellings from './TopSellings'
-import RecentActivity from './RecentActivity'
+import QuickAccess from './QuickAccess'
 import SupplyDetails from './SupplyDetails'
-import WebTraffic from './WebTraffic'
-import News from './News'
 import BackToTop from './BackToTop'
 import SuppliersDetailsListInDashboard from './SuppliersDetailsListInDashboard'
 
@@ -28,16 +25,13 @@ const Body = () => {
                     <div className="col-12">
                      <SuppliersDetailsListInDashboard />
                     </div>
-                    <div className="col-12">
-                     <TopSellings />
-                    </div>
+                    
                 </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
+              <QuickAccess />
               <SupplyDetails />
-              <WebTraffic />
-              {/* <News /> */}
+            
             </div>
         </div>
         <BackToTop />
