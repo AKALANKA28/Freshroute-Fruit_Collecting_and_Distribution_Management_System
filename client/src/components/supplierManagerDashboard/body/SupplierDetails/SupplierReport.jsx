@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     backgroundColor: "#FFFFFF",
-    padding: 20,
+    padding: 10,
   },
   header: {
     flexDirection: "row",
@@ -50,20 +50,29 @@ const styles = StyleSheet.create({
   tableColHeader: {
     borderStyle: "solid",
     borderWidth: 1,
-    padding: 10,
-    fontSize: 12,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 10,
     fontWeight: "bold",
     color: "#333333",
-    width: "33.33%",
+    width: "14.285%",
     textAlign: "center",
   },
   tableCol: {
     borderStyle: "solid",
     borderWidth: 1,
-    padding: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
     fontSize: 10,
     color: "#333333",
-    width: "33.33%",
+    width: "14.285%",
+    textAlign: "center",
+    fontSize: 8,
+    color: "#333333",
     textAlign: "center",
   },
   logo: {
@@ -81,7 +90,6 @@ const SupplierReport = ({ dataList }) => {
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-        
           <Text style={styles.heading}>Supplier Details</Text>
           <Text style={styles.headerText}>FreshRoute<br/></Text>
           <View style={styles.table}>
