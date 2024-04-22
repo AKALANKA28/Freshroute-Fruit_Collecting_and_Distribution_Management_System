@@ -1,48 +1,45 @@
-import React, { useState } from 'react'
-import CardFilter from './CardFilter';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 
-const Card = ({card}) => {
+axios.defaults.baseURL = "http://localhost:8070/";
 
-    const [filter, setFilter] = useState('Today');
-    const handleFilterChange = filter => {
-        setFilter(filter)
-    };
-    
+const Card = () => {
+  const [totalFarmers, setTotalFarmers] = useState(0);
+
+  useEffect(() => {
+    axios.get("/Prediction/totalCount")
+      .then(response => {
+        setTotalFarmers(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total farmer count:", error);
+      });
+  }, []);
+
   return (
-   <div className="col-xxl-4 col-md-6">
-    <div className="card info-card sales-card">
-        <CardFilter filterChange={handleFilterChange} />
-        <div className="card-body">
+    <div className="row">
+      <div className="col-xxl-5 col-6">
+        <div className="card info-card sales-card">
+          <div className="card-body">
             <h5 className="card-title">
-                {card.name}<span> | {filter} </span>
+              Total predictions you made
             </h5>
-
             <div className="d-flex align-items-center">
-                <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i className= {card.icon}></i>
-                </div>
-                <div className="ps-3">
-                    <h6>
-                        {card.name === 'Revenue'
-                          ? '$' + card.amount.toLocalString('en-US')
-                          : card.amount.toLocalString('en-US')}
-                    </h6>
-                    <span className= {`${card.percentage > 0 ? 'text-success' : 'text-danger' } small pt-1 fw-bold`}>
-                        {card.percentage > 0 
-                        ? card.percentage * 100 
-                        : -card.percentage * 100} %
-                    </span>
-                    <span className="text-muted small pt-2 ps-1">
-                        {card.percentage > 0 ? 'increase' : 'decrease'}
-                    </span>
-                </div>
+              <div className="ps-5 card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i className="bi bi-bar-chart"></i>
+              </div>
+              <div className="ps-5">
+                <h6 className='card-price'>
+                  {totalFarmers}
+                </h6>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      
     </div>
-   </div>
+  );
+};
 
-
-  )
-}
-
-export default Card
+export default Card;
