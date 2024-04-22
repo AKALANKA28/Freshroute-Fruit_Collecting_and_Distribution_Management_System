@@ -189,6 +189,7 @@ const CompletedOrderList = () => {
                                             }
                                          ]
                                      }
+                                     clearInputField={clearFilter}
                                      handleSearch={handleSearchOnClick}
                                 />
                             </div>

@@ -40,11 +40,10 @@ function CompletedOrderForm({ show, onHide, formData }) {
                             <Form.Control type="text" name="quantity" readOnly={true} value={formData.quantity}
                                           disabled={true}/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="fromOrderProcessor">
+                        <Form.Group className="mb-3" controlId="fromOrderProcessor" hidden={true}>
                             <Form.Label>Order Processor</Form.Label>
-                            <Form.Select name="orderProcessor" disabled={true} >
-                                <option value="">{formData.opId}</option>
-                            </Form.Select>
+                            <Form.Control type="text" name="quantity" readOnly={true} value={formData.opName}
+                                          disabled={true} />
                         </Form.Group>
                     </div>
                 </Modal.Body>

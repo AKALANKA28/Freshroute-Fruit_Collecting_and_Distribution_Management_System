@@ -66,12 +66,13 @@ const CompletedOrderList = () => {
             category: item.category,
             quality: item.quality,
             quantity: item.quantity,
-            customer: item.customerName,
+            customer: item.customer,
             placedDate: item.placedDate,
             dueDate: item.dueDate,
             opId: item.opId,
             opName: item.opName,
         })
+        console.log(item)
         setShowPopup(true);
     };
 

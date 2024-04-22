@@ -24,7 +24,6 @@ const SuppliersTable = ({ items, handleView }) => {
               <th className="col ">Price for 1kg</th>
               <th className="col">Date Can Be Given</th>
               <th className="col">Contact No</th>
-              <th className="col">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -40,13 +39,6 @@ const SuppliersTable = ({ items, handleView }) => {
                   <td >{item.price}</td>
                   <td >{dateFormat(item.dateCanBeGiven)}</td>
                   <td >{item.contact? item.contact: ""}</td>
-                  <td>
-                    <div className="buttons">
-                      <button type="button" className="btn btn-outline-warning" onClick={() => handleView(item)}>
-                        <i className="bi bi-arrow-up-right-square"></i>
-                      </button>
-                    </div>
-                  </td>
                 </tr>
               ))}
           </tbody>

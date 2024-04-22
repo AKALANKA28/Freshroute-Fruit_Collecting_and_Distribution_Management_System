@@ -70,6 +70,7 @@ import OPDashboard from "./components/orderProcessor/body/OPDashboard";
 import RequestedOrderList from "./components/orderManagement/body/RequestedOrderList/RequestedOrderList";
 import AssignedOrderList from "./components/orderManagement/body/AssignedOrderList/AssignedOrderList";
 import CompletedOrderList from "./components/orderManagement/body/CompletedOrderList/CompletedOrderList";
+import CompletedOrders from "./components/orderProcessor/body/CompletedOrders/CompletedOrderList";
 
 import Home from './Website/Home';
 import About from "./Website/About";
@@ -255,6 +256,10 @@ const router = createBrowserRouter([
       {
         path: "/OMDashboard/CompletedOrderList",
         element: <CompletedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/SupplierList",
+        element: <SupplierList/>,
       }
 
     ]
@@ -282,7 +287,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/OPDashboard/CompletedOrders",
-        element: <CompletedOrder/>,
+        element: <CompletedOrders/>,
       },
       {
         path: "/OPDashboard/QualityList",

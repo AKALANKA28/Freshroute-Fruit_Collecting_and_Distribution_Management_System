@@ -30,7 +30,7 @@ const Sidebar = () => {
 
                     <li className='nav-item'>
                         <a className='nav-link ' href='/OMDashboard/QualityList'>
-                            <i class="bi bi-sliders"></i>
+                            <i className="bi bi-sliders"></i>
 
                             <span>Quality Control</span>
                         </a>
@@ -39,7 +39,7 @@ const Sidebar = () => {
                     <li className='nav-item'>
                         <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse'
                            href='Orders'>
-                            <i class="bi bi-box-seam"></i>
+                            <i className="bi bi-box-seam"></i>
                             <span>Orders</span>
                             <i className='bi bi-chevron-down ms-auto'></i>
                         </a>
@@ -72,9 +72,9 @@ const Sidebar = () => {
                     </li>
 
                     <li className='nav-item'>
-                        <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse'
-                           href='#'>
-                            <i class="bi bi-people"></i>
+                        <a className='nav-link ' href='/OMDashboard/SupplierList'>
+                            <i className="bi bi-people"></i>
+
                             <span>Suppliers</span>
                         </a>
                     </li>

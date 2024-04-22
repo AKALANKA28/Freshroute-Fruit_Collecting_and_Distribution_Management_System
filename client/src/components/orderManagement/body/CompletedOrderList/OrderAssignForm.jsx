@@ -42,9 +42,8 @@ function OrderAssignForm({ show, onHide, formData }) {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="fromOrderProcessor">
                             <Form.Label>Order Processor</Form.Label>
-                            <Form.Select name="orderProcessor" disabled={true} >
-                                <option value="">{formData.opId}</option>
-                            </Form.Select>
+                            <Form.Control type="text" name="quantity" readOnly={true} value={formData.opName}
+                                          disabled={true}/>
                         </Form.Group>
                     </div>
                 </Modal.Body>
