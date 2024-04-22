@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const PredictionsDetailsListTableInDashboard = ({ items }) => {
     
-    const displayedItems = items.slice(0, 4);
+    const displayedItems = items.slice(0, 10);
 
     return (
         <div>
