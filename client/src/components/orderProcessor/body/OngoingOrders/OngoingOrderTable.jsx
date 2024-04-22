@@ -20,6 +20,7 @@ const OngoingOrderTable = ({items, handleExecute}) => {
                         <th className="col">Fruit Category</th>
                         <th className="col">Quality</th>
                         <th className="col">Quantity (kg)</th>
+                        <th className="col">Filled Quantity (kg)</th>
                         <th className="col date-field">Placed Date</th>
                         <th className="col date-field">Due Date</th>
                         <th className="col">Action</th>
@@ -34,6 +35,7 @@ const OngoingOrderTable = ({items, handleExecute}) => {
                                 <td>{item.category}</td>
                                 <td>{item.quality}</td>
                                 <td>{item.quantity}</td>
+                                <td>{item.filledQuantity}</td>
                                 <td>{dateFormat(item.placedDate)}</td>
                                 <td>{dateFormat(item.dueDate)}</td>
                                 <td>
