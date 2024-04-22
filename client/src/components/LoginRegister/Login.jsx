@@ -39,13 +39,13 @@ const Login = () => {
 
   const { user, isError, isSuccess, isLoading, message } = authState.auth;
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/home");
-    } else {
-      navigate("");
-    }
-  }, [user, isError, isSuccess, isLoading]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     navigate("/shop");
+  //   } else {
+  //     navigate("");
+  //   }
+  // }, [user, isError, isSuccess, isLoading]);
 
   return (
 

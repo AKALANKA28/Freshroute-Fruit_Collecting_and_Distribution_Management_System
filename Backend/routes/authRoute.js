@@ -23,12 +23,15 @@ router.put("/block/:id", authMiddleware, isAdmin, userController.blockUser);
 router.put("/unblock/:id", authMiddleware, isAdmin, userController.unblockUser);
 router.put("/save-address", authMiddleware, userController.saveAddress);
 
-// router.post('/cart', authMiddleware, userController.userCart);
-//router.get('/get-cart', authMiddleware, userController.getUserCart);
+router.post('/cart', authMiddleware, userController.userCart);
+router.get('/get-cart', authMiddleware, userController.getUserCart);
+router.put('/update-product-from-cart/:newQuantity', authMiddleware, userController.updateProductQuantityFromCart);
+router.delete('/delete-product-from-cart/:cartItemId', authMiddleware, userController.removeProductFromCart);
+
 // router.delete('/empty-cart', authMiddleware, userController.emptyCart);
-router.post('/cart',  userController.userCart);
-router.get('/get-cart', userController.getUserCart);
-router.delete('/empty-cart', userController.emptyCart);
+// router.post('/cart',  userController.userCart);
+// router.get('/get-cart', userController.getUserCart);
+// router.delete('/empty-cart', userController.emptyCart);
 
 
 

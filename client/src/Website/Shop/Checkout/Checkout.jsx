@@ -4,7 +4,36 @@ import img from "../../assets/image1.jpg"
 import './checkout.css'
 import Footer from '../../Footer/Footer'
 import Container from '../../Components/Container'
+import { loadStripe } from "@stripe/stripe-js";
+
 const Checkout = () => {
+
+    const makePayment = async () => {
+        const stripe = await loadStripe(
+          "pk_test_51P85tiKciT9oiVpgZ0v6tWCBKxPZKw7UOl9hOeK44Ce25o4wkz4gIPtvcMvWGfYfbSINuAgMYAO3dn5w41GZsVli00WkqVK56w"
+        );
+        const body = {
+            // products: carts
+        }
+        const headers = {
+            "Content-Type" : "application/json"
+        }
+
+        const res = await fetch("", {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(body)
+        })
+        const session = await res.json();
+
+        const result = stripe.redirectToCheckout({
+            sessionId:session.id
+        })
+
+        if(result.error){
+
+        }
+      };
   return (
     <div> 
     <div className="product-header">
@@ -98,7 +127,8 @@ const Checkout = () => {
                         <div className="w-100 mt-4">
                             <div className="d-flex align-items-center justify-content-between">
                                 <Link to='/cart' className='text-dark text-decoration-none'><i class="bi bi-chevron-left me-2"></i>Back to cart</Link>
-                                <Link to='/payment' className='product-button'>Continue to Payment</Link>
+                                {/* <Link to='/payment' className='product-button'>Continue to Payment</Link> */}
+                                <button to={makePayment} className='product-button'>Continue to Payment</button>
 
                             </div>    
                         </div>  

@@ -4,6 +4,20 @@ import axios from "axios";
 import { base_url, config } from "../../Utils/Config";
 
 
+
+export const getCustomerFromLocalStorage = localStorage.getItem("customer")
+? JSON.parse(localStorage.getItem("customer"))
+: null;
+
+const initialState = {
+    user: getCustomerFromLocalStorage,
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: ""
+
+}
+
 export const registerUser = createAsyncThunk("user/register", async(userData, thunkAPI) =>{
     try{
         const response = await axios.post("http://localhost:8070/user/register", userData);
@@ -31,14 +45,13 @@ export const loginUser = createAsyncThunk("user/login", async(userData, thunkAPI
 })
 
 
-export const getCustomerFromLocalStorage = localStorage.getItem("customer")
-? JSON.parse(localStorage.getItem("customer"))
-: null;
 
-console.log(getCustomerFromLocalStorage);
+// console.log(getCustomerFromLocalStorage);
+
+
 export const addToCart = createAsyncThunk("user/cart/add", async(cartData, thunkAPI) =>{
     try{
-        const response = await axios.post(`${base_url}user/cart`, cartData, config);
+        const response = await axios.post('http://localhost:8070/user/cart', cartData, config);
         if(response.data){
             return response.data;
         }
@@ -47,14 +60,45 @@ export const addToCart = createAsyncThunk("user/cart/add", async(cartData, thunk
     }
 })
 
-const initialState = {
-    user: getCustomerFromLocalStorage,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: ""
+export const getCart = createAsyncThunk("user/cart/get", async(thunkAPI) =>{
+    try{
+        const response = await axios.get("http://localhost:8070/user/get-cart/",config);
+        console.log(response);
+        if(response.data){
+            return response.data;
+        }
+    }catch(error){
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 
-}
+export const removeProductFromCart = createAsyncThunk("user/cart/delete", async(cartItemId, thunkAPI) =>{
+    try{
+        const response = await axios.delete(`http://localhost:8070/user/delete-product-from-cart/${cartItemId}`, config);
+        console.log(response);
+        if(response.data){
+            return response.data;
+        }
+    }catch(error){
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+
+
+export const updateProductFromCart = createAsyncThunk("user/cart/update", async(cartDetail, thunkAPI) =>{
+    try{
+        const response = await axios.put(`http://localhost:8070/user/update-product-from-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`, config);
+        console.log(response);
+        if(response.data){
+            return response.data;
+        }
+    }catch(error){
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+
+
+
 export const authSlice = createSlice ({
     name: "auth",
     initialState: initialState,
@@ -129,8 +173,85 @@ export const authSlice = createSlice ({
             if(state.isError === true){
                 toast.error(action.error);
             }
-        });
+        })
 
+
+
+        .addCase(getCart.pending, (state) =>{
+            state.isLoading=true
+        })
+        .addCase(getCart.fulfilled,(state, action) =>{
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess =true;
+            state.cartProducts = action.payload;
+            // if(state.isSuccess){
+            //     toast.success("Fruit Added to Cart")
+            // }
+        })
+        .addCase(getCart.rejected,(state,action) =>{
+            state.isLoading=false;
+            state.isError = true;
+            state.isSuccess=false;
+            state.message=action.error
+            if(state.isError === true){
+                toast.error(action.error);
+            }
+        })
+
+
+
+
+        
+        .addCase(removeProductFromCart.pending, (state) =>{
+            state.isLoading=true
+        })
+        .addCase(removeProductFromCart.fulfilled,(state, action) =>{
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess =true;
+            state.removeCartProduct = action.payload;
+            if(state.isSuccess){
+                toast.success("Product Deleted From Cart Succesfully")
+            }
+        })
+        .addCase(removeProductFromCart.rejected,(state,action) =>{
+            state.isLoading=false;
+            state.isError = true;
+            state.isSuccess=false;
+            state.message=action.error
+            if(state.isError === true){
+                // toast.error(action.error);
+                toast.error("Something Wnnt Wrong");
+
+            }
+        })
+
+
+
+        .addCase(updateProductFromCart.pending, (state) =>{
+            state.isLoading=true
+        })
+        .addCase(updateProductFromCart.fulfilled,(state, action) =>{
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess =true;
+            state.updatedCartProduct = action.payload;
+            if(state.isSuccess){
+                toast.success("Product Deleted From Cart Succesfully")
+            }
+        })
+        .addCase(updateProductFromCart.rejected,(state,action) =>{
+            state.isLoading=false;
+            state.isError = true;
+            state.isSuccess=false;
+            state.message=action.error
+            if(state.isError === true){
+                // toast.error(action.error);
+                toast.error("Something Went Wrong");
+
+            }
+        });
 
 
 

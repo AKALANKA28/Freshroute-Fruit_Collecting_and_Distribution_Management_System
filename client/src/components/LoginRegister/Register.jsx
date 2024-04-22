@@ -17,7 +17,7 @@ const registerSchema = yup.object({
   email: yup.string().nullable().email("Email Should be Valid").required("Email is Required"),
   mobile: yup
   .string()
-  .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please enter a valid phone number")
+  // .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please enter a valid phone number")
   .required("A phone number is required"),  password: yup.string().required("Password is required"),
 });
 
@@ -56,7 +56,7 @@ const Register = () => {
 
                     <div className='footerDiv flex'>
                        <span className='text'>Have an account?</span>
-                         <Link to={'/login'}>
+                         <Link to={'/'}>
                          <button className='btn'>Sign In</button>
                        </Link>
                     </div>
