@@ -26,7 +26,7 @@ function SuppliersList() {
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList); // InitialidataListze filteredDataList with 
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
 
   const getFetchData = async () => {
@@ -84,6 +84,7 @@ function SuppliersList() {
         await axios.delete(`/Farmer/delete/${id}`);
         alert("Successfully Deleted");
         getFetchData();
+        window.location.reload();
       } catch (err) {
         alert(err.message);
       }
@@ -234,10 +235,11 @@ function SuppliersList() {
           </Modal>
 
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
+            <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
+                  <th scope="col">#</th>
                   <th scope="col">NIC</th>
                   <th scope="col">Username</th>
                   <th scope="col">Name</th>
@@ -250,8 +252,9 @@ function SuppliersList() {
               </thead>
               <tbody>
                 {filteredDataList.length ? (
-                  filteredDataList.map((farmer) => (
+                  filteredDataList.map((farmer, index) => (
                     <tr key={farmer._id}>
+                      <td>{index + 1}</td>
                       <td>{farmer.NIC}</td>
                       <td>{farmer.username}</td>
                       <td>{farmer.name}</td>
