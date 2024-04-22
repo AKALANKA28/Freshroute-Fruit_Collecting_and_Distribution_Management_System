@@ -57,7 +57,7 @@ const Sidebar = () => {
               <li>
                 <a href='SupplyRequests'>
                   <i className='bi bi-circle'>
-                    <span>Manage Supply Requests</span>
+                    <span>Manage Requests</span>
                   </i>
                 </a>
               </li>
