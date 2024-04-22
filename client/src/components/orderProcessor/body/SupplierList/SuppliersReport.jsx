@@ -1,6 +1,6 @@
 import React from "react";
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import './OrderList.css';
+import '../OrderList.css';
 
 const styles = StyleSheet.create({
   page: {
@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const RequestedOrderReport = ({ dataList }) => {
+const SuppliersReport = ({ dataList }) => {
   return (
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>FreshRoute - Requested Order Details</Text>
+          <Text style={styles.heading}>FreshRoute - Supplier Details</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
@@ -61,6 +61,8 @@ const RequestedOrderReport = ({ dataList }) => {
               <Text style={styles.tableColHeader}>Quantity (kg)</Text>
               <Text style={styles.tableColHeader}>Placed Date</Text>
               <Text style={styles.tableColHeader}>Due Date</Text>
+              
+             
             </View>
             {dataList.map((item, index) => (
               <View key={index} style={styles.tableRow}>
@@ -69,7 +71,8 @@ const RequestedOrderReport = ({ dataList }) => {
                 <Text style={styles.tableCol}>{item.quality}</Text>
                 <Text style={styles.tableCol}>{item.quantity}</Text>
                 <Text style={styles.tableCol}>{item.placedDate}</Text>
-                <Text style={styles.tableCol}>{item.dueDate}</Text>     
+                <Text style={styles.tableCol}>{item.dueDate}</Text>
+               
               </View>
             ))}
           </View>
@@ -79,4 +82,4 @@ const RequestedOrderReport = ({ dataList }) => {
   );
 };
 
-export default RequestedOrderReport;
+export default SuppliersReport;

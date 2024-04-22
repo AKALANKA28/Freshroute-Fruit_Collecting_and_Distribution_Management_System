@@ -19,7 +19,7 @@ const AssignedOrderTable = ({ items, handleUnAssign, handleEdit }) => {
               <th className="col">Fruit Type</th>
               <th className="col">Fruit Category</th>
               <th className="col">Quality</th>
-              <th className="col">Quantity(kg)</th>
+              <th className="col">Quantity (kg)</th>
               <th className="col date-field">Placed Date</th>
               <th className="col date-field">Due Date</th>
               <th className="col">Order Processor</th>

@@ -8,7 +8,7 @@ const dateFormat = (dateString) => {
   return  date.toLocaleString();
 }
 
-const CompletedOrderTable = ({ items, handleView }) => {
+const SuppliersTable = ({ items, handleView }) => {
 
   return (
       <>
@@ -16,13 +16,15 @@ const CompletedOrderTable = ({ items, handleView }) => {
           <table className="table table-bordeless datatable">
             <thead className="table-light">
             <tr>
+                <th className="col">Supplier Name</th>  
               <th className="col">Fruit Type</th>
               <th className="col">Fruit Category</th>
               <th className="col">Quality</th>
-              <th className="col">Quantity (kg)</th>
-              <th className="col date-field">Placed Date</th>
-              <th className="col date-field">Due Date</th>
-              <th className="col">Order Processor</th>
+              <th className="col">Total Quantity (kg)</th>
+              <th className="col date-field">Price for 1kg</th>
+              <th className="col date-field">Total Price (Rs)</th>
+              <th className="col">Date Can Be Given</th>
+              <th className="col">Contact No</th>
               <th className="col">Action</th>
             </tr>
             </thead>
@@ -54,4 +56,4 @@ const CompletedOrderTable = ({ items, handleView }) => {
   );
 };
 
-export default CompletedOrderTable;
+export default SuppliersTable;

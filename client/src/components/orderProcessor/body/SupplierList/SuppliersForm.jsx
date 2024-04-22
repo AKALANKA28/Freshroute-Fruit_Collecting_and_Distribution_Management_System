@@ -3,12 +3,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import "../OrderList.css"
 import axios from "axios";
 
-function CompletedOrderForm({ show, onHide, formData }) {
+function SuppliersForm({ show, onHide, formData }) {
 
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Completed Orders</Modal.Title>
+                <Modal.Title></Modal.Title>
             </Modal.Header>
             <Form onSubmit={(event)=>{event.preventDefault(); onHide();}}>
                 <Modal.Body>
@@ -58,4 +58,4 @@ function CompletedOrderForm({ show, onHide, formData }) {
     );
 }
 
-export default CompletedOrderForm;
+export default SuppliersForm;

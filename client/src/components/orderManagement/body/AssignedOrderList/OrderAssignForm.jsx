@@ -79,7 +79,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange,
                                           disabled={true}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formQuantity">
-                            <Form.Label>Quantity(kg)</Form.Label>
+                            <Form.Label>Quantity (kg)</Form.Label>
                             <Form.Control type="text" name="quantity" readOnly={true} value={formData.quantity}
                                           disabled={true}/>
                         </Form.Group>

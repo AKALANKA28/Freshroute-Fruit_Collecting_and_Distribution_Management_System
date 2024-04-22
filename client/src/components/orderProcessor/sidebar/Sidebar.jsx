@@ -58,7 +58,7 @@ const Sidebar = ()=> {
 
                     </li>
                     <li className='nav-item'>
-                        <a className='nav-link' href='/OPDashboard/Supplierlist'>
+                        <a className='nav-link' href='/OPDashboard/SupplierList'>
                         <i class="bi bi-people"></i>
                             <span>Suppliers</span>
                         </a>

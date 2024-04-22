@@ -42,6 +42,7 @@ import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHo
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
 import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrderList"
 import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrderList"
+import SupplierList from "./components/orderProcessor/body/SupplierList/SuppliersList"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -277,6 +278,10 @@ const router = createBrowserRouter([
       {
         path: "/OPDashboard/QualityList",
         element: <QualityList isViewOnly={true}/>,
+      },
+      {
+        path: "/OPDashboard/SupplierList",
+        element: <SupplierList/>,
       }
 
     ]

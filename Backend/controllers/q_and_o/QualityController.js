@@ -74,27 +74,29 @@ exports.getQualityById = async (req, res) => {
 
 // Delete a quality record
 exports.removeQuality = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
-            $unset: {
-                qualityDesc: "",
-                storageCond: "",
-            },
-            $set: {
-                qualityStatus: 0,
+    
+        try {
+            const id = req.params.id;
+            const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
+                $unset: {
+                    qualityDesc: "",
+                    storageCond: "",
+                },
+                $set: {
+                    qualityStatus: 0,
+                }
+            }, { new: true });
+
+            if (!updatedQuality) {
+                return res.status(404).json({ status: "Quality not found" });
             }
-        }, { new: true });
 
-        if (!updatedQuality) {
-            return res.status(404).json({ status: "Quality not found" });
+            res.status(200).json({ status: "Quality record deleted", updatedQuality });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ status: "Error deleting quality record", error: err.message });
         }
-
-        res.status(200).json({ status: "Quality record updated", updatedQuality });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error updating quality record", error: err.message });
-    }
+   
 };
 
 // Retrieve filtered quality records
