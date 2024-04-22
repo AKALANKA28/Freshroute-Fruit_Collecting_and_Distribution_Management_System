@@ -59,7 +59,7 @@ const AssignedOrderList = () => {
                     opId: formData.opId
                 };
                 const response = await axios.post(`/om/editAssignOrder`, request);
-                alert("Successful");
+                alert(response.data.status);
             } catch (err) {
                 if (err.response && err.response.data && err.response.data.error) {
                     alert(err.response.data.error);

@@ -139,6 +139,15 @@ exports.assignOrder = async (req, res) => {
 exports.editAssignOrder = async (req, res) => {
     const {orderId, opName, opId } = req.body;
     try {
+        const originalOrder = await OrderDetail.findById(orderId);
+        if (!originalOrder) {
+            res.status(200).json({ status: "Order Not Found"});
+            return;
+        }
+        if (originalOrder.orderStatus === "IN_PROGRESS") {
+            res.status(200).json({ status: "Order process has already started. Edit Failed."});
+            return;
+        }
         const order = await OrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "ASSIGNED",
@@ -147,9 +156,7 @@ exports.editAssignOrder = async (req, res) => {
             },
         }, { new: true });
 
-        if (!order) {
-            return res.status(404).json({ status: "Order not found" });
-        }
+
         const orderExecutionRecord = await OrderExecutionDetail.find({orderId: orderId});
         await OrderExecutionDetail.findByIdAndUpdate(orderExecutionRecord[0]._id, {
             $set: {
@@ -176,7 +183,7 @@ exports.unAssignOrder = async (req, res) => {
             return;
         }
         if (originalOrder.orderStatus === "IN_PROGRESS") {
-            res.status(200).json({ status: "Order process has already stared. Un Assign Failed."});
+            res.status(200).json({ status: "Order process has already started. Un Assign Failed."});
             return;
         }
         const order = await OrderDetail.findByIdAndUpdate(orderId, {
