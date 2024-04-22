@@ -37,7 +37,7 @@ const Body = () => {
               <RecentActivity />
               <BudgetReport />
               <WebTraffic />
-              <News />
+              {/* <News /> */}
             </div>
         </div>
         <BackToTop />

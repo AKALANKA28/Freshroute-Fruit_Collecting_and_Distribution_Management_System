@@ -60,11 +60,21 @@ const deleteFarmerByJoinRequestID = async (req, res) => {
   }
 };
 
+const getTotalFarmersCount = async (req, res) => {
+  try {
+    const count = await Farmer.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addFarmer,
   getAllFarmers,
   getOneFarmer,
   deleteFarmer,
   updateFarmer,
-  deleteFarmerByJoinRequestID
+  deleteFarmerByJoinRequestID,
+  getTotalFarmersCount
 };
