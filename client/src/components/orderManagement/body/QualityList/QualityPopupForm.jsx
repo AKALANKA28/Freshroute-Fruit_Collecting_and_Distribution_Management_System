@@ -102,59 +102,80 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
             </Modal.Header>
             <Form onSubmit={handleOnSubmit}>
                 <Modal.Body>
+                    <div className="scrollable-content-y">
+                        <Form.Group className="mb-3" controlId="fromFruitName">
+                            <Form.Label>Fruit Type</Form.Label>
+                            <Form.Select name="fruit" required onChange={fruitOnChange} value={formData.fruit}
+                                         disabled={isEdit}>
+                                <option value="">{isEdit ? formData.fruit : "Select Fruit"}</option>
+                                {!isEdit && Object.keys(fruitDetail).map((fruit, index) => (
+                                    <option key={index} value={fruit}>
+                                        {fruit}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="fromFruitName">
-                        <Form.Label>Fruit Type</Form.Label>
-                        <Form.Select name="fruit" required onChange={fruitOnChange} value={formData.fruit} disabled={isEdit}>
-                            <option value="">{ isEdit? formData.fruit :"Select Fruit"}</option>
-                            {!isEdit && Object.keys(fruitDetail).map((fruit, index) => (
-                                <option key={index} value={fruit}>
-                                    {fruit}
-                                </option>
-                            ))}
-                        </Form.Select>
-                    </Form.Group>
+                        <Form.Group className="mb-3 error" controlId="fromFruitCategory">
+                            <Form.Label>Fruit Category</Form.Label>
+                            <Form.Select name="category" required onChange={categoryOnChange} value={formData.category}
+                                         disabled={inputFieldDisable.category}>
+                                <option value="">{isEdit ? formData.category : "Select Category"}</option>
+                                {!isEdit && Object.keys(fruitCategory).map((category, index) => (
+                                    <option key={index} value={category}>
+                                        {category}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3 error" controlId="fromFruitCategory">
-                        <Form.Label>Fruit Category</Form.Label>
-                        <Form.Select name="category" required onChange={categoryOnChange} value={formData.category} disabled={inputFieldDisable.category}>
-                            <option value="">{ isEdit? formData.category : "Select Category" }</option>
-                            {!isEdit && Object.keys(fruitCategory).map((category, index) => (
-                                <option key={index} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </Form.Select>
-                    </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGrade">
+                            <Form.Label>Grade</Form.Label>
+                            <Form.Select name="quality" required onChange={gradeOnChange} value={formData.quality}
+                                         disabled={inputFieldDisable.grade}>
+                                <option value="">{isEdit ? formData.quality : "Select Grade"}</option>
+                                {!isEdit && grade.map((grade, index) => (
+                                    <option key={index} value={grade['quality']}>
+                                        {grade['quality']}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formId" hidden={true}>
+                            <Form.Label>Id</Form.Label>
+                            <Form.Control type="text" name="id" required placeholder="Description" value={formData.id}
+                                          onChange={handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formDescription">
+                            <Form.Label>Quality Description</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                name="qualityDesc"
+                                required
+                                placeholder="Description"
+                                value={formData.qualityDesc}
+                                onChange={handleChange}
+                                rows={4} // Adjust the number of rows as needed
+                            />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formGrade">
-                        <Form.Label>Grade</Form.Label>
-                        <Form.Select name="quality" required onChange={gradeOnChange} value={formData.quality} disabled={inputFieldDisable.grade}>
-                            <option value="">{ isEdit? formData.quality :"Select Grade"}</option>
-                            {!isEdit && grade.map((grade, index) => (
-                                <option key={index} value={ grade['quality'] }>
-                                    {grade['quality']}
-                                </option>
-                            ))}
-                        </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formId" hidden={true}>
-                        <Form.Label>Id</Form.Label>
-                        <Form.Control type="text" name="id" required placeholder="Description" value={formData.id} onChange={handleChange}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formDescription">
-                        <Form.Label>Quality Description</Form.Label>
-                        <Form.Control type="text" name="qualityDesc" required placeholder="Description" value={formData.qualityDesc} onChange={handleChange}/>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formStorageCondition" >
-                        <Form.Label>Storage Conditions</Form.Label>
-                        <Form.Control type="text" name="storageCond" required placeholder="Description" value={formData.storageCond} onChange={handleChange}/>
-                    </Form.Group>
+                        <Form.Group className="mb-3" controlId="formStorageCondition">
+                            <Form.Label>Storage Conditions</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                name="storageCond"
+                                required
+                                placeholder="Description"
+                                value={formData.storageCond}
+                                onChange={handleChange}
+                                rows={4} // Adjust the number of rows as needed
+                            />
+                        </Form.Group>
+                    </div>
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="Success" onClick={onHide}>
+                <Button variant="Success" onClick={onHide}>
                         Close
                     </Button>
                     <Button variant="secondary" type="submit">

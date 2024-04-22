@@ -21,6 +21,7 @@ const QualityList = ({isViewOnly}) => {
     const [tab, setTab] = useState("A")
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [clearFilter, setClearFilter] = useState(false);
     const [formData, setFormData] = useState({
         id: "",
         fruit: "",
@@ -75,7 +76,7 @@ const QualityList = ({isViewOnly}) => {
 
         try {
             const response = await axios.put("/om/quality/update", data);
-            alert(response.data);
+            alert(isEdit? "Quality Updated Successfully":"Quality Added Successfully");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -196,7 +197,10 @@ const QualityList = ({isViewOnly}) => {
                               </li>
                               <li>
                                   <div className="button-container">
-                                      <a href="#" onClick={() => getQualityList()}>
+                                      <a href="#" onClick={() => {
+                                          getQualityList();
+                                          setClearFilter(!clearFilter);
+                                      }}>
                                           <img src={Refresh} alt="Refresh Icon" className="icon"/>
                                       </a>
                                   </div>
@@ -278,6 +282,7 @@ const QualityList = ({isViewOnly}) => {
                                                  }
                                              ]
                                          }
+                                         clearInputField={clearFilter}
                                          handleSearch={handleSearchOnClick}
                               />
                           </li>
