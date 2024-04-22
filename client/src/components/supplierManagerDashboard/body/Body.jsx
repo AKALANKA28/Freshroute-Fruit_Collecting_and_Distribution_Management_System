@@ -5,7 +5,7 @@ import Cards from './Cards'
 import Map from './Map'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
-import BudgetReport from './BudgetReport'
+import SupplyDetails from './SupplyDetails'
 import WebTraffic from './WebTraffic'
 import News from './News'
 import BackToTop from './BackToTop'
@@ -35,7 +35,7 @@ const Body = () => {
             </div>
             <div className="col-lg-4">
               <RecentActivity />
-              <BudgetReport />
+              <SupplyDetails />
               <WebTraffic />
               {/* <News /> */}
             </div>
