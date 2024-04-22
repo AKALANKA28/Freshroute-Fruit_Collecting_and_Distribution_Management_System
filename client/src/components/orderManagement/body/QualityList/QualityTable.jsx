@@ -43,8 +43,8 @@ const QualityTable = ({items, updateQualityList, editItem, isViewOnly}) => {
                         <th className="col">Fruit Type</th>
                         <th className="col">Fruit Category</th>
                         <th className="col">Grade</th>
-                        <th className="col">Quality Description</th>
-                        <th className="col">Storage Conditions</th>
+                        <th className="col" style={{minWidth:'300px'}}>Quality Description</th>
+                        <th className="col" style={{minWidth:'300px'}}>Storage Conditions</th>
                         {!isViewOnly && <th className="col">Action</th>}
                     </tr>
                     </thead>
