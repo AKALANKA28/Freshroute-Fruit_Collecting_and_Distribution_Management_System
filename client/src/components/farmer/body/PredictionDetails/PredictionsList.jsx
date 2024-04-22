@@ -282,6 +282,7 @@ const getStatusClassName = (status) => {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
+                  <th scope="col">#</th>
                   <th scope="col">Fruit</th>
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
@@ -295,8 +296,9 @@ const getStatusClassName = (status) => {
               </thead>
               <tbody>
               {filteredDataList.length ? (
-                filteredDataList.map((prediction) => (
+                filteredDataList.map((prediction, index) => (
                   <tr key={prediction._id}>
+                    <td>{index + 1}</td>
                     <td>{prediction.fruit}</td>
                     <td>{prediction.subCategory}</td>
                     <td>{prediction.quality}</td>
@@ -312,19 +314,22 @@ const getStatusClassName = (status) => {
                       </div>
                     </td>
                     <td className="action">
-                      <div className="buttons">
+                    <div className="buttons">
+                        
                         <button
-                          className="btn btn-edit"
+                          className={`btn btn-edit ${prediction.status === "Approved" ? "invisible" : ""}`}
                           onClick={() => handleEditModalOpen(prediction)}
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
+                        
                         <button
                           className="btn btn-delete"
                           onClick={() => handleDelete(prediction._id)}
                         >
                           <i className="bi bi-trash-fill"></i>
                         </button>
+                        
                       </div>
                     </td>
                   </tr>
