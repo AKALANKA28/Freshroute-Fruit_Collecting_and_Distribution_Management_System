@@ -78,6 +78,14 @@ const getTotalApprovedPrice = async (req, res) => {
   }
 };
 
+const getTotalApprovedSuppliesCount = async (req, res) => {
+  try {
+    const count = await AcceptedSupply.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 
 module.exports = {
@@ -86,5 +94,6 @@ module.exports = {
   getOneAcceptedSupply,
   deleteAcceptedSupply,
   updateAcceptedSupply,
-  getTotalApprovedPrice
+  getTotalApprovedPrice,
+  getTotalApprovedSuppliesCount
 };

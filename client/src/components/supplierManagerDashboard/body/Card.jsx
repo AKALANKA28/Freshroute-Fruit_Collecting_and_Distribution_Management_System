@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import './main.css'
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const Card = () => {
   const [totalFarmers, setTotalFarmers] = useState(0);
-  const [totalApprovedPrice, setTotalApprovedPrice] = useState(0);
+  const [totalPendingSupplies, setTotalPendingSupplies] = useState(0);
+  const [totalApprovedSupplies, setTotalApprovedSupplies] = useState(0);
+  const [totalDeclinedSupplies, setTotalDeclinedSupplies] = useState(0);
 
   useEffect(() => {
     axios.get("/Farmer/totalCount")
@@ -16,18 +19,35 @@ const Card = () => {
         console.error("Error fetching total farmer count:", error);
       });
 
-    axios.get("/acceptedSupply/totalApprovedPrice")
+    axios.get("/pendingSupply/totalPendingSupplies")
       .then(response => {
-        setTotalApprovedPrice(response.data.totalApprovedPrice);
+        setTotalPendingSupplies(response.data.count);
       })
       .catch(error => {
         console.error("Error fetching total approved price:", error);
       });
+
+      axios.get("/acceptedSupply/totalApprovedSupplies")
+      .then(response => {
+        setTotalApprovedSupplies(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total approved price:", error);
+      });  
+      
+      axios.get("/declinedSupply/totalDeclinedSupplies")
+      .then(response => {
+        setTotalDeclinedSupplies(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total approved price:", error);
+      }); 
+
   }, []);
 
   return (
     <div className="row">
-      <div className="col-xxl-5 col-6">
+      <div className="col-xxl-6 col-6">
         <div className="card info-card sales-card">
           <div className="card-body">
             <h5 className="card-title">
@@ -39,28 +59,48 @@ const Card = () => {
               </div>
               <div className="ps-5">
                 <h6 className='card-price'>
-                  {totalFarmers} Farmers
+                  {totalFarmers} Suppliers
                 </h6>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="col-xxl-5 col-6">
+      <div className="col-xxl-6 col-6">
         <div className="card info-card sales-card">
           <div className="card-body">
             <h5 className="card-title">
-              Total Approved Price
+              Details of Supply Requests
             </h5>
             <div className="d-flex align-items-center">
-              <div className="ps-5 card-icon rounded-circle d-flex align-items-center justify-content-center">
-                <i className="fa fa-money"></i>
+              
+            <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+            <i className="fas fa-clipboard-list pending"></i>
               </div>
-              <div className="ps-5">
-                <h6 className='card-price'>
-                  {totalApprovedPrice}
+              <div className="">
+                <h6 className='card-price supply-status'>
+                <a href='/SupplyRequests' className="link">{totalPendingSupplies} <span className="status-label">Pending</span></a>
                 </h6>
               </div>
+
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i className="fas fa-check-circle"></i>
+              </div>
+              <div className="">
+                <h6 className='card-price supply-status'>
+                <a href='/ApprovedSupplies' className="link">{totalApprovedSupplies} <span className="status-label">Approved</span></a>
+                </h6>
+              </div>
+
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center ">
+              <i className="fas fa-times-circle declined"></i>
+              </div>
+              <div className="">
+                <h6 className='card-price supply-status'>
+                <a href='/DeclinedSupplies' className="link">{totalDeclinedSupplies} <span className="status-label">Declined</span></a>
+                </h6>
+              </div>
+
             </div>
           </div>
         </div>
