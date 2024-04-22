@@ -418,6 +418,20 @@
       "city": "Wattala",
       "latitude": "7.6119",
       "longitude": "79.8956"
+    },
+    {
+      "city": "Kottawa",
+      "latitude": "6.8381",
+      "longitude": "80.0181"
+    },
+    {
+      "city": "Meegoda",
+      "latitude": "6.8531",
+      "longitude": "80.0202"
+    },
+    {
+      "city": "Godagama",
+      "latitude": "6.8234",
+      "longitude": "79.9952"
     }
   ]
-  

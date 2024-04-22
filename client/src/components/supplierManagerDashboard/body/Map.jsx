@@ -9,10 +9,9 @@ const Map = () => {
   const [suppliers, setSuppliers] = useState([]);
 
   useEffect(() => {
-    // Fetch supplier data from the backend
     const fetchSuppliers = async () => {
       try {
-        const response = await axios.get('/Farmer/'); // Update the endpoint
+        const response = await axios.get('/Farmer/');
         setSuppliers(response.data);
       } catch (error) {
         console.error('Error fetching suppliers:', error);
