@@ -3,7 +3,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from 'yup';
-import { addSales } from "./salesSlice";
 
 
 const salesSchema = yup.object({
@@ -20,22 +19,19 @@ const salesSchema = yup.object({
 
 const SalesForm = ({ handleSubmit, initialData }) => {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate(); // Using useNavigate hook for navigation
-
   const formik = useFormik({
     initialValues: {
-      customer_name: "",
-      date: "",
-      fruit_name: "",
-      amount: "",
-      paid: "",
-      due: "",
-      status: "",
+      _id: initialData ? initialData._id : "", // Set _id from initialData if available
+      customer_name: initialData ? initialData.customer_name : "",
+      fruit_name: initialData ? initialData.fruit_name : "",
+      amount: initialData ? initialData.amount : "",
+      paid: initialData ? initialData.paid : "",
+      due: initialData ? initialData.due : "",
+      status: initialData ? initialData.status : "",
     },
     validationSchema: salesSchema,
     onSubmit: (values) => {
-      dispatch(addSales(values));
+      handleSubmit(values);
     },
   });
 
