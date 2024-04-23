@@ -57,7 +57,7 @@ const QualityReport = ({ dataList }) => {
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-          <Image src = {logo} style={styles.logo}/>
+          {/* <Image src = {logo} style={styles.logo}/> */}
           <Text style={styles.heading}>FreshRoute - Quality Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
