@@ -5,13 +5,13 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import SearchBar from '../SearchBar'
 import axios from 'axios';
-import CompletedOrderForm from "./CompletedOrderForm";
 import CompletedOrderTable from './CompletedOrderTable';
 import { PDFViewer } from "@react-pdf/renderer";
 import CompletedOrderReport from "./CompletedOrderReport";
 import { Button, Modal } from "react-bootstrap";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
+import CompltedExecutionForm from "./CompltedExecutionForm";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const CompletedOrderList = () => {
@@ -61,7 +61,8 @@ const CompletedOrderList = () => {
 
     const handleView = (item) =>{
         setFormData({
-            orderId: item._id,
+            id: item._id,
+            orderId: item.orderId,
             fruit: item.fruit,
             category: item.category,
             quality: item.quality,
@@ -71,8 +72,9 @@ const CompletedOrderList = () => {
             dueDate: item.dueDate,
             opId: item.opId,
             opName: item.opName,
+            executionHistory: item.executionHistory,
+            filledQuantity: item.filledQuantity,
         })
-        console.log(item)
         setShowPopup(true);
     };
 
@@ -210,7 +212,7 @@ const CompletedOrderList = () => {
                             </div>
                         </div>
                         <div>
-                            <CompletedOrderForm
+                            <CompltedExecutionForm
                                 show={showPopup}
                                 onHide={handleClosePopup}
                                 formData={formData}
