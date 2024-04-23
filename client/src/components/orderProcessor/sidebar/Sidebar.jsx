@@ -2,8 +2,16 @@ import React from 'react'
 import '../../../App.css'
 import navList from './navItem';
 import logo from "../../../assests/logo.png";
+import {FaChevronRight} from "react-icons/fa";
 
-const Sidebar = ()=> {
+
+
+const Sidebar = () => {
+
+    const handleToggleSideBar = () => {
+        document.body.classList.toggle('toggle-sidebar');
+    }
+
     return (
         <div>
             <aside id='sidebar' className='sidebar'>
@@ -11,13 +19,15 @@ const Sidebar = ()=> {
                     <img src={logo} alt='logo image'/>
                     <span className=''>FreshRoute</span>
                 </a>
-                {/* <i className='bi bi-list toggle-sidebar-btn' onClick={handleToggleSideBar}></i> */}
+                <hr className='hr'></hr>
+                <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
 
+                {/* <i className='bi bi-chevron-right toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar}></i> */}
 
                 <ul className="sidebar-nav" id='sidebar-nav'>
                     <li className='nav-item'>
                         <a className='nav-link' href='/OPDashboard'>
-                            <i className='bi bi-grid-1x2-fill'></i>
+                            <i className='bi bi-grid-1x2'></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -25,7 +35,7 @@ const Sidebar = ()=> {
                     <li className='nav-item'>
                         <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse'
                            href='#'>
-                            <i class="bi bi-box-seam"></i>
+                            <i className="bi bi-box-seam"></i>
                             <span>Orders</span>
                             <i className='bi bi-chevron-down ms-auto'></i>
                         </a>
@@ -59,34 +69,36 @@ const Sidebar = ()=> {
                     </li>
                     <li className='nav-item'>
                         <a className='nav-link' href='/OPDashboard/SupplierList'>
-                        <i class="bi bi-people"></i>
+                            <i className="bi bi-people"></i>
                             <span>Suppliers</span>
                         </a>
                     </li>
-                    
+
                     <li className='nav-item'>
                         <a className='nav-link' href='/OPDashboard/QualityList'>
-                        <i class="bi bi-list-stars"></i>
+                            <i className="bi bi-list-stars"></i>
                             <span>Quality List</span>
                         </a>
                     </li>
-
-                    {/* <li className='nav-heading'>Pages</li>
-                    <div className='navList'>
-                        {navList.map(nav => (
-                            <li className='nav-item' key={nav._id}>
-                                <a className='nav-link collapsed' href={'/login'}>
-                                    <i className={nav.icon}></i>
-                                    <span>{nav.name}</span>
-                                </a>
-                            </li>
-                        ))}
-                    </div> */}
-
+                    <div className="mt-16 ">
+                        <li className='nav-item'>
+                            <a className='nav-link collapsed' href='/'>
+                                <i className="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li className='nav-item'>
+                            <a className='nav-link collapsed' href='/'>
+                                <i className="bi bi-box-arrow-left"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </div>
 
                 </ul>
             </aside>
         </div>
-    );
+    )
 }
+
 export default Sidebar

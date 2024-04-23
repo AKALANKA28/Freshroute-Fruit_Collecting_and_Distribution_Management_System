@@ -1,8 +1,7 @@
 import React from 'react'
 import '../../../App.css'
-import navList from './navItem';
 import logo from "../../../assests/logo.png";
-import {Link} from "react-router-dom";
+import {FaChevronRight} from "react-icons/fa";
 
 const Sidebar = () => {
 
@@ -17,13 +16,15 @@ const Sidebar = () => {
                     <img src={logo} alt='logo image'/>
                     <span className=''>FreshRoute</span>
                 </a>
-                {/* <i className='bi bi-list toggle-sidebar-btn' onClick={handleToggleSideBar}></i> */}
+                <hr className='hr'></hr>
+                <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
 
+                {/* <i className='bi bi-chevron-right toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar}></i> */}
 
                 <ul className="sidebar-nav" id='sidebar-nav'>
                     <li className='nav-item'>
                         <a className='nav-link' href='/OMDashboard'>
-                            <i className='bi bi-grid-1x2-fill'></i>
+                            <i className='bi bi-grid-1x2'></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -78,19 +79,20 @@ const Sidebar = () => {
                             <span>Suppliers</span>
                         </a>
                     </li>
-
-                    {/* <li className='nav-heading'>Pages</li>
-                    <div className='navList'>
-                        {navList.map(nav => (
-                            <li className='nav-item' key={nav._id}>
-                                <a className='nav-link collapsed' href={'/login'}>
-                                    <i className={nav.icon}></i>
-                                    <span>{nav.name}</span>
-                                </a>
-                            </li>
-                        ))}
-                    </div> */}
-
+                    <div className="mt-16 ">
+                        <li className='nav-item'>
+                            <a className='nav-link collapsed' href='/'>
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li className='nav-item'>
+                            <a className='nav-link collapsed' href='/'>
+                                <i class="bi bi-box-arrow-left"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </div>
 
                 </ul>
             </aside>
