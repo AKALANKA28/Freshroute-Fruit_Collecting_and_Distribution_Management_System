@@ -28,6 +28,7 @@ const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningReques
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
 const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
 const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
+const AccResRouter = require("./routes/r_and_p/AccResRoute.js");
 
 
 const itemRouter = require("./routes/buyers/Bmanager");
@@ -72,6 +73,7 @@ app.use('/Farmer', router);
 app.use("/Promotion", PromotionRouter);
 app.use("/Compaign", CompaignRouter);
 app.use("/Resource", ResourceRouter);
+//app.use("/AccRes", AccResRouter);
 
 
 

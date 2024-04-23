@@ -83,7 +83,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link collapsed" href="#">
+            <a className="nav-link collapsed" href="/AccResourcePage">
               <i class="bi bi-journal-text"></i>
               <span>Resource Accessing</span>
             </a>

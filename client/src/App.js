@@ -47,6 +47,7 @@ import ResourcePage from "./components/researchDashboard/ResourcePage";
 import RevenuePage from "./components/researchDashboard/RevenuePage";
 import VolumePage from "./components/researchDashboard/VolumePage";
 import PricePage from "./components/researchDashboard/PricePage";
+import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 
 //import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
 //import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
@@ -306,6 +307,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ResourcePage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/AccResourcePage",
+    element: (
+      <div>
+        <AccResourcePage />
       </div>
     ),
   },
