@@ -1,10 +1,23 @@
 import React from 'react';
 import '../../../App.css';
+import logo from '../../../assests/logo.png'
+import { FaChevronRight } from "react-icons/fa";
 
 const Sidebar = () => {
+
+  const handleToggleSideBar = () => {
+    document.body.classList.toggle('toggle-sidebar');
+  }
+
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
+        <a href='/' className='logo d-flex align-items-center'>
+           <img src={logo} alt='logo image'/>
+           <span className=''>FreshRoute</span>
+        </a>
+        <hr className='hr'></hr>        
+        <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
         <ul className="sidebar-nav" id='sidebar-nav'>
 
           <li className='nav-item'>
@@ -68,14 +81,19 @@ const Sidebar = () => {
 
           <hr></hr>
           
-          <div className='navList'>
+          <div className="mt-16 ">
             <li className='nav-item'>
-              <a className='nav-link' href='#'>
-                <i className='bi bi-box-arrow-right'></i>
-                <span>Logout</span>
-              </a>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li> <li className='nav-item'>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Logout</span>
+                </a>
             </li>
-          </div>
+            </div>
 
         </ul>
       </aside>
