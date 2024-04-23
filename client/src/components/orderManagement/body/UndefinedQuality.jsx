@@ -29,7 +29,7 @@ const UndefinedQuality = () => {
         <div className='card recent-sales overflow-auto'>
             <div className="card-body">
                 <h5 className="card-title">
-                    Recent Orders
+                    Recently Added Fruits
                 </h5>
                 <UndefinedQualityTable items={items} />
             </div>

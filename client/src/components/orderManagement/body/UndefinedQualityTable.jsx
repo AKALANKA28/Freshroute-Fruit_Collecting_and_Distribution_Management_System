@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Button} from "react-bootstrap";
 
 const UndefinedQualityTable = ({ items }) => {
@@ -16,17 +16,9 @@ const UndefinedQualityTable = ({ items }) => {
         }
         setDisplayAll(!displayAll);
     }
-    const getStatusClass = (sts) => {
-        switch (sts) {
-            case "ASSIGNED":
-                return "not-started";
-            case "IN_PROGRESS":
-                return "in-progress";
-            case "COMPLETED":
-                return "completed";
-            default:
-                return "";
-        }
+    const navigate = useNavigate();
+    const handleAdd = ()=> {
+        navigate("QualityList")
     }
     return (
         <div>
@@ -48,12 +40,20 @@ const UndefinedQualityTable = ({ items }) => {
                             <td>{order.fruit}</td>
                             <td>{order.category}</td>
                             <td>{order.quality}</td>
+                            <td>
+                                <div className="buttons">
+                                    <button className="btn-table edit" onClick={handleAdd}>
+                                        <i className="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button to="/PredictionDetails" className="btn btn-primary btn-sm" onClick={handleViewAll}>{displayAll? "Show Less" : "View All"}</Button>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Button to="/PredictionDetails" className="btn btn-primary btn-sm"
+                        onClick={handleViewAll}>{displayAll ? "Show Less" : "View All"}</Button>
             </div>
         </div>
     );
