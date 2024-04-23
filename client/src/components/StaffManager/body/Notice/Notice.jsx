@@ -10,6 +10,7 @@ axios.defaults.baseURL = "http://localhost:8070/";
 function Notice() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false); // State for delete confirmation modal
   const [dataList, setDataList] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]);
@@ -65,11 +66,22 @@ function Notice() {
     setEditModalOpen(false);
   };
 
+  // Function to open delete confirmation modal
+  const handleDeleteModalOpen = () => {
+    setDeleteModalOpen(true);
+  };
+
+  // Function to close delete confirmation modal
+  const handleDeleteModalClose = () => {
+    setDeleteModalOpen(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Notice/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleDeleteModalClose(); // Close delete confirmation modal after successful deletion
     } catch (err) {
       alert(err.message);
     }
@@ -97,17 +109,16 @@ function Notice() {
     }
   };
 
-
   return (
     <div className="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
-          <div class="page-header">
-            <div class="add-item d-flex">
-              <div class="card-title">Notices</div>
+          <div className="page-header">
+            <div className="add-item d-flex">
+              <div className="card-title">Notices</div>
             </div>
 
-            <ul class="table-top-head">
+            <ul className="table-top-head">
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleRefreshClick}>
@@ -116,7 +127,7 @@ function Notice() {
                 </div>
               </li>
             </ul>
-            <div class="page-btn">
+            <div className="page-btn">
               <button
                 type="button"
                 className="btn btn-added"
@@ -146,19 +157,36 @@ function Notice() {
               />
             </Modal.Body>
           </Modal>
+
+          {/* Delete confirmation modal */}
+          <Modal show={deleteModalOpen} onHide={handleDeleteModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete this notice?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleDeleteModalClose}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(selectedNotice._id)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col"> Date</th>
+                  <th scope="col">Date</th>
                   <th scope="col">Title</th>
                   <th scope="col">Description</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-              {filteredDataList.length ? (
+                {filteredDataList.length ? (
                   filteredDataList.map((notice) => (
                     <tr key={notice._id}>
                       <td>{notice.date}</td>
@@ -174,7 +202,10 @@ function Notice() {
                           </button>
                           <button
                             className="btn btn-delete"
-                            onClick={() => handleDelete(notice._id)}
+                            onClick={() => {
+                              setSelectedNotice(notice);
+                              handleDeleteModalOpen(); // Open delete confirmation modal
+                            }}
                           >
                             <i className="bi bi-trash-fill"></i>
                           </button>
@@ -184,7 +215,7 @@ function Notice() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="10">No Data</td>
+                    <td colSpan="4">No Data</td>
                   </tr>
                 )}
               </tbody>
