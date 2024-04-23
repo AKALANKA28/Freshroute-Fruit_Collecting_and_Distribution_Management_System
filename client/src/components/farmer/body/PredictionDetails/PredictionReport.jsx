@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
   },
 });
 
+const Footer = () => (
+  <Text style={styles.footer}>© 2024 Freshroute.lk copyright all right reserved.</Text>
+);
+
 const PredictionReport = ({ dataList }) => {
   return (
     <Document>
@@ -74,6 +78,7 @@ const PredictionReport = ({ dataList }) => {
             ))}
           </View>
         </View>
+        <Footer />
       </Page>
     </Document>
   );

@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     color: "green",
+    fontWeight: "bold", // Add bold font weight
   },
   footer: {
     position: "absolute",
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 10,
-    fontWeight: "bold",
+    fontWeight: "bold", // Add bold font weight
     color: "#333333",
     width: "14.285%",
     textAlign: "center",
@@ -67,12 +68,9 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     paddingTop: 8,
     paddingBottom: 8,
-    fontSize: 10,
-    color: "#333333",
-    width: "14.285%",
-    textAlign: "center",
     fontSize: 8,
     color: "#333333",
+    width: "14.285%",
     textAlign: "center",
   },
   logo: {
@@ -84,6 +82,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+const Footer = () => (
+  <Text style={styles.footer}>© 2024 Freshroute.lk copyright all right reserved.</Text>
+);
 
 const SupplierReport = ({ dataList }) => {
   return (
@@ -115,6 +117,7 @@ const SupplierReport = ({ dataList }) => {
             ))}
           </View>
         </View>
+        <Footer />
       </Page>
     </Document>
   );
