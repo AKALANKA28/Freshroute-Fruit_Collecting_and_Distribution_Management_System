@@ -1,26 +1,13 @@
-import React, {useState} from 'react'
-import Chart from 'react-apexcharts'
+import React, { useState, useEffect } from 'react';
+import Chart from 'react-apexcharts';
+import { base_url } from '../../../Utils/Config';
 
-const ReportCharts = () => {
-    const [data, setData] = useState ({
-        series: [
-            {
-                name:'Sales',
-                data: [31, 40, 28, 51, 42, 82, 56],
-            },
-            {
-                name:'Revenue',
-                data: [31, 0, 28, 81, 92, 82, 66],
-            },
-            {
-                name:'Customers',
-                data: [31, 30, 70, 59, 42, 32, 96],
-            },
-        ],
-
+const ReportCharts = ({ filter }) => {
+    const [data, setData] = useState({
+        series: [],
         options: {
             chart: {
-                height: 350,
+                height: 310,
                 type: 'area',
                 toolbar: {
                     show: false,
@@ -36,7 +23,7 @@ const ReportCharts = () => {
                     shadeIntensity: 1,
                     opacityFrom: 0.4,
                     opacityTo: 0.1,
-                    stops: [0, 90, 100]
+                    stops: [0, 90, 100],
                 },
             },
             dataLabels: {
@@ -46,37 +33,90 @@ const ReportCharts = () => {
                 curve: 'smooth',
                 width: 2,
             },
-            xaxis:{
+            xaxis: {
                 type: 'datetime',
-                categories: [
-                    '2018-09-19T00:00:000Z',
-                    '2018-09-19T01:30:000Z',
-                    '2018-09-19T02:30:000Z',
-                    '2018-09-19T03:30:000Z',
-                    '2018-09-19T04:30:000Z',
-                    '2018-09-19T05:30:000Z',
-                    '2018-09-19T06:30:000Z',
-                ],
             },
             tooltip: {
                 x: {
-                    format: 'dd/MM/yy HH:mm'
+                    format: 'dd/MM/yy HH:mm',
                 },
             },
         },
-
-
     });
-  return (
-    <div>
-      <Chart 
-        options={data.options}
-        series={data.series}
-        type={data.options.chart.type}
-        height={data.options.chart.height}
-    />
-    </div>
-  );
-}
 
-export default ReportCharts
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let startDate, endDate;
+    
+                if (filter === 'Today') {
+                    const today = new Date();
+                    startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+                    endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+                } else if (filter === 'This Month') {
+                    const today = new Date();
+                    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1, 0, 0, 0);
+                    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59);
+                    startDate = firstDayOfMonth;
+                    endDate = lastDayOfMonth;
+                } else if (filter === 'This Year') {
+                    const today = new Date();
+                    const firstDayOfYear = new Date(today.getFullYear(), 0, 1, 0, 0, 0);
+                    const lastDayOfYear = new Date(today.getFullYear(), 11, 31, 23, 59, 59);
+                    startDate = firstDayOfYear;
+                    endDate = lastDayOfYear;
+                }
+    
+                // Fetch sales data
+                const salesReq = await fetch(`${base_url}sales/?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`);
+                const salesData = await salesReq.json();
+                const salesSeries = salesData.map(item => ({
+                    x: new Date(item.date).getTime(),
+                    y: item.amount
+                }));
+    
+                // Fetch expense data
+                const expenseReq = await fetch(`${base_url}expense/?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`);
+                const expenseData = await expenseReq.json();
+                const expenseSeries = expenseData.map(item => ({
+                    x: new Date(item.date).getTime(),
+                    y: item.amount
+                }));
+    
+                setData(prevState => ({
+                    ...prevState,
+                    series: [
+                        { name: 'Sales', data: salesSeries },
+                        { name: 'Expense', data: expenseSeries }
+                    ],
+                    options: {
+                        ...prevState.options,
+                        xaxis: {
+                            ...prevState.options.xaxis,
+                            min: startDate.getTime(),
+                            max: endDate.getTime()
+                        },
+                    },
+                }));
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+    
+        fetchData();
+    }, [filter]);
+    
+
+    return (
+        <div>
+            <Chart
+                options={data.options}
+                series={data.series}
+                type={data.options.chart.type}
+                height={data.options.chart.height}
+            />
+        </div>
+    );
+};
+
+export default ReportCharts;

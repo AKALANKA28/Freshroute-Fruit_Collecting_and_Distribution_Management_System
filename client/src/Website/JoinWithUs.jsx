@@ -188,7 +188,7 @@ import storage from "../../src/firebase"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import "./website.css";
-import Container from './Container';
+import Container from './Components/Container';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
