@@ -1,3 +1,4 @@
+const moment = require('moment')
 const OrderDetail = require("../../models/q_and_o/MockOrderDetail");
 const OrderExecutionDetail = require("../../models/q_and_o/OrderExecutionDetail");  
 const Employee = require("../../models/StaffManager/Employee")
@@ -18,7 +19,9 @@ exports.getCompletedOrderList = async (req, res) => {
 };
 exports.getPendingOrderListByFilter = async (req, res) => {
     const filter = createFilterFromRequest(req);
-    if (filter) {
+    if (filter && filter.date) {
+        getOrderListByDateFilter(res,filter, {orderStatus:"PENDING"})
+    }else if (filter) {
         filter.orderStatus = "PENDING";
         await getOrderListByFilter(res, filter);
     } else {
@@ -28,7 +31,9 @@ exports.getPendingOrderListByFilter = async (req, res) => {
 
 exports.getOngoingOrderListByFilter = async (req, res) => {
     const filter = createFilterFromRequest(req);
-    if (filter) {
+    if (filter && filter.date) {
+        getOrderListByDateFilter(res,filter, {$or: [{ orderStatus: "ASSIGNED" }, { orderStatus: "IN_PROGRESS" }]})
+    }else if (filter) {
         filter.$or = [{ orderStatus: "ASSIGNED" }, { orderStatus: "IN_PROGRESS" }];
         await getOrderListByFilter(res, filter);
     } else {
@@ -38,7 +43,9 @@ exports.getOngoingOrderListByFilter = async (req, res) => {
 
 exports.getCompletedOrderListByFilter = async (req, res) => {
     const filter = createFilterFromRequest(req);
-    if (filter) {
+    if (filter && filter.date) {
+        getOrderListByDateFilter(res,filter, {orderStatus:"COMPLETED"})
+    }else if (filter) {
         filter.orderStatus = "COMPLETED";
         await getOrderListByFilter(res, filter);
     } else {
@@ -63,11 +70,20 @@ const createFilterFromRequest = (req) => {
         case 'customer':
             filter = { customer: new RegExp(filterValue, 'i') };
             break;
+        case 'quantity':
+            filter = { quantity: parseFloat(filterValue) };
+            break;
         case 'placedDate':
-            filter = { placedDate: new Date(filterValue) };
+            filter = {
+                date: filterValue,
+                field: 'placedDate'
+            };
             break;
         case 'dueDate':
-            filter = { dueDate: new Date(filterValue) };
+            filter = {
+                date: filterValue,
+                field: 'dueDate'
+            };
             break;
         default:
             return null;
@@ -79,6 +95,22 @@ const getOrderListByFilter = async (res, filter) => {
     try {
         const pendingOrderList = await OrderDetail.find(filter);
         res.json(pendingOrderList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+}
+const getOrderListByDateFilter = async (res, dateFilter, filter) => {
+    try {
+        const orderList = await OrderDetail.find(filter);
+        const dateField = dateFilter.field;
+        const dateValue = dateFilter.date;
+        const newList = orderList.filter((item) => {
+            const dateString = item[dateField];
+            const formattedDate = moment(dateString).format("YYYY-MM-DD")
+            return formattedDate=== dateValue
+        })
+        res.json(newList);
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });

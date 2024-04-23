@@ -17,7 +17,7 @@ function OrderAssignForm({ show, onHide, formData, handleSubmit, handleOnChange,
     const handleOrderProcessorChange = (event) => {
         const { value } = event.target;
         orderProcessor.map((op) => {
-            if (op.id === value) {
+            if (op._id === value) {
                 event.target.opName = op.name;
                 event.target.opId = value;
             }

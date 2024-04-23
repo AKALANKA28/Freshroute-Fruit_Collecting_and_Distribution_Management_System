@@ -24,7 +24,6 @@ const AssignedOrderList = () => {
     const handleOnInputChange = (event) => {
         const { opName, opId } = event.target;
         setFormData(  {...formData, opName: opName, opId: opId})
-        console.log(formData)
     };
 
     const handleClosePopup = () => setShowPopup(false);
@@ -205,31 +204,38 @@ const AssignedOrderList = () => {
                                          [
                                              {
                                                  name: "Fruit Type",
-                                                 tag: "fruit"
+                                                 tag: "fruit",
+                                                 type: "text"
                                              },
                                              {
                                                  name: "Fruit Category",
-                                                 tag: "category"
+                                                 tag: "category",
+                                                 type: "text"
                                              },
                                              {
                                                  name: "Quality",
-                                                 tag: "quality"
+                                                 tag: "quality",
+                                                 type: "text"
                                              },
                                              {
                                                  name: "Quantity",
-                                                 tag: "quantity"
+                                                 tag: "quantity",
+                                                 type: "number"
                                              },
                                              {
                                                  name: "Placed Date",
-                                                 tag: "placedDate"
+                                                 tag: "placedDate",
+                                                 type: "date"
                                              },
                                              {
                                                  name: "Due Date",
-                                                 tag: "dueDate"
+                                                 tag: "dueDate",
+                                                 type: "date"
                                              },
                                              {
                                                  name: "Order Processor",
-                                                 tag: "opName"
+                                                 tag: "opName",
+                                                 type: "text"
                                              }
                                          ]
                                      }

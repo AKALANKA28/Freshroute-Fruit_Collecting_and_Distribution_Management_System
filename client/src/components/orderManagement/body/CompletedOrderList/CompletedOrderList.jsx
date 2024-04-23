@@ -169,23 +169,28 @@ const CompletedOrderList = () => {
                                          [
                                             {
                                                 name: "Fruit Type",
-                                                tag: "fruit"
+                                                tag: "fruit",
+                                                type: "text"
                                             },
                                             {
                                                 name: "Fruit Category",
-                                                tag: "category"
+                                                tag: "category",
+                                                type: "text"
                                             },
                                             {
                                                 name: "Quality",
-                                                tag: "quality"
+                                                tag: "quality",
+                                                type: "text"
                                             },
                                             {
                                                 name: "Placed Date",
-                                                tag: "placedDate"
+                                                tag: "placedDate",
+                                                type: "date"
                                             },
                                             {
                                                 name: "Due Date",
-                                                tag: "dueDate"
+                                                tag: "dueDate",
+                                                type: "date"
                                             }
                                          ]
                                      }

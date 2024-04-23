@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import moment from "moment";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const dateFormat = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
+    return  moment(dateString).format("YYYY-MM-DD");
 }
 
 const OngoingOrderTable = ({items, handleExecute}) => {
