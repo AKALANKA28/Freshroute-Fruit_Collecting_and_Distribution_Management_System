@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../../App.css'
+import './sidebar.css'
 import navList from './navItem';
 
 
@@ -8,9 +9,9 @@ import navList from './navItem';
 const Sidebar = () => {
   return (
     <div>
-      <aside id='sidebar' className='sidebar'>
+      <aside id='sidebar' className='sidebar driver-sidebar'>
 
-        <ul className="sidebar-nav" id='sidebar-nav'>
+        {/* <ul className="sidebar-nav" id='sidebar-nav'>
 
             <li className='nav-item'>
                 <a className='nav-link' href='/'>
@@ -128,7 +129,7 @@ const Sidebar = () => {
             </div>
             
 
-        </ul>
+        </ul> */}
       </aside>
     </div>
   )

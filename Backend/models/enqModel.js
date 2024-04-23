@@ -13,7 +13,7 @@ var enqSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  comment: {
+  message: {
     type: String,
     required: true,
   },

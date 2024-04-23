@@ -6,7 +6,7 @@ const Cards = () => {
     const [cards, setCards] = useState([])
 
     const fetchData = () => {
-        fetch("")
+        fetch("http://localhost:8070/cards/")
          .then(res => res.json())
          .then(data => {
             setCards(data);
@@ -21,9 +21,16 @@ const Cards = () => {
 
 
   return (
-    <div>
-      {cards && cards.length > 0 && 
-        cards.map(card => <Card key={card._id} card={card} />)}
+    <div className='col-12'>   
+        <div className="row">
+        {
+                cards && cards.length > 0 && 
+                cards.map(card => 
+                  <Card key={card._id} card={card} 
+                />
+              )
+          }    
+        </div>       
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import './partners.css'
 
 import img1 from '../../assets/keellslogo.png'
-import img2 from '../../assets/glomark.jpg'
+import img2 from '../../assets/Glomark.png'
 import img3 from '../../assets/MDlogo.png'
 import img4 from '../../assets/foodcity.png'
 import img5 from '../../assets/arpico.png'
@@ -12,7 +12,7 @@ import img5 from '../../assets/arpico.png'
 const Partners = () => {
   return (
     <div className='section section_partners'>
-      <div className="container flex_center">
+      <div className="container d-flex align-items-center justify-content-center">
         <div className="row text-center">
             <div className="col-12">
                 {/* <h6 className='heading'>What We Offer</h6> */}
