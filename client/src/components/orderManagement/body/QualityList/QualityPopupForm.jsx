@@ -116,7 +116,7 @@ function QualityPopupForm({ show, onHide, formData, isEdit, handleSubmit, handle
                             </Form.Select>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 error" controlId="fromFruitCategory">
+                        <Form.Group className="mb-3" controlId="fromFruitCategory">
                             <Form.Label>Fruit Category</Form.Label>
                             <Form.Select name="category" required onChange={categoryOnChange} value={formData.category}
                                          disabled={inputFieldDisable.category}>
