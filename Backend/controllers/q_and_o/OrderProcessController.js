@@ -120,6 +120,9 @@ const createFilterFromRequest = (req) => {
         case 'customer':
             filter = { customer: new RegExp(filterValue, 'i') };
             break;
+        case 'quantity':
+            filter = { quantity: parseFloat(filterValue) };
+            break;
         case 'placedDate':
             filter = {
                 date: filterValue,
