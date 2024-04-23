@@ -8,16 +8,16 @@ import aboutimg from '../../assets/middlepic.svg'
 const About = () => {
   return (
     <>
-    <div className="section">
+    <div className="section text-section section_about">
         <div className="container">
-            <div class="section-text">
-                <h2 class="text text-center lazy">
+            <div class="section-text text-div">
+                <h2 class="text-center">
                    Distrubutors of organic produce            
                 </h2>
             </div>
         </div>
     </div>
-    <div className='section section_about flex_center'>
+    <div className='section  section_about flex_center'>
         <div className="section_about-overlay flex_center">
           <img src={FreshRoute} alt='frshroute' />
         </div>

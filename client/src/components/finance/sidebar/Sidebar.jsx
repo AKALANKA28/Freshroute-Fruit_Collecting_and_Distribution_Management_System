@@ -3,6 +3,7 @@ import '../../../App.css'
 import navList from './navItem';
 import { Link } from 'react-router-dom';
 import logo from '../../../assests/logo.png'
+import { FaChevronRight } from "react-icons/fa";
 
 
 const Sidebar = () => {
@@ -17,23 +18,25 @@ const Sidebar = () => {
         <a href='/' className='logo d-flex align-items-center'>
            <img src={logo} alt='logo image'/>
            <span className=''>FreshRoute</span>
-        </a>        
-     {/* <i className='bi bi-list toggle-sidebar-btn' onClick={handleToggleSideBar}></i> */}
+        </a>
+        <hr className='hr'></hr>        
+        <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
 
+     {/* <i className='bi bi-chevron-right toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar}></i> */}
 
         <ul className="sidebar-nav" id='sidebar-nav'>
             <li className='nav-item'>
                 <a className='nav-link' href='/'>
-                    <i className='bi bi-grid-1x2-fill'></i>
+                    <i className='bi bi-grid-1x2'></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li className='nav-item'>
-                <Link  to='/SalesPage' className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse'>
-                    <i className='bi bi-menu-button-wide'></i>
-                    <span>Reports</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <Link  to='/SalesPage' className='nav-link collapsed' >
+                <i class="bi bi-bar-chart"></i>
+                                    <span>Sales</span>
+                    {/* <i className='bi bi-chevron-down ms-auto'></i> */}
                 </Link>
 
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
@@ -65,7 +68,7 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse' href='/ExpensePage'>
-                    <i className='bi bi-journal-text'></i>
+                    <i className='bi bi-wallet'></i>
                     <span>Expenses</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
@@ -98,45 +101,38 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-layout-text-window-reverse'></i>
-                    <span>Sales</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='/salespage'>
+                    <i className='bi bi-archive'></i>
+                    <span>Reports</span>
                 </a>
 
-                <ul id='tables-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>General Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Data Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                   
-
-                </ul>
+               
             </li>
 
-            <li className='nav-heading'>Pages</li>
+            {/* <li className='nav-heading'>Pages</li>
             <div className='navList'>
                 {navList.map(nav => (
                     <li className='nav-item' key={nav._id}>
-                    <a className='nav-link collapsed' href ={'/login'}>
+                    <a className='nav-link collapsed' href ={''}>
                         <i className={nav.icon}></i>
                         <span>{nav.name}</span>
                     </a>
                 </li>
                 ))}
+            </div> */}
+            <div className="mt-16 ">
+            <li className='nav-item'>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li> <li className='nav-item'>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
             </div>
-            
 
         </ul>
       </aside>

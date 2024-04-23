@@ -10,6 +10,7 @@ import BudgetReport from './BudgetReport'
 import ExpenseReport from './Expense'
 import News from './News'
 import BackToTop from './BackToTop'
+import TopCards from './TopCards'
 
 const Body = () => {
 
@@ -20,9 +21,9 @@ const Body = () => {
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8 ">
-                <div className="row gap-1">
-                   
-                      <Cards />
+                <div className="row gap-1">  
+                <TopCards/>
+                      {/* <Cards /> */}
                     <div className="col-12">
                         <Reports />
                     </div>
@@ -34,7 +35,7 @@ const Body = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-4 main-right-col">
               <RecentActivity />
               <BudgetReport />
               <ExpenseReport />

@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './website.css'
 import Card from './Shop/Products/Card'
 import Footer from './Footer/Footer'
 import { Link } from 'react-router-dom'
-import Container from './Container'
+import Container from './Components/Container'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllProducts } from '../features/products/productSlice';
+
+
 
 const Shop = () => {
+
+
+  const productState = useSelector((state) => state?.product?.product);
+  const dispatch =useDispatch();
+  useEffect (() => {
+    getProducts();
+  }, []);
+
+  const getProducts = () => {
+    dispatch(getAllProducts());
+  };
+
   return (
    <>
     <div className="product-header">
@@ -53,7 +69,7 @@ const Shop = () => {
                         value=""
                         id=""
                       />
-                      <label className="form-check-label" for=""> Out of Stock (0) </label>
+                      <label className="form-check-label" htmlFor=""> Out of Stock (0) </label>
                     </div>
                 </div>
 
@@ -87,24 +103,22 @@ const Shop = () => {
                         <input
                           type="text"
                           className="form-control"
-
                           name="formId1"
                           id="formId1"
                           placeholder="From"
                         />
-                        <label for="formId1">From</label>
+                        <label htmlFor="formId1">From</label>
                       </div>  
 
                       <div className="form-floating ">
                         <input
                           type="text"
                           className="form-control "
-
                           name="formId1"
                           id="formId1"
                           placeholder="To"
                         />
-                        <label for="formId1">To</label>
+                        <label htmlFor="formId1">To</label>
                       </div>  
                     </div>     
                 </div>  
@@ -141,12 +155,10 @@ const Shop = () => {
                   </div>
                 </div>
               </div>
-              <div className="products-list d-flex gap-2 pb-5">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-
+              <div className="products-list d-flex gap- pb-5">
+                <div className="d-flex gap-3 flex-wrap">
+                  <Card data={productState ? productState: []}/>
+                </div>
               </div>
 
           </div>
@@ -160,92 +172,3 @@ const Shop = () => {
 export default Shop
 
 
-
-// import React, {useState} from 'react'
-// import Navbar from './Navbar/Navbar'
-// import Footer from './Footer/Footer'
-
-
-// import Navigation from "./Shop/Sidebar/Search/Search";
-// import Products from "./Shop/Products/Products";
-// import products from "./Shop/db/data";
-// import Recommended from "./Shop/Recommended/Recommended";
-// import Sidebar from "./Shop/Sidebar/Sidebar";
-// import Card from "./Shop/Components/Card";
-
-// const Shop = () => {
-
-//   const [selectedCategory, setSelectedCategory] = useState(null);
-
-//   // ----------- Input Filter -----------
-//   const [query, setQuery] = useState("");
-
-//   const handleInputChange = (event) => {
-//     setQuery(event.target.value);
-//   };
-
-//   const filteredItems = products.filter(
-//     (product) => product.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
-//   );
-
-//   // ----------- Radio Filtering -----------
-//   const handleChange = (event) => {
-//     setSelectedCategory(event.target.value);
-//   };
-
-//   // ------------ Button Filtering -----------
-//   const handleClick = (event) => {
-//     setSelectedCategory(event.target.value);
-//   };
-
-//   function filteredData(products, selected, query) {
-//     let filteredProducts = products;
-
-//     // Filtering Input Items
-//     if (query) {
-//       filteredProducts = filteredItems;
-//     }
-
-//     // Applying selected filter
-//     if (selected) {
-//       filteredProducts = filteredProducts.filter(
-//         ({ category, color, company, newPrice, title }) =>
-//           category === selected ||
-//           color === selected ||
-//           company === selected ||
-//           newPrice === selected ||
-//           title === selected
-//       );
-//     }
-
-
-//     return filteredProducts.map(
-//       ({ img, title, star, reviews, prevPrice, newPrice }) => (
-//         <Card
-//           key={Math.random()}
-//           img={img}
-//           title={title}
-//           star={star}
-//           reviews={reviews}
-//           prevPrice={prevPrice}
-//           newPrice={newPrice}
-//         />
-//       )
-//     );
-//   }
-
-//   const result = filteredData(products, selectedCategory, query);
-
-//   return (
-//     <div>
-//       <Navbar/>
-//       <Sidebar handleChange={handleChange} />
-//       <Navigation query={query} handleInputChange={handleInputChange} />
-//       <Recommended handleClick={handleClick} />
-//       <Products result={result} />
-//       <Footer/>
-//     </div>
-//   )
-// }
-
-// export default Shop

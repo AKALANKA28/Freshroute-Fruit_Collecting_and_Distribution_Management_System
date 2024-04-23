@@ -1,17 +1,56 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './loginregister.css'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 
 import video from '../../assests/video.mp4'
 import logo from '../../assests/logo.png'
-import Container from '../../Website/Container'
+import Container from '../../Website/Components/Container'
+
+import * as yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../features/user/userSlice';
+import { useFormik } from 'formik'
 
 
-const login = () => {
+
+const loginSchema = yup.object({
+  email: yup.string().nullable().email("Email Should be Valid"),
+  password: yup.string().required("Password is required"),
+});
+
+const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Using useNavigate hook for navigation
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      dispatch(loginUser(values));
+    },
+  });
+
+  const authState = useSelector((state) => state);
+
+  const { user, isError, isSuccess, isLoading, message } = authState.auth;
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     navigate("/shop");
+  //   } else {
+  //     navigate("");
+  //   }
+  // }, [user, isError, isSuccess, isLoading]);
+
   return (
 
-
-    <Container class1="wrapper">
+    <>
+     <Container class1="wrapper">
     <div class="login-main">
         <div class="login-row">
             <div class="col-md-6 side-video">
@@ -46,13 +85,36 @@ const login = () => {
                             <a href="#" class="facebook"><i class="fab fa-facebook"></i> Sign in with Facebook</a>
                         </div>
                     </div> */}
-                   <form action="">
+                   <form 
+                    action=""
+                    onSubmit={formik.handleSubmit}>
+                    
                       <div class="input-field">
-                            <input type="text" class="input" id="email" required="" autocomplete="off"/>
+                            <input 
+                             type="text" 
+                             class="input" 
+                             id="email" 
+                             required="" 
+                             value={formik.values.email}
+                             onChange={formik.handleChange("email")}
+                             onBlur={formik.handleBlur("email")}/>
+                             <div className='error'>
+                                {formik.touched.email && formik.errors.email}
+                             </div>
                             <label for="email">Email</label> 
                       </div> 
                       <div class="input-field">
-                            <input type="password" class="input" id="pass" required=""/>
+                            <input 
+                             type="password" 
+                             class="input" 
+                             id="pass" 
+                             required=""
+                             value={formik.values.password}
+                             onChange={formik.handleChange("password")}
+                             onBlur={formik.handleBlur("password")}/>
+                             <div className='error'>
+                                {formik.touched.password && formik.errors.password}
+                             </div>
                             <label for="pass">Password</label>
                         </div> 
                       <div class="input-field">  
@@ -67,9 +129,28 @@ const login = () => {
             </div>
         </div>
     </div>
-</Container>
+    </Container>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      // transition: Bounce
+      />
+      {/* Same as */}
+    <ToastContainer />
+
+    </>
+   
+    
 
   )
 }
 
-export default login
+export default Login
