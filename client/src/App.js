@@ -11,7 +11,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
-// import Register from "./components/LoginRegister/Register";
+import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
@@ -79,6 +79,7 @@ import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
 
 const router = createBrowserRouter([
+ 
   {
     path: "/home",
     element: (
@@ -98,7 +99,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/product",
+    path: "/shop",
     element: (
       <div>
         <Shop />
@@ -134,7 +135,6 @@ const router = createBrowserRouter([
     ),
   },
 
-
   {
     path: "/contact",
     element: (
@@ -145,7 +145,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/:id",
+    path: "/shop/:id",
     element: (
       <div>
         <SingleProduct />
@@ -162,14 +162,14 @@ const router = createBrowserRouter([
     ),
   },
 
-  // {
-  //   path: "/register",
-  //   element: (
-  //     <div>
-  //       <Register />
-  //     </div>
-  //   ),
-  // },
+  {
+    path: "/register",
+    element: (
+      <div>
+        <Register />
+      </div>
+    ),
+  },
 
   {
     path: "/",

@@ -11,7 +11,7 @@ const salesSchema = mongoose.Schema({
     date: {
         type: String,
         required: true,
-
+       
     },
 
     fruit_name: {
@@ -40,7 +40,9 @@ const salesSchema = mongoose.Schema({
         required: true
     },
    
-})
+},
+
+)
 
 const Sales = mongoose.model("sales", salesSchema);
 

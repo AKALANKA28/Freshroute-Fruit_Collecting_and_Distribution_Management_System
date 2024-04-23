@@ -7,7 +7,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import cityCoordinates from "../components/supplierManagerDashboard/body/SupplierDetails/cityCoordinates.json"
 
 import "./website.css";
-import Container from './Container';
+import Container from './Components/Container';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 

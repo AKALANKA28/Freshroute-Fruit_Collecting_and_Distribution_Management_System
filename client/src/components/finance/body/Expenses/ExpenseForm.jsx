@@ -1,30 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as yup from 'yup';
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addExpense } from "./expenseSlice";
 
-const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
-  const { date, category, amount, description } = rest;
+
+
+const expenseSchema = yup.object({
+  date: yup.string().nullable().required("Date is required"),
+  category: yup.string().required("Category is required"),
+  amount: yup.string().required("Amount is required"),
+  description: yup.string()
+  
+
+});
+const ExpenseForm = () => {
+  const [formData, setFormData] = useState({
+    date: "",
+    category: "",
+    amount: "",
+    description: "",
+    // status: "",
+
+
+  });
+
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Using useNavigate hook for navigation
+
+  const formik = useFormik({
+    initialValues: {
+      date: "",
+      category: "",
+      amount: "",
+      description: "",
+     
+    },
+    validationSchema: expenseSchema,
+    onSubmit: (values) => {
+      dispatch(addExpense(values));
+    },
+  });
 
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+      <form 
+      action=""
+      onSubmit={formik.handleSubmit}>
+      <div className="mb-3">
           <label htmlFor="date" className="form-label">
             Date
           </label>
           <input
-            type="text"
+            type="datetime-local"
             className="form-control"
             name="date"
             placeholder="Date"
-            required
-            onChange={handleOnChange}
-            value={date || ""}
-          />
-          {err.date && (
-            <div className="text-danger">hhhhhhh</div>
-          )}
+            value={formik.values.date}
+            onChange={formik.handleChange("date")}
+            onBlur={formik.handleBlur("date")}/>
+            <div className='error'>
+               {formik.touched.date && formik.errors.date}
+            </div>
+            
+          
         </div>
-
         <div className="mb-3">
           <label htmlFor="category" className="form-label">
             Category
@@ -32,8 +75,8 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
           <select
             name="category"
             className="form-control"
-            onChange={handleOnChange}
-            value={category || ""}
+            onChange={formik.handleChange("category")}
+            // value={formData.category || ""}
           >
             
             <option value="">Select Category</option>
@@ -42,9 +85,7 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
             <option value="Research">Research</option>
             <option value="Promotion">Promotion</option>
           </select>
-          {err.category && (
-            <div className="text-danger">{err.category}</div>
-          )}
+         
         </div>
 
         <div className="mb-3">
@@ -56,13 +97,13 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
             className="form-control"
             name="amount"
             placeholder="Amount"
-            required
-            onChange={handleOnChange}
-            value={amount || ""}
-          />
-          {err.amount && (
-            <div className="text-danger">{err.amount}</div>
-          )}
+            value={formik.values.amount}
+            onChange={formik.handleChange("amount")}
+            onBlur={formik.handleBlur("amount")}/>
+            <div className='error'>
+               {formik.touched.amount && formik.errors.amount}
+            </div>
+         
         </div>
 
         <div className="mb-3">
@@ -74,18 +115,19 @@ const ExpenseForm = ({ handleSubmit, handleOnChange, err = {}, rest = {} }) => {
             className="form-control"
             name="description"
             placeholder="Description"
-            required
-            onChange={handleOnChange}
-            value={description || ""}
-          />
+            value={formik.values.description}
+            onChange={formik.handleChange("description")}
+            onBlur={formik.handleBlur("description")}/>
+            <div className='error'>
+               {formik.touched.description && formik.errors.description}
+            </div>
           
         </div>
-        {err.description && (
-            <div className="text-danger">{err.description}</div>
-          )}
-        {/* <button type="submit" className="btn btn-primary">
-          Submit
-        </button> */}
+     
+        <div className="d-flex justify-content-end border-top">
+          {/* <button type="submit" className="btn btn-secondary "> Cancel </button> */}
+          <button type="submit" className="btn btn-success"> Submit </button>
+       </div>
       </form>
     </div>
   );

@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
 
-import osm from '../../Website/Components/osmProviders'
+import osm from './components/osmProviders.jsx'
 import useGeoLocation from "./components/useGeoLocation.jsx";
 
 import { MapContainer, Marker, Popup, TileLayer} from "react-leaflet"
@@ -53,6 +53,7 @@ const Map = () => {
     <div>
         <Header />
         <Sidebar />
+        <div className="main">
         <MapContainer
             center={center}
             zoom={ZOOM_LEVEL}
@@ -86,6 +87,8 @@ const Map = () => {
 
             )}
         </MapContainer>
+        </div>
+       
           <div className="row my-4">
             <div className="col d-flex justify-content-center">
               <button
