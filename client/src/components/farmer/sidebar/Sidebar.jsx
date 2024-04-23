@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Modal, Button } from 'react-bootstrap';
-import PredictionForm from '../body/PredictionDetails/PredictionForm'
+import PredictionForm from '../body/PredictionDetails/PredictionForm';
 
 
 const Sidebar = () => {
@@ -42,7 +42,7 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='PredictionDetails'>
-                    <i className='bi bi-menu-button-wide'></i>
+                <i className='bi bi-menu-button-wide'></i>
                     <span>Supply Predictions</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
@@ -51,27 +51,23 @@ const Sidebar = () => {
 
                     <li>
                         <a onClick={handleAddModalOpen}>
-                            <i className='bi bi-circle'>
-                                <span>Add Supply Prediction</span>
-                            </i>
+                            <i className='bi bi-plus-circle'></i>
+                            <span>Add Supply Prediction</span>
                         </a>
                     </li>
                     <li>
                         <a href='PredictionDetails'>
-                            <i className='bi bi-circle'>
-                                <span>Previous Predictions</span>
-                            </i>
+                            <i className='bi bi-list-ul'></i>
+                            <span>Previous Predictions</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
-            
-
             <hr></hr>
             <li className='nav-item'>
                 <a className='nav-link' href='#'>
-                    <i className='bi bi-grid'></i>
+                    <i className='bi bi-box-arrow-right'></i>
                     <span>Logout</span>
                 </a>
             </li>
