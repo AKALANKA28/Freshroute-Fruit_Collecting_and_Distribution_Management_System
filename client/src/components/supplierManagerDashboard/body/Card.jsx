@@ -47,26 +47,26 @@ const Card = () => {
 
   return (
     <div className="row">
-      <div className="col-xxl-6 col-6">
+      <div className="col-xxl-4 col-6">
         <div className="card info-card sales-card">
           <div className="card-body">
             <h5 className="card-title">
               Total Suppliers
             </h5>
             <div className="d-flex align-items-center">
-              <div className="ps-5 card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
                 <i className="fa fa-users"></i>
               </div>
               <div className="ps-5">
                 <h6 className='card-price'>
-                  {totalFarmers} Suppliers
+                  {totalFarmers} <span className="status-label">Suppliers</span>
                 </h6>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="col-xxl-6 col-6">
+      <div className="col-xxl-8 col-6">
         <div className="card info-card sales-card">
           <div className="card-body">
             <h5 className="card-title">
