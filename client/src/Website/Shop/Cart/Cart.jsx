@@ -25,6 +25,8 @@ const Cart = () => {
     dispatch(getCart());
   }, []);
 
+
+//update cart product  
   useEffect(() => {
     if (productUpdateDetail !== null)
       dispatch(
@@ -38,7 +40,7 @@ const Cart = () => {
     }, 200);
   }, [productUpdateDetail]);
 
-
+//delete cart product
   const deleteACartProduct = (id) => {
     dispatch(removeProductFromCart(id));
     setTimeout(() => {
@@ -47,7 +49,7 @@ const Cart = () => {
   };
 
 
-
+//total amount
   useEffect(() => {
     let sum = 0;
     if(userCartState) {
@@ -91,6 +93,7 @@ const Cart = () => {
                       <h5 className="price">Rs.{item?.price}</h5>
                     </div>
                     <div className="cart-col-3 d-flex align-items-center gap-3">
+
                       <input
                         type="number"
                         className="form-control"
@@ -110,6 +113,8 @@ const Cart = () => {
                           });
                         }}
                       />
+
+                      
                       <div>
                         <i
                           onClick={() => {
