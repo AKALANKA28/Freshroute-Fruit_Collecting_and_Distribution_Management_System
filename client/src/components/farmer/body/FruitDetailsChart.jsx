@@ -6,8 +6,11 @@ const FruitDetailsChart = ({ predictionData }) => {
 
   useEffect(() => {
     if (predictionData && predictionData.length > 0) {
-      const fruits = predictionData.map(prediction => prediction.fruit);
-      const quantities = predictionData.map(prediction => prediction.quantity);
+      // Filter out declined predictions
+      const filteredData = predictionData.filter(prediction => prediction.status !== 'Declined');
+
+      const fruits = filteredData.map(prediction => prediction.fruit);
+      const quantities = filteredData.map(prediction => prediction.quantity);
 
       // Aggregate quantities for each fruit
       const aggregated = {};
