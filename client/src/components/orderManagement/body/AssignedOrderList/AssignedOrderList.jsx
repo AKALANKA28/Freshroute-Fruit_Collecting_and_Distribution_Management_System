@@ -24,7 +24,6 @@ const AssignedOrderList = () => {
     const handleOnInputChange = (event) => {
         const { opName, opId } = event.target;
         setFormData(  {...formData, opName: opName, opId: opId})
-        console.log(formData)
     };
 
     const handleClosePopup = () => setShowPopup(false);

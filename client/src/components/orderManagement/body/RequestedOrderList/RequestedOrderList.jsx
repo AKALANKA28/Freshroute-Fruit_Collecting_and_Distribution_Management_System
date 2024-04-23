@@ -31,8 +31,7 @@ const RequestedOrderList = () => {
 
     const handleOnInputChange = (event) => {
         const { opName, opId } = event.target;
-        setFormData( (prevState) =>{ return {...prevState, opName: opName, opId: opId}})
-        console.log(formData)
+        setFormData( {...formData, opName: opName, opId: opId})
     };
 
     const handleClosePopup = () => setShowPopup(false);
