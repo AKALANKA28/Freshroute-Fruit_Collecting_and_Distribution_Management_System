@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from "react";
+import * as yup from 'yup';
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addExpense } from "./expenseSlice";
 
-const ExpenseForm = ({ handleSubmit, initialData }) => {
+
+
+const expenseSchema = yup.object({
+  date: yup.string().nullable().required("Date is required"),
+  category: yup.string().required("Category is required"),
+  amount: yup.string().required("Amount is required"),
+  description: yup.string()
+  
+
+});
+const ExpenseForm = () => {
   const [formData, setFormData] = useState({
     date: "",
     category: "",
@@ -11,27 +26,30 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
 
   });
 
-  useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-    }
-  }, [initialData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Using useNavigate hook for navigation
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    handleSubmit(formData);
-  };
+  const formik = useFormik({
+    initialValues: {
+      date: "",
+      category: "",
+      amount: "",
+      description: "",
+     
+    },
+    validationSchema: expenseSchema,
+    onSubmit: (values) => {
+      dispatch(addExpense(values));
+    },
+  });
+
+
   return (
     <div>
-      <form onSubmit={handleFormSubmit}>
+      <form 
+      action=""
+      onSubmit={formik.handleSubmit}>
       <div className="mb-3">
           <label htmlFor="date" className="form-label">
             Date
@@ -41,10 +59,14 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
             className="form-control"
             name="date"
             placeholder="Date"
-            onChange={handleChange}
-            value={formData.date}
+            value={formik.values.date}
+            onChange={formik.handleChange("date")}
+            onBlur={formik.handleBlur("date")}/>
+            <div className='error'>
+               {formik.touched.date && formik.errors.date}
+            </div>
             
-          />
+          
         </div>
         <div className="mb-3">
           <label htmlFor="category" className="form-label">
@@ -53,8 +75,8 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
           <select
             name="category"
             className="form-control"
-            onChange={handleChange}
-            value={formData.category || ""}
+            onChange={formik.handleChange("category")}
+            // value={formData.category || ""}
           >
             
             <option value="">Select Category</option>
@@ -75,10 +97,12 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
             className="form-control"
             name="amount"
             placeholder="Amount"
-            required
-            onChange={handleChange}
-            value={formData.amount || ""}
-          />
+            value={formik.values.amount}
+            onChange={formik.handleChange("amount")}
+            onBlur={formik.handleBlur("amount")}/>
+            <div className='error'>
+               {formik.touched.amount && formik.errors.amount}
+            </div>
          
         </div>
 
@@ -91,10 +115,12 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
             className="form-control"
             name="description"
             placeholder="Description"
-            required
-            onChange={handleChange}
-            value={formData.description || ""}
-          />
+            value={formik.values.description}
+            onChange={formik.handleChange("description")}
+            onBlur={formik.handleBlur("description")}/>
+            <div className='error'>
+               {formik.touched.description && formik.errors.description}
+            </div>
           
         </div>
      

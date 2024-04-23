@@ -10,6 +10,7 @@ import ExpenseForm from "./ExpenseForm";
 import ExpenseReport from "./ExpenseReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
+import { ToastContainer } from "react-toastify";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -22,7 +23,15 @@ function Expense() {
   const [filter, setFilter] = useState('Today');
   const [filteredDataList, setFilteredDataList] = useState([]); 
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6); // Number of items per page
 
+
+
+
+
+
+  
   useEffect(() => {
     getFetchData();
   }, []);
@@ -246,7 +255,21 @@ function Expense() {
           </div>
         </div>
     </div>
+    <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        // transition: Bounce
+      />
   </div>
+  
   );
 }
 
