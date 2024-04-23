@@ -4,7 +4,7 @@ import './expense.css'
 
 import BackToTop from '../BackToTop'
 import Expense from './Expense'
-import BudgetReport from '../BudgetReport'
+import ExpenseReport from '../Expense'
 
 const body = () => {
   return (
@@ -12,12 +12,12 @@ const body = () => {
       <div className="body" id='body'>
             <div className="row">
                 <div className="col-lg-6">
-                <BudgetReport/>
+                {/* <ExpenseReport/> */}
                 </div>
                 <div className="col-lg-4">
                   <div className="col-lg-8">
                     <div className="row">
-                    <BudgetReport/>
+                    {/* <BudgetReport/> */}
                     </div>
                   </div>
                   <div className="col-lg-6">

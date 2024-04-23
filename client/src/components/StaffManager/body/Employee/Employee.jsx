@@ -46,7 +46,6 @@ function Employee() {
 
   const handleRefreshClick = () => {
     getFetchData();
-    
   };
 
   const handleButtonClick = () => {
@@ -81,26 +80,26 @@ function Employee() {
   };
 
   const handleAddSubmit = async (formData) => {
-    try {
-      await axios.post("/Employee/add", formData);
-      alert("Employee Added");
-      handleAddModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  try {
+    const response = await axios.post("/Employee/add", formData);
+    alert("Employee Added");
+    handleAddModalClose();
+    getFetchData();
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
-  const handleEditSubmit = async (formData) => {
-    try {
-      await axios.put(`/Employee/update/${formData._id}`, formData);
-      alert("Employee Updated");
-      handleEditModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+const handleEditSubmit = async (formData) => {
+  try {
+    const response = await axios.put(`/Employee/update/${formData._id}`, formData);
+    alert("Employee Updated");
+    handleEditModalClose();
+    getFetchData();
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
   const [showReportModal, setShowReportModal] = useState(false);
 
@@ -109,59 +108,56 @@ function Employee() {
 
 
   return (
-    <div id="main">
-    <div className="card recent-sales overflow-auto">
-     
-          <div className="card-body">
-          
-            <div class="page-header">
-              <div class="add-item d-flex">
-
-              <div class="card-title">
-                  Employee Details
-                  <h6>Manage employee details</h6>
-                </div>
+    <div className="main">
+      <div className="card recent-sales overflow-auto">
+        <div className="card-body">
+          <div className="page-header">
+            <div className="add-item d-flex">
+              <div className="card-title">
+                Employee Details
+                <h6>Manage employee details</h6>
               </div>
+            </div>
 
-              <ul class="table-top-head">
+            <ul className="table-top-head">
               <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Employee Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px" >
-              <EmployeeReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
-                <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleButtonClick}>
-                          <img src={Excel} alt="Excel Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li>  
-                <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleRefreshClick}>
-                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li>    
-              </ul>
-              <div class="page-btn">  
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Employee Details Report</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PDFViewer width="100%" height="500px">
+                        <EmployeeReport dataList={dataList} />
+                      </PDFViewer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseReportModal}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              </li>
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleButtonClick}>
+                    <img src={Excel} alt="Excel Icon" className="icon" />
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleRefreshClick}>
+                    <img src={Refresh} alt="Refresh Icon" className="icon" />
+                  </a>
+                </div>
+              </li>
+            </ul>
+            <div className="page-btn">
               <button
                 type="button"
                 className="btn btn-added"
@@ -169,9 +165,9 @@ function Employee() {
               >
                 <i className="bi bi-plus-circle"></i> Add New Employee
               </button>
-        </div>
-        </div>
-        <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            </div>
+          </div>
+          <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
               <Modal.Title>Add Employee</Modal.Title>
             </Modal.Header>
@@ -191,64 +187,81 @@ function Employee() {
               />
             </Modal.Body>
           </Modal>
-        <div className="table-container">
-        <SearchBar onSearch={handleSearch} />
-          <table className="table table-borderless datatable">
-            <thead className="table-light">
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Job Role</th>
-                <th scope="col">NIC</th>
-                <th scope="col">Address</th>
-                <th scope="col">Email Address</th>
-                <th scope="col"> Account Number</th>
-                <th scope="col">Bank Name</th>
-                <th scope="col">Qualifications</th>
-                <th scope="col">Joined Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-            {filteredDataList.length ? (
-                  filteredDataList.map((employee) => (
-                    <tr key={employee._id}>
-                    <td>{employee.name}</td>
-                    <td>{employee.jobrole}</td>
-                    <td>{employee.nic}</td>
-                    <td>{employee.address}</td>
-                    <td>{employee.email}</td>
-                    <td>{employee.accno}</td>
-                    <td>{employee.bankname}</td>
-                    <td>{employee.qualifications}</td>
-                    <td>{employee.joineddate}</td>
-                    <td>
-                      <div className="buttons">
-                        <button
-                          className="btn btn-edit"
-                          onClick={() => handleEditModalOpen(employee)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn btn-delete"
-                          onClick={() => handleDelete(employee._id)}
-                        >
-                           <i className="bi bi-trash-fill"></i>
-                           </button>
-                    </div>
-                  </td>
+          <div className="table-container">
+            <SearchBar onSearch={handleSearch} />
+            <table className="table table-borderless datatable">
+              <thead className="table-light">
+                <tr>
+                <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Job Role</th>
+                  <th scope="col">NIC</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col"> Account Number</th>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Qualifications</th>
+                  <th scope="col">Joined Date</th>
+                  <th>Action</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="10">No Data</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+              {filteredDataList.length ? (
+  filteredDataList.map((employee) => (
+    <tr key={employee._id}>
+      <td>
+        {employee.imageUrl && (
+          <img
+            src={employee.imageUrl}
+            alt="Employee Profile"
+            className="rounded-circle"
+            style={{ width: "50px", height: "50px" }}
+          />
+        )}
+      </td>
+      <td>{employee.name}</td>
+      <td>{employee.jobrole}</td>
+      <td>{employee.nic}</td>
+      <td>{employee.address}</td>
+      <td>{employee.email}</td>
+      <td>{employee.accno}</td>
+      <td>{employee.bankname}</td>
+      <td>
+        {employee.fileUrl && (
+          <a href={employee.fileUrl} target="_blank" rel="noopener noreferrer">
+            View Qualifications
+          </a>
+        )}
+      </td>
+      <td>{employee.joineddate}</td>
+      <td>
+        <div className="buttons">
+          <button
+            className="btn btn-edit"
+            onClick={() => handleEditModalOpen(employee)}
+          >
+            <i className="bi bi-pencil-square"></i>
+          </button>
+          <button
+            className="btn btn-delete"
+            onClick={() => handleDelete(employee._id)}
+          >
+            <i className="bi bi-trash-fill"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  ))
+) : (
+  <tr>
+    <td colSpan="10">No Data</td>
+  </tr>
+)}
+</tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
     </div>
   );
 }

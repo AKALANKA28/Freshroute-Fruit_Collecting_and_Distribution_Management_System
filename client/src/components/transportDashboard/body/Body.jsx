@@ -22,9 +22,9 @@ const Body = () => {
             <div className="col-lg-8">
                 <div className="row">
                     <Cards />
-                    <div className="col-12">
+                    {/* <div className="col-12">
                         <Reports />
-                    </div>
+                    </div> */}
                     <div className="col-12">
                      <RecentSales />
                     </div>

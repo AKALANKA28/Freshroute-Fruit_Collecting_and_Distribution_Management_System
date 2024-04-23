@@ -26,6 +26,8 @@ function Category() {
   const [fruitNames, setFruitNames] = useState([]);
   const [selectedFruit, setSelectedFruit] = useState("all");
   const [selectedQuality, setSelectedQuality] = useState("all");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     getFetchData();
@@ -41,7 +43,7 @@ function Category() {
       const response = await axios.get("/Category/");
       setDataList(response.data);
     } catch (err) {
-      alert(err.message);
+      console.error("Error fetching data:", err);
     }
   };
 
@@ -50,7 +52,7 @@ function Category() {
       const response = await axios.get("/fruitType/");
       setFruitNames(response.data.map(fruit => fruit.name));
     } catch (err) {
-      alert(err.message);
+      console.error("Error fetching fruit names:", err);
     }
   };
 
@@ -87,11 +89,11 @@ function Category() {
   };
 
   const handleRefreshClick = () => {
-    window.location.reload();
+    getFetchData();
   };
 
   const handleButtonClick = () => {
-    getFetchData();
+    // Logic for handling Excel export
   };
 
   const handleAddModalOpen = () => {
@@ -120,13 +122,24 @@ function Category() {
     setPriceModalOpen(false);
   };
 
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Category/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal(); // Close the modal after successful deletion
     } catch (err) {
-      alert(err.message);
+      console.error("Error deleting category:", err);
     }
   };
 
@@ -137,7 +150,7 @@ function Category() {
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error adding category:", err);
     }
   };
 
@@ -148,7 +161,7 @@ function Category() {
       handleEditModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error updating category:", err);
     }
   };
 
@@ -159,7 +172,7 @@ function Category() {
       handlePriceModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      console.error("Error pricing category:", err);
     }
   };
 
@@ -188,7 +201,7 @@ function Category() {
   });
 
   return (
-    <div id="main">
+    <div className="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -210,7 +223,7 @@ function Category() {
                     </Modal.Header>
                     <Modal.Body>
                       <PDFViewer width="100%" height="500px">
-                        <CategoryReport dataList={dataList} />
+                        <CategoryReport dataList={filteredDataList} />
                       </PDFViewer>
                     </Modal.Body>
                     <Modal.Footer>
@@ -258,7 +271,7 @@ function Category() {
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Pricing for Category</Modal.Title>
+              <Modal.Title>Edit Category</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <CategoryForm
@@ -280,9 +293,25 @@ function Category() {
             </Modal.Body>
           </Modal>
 
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <div className="search-dropdown-container">
             <SearchBar onSearch={handleSearch} />
-            {/* Dropdown for fruit names */}
             <div className="dropdown">
               <select
                 className="form-select"
@@ -297,7 +326,6 @@ function Category() {
                 ))}
               </select>
             </div>
-            {/* Dropdown for quality */}
             <div className="dropdown">
               <select
                 className="form-select"
@@ -314,7 +342,6 @@ function Category() {
             </div>
           </div>
 
-          {/* Table */}
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
@@ -323,7 +350,7 @@ function Category() {
                 <th scope="col" onClick={() => handleSort("category")}>Category</th>
                 <th scope="col">Quality</th>
                 <th scope="col">Quality Description</th>
-                <th scope="col">Price(1KG)</th>
+                <th scope="col">Price per Kg(Rs)</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -353,7 +380,7 @@ function Category() {
                         </button>
                         <button
                           className="btn btn-delete"
-                          onClick={() => handleDelete(category._id)}
+                          onClick={() => handleShowDeleteModal(category._id)}
                         >
                           <i className="bi bi-trash-fill"></i>
                         </button>

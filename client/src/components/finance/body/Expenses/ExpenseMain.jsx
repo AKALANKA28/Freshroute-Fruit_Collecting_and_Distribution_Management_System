@@ -6,7 +6,7 @@ import PageTitle from '../PageTitle'
 
 const Main = () => {
   return (
-    <main id='main' className='main'>
+    <main className='main'>
     {/* <PageTitle page="Expense" /> */}
     <Body />
    </main>

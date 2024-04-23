@@ -7,7 +7,7 @@ exports.addExpense = async (req, res) => {
         const { date, category, amount, description,} = req.body;
 
         const newExpense = new Expense({
-            date: new Date(date), // Convert date string to Date object
+            date, 
             category,
             amount,
             description,
@@ -44,13 +44,13 @@ exports.getAllExpenses = async (req, res) => {
 exports.getExpenseById = async (req, res) => {
     try {
         const ExpenseId = req.params.id;
-        const sale = await Expense.findById(ExpenseId);
+        const expense = await Expense.findById(ExpenseId);
         
-        if (!sale) {
+        if (!expense) {
             return res.status(404).json({ status: "Expense not found" });
         }
         
-        res.status(200).json({ status: "Expense fetched", sale });
+        res.status(200).json({ status: "Expense fetched", expense });
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error retrieving Expense record", error: err.message });
@@ -64,7 +64,7 @@ exports.updateExpense = async (req, res) => {
         const { date, category, amount, description, } = req.body;
 
         const updateExpense = {
-            date: new Date(date), // Convert date string to Date object
+            date, // Convert date string to Date object
             category,
             amount,
             description,

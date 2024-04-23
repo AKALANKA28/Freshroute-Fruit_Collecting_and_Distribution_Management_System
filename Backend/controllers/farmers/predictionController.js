@@ -1,14 +1,17 @@
 const Prediction = require("../../models/farmers/predictions");
+const AcceptedSupply = require("../../models/farmers/acceptedSupplies");
 
 const addPrediction = async (req, res) => {
   const { fruit, subCategory, quality, quantity, price, dateCanBeGiven } = req.body;
   try {
     const newPrediction = await Prediction.create({ fruit, subCategory, quality, quantity, price, dateCanBeGiven });
-    res.json("New Supply Prediction Added");
+    res.status(201).json(newPrediction); // Return the newly created prediction
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Failed to add prediction" });
   }
 };
+
 
 const getAllPredictions = async (req, res) => {
   try {
@@ -50,10 +53,38 @@ const updatePrediction = async (req, res) => {
   }
 };
 
+const acceptPrediction = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const prediction = await Prediction.findByIdAndUpdate(id, { status: 'Approved' }, { new: true });
+    if (!prediction) {
+      return res.status(404).json({ message: "Prediction not found" });
+    }
+    res.status(200).json({ message: "Prediction Approved" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const declinePrediction = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const prediction = await Prediction.findByIdAndUpdate(id, { status: 'Declined' }, { new: true });
+    if (!prediction) {
+      return res.status(404).json({ message: "Prediction not found" });
+    }
+    res.status(200).json({ message: "Prediction Declined" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   addPrediction,
   getAllPredictions,
   getOnePrediction,
   deletePrediction,
   updatePrediction,
+  acceptPrediction,
+  declinePrediction,
 };

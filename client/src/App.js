@@ -3,15 +3,21 @@ import "remixicon/fonts/remixicon.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+
 
 import Dashboard from "./components/finance/Finance";
 import Login from "./components/LoginRegister/Login";
-// import Register from "./components/LoginRegister/Register";
+import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
-import OMDashboard from "./components/orderManagement/OMDashboard";
+import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
+import QualityList from "./components/orderManagement/body/QualityList/QualityList";
 import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
@@ -26,11 +32,16 @@ import Notice from "./components/StaffManager/Notice";
 import SalesPage from "./components/finance/SalesPage";
 import SupplierRequests from "./components/supplierManagerDashboard/SupplierRequests";
 import FDashboard from "./components/farmer/FDashboard";
+import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
+import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
+import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 
-import OPDashboard from "./components/orderProcessor/OPDashboard";
-import QualityList from "./components/orderManagement/QualityList";
+import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
+import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -55,17 +66,93 @@ import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 //import EditOrder from "./components/NormalOrder/EditOrder";
 
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
-import Website from "./Website/Website";
+import OMDashboard from "./components/orderManagement/body/OMDashboard";
+import OPDashboard from "./components/orderProcessor/body/OPDashboard";
+import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
+
+import Home from './Website/Home';
+import About from "./Website/About";
+import Shop from "./Website/Shop";
+import Contact from "./Website/Contact";
+import SingleProduct from "./Website/Shop/Products/SingleProduct";
+import Cart from "./Website/Shop/Cart/Cart";
+import Checkout from "./Website/Shop/Checkout/Checkout";
+import Map from "./components/transportDashboard/Map";
+import JoinWithUsSupplier from "./Website/JoinWithUs";
 
 const router = createBrowserRouter([
+ 
   {
-    path: "/freshroute",
+    path: "/home",
     element: (
       <div>
-        <Website />
+        <Home />
+      </div>
+    ),
+  },
+
+  {
+    path: "/about",
+    element: (
+      <div>
+        <About />
+      </div>
+    ),
+  },
+
+  {
+    path: "/shop",
+    element: (
+      <div>
+        <Shop />
+      </div>
+    ),
+  },
+
+  {
+    path: "/cart",
+    element: (
+      <div>
+        <Cart />
+      </div>
+    ),
+  },
+
+  {
+    path: "/checkout",
+    element: (
+      <div>
+        <Checkout />
+      </div>
+    ),
+  },
+
+
+  {
+    path: "/JoinWithUsSupplier",
+    element: (
+      <div>
+        <JoinWithUsSupplier />
+      </div>
+    ),
+  },
+
+  {
+    path: "/contact",
+    element: (
+      <div>
+        <Contact />
+      </div>
+    ),
+  },
+
+  {
+    path: "/shop/:id",
+    element: (
+      <div>
+        <SingleProduct />
       </div>
     ),
   },
@@ -79,14 +166,14 @@ const router = createBrowserRouter([
     ),
   },
 
-  // {
-  //   path: "/register",
-  //   element: (
-  //     <div>
-  //       <Register />
-  //     </div>
-  //   ),
-  // },
+  {
+    path: "/register",
+    element: (
+      <div>
+        <Register />
+      </div>
+    ),
+  },
 
   {
     path: "/",
@@ -105,6 +192,16 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/map",
+    element: (
+      <div>
+        <Map />
+      </div>
+    ),
+  },
+
 
   {
     path: "/BMDashboard",
@@ -136,11 +233,54 @@ const router = createBrowserRouter([
   {
     path: "/OMDashboard",
     element: (
-      <div>
-        <OMDashboard />
-      </div>
+        <div>
+          <OrderManagerHomePage />
+        </div>
     ),
+    children: [ {
+        path: "/OMDashboard/",
+        element: <OMDashboard/>,
+      },
+      {
+        path: "/OMDashboard/QualityList",
+        element: <QualityList/>,
+      },
+      {
+        path: "/OMDashboard/RequestedOrderList",
+        element: <RequestedOrderList/>,
+      }
+
+    ]
   },
+
+  {
+    path: "/OPDashboard",
+    element: (
+        <div>
+          <OrderProcessorHomePage />
+        </div>
+    ),
+    children: [
+      {
+        path: "/OPDashboard/",
+        element: <OPDashboard/>,
+      },
+      {
+        path: "/OPDashboard/AssignedOrders",
+        element: <AssignedOrder/>,
+      },
+      {
+        path: "/OPDashboard/OngoingOrders",
+        element: <OngoingOrder/>,
+      },
+      {
+        path: "/OPDashboard/CompletedOrders",
+        element: <CompletedOrder/>,
+      },
+
+    ]
+  },
+
 
   {
     path: "/SMDashboard",
@@ -183,6 +323,33 @@ const router = createBrowserRouter([
     element: (
       <div>
         <PredictionDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplyRequests",
+    element: (
+      <div>
+        <SupplyRequests />
+      </div>
+    ),
+  },
+
+  {
+    path: "/ApprovedSupplies",
+    element: (
+      <div>
+        <ApprovedSupplies />
+      </div>
+    ),
+  },
+
+  {
+    path: "/DeclinedSupplies",
+    element: (
+      <div>
+        <DeclinedSupplies />
       </div>
     ),
   },
@@ -384,14 +551,6 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/OPDashboard",
-    element: (
-      <div>
-        <OPDashboard />
-      </div>
-    ),
-  },
   {
     path: "/QualityList",
     element: (

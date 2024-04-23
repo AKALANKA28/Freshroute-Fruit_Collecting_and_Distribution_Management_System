@@ -1,17 +1,57 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './loginregister.css'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 
 import video from '../../assests/video.mp4'
 import logo from '../../assests/logo.png'
+import Container from '../../Website/Components/Container'
+
+import * as yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../features/user/userSlice';
+import { useFormik } from 'formik'
 
 
-const login = () => {
+
+const loginSchema = yup.object({
+  email: yup.string().nullable().email("Email Should be Valid"),
+  password: yup.string().required("Password is required"),
+});
+
+const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Using useNavigate hook for navigation
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      dispatch(loginUser(values));
+    },
+  });
+
+  const authState = useSelector((state) => state);
+
+  const { user, isError, isSuccess, isLoading, message } = authState.auth;
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     navigate("/shop");
+  //   } else {
+  //     navigate("");
+  //   }
+  // }, [user, isError, isSuccess, isLoading]);
+
   return (
 
-
-    <div class="wrapper">
-    <div class="container login-main">
+    <>
+     <Container class1="wrapper">
+    <div class="login-main">
         <div class="login-row">
             <div class="col-md-6 side-video">
                        
@@ -39,14 +79,42 @@ const login = () => {
 
                    <h4>Welcome Back!</h4>
                    {/* <span className='showMessage'>Login status will go here</span> */}
-
-                   <form action="">
+                   {/* <div class="sign-in-options">
+                        <div class="signin">
+                            <a href="#" class="google"><i class="fab fa-google"></i> Sign in with Google</a>
+                            <a href="#" class="facebook"><i class="fab fa-facebook"></i> Sign in with Facebook</a>
+                        </div>
+                    </div> */}
+                   <form 
+                    action=""
+                    onSubmit={formik.handleSubmit}>
+                    
                       <div class="input-field">
-                            <input type="text" class="input" id="email" required="" autocomplete="off"/>
+                            <input 
+                             type="text" 
+                             class="input" 
+                             id="email" 
+                             required="" 
+                             value={formik.values.email}
+                             onChange={formik.handleChange("email")}
+                             onBlur={formik.handleBlur("email")}/>
+                             <div className='error'>
+                                {formik.touched.email && formik.errors.email}
+                             </div>
                             <label for="email">Email</label> 
                       </div> 
                       <div class="input-field">
-                            <input type="password" class="input" id="pass" required=""/>
+                            <input 
+                             type="password" 
+                             class="input" 
+                             id="pass" 
+                             required=""
+                             value={formik.values.password}
+                             onChange={formik.handleChange("password")}
+                             onBlur={formik.handleBlur("password")}/>
+                             <div className='error'>
+                                {formik.touched.password && formik.errors.password}
+                             </div>
                             <label for="pass">Password</label>
                         </div> 
                       <div class="input-field">  
@@ -61,73 +129,28 @@ const login = () => {
             </div>
         </div>
     </div>
-</div>
+    </Container>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      // transition: Bounce
+      />
+      {/* Same as */}
+    <ToastContainer />
 
-    // <div className='wrapper'>
-    //     <div className="container ">
-    //         <div className="container-row">
-    //             <div className="col-md-6 side-video">
-               
-    //                 <video src={video} autoPlay muted loop></video>
+    </>
+   
+    
 
-    //                 <div className="textDiv">
-    //                     <h2 className="title">Create Sell</h2>
-    //                     <p>exmple text</p>
-    //                 </div>
-
-    //                 <div className='footerDiv flex'>
-    //                     <span className='text'>Don't have an account?</span>
-    //                     <Link to={'/register'}>
-    //                     <button className='btn'>Sign Up</button>
-    //                     </Link>
-    //                 </div>
-                    
-    //             </div>
-    //             <div className="col-mg-6 right">
-        //         <div className='formDiv flex'>
-        //   <div className='headerDiv'>
-        // {/*<img src={logo} alt='Logo Image'/> */}
-        //     <h3>Welcome Back!</h3>
-        //   </div>
-          
-        //   <from actionj="" className='form grid'>
-            // <span className='showMessage'>Login status will go here</span>
-
-        //     <div className='inputDiv'>
-        //       <label htmlFor='username'>Username</label>
-        //       <div className='input flex'>
-               
-        //         <input type='text' id='username' placeholder='Enter Username'/>
-        //       </div>
-        //     </div>
-
-        //     <div className='inputDiv'>
-        //       <label htmlFor='password'>Password</label>
-        //       <div className='input flex'>
-              
-        //         <input type='password' id='password' placeholder='Enter Password'/>
-        //       </div>
-        //     </div>
-
-        //     <button type='submit' className='btn flex'>
-        //       <span>Login</span>
-             
-        //     </button>
-
-        //     <span className='forgotPassword'>
-        //       Forgot your password? <a href=''>Click Here</a>
-        //     </span>
-
-        //   </from>
-
-         
-        // </div>
-    //             </div>
-    //         </div>
-    //     </div>
-      
-    // </div>
   )
 }
 
-export default login
+export default Login

@@ -21,6 +21,8 @@ function FruitType() {
   const [dataList, setDataList] = useState([]);
   const [selectedFruitType, setSelectedFruitType] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null); // Store the ID of the record to be deleted
 
   useEffect(() => {
     getFetchData();
@@ -99,6 +101,7 @@ function FruitType() {
       await axios.delete(`/FruitType/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal();
     } catch (err) {
       alert(err.message);
     }
@@ -106,7 +109,7 @@ function FruitType() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/FruitType/add", formData);
+      await axios.post("/FruitType/add", { ...formData, imageUrl: formData.imageUrl });
       alert("Fruit Type Added");
       handleAddModalClose();
       getFetchData();
@@ -114,10 +117,10 @@ function FruitType() {
       alert(err.message);
     }
   };
-
+  
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/FruitType/update/${formData._id}`, formData);
+      await axios.put(`/FruitType/update/${formData._id}`, { ...formData, imageUrl: formData.imageUrl });
       alert("Fruit Type Updated");
       handleEditModalClose();
       getFetchData();
@@ -131,71 +134,76 @@ function FruitType() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+    setDeleteId(null); // Reset deleteId after closing the modal
+  };
 
   return (
-    <div id="main">
-    <div className="card recent-sales overflow-auto">
-     
-          <div className="card-body">
-          
-            <div class="page-header">
-              <div class="add-item d-flex">
-
+    <div className="main">
+      <div className="card recent-sales overflow-auto">
+        <div className="card-body">
+          <div class="page-header">
+            <div class="add-item d-flex">
               <div class="card-title">
-                  Fruit Details
-                  <h6>Manage fruit details</h6>
-                </div>
+                Fruit Details
+                <h6>Manage fruit details</h6>
               </div>
-
-              <ul class="table-top-head">
+            </div>
+            <ul class="table-top-head">
               <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Salary Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <FruitTypeReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
-      <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleButtonClick}>
-                          <img src={Excel} alt="Excel Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li>  
-                <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleRefreshClick}>
-                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li>    
-              </ul>
-      <div class="page-btn">
-      <button
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Salary Details Report</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PDFViewer width="100%" height="500px">
+                        <FruitTypeReport dataList={dataList} />
+                      </PDFViewer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseReportModal}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              </li>
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleButtonClick}>
+                    <img src={Excel} alt="Excel Icon" className="icon" />
+                  </a>
+                </div>
+              </li>  
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleRefreshClick}>
+                    <img src={Refresh} alt="Refresh Icon" className="icon" />
+                  </a>
+                </div>
+              </li>    
+            </ul>
+            <div class="page-btn">
+              <button
                 type="button"
                 className="btn btn-added"
                 onClick={handleAddModalOpen}
               >
                 <i className="bi bi-plus-circle"></i> Add Fruit Type
               </button>
-      </div>
-      </div>
-      <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            </div>
+          </div>
+          <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
               <Modal.Title>Add Fruit Type</Modal.Title>
             </Modal.Header>
@@ -203,7 +211,6 @@ function FruitType() {
               <FruitTypeForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
-
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
               <Modal.Title>Edit Fruit Type</Modal.Title>
@@ -215,58 +222,76 @@ function FruitType() {
               />
             </Modal.Body>
           </Modal>
-
-
-      
-
-       
-<div className="table-container">
-<SearchBar onSearch={handleSearch} />
-        <table className="table table-borderless datatable">
-
-          <thead className="table-light">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Date</th>
-              <th scope="col" >Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-          {filteredDataList.length ? (
-                  filteredDataList.map((fruitType) => (
-                <tr key={fruitType._id}>
-                  <td>{fruitType.name}</td>
-                  <td>{fruitType.date}</td>
-                  <td className="description">{fruitType.description}</td>
-                  <td>
-                    <div className="buttons">
-                      <button
-                        className="btn btn-edit"
-                        onClick={() =>handleEditModalOpen(fruitType)}
-                      >
-                        <i className="bi bi-pencil-square"></i>
-                      </button>
-                      <button
-                        className="btn btn-delete"
-                        onClick={() => handleDelete(fruitType._id)}
-                      >
-                       <i className="bi bi-trash-fill"></i>
-                      </button>
-                      </div>
-                  </td>
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete this record?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <div className="table-container">
+            <SearchBar onSearch={handleSearch} />
+            <table className="table table-borderless datatable">
+              <thead className="table-light">
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Description</th>
+                  <th>Action</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5">No Data</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {filteredDataList.length ? (
+                  filteredDataList.map((fruitType) => (
+                    <tr key={fruitType._id}>
+                      <td>
+                        {fruitType.imageUrl && (
+                          <img
+                            src={fruitType.imageUrl}
+                            alt="Fruit Image"
+                            style={{ width: "50px", height: "50px" }}
+                          />
+                        )}
+                      </td>
+                      <td>{fruitType.name}</td>
+                      <td>{fruitType.date}</td>
+                      <td className="description">{fruitType.description}</td>
+                      <td>
+                        <div className="buttons">
+                          <button
+                            className="btn btn-edit"
+                            onClick={() => handleEditModalOpen(fruitType)}
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button
+                            className="btn btn-delete"
+                            onClick={() => handleShowDeleteModal(fruitType._id)}
+                          >
+                            <i className="bi bi-trash-fill"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5">No Data</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
     </div>
   );
 }

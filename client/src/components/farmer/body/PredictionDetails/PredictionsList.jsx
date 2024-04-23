@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
+import './predictions.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -91,6 +92,7 @@ function PredictionsList() {
     if (confirmDelete) {
       try {
         await axios.delete(`/Prediction/delete/${id}`);
+        await axios.delete(`/pendingSupply/deleteByPredictionID/${id}`);
         alert("Successfully Deleted");
         getFetchData();
       } catch (err) {
@@ -101,7 +103,19 @@ function PredictionsList() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Prediction/add", formData);
+      // Add supply prediction to the Prediction collection
+      const response = await axios.post("/Prediction/add", formData);
+      const predictionId = response.data._id;
+  
+      // Create payload to add supply prediction to the pendingSupplies collection
+      const pendingSupplyData = {
+        ...formData,
+        predictionID: predictionId
+      };
+  
+      // Add supply prediction to the pendingSupplies collection
+      await axios.post("/pendingSupply/add", pendingSupplyData);
+  
       alert("Prediction Added");
       window.location.reload();
       handleAddModalClose();
@@ -143,6 +157,34 @@ function PredictionsList() {
   const handleSearchAttributeChange = (event) => {
     setSearchAttribute(event.target.value);
   };
+
+  // Helper function to format status text
+const formatStatus = (status) => {
+  switch (status) {
+    case 'approved':
+      return 'Approved';
+    case 'declined':
+      return 'Declined';
+    case 'pending':
+      return 'Pending';
+    default:
+      return status;
+  }
+};
+
+// Helper function to get the CSS class name based on status
+const getStatusClassName = (status) => {
+  switch (status.toLowerCase()) {
+    case 'approved':
+      return 'approved';
+    case 'declined':
+      return 'declined';
+    case 'pending':
+      return 'pending';
+    default:
+      return '';
+  }
+};
 
   const [showReportModal, setShowReportModal] = useState(false);
   const handleCloseReportModal = () => setShowReportModal(false);
@@ -243,45 +285,56 @@ function PredictionsList() {
                   <th scope="col">Fruit</th>
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">Total Quantity(kg)</th>
+                  <th scope="col">Price for 1kg</th>
+                  <th scope="col">Total Price(Rs)</th>
                   <th scope="col">Date Can Be Given</th>
+                  <th scope="col">Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredDataList.length ? (
-                  filteredDataList.map((prediction) => (
-                    <tr key={prediction._id}>
-                      <td>{prediction.fruit}</td>
-                      <td>{prediction.subCategory}</td>
-                      <td>{prediction.quality}</td>
-                      <td>{prediction.quantity}</td>
-                      <td>{prediction.price}</td>
-                      <td>{prediction.dateCanBeGiven}</td>
-                      <td className="action">
-                        <div className="buttons">
-                          <button
-                            className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(prediction)}
-                          >
-                            <i className="bi bi-pencil-square"></i>
-                          </button>
-                          <button
-                            className="btn btn-delete"
-                            onClick={() => handleDelete(prediction._id)}
-                          >
-                            <i className="bi bi-trash-fill"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6">No Data</td>
+              {filteredDataList.length ? (
+                filteredDataList.map((prediction) => (
+                  <tr key={prediction._id}>
+                    <td>{prediction.fruit}</td>
+                    <td>{prediction.subCategory}</td>
+                    <td>{prediction.quality}</td>
+                    <td>{prediction.quantity} kg</td>
+                    <td>Rs. {prediction.price}</td>
+                    <td>Rs. {prediction.price * prediction.quantity}</td>
+                    <td>{prediction.dateCanBeGiven}</td>
+                    <td>
+                      <div
+                        className={`status-box ${getStatusClassName(prediction.status)}`}
+                      >
+                        {formatStatus(prediction.status)}
+                      </div>
+                    </td>
+                    <td className="action">
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                          onClick={() => handleEditModalOpen(prediction)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                          onClick={() => handleDelete(prediction._id)}
+                        >
+                          <i className="bi bi-trash-fill"></i>
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-                )}
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6">No Data</td>
+                </tr>
+              )}
+
               </tbody>
             </table>
           </div>

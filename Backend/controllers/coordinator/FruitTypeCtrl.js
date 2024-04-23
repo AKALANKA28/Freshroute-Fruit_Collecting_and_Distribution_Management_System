@@ -1,10 +1,15 @@
-// .Backend/controllers/coordinator/FruitTypeCtrl
+// D:\FreshRoute\MERN_Project\Backend\controllers\coordinator\FruitTypeCtrl.js
 const FruitType = require("../../models/coordinator/FruitType");
 
 const addFruitType = async (req, res) => {
-  const { name, date, description } = req.body;
+  const { imageUrl, name, date, description } = req.body;
   try {
-    const newFruitType = await FruitType.create({ name, date, description });
+    const newFruitType = await FruitType.create({
+      imageUrl,
+      name,
+      date,
+      description,
+    });
     res.json("New FruitType Added");
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -42,9 +47,14 @@ const deleteFruitType = async (req, res) => {
 
 const updateFruitType = async (req, res) => {
   const id = req.params.id;
-  const { name, date, description } = req.body;
+  const { imageUrl, name, date, description } = req.body;
   try {
-    await FruitType.findByIdAndUpdate(id, { name, date, description });
+    await FruitType.findByIdAndUpdate(id, {
+      imageUrl,
+      name,
+      date,
+      description,
+    });
     res.status(200).json({ message: "Fruit updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });

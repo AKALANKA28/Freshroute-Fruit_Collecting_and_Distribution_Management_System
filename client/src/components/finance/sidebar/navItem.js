@@ -22,6 +22,7 @@ const navList = [
     {
         _id: 5,
         name: 'Settings',
+        class: 'mt-15',
         icon: 'bi bi-person',
     },
     

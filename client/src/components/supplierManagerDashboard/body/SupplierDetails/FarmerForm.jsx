@@ -141,6 +141,20 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           />
         </div>
         <div className="mb-3">
+        <label htmlFor="mobile" className="form-label">
+            Mobile
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="mobile"
+            placeholder="Enter Mobile Number"
+            required
+            onChange={handleChange}
+            value={formData.mobile}
+          />
+        </div>
+        <div className="mb-3">
           <label htmlFor="description" className="form-label">
             City
           </label>
@@ -164,7 +178,6 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
             className="form-control"
             name="lane"
             placeholder="Enter Lane"
-            required
             onChange={handleChange}
             value={formData.lane}
           />

@@ -4,7 +4,7 @@ import SuppliersList from './SuppliersList';
 
 const SupplierDetailsBody = () => {
   return (
-    <div id="main"> 
+    <div className="main"> 
       <section className="body" id='body'>
         <div className="row">
             <div className="row">

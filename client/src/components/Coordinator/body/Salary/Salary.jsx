@@ -18,13 +18,15 @@ function Salary() {
   const [dataList, setDataList] = useState([]);
   const [selectedSalary, setSelectedSalary] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     getFetchData();
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+    setFilteredDataList(dataList);
   }, [dataList]);
 
   const getFetchData = async () => {
@@ -36,19 +38,16 @@ function Salary() {
     }
   };
 
-  // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
+      const fullName = `${employee.name} ${employee.jobrole}`;
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
   };
 
-
   const handleRefreshClick = () => {
     getFetchData();
-    
   };
 
   const handleButtonClick = () => {
@@ -72,11 +71,22 @@ function Salary() {
     setEditModalOpen(false);
   };
 
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Salary/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal();
     } catch (err) {
       alert(err.message);
     }
@@ -109,43 +119,40 @@ function Salary() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
-
-
-
   return (
-    <div id="main">
+    <div className="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
-            <div class="add-item d-flex">
-              <div class="card-title">
+            <div className="add-item d-flex">
+              <div className="card-title">
                 Salary Details
                 <h6>Manage employee salaries</h6>
               </div>
             </div>
-            <ul class="table-top-head">
-            <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Salary Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <SalaryReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
+            <ul className="table-top-head">
+              <li>
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Salary Details Report</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PDFViewer width="100%" height="500px">
+                        <SalaryReport dataList={dataList} />
+                      </PDFViewer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseReportModal}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              </li>
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
@@ -161,7 +168,7 @@ function Salary() {
                 </div>
               </li>
             </ul>
-            <div class="page-btn">
+            <div className="page-btn">
               <button
                 type="button"
                 className="btn btn-added"
@@ -193,8 +200,25 @@ function Salary() {
             </Modal.Body>
           </Modal>
 
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -205,7 +229,7 @@ function Salary() {
                 </tr>
               </thead>
               <tbody>
-              {filteredDataList.length ? (
+                {filteredDataList.length ? (
                   filteredDataList.map((salary) => (
                     <tr key={salary._id}>
                       <td>{salary.jobrole}</td>
@@ -221,7 +245,7 @@ function Salary() {
                           </button>
                           <button
                             className="btn btn-delete"
-                            onClick={() => handleDelete(salary._id)}
+                            onClick={() => handleShowDeleteModal(salary._id)}
                           >
                             <i className="bi bi-trash-fill"></i>
                           </button>
