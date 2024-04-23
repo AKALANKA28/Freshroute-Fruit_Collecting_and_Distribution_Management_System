@@ -22,7 +22,7 @@ const OderDetail = () => {
             <div className='card'>
                 <div className="card-body pb-0">
                     <h5 className="card-title">
-                        Sold Fruits Details
+                        Available Supplies
                     </h5>
                     <OrderDetailChart predictionData={predictionData} />
                 </div>
