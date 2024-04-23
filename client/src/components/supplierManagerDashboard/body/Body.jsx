@@ -17,23 +17,26 @@ const Body = () => {
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8">
+                
                 <div className="row">
                     <Cards />
                     <div className="col-12">
                         <Map />
                     </div>
-                    <div className="col-12">
-                     <SuppliersDetailsListInDashboard />
-                    </div>
+                    
                     
                 </div>
             </div>
             <div className="col-lg-4">
               <QuickAccess />
               <SupplyDetails />
-            
             </div>
         </div>
+
+        <div className="">
+          <SuppliersDetailsListInDashboard />
+        </div>
+        
         <BackToTop />
    </section>
    </div>
