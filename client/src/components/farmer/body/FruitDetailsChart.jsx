@@ -6,8 +6,8 @@ const FruitDetailsChart = ({ predictionData }) => {
 
   useEffect(() => {
     if (predictionData && predictionData.length > 0) {
-      // Filter out declined predictions
-      const filteredData = predictionData.filter(prediction => prediction.status !== 'Declined');
+      // Filter out declined and pending predictions
+      const filteredData = predictionData.filter(prediction => prediction.status !== 'Declined' && prediction.status !== 'pending');
 
       const fruits = filteredData.map(prediction => prediction.fruit);
       const quantities = filteredData.map(prediction => prediction.quantity);
@@ -52,6 +52,7 @@ const FruitDetailsChart = ({ predictionData }) => {
                 show: true,
                 fontSize: '18',
                 fontWeight: 'bold',
+                formatter: '{b}: \n{c} ({d}%)', // Display fruit name, quantity, and percentage
               },
             },
             labelLine: {
