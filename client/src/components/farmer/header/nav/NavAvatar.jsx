@@ -1,5 +1,5 @@
 import React from 'react'
-import avatar from '../../../../assests/heshan.jpg'
+import avatar from '../../../../assests/gunadasa.jpeg'
 
 function NavAvatar () {
   
@@ -8,12 +8,12 @@ function NavAvatar () {
      <li className='nav-item dropdown pe-3'>
       <a className='nav-link nav-profile d-flex align-items-center pe-8' href='#' data-bs-toggle="dropdown">
        <img src={avatar} alt='profile' className='rounded-circle' /> 
-        <span className='d-none d-md-block dropdown-toggle ps-2'>Supplier's Name</span>
+        <span className='d-none d-md-block dropdown-toggle ps-2'>Gunadasa Perera</span>
       </a>
 
       <ul className='dropdown-menu dropdown-menu-end dropdown-menu-arrow profile'>
         <li className='dropdown-header'>
-          <h6>Supplier's Name</h6>
+          <h6>Gunadasa Perera</h6>
           <span>Supplier</span>
         </li>
 
