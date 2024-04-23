@@ -317,7 +317,7 @@ const getStatusClassName = (status) => {
                     <div className="buttons">
                         
                         <button
-                          className={`btn btn-edit ${prediction.status === "Approved" ? "invisible" : ""}`}
+                          className={`btn btn-edit ${["Approved", "Declined"].includes(prediction.status) ? "invisible" : ""}`}
                           onClick={() => handleEditModalOpen(prediction)}
                         >
                           <i className="bi bi-pencil-square"></i>
