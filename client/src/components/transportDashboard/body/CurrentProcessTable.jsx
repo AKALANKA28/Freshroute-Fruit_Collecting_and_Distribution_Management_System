@@ -2,15 +2,15 @@ import React from 'react'
 
 
 const CurrentProcessTable = ({items}) => {
-    const handleStatus = status => {
-    switch (status) {
-        case 'Approved':
+    const handleStatus = current_status => {
+    switch (current_status) {
+        case 'Complete':
             return 'success';
             break;
-        case 'Warning':
+        case 'pending':
             return 'warning';
             break;
-         case 'Rejected':
+         case 'Late':
             return 'danger';
             break;
          default:
@@ -35,20 +35,16 @@ const CurrentProcessTable = ({items}) => {
              items.map(item => (
                 <tr key={item._id}>
                     <th className="row">
-                        <a href="#">
-                            {item.number}
-                        </a>
+                            {item.process_ID}
                     </th>
-                    <td>{item.customer}</td>
+                    <td>{item.vehicle_no}</td>
                     <td>
-                        <a href='#' className='text-primary'>
-                            {item.product}
-                        </a>
+                            {item.driver_name}
                     </td>
-                    <td>${item.price.toFixed(2)}</td>
+                    {/* <td>${item.price}</td> */}
                     <td>
-                        <span className={`badge bg-${handleStatus(item.status)}`}>
-                            {item.status}
+                        <span className={`badge bg-${handleStatus(item.current_status)}`}>
+                            {item.current_status}
                         </span>
                     </td>
                 </tr>

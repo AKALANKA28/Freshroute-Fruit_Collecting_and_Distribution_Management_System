@@ -10,6 +10,7 @@ import BudgetReport from './BudgetReport'
 import Deliverymetrics from './Deliverymetrics'
 import News from './News'
 import BackToTop from './BackToTop'
+import TopCards from './TopCards'
 
 const Body = () => {
 
@@ -21,7 +22,8 @@ const Body = () => {
         <div className="row">
             <div className="col-lg-8">
                 <div className="row">
-                    <Cards />
+                  <TopCards />
+                    {/* <Cards /> */}
                     {/* <div className="col-12">
                         <Reports />
                     </div> */}
@@ -29,15 +31,16 @@ const Body = () => {
                      <CurrentProcess />
                     </div>
                     <div className="col-12">
-                     <TopSellings />
+
+                     {/* <TopSellings /> */}
                     </div>
                 </div>
             </div>
             <div className="col-lg-4">
               <RecentActivity />
-              <BudgetReport />
+              {/* <BudgetReport /> */}
               <Deliverymetrics />
-              <News />
+         {/*< News />*/}
             </div>
         </div>
         <BackToTop />

@@ -11,7 +11,7 @@ const CurrentProcess = () => {
     };
 
     const fetchData = () => {
-        fetch("")
+        fetch("http://localhost:8070/process/")
          .then(res => res.json())
          .then(data => {
             setItems(data);

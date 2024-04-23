@@ -9,6 +9,8 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import ScheduleForm from "./ScheduleForm";
 import ScheduleReport from "./ScheduleReport";
 import "./Schedule.css";
+import { ToastContainer } from "react-toastify";
+
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -250,6 +252,19 @@ function Schedule() {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        // transition: Bounce
+      />
     </div>
   );
 }

@@ -9,6 +9,9 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import ProcessForm from "./ProcessForm";
 import ProcessReport from "./ProcessReport";
 import "./Process.css";
+import { ToastContainer } from "react-toastify";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -53,9 +56,23 @@ function Process() {
     
   };
 
-  const handleButtonClick = () => {
-    getFetchData();
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "suppliers_report.xlsx");
   };
+  
+  const handleButtonClick = () => {
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
+  };
+  
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);
@@ -111,9 +128,6 @@ function Process() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
-
-
-
   return (
     <div className="main">
       <div className="card recent-sales overflow-auto">
@@ -150,8 +164,8 @@ function Process() {
       </div>
       </li>
               <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
+                <div className="button-container"> 
+                  <a  onClick={handleButtonClick}>
                     <img src={Excel} alt="Excel Icon" className="icon" />
                   </a>
                 </div>
@@ -245,6 +259,19 @@ function Process() {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        // transition: Bounce
+      />
     </div>
   );
 }

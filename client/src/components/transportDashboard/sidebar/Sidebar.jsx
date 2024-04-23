@@ -1,25 +1,31 @@
 import React from 'react'
 import '../../../App.css'
 import navList from './navItem';
-import { Link } from 'react-router-dom'; // Import Link from React Router
-
-import Logo from '../../../assests/logo.png';
+import { Link } from 'react-router-dom';
+import logo from '../../../assests/logo.png'
+import { FaChevronRight } from "react-icons/fa";
 
 
 const Sidebar = () => {
 
-    
+    const handleToggleSideBar = () => {
+        document.body.classList.toggle('toggle-sidebar');
+      }
+
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
-      <a href='/tdahsboard' className='logo d-flex align-items-center'>
-           <img src={Logo} alt='logo image'/>
+        <a href='/' className='logo d-flex align-items-center'>
+           <img src={logo} alt='logo image'/>
            <span className=''>FreshRoute</span>
-        </a> 
+        </a>
+        <hr className='hr'></hr>        
+        <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
+
         <ul className="sidebar-nav" id='sidebar-nav'>
 
             <li className='nav-item'>
-                <a className='nav-link ' href='/'>
+                <a className='nav-link ' href='/tdashboard'>
                     <i className='bi bi-grid-1x2-fill'></i>
                     <span>Dashboard</span>
                 </a>
