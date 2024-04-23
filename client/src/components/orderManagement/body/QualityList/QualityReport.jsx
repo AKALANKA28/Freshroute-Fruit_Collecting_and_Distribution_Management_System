@@ -1,6 +1,7 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import './Quality.css';
+import logo from '../../../../assests/logo.png'
 
 const styles = StyleSheet.create({
   page: {
@@ -45,6 +46,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 10,
   },
+  logo:{
+    width: 100,
+    height: 100
+  }
 });
 
 const QualityReport = ({ dataList }) => {
@@ -52,6 +57,7 @@ const QualityReport = ({ dataList }) => {
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
+          <Image src = {logo} style={styles.logo}/>
           <Text style={styles.heading}>FreshRoute - Quality Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>

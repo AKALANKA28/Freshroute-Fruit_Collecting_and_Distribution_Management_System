@@ -71,7 +71,7 @@ const Sidebar = ()=> {
                         </a>
                     </li>
 
-                    <li className='nav-heading'>Pages</li>
+                    {/* <li className='nav-heading'>Pages</li>
                     <div className='navList'>
                         {navList.map(nav => (
                             <li className='nav-item' key={nav._id}>
@@ -81,7 +81,7 @@ const Sidebar = ()=> {
                                 </a>
                             </li>
                         ))}
-                    </div>
+                    </div> */}
 
 
                 </ul>
