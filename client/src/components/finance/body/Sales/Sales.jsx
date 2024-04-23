@@ -34,6 +34,8 @@ function Sales() {
     setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
 
+
+  
   const getFetchData = async () => {
     try {
       const response = await axios.get("/sales/");

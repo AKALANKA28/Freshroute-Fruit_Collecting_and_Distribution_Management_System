@@ -201,7 +201,8 @@ function Category() {
   });
 
   return (
-    <div className="main">
+    <div id='main' className='main'>
+      <br/><br/>
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -362,7 +363,7 @@ function Category() {
                     <td>{category.fruit}</td>
                     <td>{category.category}</td>
                     <td>{category.quality}</td>
-                    <td>{category.qualityDesc}</td>
+                    <td className="description">{category.qualityDesc}</td>
                     <td>{category.price}</td>
                     <td className="action">
                       <div className="buttons">
