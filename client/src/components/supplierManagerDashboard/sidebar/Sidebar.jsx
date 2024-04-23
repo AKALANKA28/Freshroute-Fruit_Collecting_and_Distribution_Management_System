@@ -29,7 +29,7 @@ const Sidebar = () => {
 
           <li className='nav-item'>
             <a className='nav-link collapsed' data-bs-target='#supplier-details-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-person-lines-fill'></i>
+              <i className='bi bi-person-lines-fill' onClick={handleToggleSideBar}></i>
               <span>Supplier Details</span>
               <i className='bi bi-chevron-down ms-auto'></i>
             </a>
@@ -52,7 +52,7 @@ const Sidebar = () => {
 
           <li className='nav-item'>
             <a className='nav-link collapsed' data-bs-target='#supply-requests-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-truck'></i>
+              <i className='bi bi-truck' onClick={handleToggleSideBar}></i>
               <span>Supply Requests</span>
               <i className='bi bi-chevron-down ms-auto'></i>
             </a>
