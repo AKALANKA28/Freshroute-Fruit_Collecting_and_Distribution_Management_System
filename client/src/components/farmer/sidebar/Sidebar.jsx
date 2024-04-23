@@ -54,7 +54,7 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='PredictionDetails'>
-                <i className='bi bi-menu-button-wide'></i>
+                <i className='bi bi-menu-button-wide' onClick={handleToggleSideBar}></i>
                     <span>Supply Predictions</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
