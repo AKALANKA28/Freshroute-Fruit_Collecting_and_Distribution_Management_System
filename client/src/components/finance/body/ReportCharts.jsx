@@ -48,7 +48,7 @@ const ReportCharts = ({ filter }) => {
         const fetchData = async () => {
             try {
                 let startDate, endDate;
-
+    
                 if (filter === 'Today') {
                     const today = new Date();
                     startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
@@ -66,29 +66,23 @@ const ReportCharts = ({ filter }) => {
                     startDate = firstDayOfYear;
                     endDate = lastDayOfYear;
                 }
-                
-                
-
+    
                 // Fetch sales data
                 const salesReq = await fetch(`${base_url}sales/?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`);
                 const salesData = await salesReq.json();
-                const salesSeries = salesData.map(item => 
-                    ({ x: 
-                        new Date(item.date).getTime(), 
-                        y:
-                         item.amount
-                    }));
-
+                const salesSeries = salesData.map(item => ({
+                    x: new Date(item.date).getTime(),
+                    y: item.amount
+                }));
+    
                 // Fetch expense data
                 const expenseReq = await fetch(`${base_url}expense/?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`);
                 const expenseData = await expenseReq.json();
-                const expenseSeries = expenseData.map(item => 
-                    ({ x: 
-                        new Date(item.date).getTime(),
-                       y: 
-                        item.amount
-                     }));
-
+                const expenseSeries = expenseData.map(item => ({
+                    x: new Date(item.date).getTime(),
+                    y: item.amount
+                }));
+    
                 setData(prevState => ({
                     ...prevState,
                     series: [
@@ -97,18 +91,21 @@ const ReportCharts = ({ filter }) => {
                     ],
                     options: {
                         ...prevState.options,
-                        xaxis: { ...prevState.options.xaxis,
-                                 min: startDate.getTime(),
-                                 max: endDate.getTime() },
+                        xaxis: {
+                            ...prevState.options.xaxis,
+                            min: startDate.getTime(),
+                            max: endDate.getTime()
+                        },
                     },
                 }));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
+    
         fetchData();
     }, [filter]);
+    
 
     return (
         <div>
