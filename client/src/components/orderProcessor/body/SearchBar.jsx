@@ -32,6 +32,7 @@ const SearchBar = ({enableFilterType, filterColumns, handleSearch, clearInputFie
     const handleFilterTypeChange = (event) => {
         const{ value } = event.target;
         setFilterType(value);
+        setInputValue("");
         filterColumns.map((filter) => {
             if (filter.tag === value) {
                 setFilterDataType(filter.type? filter.type : 'text');
