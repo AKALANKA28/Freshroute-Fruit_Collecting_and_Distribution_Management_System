@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     color: "green",
-    fontWeight: "bold", // Add bold font weight
+    fontWeight: "bold",
   },
   footer: {
     position: "absolute",
