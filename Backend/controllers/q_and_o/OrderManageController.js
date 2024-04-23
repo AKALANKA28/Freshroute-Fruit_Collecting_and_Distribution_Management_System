@@ -7,6 +7,15 @@ exports.getPendingOrderList = async (req, res) => {
     const filter = { orderStatus: "PENDING" };
     await getOrderListByFilter(res, filter);
 };
+exports.getAllOrderList = async (req, res) => {
+    try {
+        const orderList = await OrderDetail.find();
+        res.json(orderList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+};
 
 exports.getOngoingOrderList = async (req, res) => {
     const filter = { $or: [{ orderStatus: "ASSIGNED" }, { orderStatus: "IN_PROGRESS" }] }

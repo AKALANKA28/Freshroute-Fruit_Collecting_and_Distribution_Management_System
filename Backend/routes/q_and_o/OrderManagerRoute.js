@@ -27,6 +27,7 @@ router.get("/quality/categorizedData", qualityController.getCategorizedFruitDeta
 /** Order Manager */
 
 //Get Order List from Buyer Manager
+router.get("/orderList", orderManageController.getAllOrderList);
 router.get("/pendingOrderList", orderManageController.getPendingOrderList);
 router.get("/ongoingOrderList", orderManageController.getOngoingOrderList);
 router.get("/completedOrderList", orderManageController.getCompletedOrderList);

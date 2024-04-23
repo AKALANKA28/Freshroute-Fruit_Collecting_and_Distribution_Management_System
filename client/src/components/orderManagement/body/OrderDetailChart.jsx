@@ -1,35 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import * as echarts from 'echarts';
 
-const OrderDetailChart = ({ predictionData }) => {
+const OrderDetailChart = ({ orderDetails }) => {
   const [aggregatedData, setAggregatedData] = useState({});
 
   useEffect(() => {
-    if (predictionData && predictionData.length > 0) {
-      // Filter out declined and pending predictions
-      const filteredData = predictionData.filter(prediction => prediction.status !== 'Declined' && prediction.status !== 'pending');
-
-      const fruits = filteredData.map(prediction => prediction.fruit);
-      const quantities = filteredData.map(prediction => prediction.quantity);
-
-      // Aggregate quantities for each fruit
+    if (orderDetails && orderDetails.length > 0) {
+      // Aggregate order status counts
       const aggregated = {};
-      fruits.forEach((fruit, index) => {
-        if (aggregated[fruit]) {
-          aggregated[fruit] += quantities[index];
+      orderDetails.forEach(order => {
+        const status = order.orderStatus;
+        if (aggregated[status]) {
+          aggregated[status]++;
         } else {
-          aggregated[fruit] = quantities[index];
+          aggregated[status] = 1;
         }
       });
 
       setAggregatedData(aggregated);
     }
-  }, [predictionData]);
+  }, [orderDetails]);
 
   useEffect(() => {
     // Initialize or update the pie chart whenever aggregatedData changes
     if (Object.keys(aggregatedData).length > 0) {
-      echarts.init(document.querySelector('#trafficChart')).setOption({
+      echarts.init(document.querySelector('#orderStatusChart')).setOption({
         tooltip: {
           trigger: 'item',
         },
@@ -39,7 +34,7 @@ const OrderDetailChart = ({ predictionData }) => {
         },
         series: [
           {
-            name: 'Access From',
+            name: 'Order Status',
             type: 'pie',
             radius: ['40%', '70%'],
             avoidLabelOverlap: false,
@@ -52,15 +47,15 @@ const OrderDetailChart = ({ predictionData }) => {
                 show: true,
                 fontSize: '18',
                 fontWeight: 'bold',
-                formatter: '{b}: \n{c} ({d}%)', // Display fruit name, quantity, and percentage
+                formatter: '{b}: \n{c} ({d}%)', // Display order status and count
               },
             },
             labelLine: {
               show: false,
             },
-            data: Object.entries(aggregatedData).map(([fruit, quantity]) => ({
-              value: quantity,
-              name: fruit,
+            data: Object.entries(aggregatedData).map(([status, count]) => ({
+              value: count,
+              name: status,
             })),
           },
         ],
@@ -69,7 +64,7 @@ const OrderDetailChart = ({ predictionData }) => {
   }, [aggregatedData]);
 
   return (
-    <div id='trafficChart' style={{ minHeight: '480px' }} className='echart'></div>
+      <div id='orderStatusChart' style={{ minHeight: '480px' }} className='echart'></div>
   );
 };
 

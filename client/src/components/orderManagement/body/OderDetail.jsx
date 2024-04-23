@@ -3,13 +3,13 @@ import axios from "axios";
 import OrderDetailChart from './OrderDetailChart';
 
 const OderDetail = () => {
-    const [predictionData, setPredictionData] = useState([]);
+    const [orderDetails, setOrderDetails] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("/Prediction/");
-                setPredictionData(response.data);
+                const response = await axios.get("om/orderList");
+                setOrderDetails(response.data);
             } catch (err) {
                 alert(err.message);
             }
@@ -22,9 +22,9 @@ const OderDetail = () => {
             <div className='card'>
                 <div className="card-body pb-0">
                     <h5 className="card-title">
-                        Sold Fruits Details
+                        Order Status
                     </h5>
-                    <OrderDetailChart predictionData={predictionData} />
+                    <OrderDetailChart orderDetails={orderDetails} />
                 </div>
             </div>
         </div>

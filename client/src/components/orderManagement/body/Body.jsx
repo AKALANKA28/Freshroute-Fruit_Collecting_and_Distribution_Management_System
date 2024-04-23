@@ -22,7 +22,7 @@ const Body = () => {
                 </div>
             </div>
             <div className="col-lg-4">
-              <QuickAccess />
+              {/*<QuickAccess />*/}
               <OderDetail />
             </div>
         </div>
