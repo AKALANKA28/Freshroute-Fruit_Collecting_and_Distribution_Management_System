@@ -56,7 +56,8 @@ const OrderExecutionDetailSchema = mongoose.Schema({
     filledQuantity: {
         type: Number,
         default: 0
-    }
+    },
+    lastUpdatedTime: Date,
    
 });
 

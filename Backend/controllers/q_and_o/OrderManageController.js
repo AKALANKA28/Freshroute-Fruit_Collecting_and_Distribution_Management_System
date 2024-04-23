@@ -154,7 +154,8 @@ exports.assignOrder = async (req, res) => {
             quantity: order.quantity,
             placedDate: order.placedDate,
             dueDate: order.dueDate,
-            orderStatus: "ASSIGNED"
+            orderStatus: "ASSIGNED",
+            lastUpdatedTime: new Date()
         });
         await orderExecutionRecord.save();
 
@@ -190,7 +191,8 @@ exports.editAssignOrder = async (req, res) => {
         await OrderExecutionDetail.findByIdAndUpdate(orderExecutionRecord[0]._id, {
             $set: {
                 opName: opName,
-                opId: opId
+                opId: opId,
+                lastUpdatedTime: new Date()
             }
         })
 
@@ -218,6 +220,7 @@ exports.unAssignOrder = async (req, res) => {
         const order = await OrderDetail.findByIdAndUpdate(orderId, {
             $set: {
                 orderStatus: "PENDING",
+                lastUpdatedTime: new Date(),
             },
             $unset: {
                 opId: "",

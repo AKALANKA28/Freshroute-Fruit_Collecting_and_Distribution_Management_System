@@ -16,7 +16,7 @@ const Sidebar = ()=> {
 
                 <ul className="sidebar-nav" id='sidebar-nav'>
                     <li className='nav-item'>
-                        <a className='nav-link' href='/OMDashboard'>
+                        <a className='nav-link' href='/OPDashboard'>
                             <i className='bi bi-grid-1x2-fill'></i>
                             <span>Dashboard</span>
                         </a>

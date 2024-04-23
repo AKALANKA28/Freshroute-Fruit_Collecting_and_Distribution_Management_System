@@ -14,6 +14,7 @@ router.post("/updateSupplierDetails", orderProcessController.updateSuppliers);
 router.get("/pendingOrderList", orderProcessController.getAssignedOrderList);
 router.get("/ongoingOrderList", orderProcessController.getOngoingOrderList);
 router.get("/completedOrderList", orderProcessController.getCompletedOrderList);
+router.get("/recentOrders", orderProcessController.getRecentOrders);
 
 router.post("/pendingOrderList", orderProcessController.getAssignedOrderListByFilter);
 router.post("/ongoingOrderList", orderProcessController.getOngoingOrderListByFilter);

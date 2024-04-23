@@ -179,7 +179,8 @@ exports.executeOrder = async (req, res) => {
         $set: {
             executionHistory: executionDetails,
             orderStatus: status,
-            filledQuantity: filledQuantity
+            filledQuantity: filledQuantity,
+            lastUpdatedTime: new Date()
         }
     })
 
@@ -187,5 +188,18 @@ exports.executeOrder = async (req, res) => {
         res.json(updatedOrder)
     } else {
         res.status(400).json({ message: 'Invalid execution' });
+    }
+};
+
+exports.getRecentOrders = async (req, res) => {
+    try {
+        const orderList = await OrderExecutionDetail.find();
+        orderList.sort((a,b) => {
+            return b.lastUpdatedTime- a.lastUpdatedTime ;
+        })
+        res.json(orderList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
