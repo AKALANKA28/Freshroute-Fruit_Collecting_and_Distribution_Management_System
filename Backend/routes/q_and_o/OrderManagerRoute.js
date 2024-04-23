@@ -8,7 +8,9 @@ const orderManageController = require('../../controllers/q_and_o/OrderManageCont
 router.put("/quality/update", qualityController.addEditQuality);
 
 // Retrieve all quality records
-router.get("/quality/", qualityController.getAllQualities); // Corrected function name
+router.get("/quality/", qualityController.getAllQualities);
+
+router.get("/quality/undefinedQuality", qualityController.getUndefinedQualityList);
 
 // Retrieve a specific quality record by ID
 router.get("/quality/get/:id", qualityController.getQualityById);

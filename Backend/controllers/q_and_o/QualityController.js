@@ -34,6 +34,17 @@ exports.getAllQualities = async (req, res) => {
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
+// Retrieve all quality records
+exports.getUndefinedQualityList = async (req, res) => {
+    try {
+        const filter = { qualityStatus: 0 }; // get quality added records only
+        const allQualities = await FruitDetail.find(filter);
+        res.json(allQualities);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+};
 
 // Retrieve all quality records
 exports.getCategorizedFruitDetail = async (req, res) => {
