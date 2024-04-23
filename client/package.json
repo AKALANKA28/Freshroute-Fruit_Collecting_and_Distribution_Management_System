@@ -13,6 +13,8 @@
     "boxicons": "^2.1.4",
     "dom": "^0.0.3",
     "echarts": "^5.4.3",
+    "firebase": "^10.11.0",
+    "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.2",

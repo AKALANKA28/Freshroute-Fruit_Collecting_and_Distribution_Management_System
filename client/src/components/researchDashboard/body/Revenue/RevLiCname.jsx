@@ -1,9 +1,10 @@
+// ./client\src\components\researchDashboard\body\Revenue\RevLiCname.jsx
 import React, { useState } from 'react'
 import CardFilter from './CardFilter'
-import ReportCharts from './ReportCharts';
+import RevLiChart from './RevLiChart';
 
 
-const Reports = () => {
+const RevLiCname = () => {
 
   const [filter, setFilter] = useState('Today');
   const handleFilterChange = filter => {
@@ -15,12 +16,12 @@ const Reports = () => {
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Market Analysis<span>| {filter}</span>
+          Average Revenue per capita<span>| {filter}</span>
         </h5>
-        <ReportCharts />
+        <RevLiChart />
       </div>
     </div>
   )
 }
 
-export default Reports
+export default RevLiCname

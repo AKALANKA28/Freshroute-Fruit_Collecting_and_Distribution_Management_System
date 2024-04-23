@@ -1,7 +1,8 @@
+// ./client\src\components\researchDashboard\body\Revenue\RevenuChart.jsx
 import React, {useState} from 'react'
 import Chart from 'react-apexcharts'
 
-const ReportCharts = () => {
+const RevenuChart = () => {
     const [data, setData] = useState ({
         series: [
             {
@@ -83,4 +84,4 @@ const ReportCharts = () => {
   );
 }
 
-export default ReportCharts
+export default RevenuChart

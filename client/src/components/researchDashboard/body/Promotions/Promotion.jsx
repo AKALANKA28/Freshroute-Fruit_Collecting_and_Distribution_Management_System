@@ -186,6 +186,7 @@ function Promotion() {
                   <th scope="col">NIC</th>
                   <th scope="col">Location</th>
                   <th scope="col">Application No</th>
+                  <th scope="col">Required Resouce</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -197,6 +198,7 @@ function Promotion() {
                       <td>{promotion.nic}</td>
                       <td>{promotion.location}</td>
                       <td>{promotion.application_no}</td>
+                      <td>{promotion.required_resouce}</td>
                       <td className="action">
                         <div className="buttons">
                           <button

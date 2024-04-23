@@ -44,6 +44,9 @@ import EditOrder from './components/NormalOrder/EditOrder';
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
 import ResourcePage from "./components/researchDashboard/ResourcePage";
+import RevenuePage from "./components/researchDashboard/RevenuePage";
+import VolumePage from "./components/researchDashboard/VolumePage";
+import PricePage from "./components/researchDashboard/PricePage";
 
 //import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
 //import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
@@ -260,6 +263,31 @@ const router = createBrowserRouter([
     element: (
       <div>
         <PromotionPage />
+      </div>
+    ),
+  },
+  {
+    path: "/RevenuePage",
+    element: (
+      <div>
+        <RevenuePage />
+      </div>
+    ),
+  },
+  {
+    path: "/VolumePage",
+    element: (
+      <div>
+        <VolumePage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PricePage",
+    element: (
+      <div>
+        <PricePage />
       </div>
     ),
   },

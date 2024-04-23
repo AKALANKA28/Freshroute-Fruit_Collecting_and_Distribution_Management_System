@@ -1,9 +1,10 @@
+// ./client\src\components\researchDashboard\body\Revenue\RevenueCname.jsx
 import React, { useState } from 'react'
 import CardFilter from './CardFilter'
-import ReportCharts from './ReportCharts';
+import PriceChart from './PriceChart';
 
 
-const Reports = () => {
+const PriceCname = () => {
 
   const [filter, setFilter] = useState('Today');
   const handleFilterChange = filter => {
@@ -15,12 +16,12 @@ const Reports = () => {
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Market Analysis<span>| {filter}</span>
+          Price<span>| {filter}</span>
         </h5>
-        <ReportCharts />
+        <PriceChart />
       </div>
     </div>
   )
 }
 
-export default Reports
+export default PriceCname

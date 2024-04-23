@@ -25,21 +25,21 @@ const Sidebar = () => {
                 <ul id='components-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
 
                     <li>
-                        <a href='#'>
+                        <a href='/RevenuePage'>
                             <i className='bi bi-circle'>
                                 <span>Revenue</span>
                             </i>
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='VolumePage'>
                             <i className='bi bi-circle'>
                                 <span>Volume</span>
                             </i>
                         </a>
                     </li>
                     <li>
-                        <a href='#'>
+                        <a href='/PricePage'>
                             <i className='bi bi-circle'>
                                 <span>Price</span>
                             </i>
