@@ -26,9 +26,9 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' href='/vehicles'>
+                <a className='nav-link collapsed' href='/VehicleDetails'>
                     <i className='bi bi-grid-1x2-fill'></i>
-                    <span>Vehicles</span>
+                    <span>Vehicle Details</span>
                 </a>
             </li>
 
@@ -40,16 +40,16 @@ const Sidebar = () => {
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' href='/route'>
+                <a className='nav-link collapsed' href='/ProcessDetails'>
                     <i className='bi bi-grid-1x2-fill'></i>
-                    <span>Route</span>
+                    <span>Process Details</span>
                 </a>
             </li>
 
             <li className='nav-item'>
-                <a className='nav-link collapsed' href='/schedule'>
+                <a className='nav-link collapsed' href='/ScheduleDetails'>
                     <i className='bi bi-grid-1x2-fill'></i>
-                    <span>Schedule</span>
+                    <span>Schedule Details</span>
                 </a>
             </li>
 

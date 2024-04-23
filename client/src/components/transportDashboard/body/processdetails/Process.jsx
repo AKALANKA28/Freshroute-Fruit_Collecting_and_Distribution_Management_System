@@ -76,7 +76,7 @@ function Process() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/Process/delete/${id}`);
+      await axios.delete(`/process/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
@@ -86,7 +86,7 @@ function Process() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Process/add", formData);
+      await axios.post("/process/add", formData);
       alert("Process Details Added");
       handleAddModalClose();
       getFetchData();
@@ -97,7 +97,7 @@ function Process() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Process/update/${formData._id}`, formData);
+      await axios.patch(`/process/update/${formData._id}`, formData);
       alert("Process Details Updated");
       handleEditModalClose();
       getFetchData();
@@ -115,7 +115,7 @@ function Process() {
 
 
   return (
-    <div id="main">
+    <div className="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">

@@ -424,10 +424,6 @@ exports.applyCoupon = asyncHandler(async (req, res) => {
   );
   res.json(totalAfterDiscount);
 });
-
-
-
-
 exports.createOrder = asyncHandler(async (req, res) => {
   const { COD, couponApplied } = req.body;
   const { _id } = req.user;

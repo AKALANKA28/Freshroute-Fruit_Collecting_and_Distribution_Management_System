@@ -97,7 +97,7 @@ function Vehicle() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Vehicle/update/${formData._id}`, formData);
+      await axios.patch(`/Vehicle/update/${formData._id}`, formData);
       alert("Vehicle Details Updated");
       handleEditModalClose();
       getFetchData();
@@ -115,7 +115,7 @@ function Vehicle() {
 
 
   return (
-    <div id="main">
+    <div className="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">

@@ -13,7 +13,7 @@ const vehicle = mongoose.Schema({
 
   conditions: {
     type: String,
-    required: true,
+    // required: true,
   },
 
   capacity: {

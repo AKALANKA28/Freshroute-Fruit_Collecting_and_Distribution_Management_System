@@ -97,7 +97,7 @@ function Schedule() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Schedule/update/${formData._id}`, formData);
+      await axios.patch(`/Schedule/update/${formData._id}`, formData);
       alert("Schedule Details Updated");
       handleEditModalClose();
       getFetchData();
@@ -115,7 +115,7 @@ function Schedule() {
 
 
   return (
-    <div id="main">
+    <div className="main">
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">

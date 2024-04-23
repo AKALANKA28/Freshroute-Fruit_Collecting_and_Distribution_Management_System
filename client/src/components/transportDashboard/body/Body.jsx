@@ -3,7 +3,7 @@ import './main.css'
 
 import Cards from './Cards'
 import Reports from './Reports'
-import RecentSales from './RecentSales'
+import CurrentProcess from './CurrentProcess'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import BudgetReport from './BudgetReport'
@@ -26,7 +26,7 @@ const Body = () => {
                         <Reports />
                     </div>
                     <div className="col-12">
-                     <RecentSales />
+                     <CurrentProcess />
                     </div>
                     <div className="col-12">
                      <TopSellings />

@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import CardFilter from './CardFilter'
-import RecentSalesTable from './RecentSalesTable'
+import CurrentProcessTable from './CurrentProcessTable'
 
-const RecentSales = () => {
+const CurrentProcess = () => {
 
     const [items, setItems] = useState([])
     const [filter, setFilter] = useState('Today');
@@ -28,12 +28,12 @@ const RecentSales = () => {
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Recent Sales<span>| {filter}</span>
+        Current Process <span>| {filter}</span>
         </h5>
-        <RecentSalesTable items={items} />
+        <CurrentProcessTable items={items} />
       </div>
     </div>
   )
 }
 
-export default RecentSales
+export default CurrentProcess

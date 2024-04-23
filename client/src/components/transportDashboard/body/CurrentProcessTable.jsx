@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const RecentSalesTable = ({items}) => {
+const CurrentProcessTable = ({items}) => {
     const handleStatus = status => {
     switch (status) {
         case 'Approved':
@@ -23,11 +23,10 @@ const RecentSalesTable = ({items}) => {
       <table className='table table-bordeless datatable'>
         <thead className="table-light">
             <tr>
-                <th className="col"d>#</th>
-                <th className="col"d>Customer</th>
-                <th className="col"d>Product</th>
-                <th className="col"d>Price</th>
-                <th className="col"d>Status </th>
+                <th className="col"d>Process ID</th>
+                <th className="col"d>Vehicle Number</th>
+                <th className="col"d>Driver Name</th>
+                <th className="col"d>Current Status</th>
             </tr>
         </thead>
         <tbody>
@@ -60,4 +59,4 @@ const RecentSalesTable = ({items}) => {
   )
 }
 
-export default RecentSalesTable
+export default CurrentProcessTable

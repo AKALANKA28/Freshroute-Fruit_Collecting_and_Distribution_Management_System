@@ -37,6 +37,7 @@ import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupp
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+import ProcessDetails from "./components/transportDashboard/ProcessDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
@@ -500,6 +501,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <VehicleDetails />
+      </div>
+    ),
+  },
+  {
+    path: "/ProcessDetails",
+    element: (
+      <div>
+        <ProcessDetails />
       </div>
     ),
   },

@@ -7,7 +7,7 @@ import Process from './body/processdetails/Process'
 import Footer from './footer/Footer'
 
 
-const ScheduleDetails = () => {
+const ProcessDetails = () => {
   return (
     <div>
       <Header />

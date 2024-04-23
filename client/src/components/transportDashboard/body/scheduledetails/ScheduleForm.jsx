@@ -1,6 +1,6 @@
 import React from "react";
 
-const ScheduleForm = ({ handleSubmit, handleOnChange, rest, isEditMode }) => {
+const ScheduleForm = ({ handleSubmit, handleOnChange, rest = {}, isEditMode }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -15,7 +15,7 @@ const ScheduleForm = ({ handleSubmit, handleOnChange, rest, isEditMode }) => {
             placeholder="schedule_ID"
             required
             onChange={handleOnChange}
-            value={rest.schedule_ID}
+            value={rest.schedule_ID }
             readOnly={isEditMode}
           />
         </div>
