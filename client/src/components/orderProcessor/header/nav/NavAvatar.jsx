@@ -12,7 +12,7 @@ function NavAvatar () {
 
       <ul className='dropdown-menu dropdown-menu-end dropdown-menu-arrow profile'>
         <li className='dropdown-header'>
-          <h6>Sasanka</h6>
+          <h6>Sasanka Welikanna</h6>
           <span>Order Processor</span>
         </li>
 
