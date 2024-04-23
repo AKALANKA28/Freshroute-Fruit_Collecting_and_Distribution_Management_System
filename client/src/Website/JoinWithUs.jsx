@@ -30,12 +30,24 @@ const JoinWithUs = () => {
     landDeedUrl: '',
   });
 
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    city: '',
+    NIC: '',
+    landAddress: '',
+    fieldArea: '',
+    landDeedUrl: '',
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+    validateField(name, value);
     // If city is changed, fetch coordinates
     if (name === "city") {
       fetchCoordinates(value);
@@ -53,6 +65,17 @@ const JoinWithUs = () => {
       city.city.toLowerCase().startsWith(value.toLowerCase())
     );
     setCitySuggestions(filteredSuggestions);
+    validateField('city', value);
+  };
+
+  const handleSuggestionClick = (city) => {
+    setFormData((prev) => ({
+      ...prev,
+      city: city.city,
+      latitude: city.latitude,
+      longitude: city.longitude,
+    }));
+    setShowSuggestions(false);
   };
 
   const fetchCoordinates = async (city) => {
@@ -75,51 +98,94 @@ const JoinWithUs = () => {
     }
   };
 
-  const handleSuggestionClick = (city) => {
-    setFormData((prev) => ({
-      ...prev,
-      city: city.city,
-      latitude: city.latitude,
-      longitude: city.longitude,
+  const validateField = (name, value) => {
+    let error = '';
+    switch (name) {
+      case 'name':
+        error = value.length < 1 ? 'Name is required' : '';
+        break;
+      case 'email':
+        error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid email address';
+        break;
+      case 'mobile':
+        error = /^[0-9]{10}$/.test(value) ? '' : 'Mobile number should be 10 digits';
+        break;
+      case 'city':
+        error = value.length < 1 ? 'City is required' : '';
+        break;
+      case 'NIC':
+        error = /^(?:[0-9]{9}[vVxX]|[0-9]{12})?$/.test(value) ? '' : 'Invalid NIC';
+        break;
+      case 'landAddress':
+        error = value.length < 1 ? 'Field address is required' : '';
+        break;
+      case 'fieldArea':
+        error = /^[0-9]+$/.test(value) ? '' : 'Field area should be a number';
+        break;
+      default:
+        break;
+    }
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
     }));
-    setShowSuggestions(false);
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setLandDeed(file);
+    validateField('landDeedUrl', file);
   };
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    // Check if there are any errors before submitting
+    if (Object.values(formErrors).every((error) => error === "")) {
+      handleSubmit(formData);
+    } else {
+      alert("Please fill out the form correctly");
+    }
+  };
+
+  const handleSubmit = async () => {
     try {
-      if (landDeed) {
-        const fileName = new Date().getTime() + landDeed.name;
-        const storageRef = ref(storage, 'files/landDeeds/' + fileName);
-        const uploadTask = uploadBytesResumable(storageRef, landDeed);
+      let isValid = true;
+      Object.keys(formData).forEach((key) => {
+        validateField(key, formData[key]);
+        if (formErrors[key]) {
+          isValid = false;
+        }
+      });
   
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setLandDeedPerc(Math.round(progress));
-          },
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log('DownloadURL - ', downloadURL);
-              setFormData(prev => ({
-                ...prev,
-                landDeedUrl: downloadURL // Make sure landDeedUrl is set correctly
-              }));
-              submitFormData({...formData, landDeedUrl: downloadURL}); // Pass the updated formData with landDeedUrl to submitFormData
-            });
-          }
-        );
-      } else {
-        submitFormData(formData);
+      if (isValid) {
+        if (landDeed) {
+          const fileName = new Date().getTime() + landDeed.name;
+          const storageRef = ref(storage, 'files/landDeeds/' + fileName);
+          const uploadTask = uploadBytesResumable(storageRef, landDeed);
+  
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              setLandDeedPerc(Math.round(progress));
+            },
+            (error) => {
+              console.log(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('DownloadURL - ', downloadURL);
+                setFormData(prev => ({
+                  ...prev,
+                  landDeedUrl: downloadURL // Make sure landDeedUrl is set correctly
+                }));
+                submitFormData({...formData, landDeedUrl: downloadURL}); // Pass the updated formData with landDeedUrl to submitFormData
+              });
+            }
+          );
+        } else {
+          submitFormData(formData);
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -159,23 +225,27 @@ const JoinWithUs = () => {
             <div className="contact-inner-wrapper d-flex justify-content-between">
               <div>
                 <h3 className="contact-title mb-5 mt-5">Want to join with us ?</h3>
-                <form onSubmit={handleSubmit} className='d-flex flex-column m-3 gap-15'>
+                <form onSubmit={handleFormSubmit} className='d-flex flex-column m-3 gap-15'>
                   
                   <legend>Personal Details</legend>
-                  <div>
-                    <input type="text" value={formData.name} name="name" className="form-control" onChange={handleChange} placeholder='Name' required />
+                  <div className="form-group">
+                    <input type="text" value={formData.name} name="name" className={`form-control ${formErrors.name && 'is-invalid'}`} onChange={handleChange} placeholder='Name' required />
+                    {formErrors.name && <div className="invalid-feedback">{formErrors.name}</div>}
                   </div>
                   
-                  <div>
-                    <input type="email" value={formData.email} name="email" className="form-control" onChange={handleChange} placeholder='Email' required/>
+                  <div className="form-group">
+                    <input type="email" value={formData.email} name="email" className={`form-control ${formErrors.email && 'is-invalid'}`} onChange={handleChange} placeholder='Email' required/>
+                    {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
                   </div>
 
-                  <div>
-                    <input type="text" value={formData.mobile} name="mobile" className="form-control" onChange={handleChange} placeholder='Mobile' required/>
+                  <div className="form-group">
+                    <input type="text" value={formData.mobile} name="mobile" className={`form-control ${formErrors.mobile && 'is-invalid'}`} onChange={handleChange} placeholder='Mobile' required/>
+                    {formErrors.mobile && <div className="invalid-feedback">{formErrors.mobile}</div>}
                   </div>
 
-                  <div>
-                    <input type="text" value={formData.city} name="city" className="form-control" onChange={handleCityChange} placeholder='City' required/>
+                  <div className="form-group">
+                    <input type="text" value={formData.city} name="city" className={`form-control ${formErrors.city && 'is-invalid'}`} onChange={handleCityChange} placeholder='City' required/>
+                    {formErrors.city && <div className="invalid-feedback">{formErrors.city}</div>}
                     {showSuggestions && citySuggestions.length > 0 && (
                       <ul className="list-group">
                         {citySuggestions.map((city, index) => (
@@ -191,27 +261,31 @@ const JoinWithUs = () => {
                     )}
                   </div>
 
-                  <div>
-                    <input type="text" value={formData.NIC} name="NIC" className="form-control" onChange={handleChange} placeholder='NIC' required/>
+                  <div className="form-group">
+                    <input type="text" value={formData.NIC} name="NIC" className={`form-control ${formErrors.NIC && 'is-invalid'}`} onChange={handleChange} placeholder='NIC' required/>
+                    {formErrors.NIC && <div className="invalid-feedback">{formErrors.NIC}</div>}
                   </div>
 
                       
                   <legend>Field Details</legend> 
 
-                  <div>
-                    <input type="text" value={formData.landAddress} name="landAddress" className="form-control" onChange={handleChange} placeholder='Address of the field' required/>
+                  <div className="form-group">
+                    <input type="text" value={formData.landAddress} name="landAddress" className={`form-control ${formErrors.landAddress && 'is-invalid'}`} onChange={handleChange} placeholder='Address of the field' required/>
+                    {formErrors.landAddress && <div className="invalid-feedback">{formErrors.landAddress}</div>}
                   </div>
 
-                  <div>
-                    <input type="Number" value={formData.fieldArea} name="fieldArea" className="form-control" onChange={handleChange} placeholder='Field-Area (in perches)' required/>
+                  <div className="form-group">
+                    <input type="Number" value={formData.fieldArea} name="fieldArea" className={`form-control ${formErrors.fieldArea && 'is-invalid'}`} onChange={handleChange} placeholder='Field-Area (in perches)' required/>
+                    {formErrors.fieldArea && <div className="invalid-feedback">{formErrors.fieldArea}</div>}
                   </div>
 
-                  <div>
+                  <div className="form-group">
                     <label>{landDeedPerc > 0 && "Uploading: "+ landDeedPerc+ "%"}Land-Deed (PDF)</label>
-                    <input type="file" name="landDeedUrl" className="form-control" onChange={handleFileChange} required />
+                    <input type="file" name="landDeedUrl" className={`form-control ${formErrors.landDeedUrl && 'is-invalid'}`} onChange={handleFileChange} required />
+                    {formErrors.landDeedUrl && <div className="invalid-feedback">{formErrors.landDeedUrl}</div>}
                   </div>
                   
-                  <div>
+                  <div className="form-group">
                     <button type="submit" className="button mb-2">Submit</button>
                   </div>
 
