@@ -15,7 +15,7 @@ const SearchBar = ({enableFilterType, filterColumns, handleSearch, clearInputFie
     useEffect(() => {
         setInputValue("");
         setFilterType(filterColumns[0].tag)
-        setFilterType(filterColumns[0].type? filterColumns[0].type: 'text')
+        setFilterDataType(filterColumns[0].type? filterColumns[0].type: 'text')
     }, [clearInputField]);
     const handleOnSubmit = (event) => {
         event.preventDefault();
