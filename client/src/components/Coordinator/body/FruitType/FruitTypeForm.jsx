@@ -65,12 +65,17 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+  
+    // Prevent inserting numbers into the fruit name field
+    if (name === "name" && /\d/.test(value)) {
+      return; // Exit the function early if a number is detected
+    }
+  
     setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
   };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleSubmit(formData);
