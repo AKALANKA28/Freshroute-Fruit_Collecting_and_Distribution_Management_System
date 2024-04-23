@@ -96,20 +96,19 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
         <td>{request.fruit}</td>
         <td>{request.subCategory}</td>
         <td>{request.quality}</td>
-        <td>{request.quantity}</td>
-        <td>{request.price}</td>
-        <td>{request.price * request.quantity}</td>
+        <td>{request.quantity} kg</td>
+        <td>Rs. {request.price}</td>
+        <td>Rs. {request.price * request.quantity}</td>
         <td>{request.dateCanBeGiven}</td>
         <td>
           <Button
             className="btn-action btn-approve"
-            variant="success"
             onClick={() => handleShowModal(request)}
           >
             Approve
           </Button>
           <Button
-            className="btn btn-action btn-danger"
+            className="btn-action btn-danger"
             onClick={() => handleShowDeclineModal(request)}
           >
             Decline
