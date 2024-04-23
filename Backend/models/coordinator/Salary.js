@@ -1,4 +1,3 @@
-// .Backend/models/coordinator/Salary.js
 const mongoose = require("mongoose");
 
 const SalarySchema = new mongoose.Schema({

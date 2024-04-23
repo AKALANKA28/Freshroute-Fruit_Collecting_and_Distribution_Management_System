@@ -6,7 +6,7 @@
 
 .section{
   padding: 5rem 8rem;
-  background: white;
+  background: white ;
 }
 
 .flex_center {
@@ -171,7 +171,9 @@
   border-radius: 10px;
 }
 
-
+.shop-col-3{
+  width: 24%;
+}
 
 /* --------------------end - shop-------------------- */
 

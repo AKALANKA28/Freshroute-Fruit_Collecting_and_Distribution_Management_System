@@ -12,7 +12,7 @@ const body = () => {
       <div className="body" id='body'>
             <div className="row">
                 <div className="col-lg-6">
-                <ExpenseReport/>
+                {/* <ExpenseReport/> */}
                 </div>
                 <div className="col-lg-4">
                   <div className="col-lg-8">

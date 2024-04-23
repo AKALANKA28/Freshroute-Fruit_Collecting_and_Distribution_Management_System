@@ -15,11 +15,18 @@ exports.addSale = async (req, res) => {
             due,
             status
         });
+        await newSale.validate(); // Validate the schema
+
         await newSale.save();
         res.json("Sales Added");
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ status: "Error adding sales record", error: err.message });
+        if (err.name === 'ValidationError') {
+            const errorMessage = Object.values(err.errors).map(error => error.message).join(', ');
+            res.status(400).json({ error: errorMessage });
+        } else {
+            console.log(err);
+            res.status(500).json({ status: "Error adding sales record", error: err.message });
+        }
     }
 };
 

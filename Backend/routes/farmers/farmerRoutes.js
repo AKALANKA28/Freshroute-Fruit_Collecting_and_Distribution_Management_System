@@ -6,5 +6,6 @@ router.get("/", farmerController.getAllFarmers);
 router.get("/get/:id", farmerController.getOneFarmer);
 router.delete("/delete/:id", farmerController.deleteFarmer);
 router.put("/update/:id", farmerController.updateFarmer);
+router.delete("/deleteFarmerByJoinRequestID/:joinRequestId", farmerController.deleteFarmerByJoinRequestID);
 
 module.exports = router;

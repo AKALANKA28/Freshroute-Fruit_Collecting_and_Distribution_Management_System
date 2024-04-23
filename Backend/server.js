@@ -12,6 +12,8 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan")
 
+const stripe = require("stripe")("sk_test_51P85tiKciT9oiVpgb9vlJdOnOVjTZOf3y0KGLObSVItsZVQWWPWQIzph7lv3NlVH6jtCBkwVQHfM1YXRYF0fSmmV00LNhhhQHo")
+
 const authRouter = require('./routes/authRoute.js');
 const productRouter = require('./routes/productRoute.js');
 const categoryRouter = require('./routes/categoryRoute.js');
@@ -32,10 +34,13 @@ const coveringsRouter = require("./routes/transport/coveringsRoute.js");
 //Heshan
 const farmerRouter = require("./routes/farmers/farmerRoutes");
 const predictionRouter = require("./routes/farmers/predictionRoutes");
-const farmerJoiningRequestRouter = require("./routes/farmers/farmerJoiningRequestRoutes");
 const pendingSupplyRouter = require("./routes/farmers/pendingSuppliesRoutes");
 const acceptedSupplyRouter = require("./routes/farmers/acceptedSuppliesRoutes");
 const declinedSupplyRouter = require("./routes/farmers/declinedSuppliesRoutes");
+const joiningRequestRouter = require("./routes/joiningRequestRoutes.js");
+const pendingSupplierRouter = require("./routes/farmers/pendingSuppliersRoutes.js");
+const acceptedSupplierRouter = require("./routes/farmers/acceptedSuppliersRoutes.js");
+const declinedSupplierRouter = require("./routes/farmers/declinedSuppliersRoutes.js");
 
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
 const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
@@ -96,10 +101,13 @@ app.use("/Resource", ResourceRouter);
 //Heshan
 app.use("/Farmer", farmerRouter);
 app.use("/Prediction", predictionRouter);
-app.use("/farmerJoiningRequest", farmerJoiningRequestRouter);
 app.use("/pendingSupply", pendingSupplyRouter);
 app.use("/acceptedSupply", acceptedSupplyRouter);
 app.use("/declinedSupply", declinedSupplyRouter);
+app.use("/JoiningRequest", joiningRequestRouter);
+app.use("/pendingSupplier", pendingSupplierRouter);
+app.use("/acceptedSupplier", acceptedSupplierRouter);
+app.use("/declinedSupplier", declinedSupplierRouter);
 
 app.use(itemRouter);
 app.use("/TransportFee", TransportFeeRouter);
@@ -110,6 +118,34 @@ app.use("/Notice", NoticeRouter);
 app.use("/om", orderMangerRoute);
 app.use("/op", orderProcessorRoute);
 
+
+
+
+
+app.post("/user/checkout", async(req, res) => {
+  const {product} = req.body;
+
+  const lineItems = product.map((product) => ({
+    price_data: {
+      currency: "inr",
+      product_data: {
+        name: product.dish
+      },
+      unit_amount: product.price * 100,
+    },
+    quantity:product.qnty
+  }));
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items:lineItems,
+    mode: "payment",
+    success_url:"",
+    cancel_url:"",
+  })
+  res.json({id:session.id})
+
+})
 
 
 app.use(notFound);

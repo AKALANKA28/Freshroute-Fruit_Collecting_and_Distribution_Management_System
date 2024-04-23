@@ -1,59 +1,96 @@
-import React, { useState } from 'react';
-import { Button, Modal } from "react-bootstrap";
-import JoinForm from './JoinForm';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Nav, Tab } from "react-bootstrap";
+import '../SupplyRequests/supplyRequests.css';
+import SupplierRequestsTable from "./SupplierRequestsTable";
+import ApprovedSuppliersTable from "./ApprovedSuppliersTable";
+import DeclinedSuppliersTable from "./DeclinedSuppliersTable";
+
+axios.defaults.baseURL = "http://localhost:8070/";
 
 const SupplierRequests = () => {
-  const supplierRequests = [
-    { id: 1, name: 'Supplier 1', email: 'supplier1@example.com', status: 'Pending' },
-    { id: 2, name: 'Supplier 2', email: 'supplier2@example.com', status: 'Approved' },
-    { id: 3, name: 'Supplier 3', email: 'supplier3@example.com', status: 'Pending' },
-  ];
+  const [supplierRequests, setSupplierRequests] = useState([]);
+  const [approvedSuppliers, setApprovedSuppliers] = useState([]);
+  const [declinedSuppliers, setDeclinedSuppliers] = useState([]);
 
-  const [showJoinForm, setShowJoinForm] = useState(false);
+  useEffect(() => {
+    fetchSupplierRequests();
+    fetchApprovedSuppliers();
+    fetchDeclinedSuppliers();
+  }, []);
 
-  const handleJoinClick = () => {
-    setShowJoinForm(true);
+  const fetchSupplierRequests = async () => {
+    try {
+      const response = await axios.get("/pendingSupplier");
+      setSupplierRequests(response.data);
+    } catch (error) {
+      console.error("Error fetching supplier requests:", error);
+    }
   };
 
-  const handleCloseJoinForm = () => {
-    setShowJoinForm(false);
+  const fetchApprovedSuppliers = async () => {
+    try {
+      const response = await axios.get("/acceptedSupplier");
+      setApprovedSuppliers(response.data);
+    } catch (error) {
+      console.error("Error fetching approved suppliers:", error);
+    }
   };
+
+  const fetchDeclinedSuppliers = async () => {
+    try {
+      const response = await axios.get("/declinedSupplier");
+      setDeclinedSuppliers(response.data);
+    } catch (error) {
+      console.error("Error fetching declined suppliers:", error);
+    }
+  };
+
+
+
+
+
 
   return (
-    <div>
-      <div className="main">
-        <h1>Supplier Requests</h1>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {supplierRequests.map(request => (
-              <tr key={request.id}>
-                <td>{request.id}</td>
-                <td>{request.name}</td>
-                <td>{request.email}</td>
-                <td>{request.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button onClick={handleJoinClick}>Join with us</button>
-        <Modal show={showJoinForm} onHide={handleCloseJoinForm} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Join with us</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <JoinForm onClose={handleCloseJoinForm} />
-          </Modal.Body>
-        </Modal>
+    <div className="card recent-sales overflow-auto">
+        <div className="card-body">
+          <div className="page-header">
+              <div className="card-title">
+                Supplier Requests
+                <h6>Manage Supplier Requests</h6>
+              </div>
+          </div>
+
+          <Tab.Container defaultActiveKey="supplierRequests">
+            <Nav variant="tabs" className="mb-3">
+              <Nav.Item>
+                <Nav.Link eventKey="supplierRequests">Pending Supplier Requests</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="approvedSuppliers">Approved Suppliers</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="declinedSuppliers">Declined Suppliers</Nav.Link>
+              </Nav.Item>
+            </Nav>
+            <Tab.Content>
+              <Tab.Pane eventKey="supplierRequests">
+                <SupplierRequestsTable
+                  supplierRequests={supplierRequests}
+                  fetchSupplierRequests={fetchSupplierRequests}
+                />
+              </Tab.Pane>
+              <Tab.Pane eventKey="approvedSuppliers">
+                <ApprovedSuppliersTable approvedSuppliers={approvedSuppliers} />
+              </Tab.Pane>
+              <Tab.Pane eventKey="declinedSuppliers">
+              <DeclinedSuppliersTable declinedSuppliers={declinedSuppliers} />
+              </Tab.Pane>
+            </Tab.Content>
+          </Tab.Container>
+
+        </div>
       </div>
-    </div>
   );
 };
 

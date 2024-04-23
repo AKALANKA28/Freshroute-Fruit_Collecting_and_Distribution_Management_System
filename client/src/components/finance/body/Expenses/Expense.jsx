@@ -1,161 +1,276 @@
-import React,{useState, useEffect} from 'react'
-import './expense.css'
-import SearchBar from './SearchBar'
-import ExpenseTable from "./ExpenseTable";
-import ExpenseFormModal from './ExpenseFormModal';
-import axios from 'axios';
-import CardFilter from '../CardFilter'
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { PDFViewer } from "@react-pdf/renderer";
+import { Button, Modal } from "react-bootstrap";
+import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import ExpenseForm from "./ExpenseForm";
+import ExpenseReport from "./ExpenseReport";
+import "../Expenses/expense.css";
+import CardFilter from "../CardFilter";
+import { ToastContainer } from "react-toastify";
+
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-
-
-const Expense = () => {
-
-  const [items, setItems] = useState([])
+function Expense() {
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [dataList, setDataList] = useState([]);
+  const [selectedExpense, setSelectedExpense] = useState(null);
   const [filter, setFilter] = useState('Today');
-  const [addSection, setAddSection] = useState(false)
+  const [filteredDataList, setFilteredDataList] = useState([]); 
 
-    const [data, setData] = useState({
-      date : "",
-      category : "",
-      amount : "",
-      description : ""
-    })
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6); // Number of items per page
 
-    const handleOnChange = (e) =>{
-      const {value,name} = e.target
-      setData((preve)=>{
-        return{
-          ...preve,
-          [name] : value
-        }
-        
-      }) 
-    }
-    //add data
-    const handleSubmit = async(e)=>{
-      e.preventDefault()
-      axios.post("http://localhost:8070/expense/add", data).then(() => {
-        alert("Expense Added")
-        fetchData()
-      }).catch((err) =>{
-        if (err.response && err.response.data && err.response.data.err) {
-          // If the error has a custom message from the backend, display it
-          alert(err.response.data.err);
-        } else {
-          // Otherwise, display a generic error message
-          alert("An error occurred while adding the expense record");
-        }      
-      })
-     
-    }
 
-    const handleFilterChange = filter => {
-        setFilter(filter)
-    };
 
-    const fetchData = () => {
-        fetch("http://localhost:8070/expense/")
-         .then(res => res.json())
-         .then(data => {
-            setItems(data);
-         }).catch((err) =>{
-          if (err.response && err.response.data && err.response.data.err) {
-            alert(err.response.data.err);
-          } else {
-            alert("An error occurred while retrieving the expense records");
-          }      
-        })
-    };
 
-    useEffect(() => {
-        fetchData();
-    }, [])
+
 
   
-    const handleRefreshClick = () => {
-      fetchData();
-    };
+  useEffect(() => {
+    getFetchData();
+  }, []);
 
-    const handleButtonClick = () => {
-      fetchData();
-    };
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
+
+
+  const getFetchData = async () => {
+    try {
+      const response = await axios.get("/expense/");
+      setDataList(response.data);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+
+   // Search functionality
+   const handleSearch = (query) => {
+    const filteredList = dataList.filter((expense) => {
+      const fullName = `${expense.customer_name} ${expense.date} ${expense.fruit_name} ${expense.amount} ${expense.paid} ${expense.due} ${expense.status}`; 
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+  };
+
+
+  const handleRefreshClick = () => {
+    getFetchData();
+  };
+
+  const handleButtonClick = () => {
+    getFetchData();
+  };
+
+  const handleAddModalOpen = () => {
+    setAddModalOpen(true);
+  };
+
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
+  };
+
+  const handleEditModalOpen = (expense) => {
+    setSelectedExpense(expense);
+    setEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+  };
+
+  const handleAddSubmit = async (formData) => {
+    try {
+      await axios.post("/expense/add", formData);
+      alert("Expense Added");
+      handleAddModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+  
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/expense/delete/${id}`);
+      alert("Successfully Deleted");
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+
+
+  const handleEditSubmit = async (formData) => {
+    try {
+      await axios.patch(`/expense/update/${formData._id}`, formData);
+      alert("Expense Updated");
+      handleEditModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
+
 
   return (
-   
-        <div className="card recent-sales overflow-auto">
-
-{/* ---------------------------table filter---------------------- */}
-        <CardFilter filterChange={handleFilterChange} />
-          <div className="card-body">
-            <div class="page-header">
-              <div class="add-item d-flex">
-
-
-{/* --------------------------table name ---------------------------*/}
-                <div class="card-title">
-                  Expense Details<span>| {filter}</span>
-                  <h6>Manage your expenses</h6>
+    <div className="">
+     <div className="card recent-sales overflow-auto">    
+        <div className="card-body">           
+          <div class="page-header">
+            <div class="add-item d-flex">
+              <div class="card-title">
+                    Expense Details<span>| {filter}</span>
+                    <h6>Manage your expense</h6>
                 </div>
-              </div>
-
+            </div>
 {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-              <ul class="table-top-head">
-                <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleButtonClick}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li> 
-                <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleButtonClick}>
-                          <img src={Excel} alt="Excel Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li>  
-                <li>
-                  <div className="button-container">
-                      <a href="#" onClick={handleRefreshClick}>
-                      <img src={Refresh} alt="Refresh Icon"  className="icon"  />
-                      </a>
-                  </div>
-                </li>    
-              </ul>
 
+            <ul class="table-top-head">
+            <li>
+             <div className="button-container">
+                <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+                </a>
 
-{/* --------------------add button------------------ */}
+                <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Active campaigns Report</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <PDFViewer width="100%" height="500px">
+                      <ExpenseReport dataList={dataList} />
+                    </PDFViewer>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseReportModal}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
 
-              <div class="page-btn">
-                  <button type="button" class="btn btn-added" data-bs-toggle="modal"  data-bs-target="#addExpenseModal" onClick={() => setAddSection(true)}>
-                    <i className="bi bi-plus-circle" style={{ marginRight: '10px' }}></i>
-                      Add Expense
-                  </button>
-                  </div>
-                  <ExpenseFormModal
-                    show={addSection}
-                    handleClose={() => setAddSection(false)}
-                    handleSubmit={handleSubmit}
-                    handleOnChange={handleOnChange}
-                    rest={data}
-                  />
+            </div>
+            </li>
 
-{/* --------------------imported search bar and table data ------------------------*/}
-            </div>  
-              <SearchBar/>
-              <ExpenseTable items = {items} />
-            </div> 
+              <li>
+                <div className="button-container">
+                  <a href="#" onClick={handleButtonClick}>
+                      <img src={Excel} alt="Excel Icon"  className="icon"  />
+                  </a>
+                </div>
+              </li>  
+              <li>
+                <div className="button-container">
+                    <a href="#" onClick={handleRefreshClick}>
+                    <img src={Refresh} alt="Refresh Icon"  className="icon"  />
+                    </a>
+                </div>
+              </li>    
+            </ul>
 
-        </div>   
-   
-  )
+            <div class="page-btn">
+              <button
+                  type="button"
+                  className="btn btn-added"
+                  onClick={handleAddModalOpen}
+                >
+                <i className="bi bi-plus-circle"></i> Add Expense
+              </button>
+            </div>
+          </div>
+          <Modal show={addModalOpen} onHide={handleAddModalClose}>
+            
+            <Modal.Header closeButton>
+              <Modal.Title>Add Expense</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ExpenseForm handleSubmit={handleAddSubmit} />
+            </Modal.Body>
+          </Modal>
+
+          <Modal show={editModalOpen} onHide={handleEditModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Expense</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ExpenseForm
+                handleSubmit={handleEditSubmit}
+                initialData={selectedExpense}
+              />
+            </Modal.Body>
+          </Modal>
+    
+          <div className="table-container">
+          <SearchBar onSearch={handleSearch} />
+
+{/* ---------------table--------------- */}
+          <table className="table table-bordeless datatable">
+          <thead className="table-light">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col" >Category</th>
+                <th scope="col" >Amount</th>
+                <th scope="col" >Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredDataList &&
+              filteredDataList.length > 0 &&
+              filteredDataList.map((expense) => (
+                <tr key={expense._id}>
+                  <td>{expense.date}</td>
+                  <td>{expense.category}</td>
+                  <td>Rs. {expense.amount.toFixed(2)}</td>
+                  <td>{expense.description}</td>
+                  {/* <td>{expense.status}</td> */}
+                  <td>
+                    <div className="buttons">
+                      <button className="btn btn-edit" onClick={() => handleEditModalOpen(expense)}>
+                        <i className="bi bi-pencil-square"></i>
+                      </button>
+                      <button className="btn btn-delete" onClick={() => handleDelete(expense._id)}>
+                        <i className="bi bi-trash3-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+
+        </table>
+          </div>
+        </div>
+    </div>
+    <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        // transition: Bounce
+      />
+  </div>
+  
+  );
 }
 
-export default Expense
+export default Expense;
