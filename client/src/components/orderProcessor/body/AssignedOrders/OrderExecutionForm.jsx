@@ -260,7 +260,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                     <div className="row mb-3">
                         <div className="col-6">
                             <label className="form-label">Enter Quantity:</label>
-                            <input className={`form-control  error ${invalidQuantity ? 'is-invalid' : ''}`} type="number" name="fillingQuantity"
+                            <input className={`form-control  ${invalidQuantity ? 'is-invalid' : ''}`} type="number" name="fillingQuantity"
                                    value={quantity}
                                    disabled={!supplier || totalFilledQuantity>= formData.quantity}
                                    onChange={handleQuantityChange}
