@@ -5,6 +5,7 @@ import PredictionForm from '../body/PredictionDetails/PredictionForm';
 import logo from '../../../assests/logo.png'
 import { FaChevronRight } from "react-icons/fa";
 
+axios.defaults.baseURL = "http://localhost:8070/";
 
 const Sidebar = () => {
 
@@ -24,10 +25,22 @@ const Sidebar = () => {
   
     const handleSubmit = async (formData) => {
       try {
-        await axios.post("/Prediction/add", formData);
+        // Add supply prediction to the Prediction collection
+        const response = await axios.post("/Prediction/add", formData);
+        const predictionId = response.data._id;
+    
+        // Create payload to add supply prediction to the pendingSupplies collection
+        const pendingSupplyData = {
+          ...formData,
+          predictionID: predictionId
+        };
+    
+        // Add supply prediction to the pendingSupplies collection
+        await axios.post("/pendingSupply/add", pendingSupplyData);
+    
         alert("Prediction Added");
-        handleAddModalClose();
         window.location.reload();
+        handleAddModalClose();
       } catch (err) {
         alert(err.message);
       }
