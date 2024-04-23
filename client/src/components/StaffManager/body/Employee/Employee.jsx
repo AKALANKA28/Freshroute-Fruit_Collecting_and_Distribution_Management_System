@@ -14,9 +14,11 @@ axios.defaults.baseURL = "http://localhost:8070/";
 function Employee() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [filteredDataList, setFilteredDataList] = useState([]);
+  const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
   useEffect(() => {
     getFetchData();
@@ -69,43 +71,52 @@ function Employee() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
+  const handleDeleteModalOpen = (employeeId) => {
+    setEmployeeToDelete(employeeId);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteModalClose = () => {
+    setDeleteModalOpen(false);
+  };
+
+  const handleDeleteConfirmed = async () => {
     try {
-      await axios.delete(`/Employee/delete/${id}`);
+      await axios.delete(`/Employee/delete/${employeeToDelete}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleDeleteModalClose();
     } catch (err) {
       alert(err.message);
     }
   };
 
   const handleAddSubmit = async (formData) => {
-  try {
-    const response = await axios.post("/Employee/add", formData);
-    alert("Employee Added");
-    handleAddModalClose();
-    getFetchData();
-  } catch (err) {
-    alert(err.message);
-  }
-};
+    try {
+      const response = await axios.post("/Employee/add", formData);
+      alert("Employee Added");
+      handleAddModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
-const handleEditSubmit = async (formData) => {
-  try {
-    const response = await axios.put(`/Employee/update/${formData._id}`, formData);
-    alert("Employee Updated");
-    handleEditModalClose();
-    getFetchData();
-  } catch (err) {
-    alert(err.message);
-  }
-};
+  const handleEditSubmit = async (formData) => {
+    try {
+      const response = await axios.put(`/Employee/update/${formData._id}`, formData);
+      alert("Employee Updated");
+      handleEditModalClose();
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   const [showReportModal, setShowReportModal] = useState(false);
 
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
-
 
   return (
     <div id='main' className='main'>
@@ -188,6 +199,24 @@ const handleEditSubmit = async (formData) => {
               />
             </Modal.Body>
           </Modal>
+
+          <Modal show={deleteModalOpen} onHide={handleDeleteModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this employee?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleDeleteModalClose}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={handleDeleteConfirmed}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <div className="table-container">
             <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
@@ -245,7 +274,7 @@ const handleEditSubmit = async (formData) => {
           </button>
           <button
             className="btn btn-delete"
-            onClick={() => handleDelete(employee._id)}
+            onClick={() => handleDeleteModalOpen(employee._id)}
           >
             <i className="bi bi-trash-fill"></i>
           </button>
