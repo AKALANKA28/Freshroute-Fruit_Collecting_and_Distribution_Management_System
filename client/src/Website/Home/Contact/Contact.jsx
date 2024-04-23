@@ -22,9 +22,9 @@ const Contact = () => {
                 </div>
                 <div className="button_row d-flex gap-3 mt-5">
                   <Link to="/contact">
-                  <button className='home-button'>Contact Us</button>
-                  </Link>
-                  <button className='home-button'>Post Your Resume</button>
+                  <button className='home-button'>Contact Us</button></Link>
+                  <Link to="/JoinWithUsSupplier">
+                  <button className='home-button'>Post Your Resume</button></Link>
 
                 </div>
             </div>
