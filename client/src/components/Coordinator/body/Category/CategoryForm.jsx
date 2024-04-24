@@ -34,6 +34,10 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "category" && /\d/.test(value)) {
+      return; 
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
