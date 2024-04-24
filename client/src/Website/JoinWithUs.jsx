@@ -102,7 +102,7 @@ const JoinWithUs = () => {
     let error = '';
     switch (name) {
       case 'name':
-        error = value.length < 1 ? 'Name is required' : '';
+        error = /^[a-zA-Z\s]*$/.test(value) ? (value.length < 1 ? 'Name is required' : '') : 'Name should contain only letters and spaces';
         break;
       case 'email':
         error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid email address';
