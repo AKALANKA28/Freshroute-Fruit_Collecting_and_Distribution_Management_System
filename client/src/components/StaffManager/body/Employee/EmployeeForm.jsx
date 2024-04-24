@@ -99,7 +99,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
   };
 
   const validateNic = (nic) => {
-    const nicRegex = /^[0-9]{9}[vVxX]$/;
+    const nicRegex = /^(1|2)\d{8}[vV]?$|^(1|2)\d{11}$/;
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
     } else {
