@@ -26,35 +26,35 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link ' href='/tdashboard'>
-                    <i className='bi bi-grid-1x2-fill'></i>
+                    <i className='bi bi-grid'></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/VehicleDetails'>
-                    <i className='bi bi-grid-1x2-fill'></i>
+                    <i className='bi bi-truck'></i>
                     <span>Vehicle Details</span>
                 </a>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/map'>
-                    <i className='bi bi-grid-1x2-fill'></i>
+                    <i className='bi bi-geo-alt'></i>
                     <span>Map</span>
                 </a>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/ProcessDetails'>
-                    <i className='bi bi-grid-1x2-fill'></i>
+                    <i className='bi bi-compass'></i>
                     <span>Process Details</span>
                 </a>
             </li>
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/ScheduleDetails'>
-                    <i className='bi bi-grid-1x2-fill'></i>
+                    <i className='bi bi-journal-medical'></i>
                     <span>Schedule Details</span>
                 </a>
             </li>

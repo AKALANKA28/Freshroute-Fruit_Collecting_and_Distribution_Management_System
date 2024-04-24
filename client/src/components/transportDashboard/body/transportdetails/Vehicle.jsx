@@ -9,6 +9,8 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import VehicleForm from "./VehicleForm";
 import VehicleReport from "./VehicleReport";
 import "./Vehicle.css";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -53,9 +55,24 @@ function Vehicle() {
     
   };
 
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Vehicle Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "vehicle_report.xlsx");
+  };
+
   const handleButtonClick = () => {
     getFetchData();
+    generateExcelFile();
   };
+
+  
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);

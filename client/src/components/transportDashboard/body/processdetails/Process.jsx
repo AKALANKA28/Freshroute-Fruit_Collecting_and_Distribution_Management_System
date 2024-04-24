@@ -62,10 +62,10 @@ function Process() {
   
     // Define the workbook
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+    XLSX.utils.book_append_sheet(wb, ws, "Process Report");
   
     // Generate the Excel file
-    writeFile(wb, "suppliers_report.xlsx");
+    writeFile(wb, "Process_report.xlsx");
   };
   
   const handleButtonClick = () => {

@@ -1,6 +1,5 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
-import logo from '../../../../assests/logo.png';
+import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
@@ -45,34 +44,29 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 10,
   },
-  // logo: {
-  //   width: 100,
-  //   height: 100
-  // }
 });
 
-const ProcessReport = ({ dataList }) => {
+const CoveringReport = ({ dataList }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          {/* <Image src={logo} style={styles.logo}></Image> */}
-          <Text style={styles.heading}>Process Details Report</Text>
+          <Text style={styles.heading}>Covering Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>Process ID</Text>
               <Text style={styles.tableColHeader}>Vehicle Number</Text>
-              <Text style={styles.tableColHeader}> Driver name</Text>
-              <Text style={styles.tableColHeader}> Current status</Text>
+              <Text style={styles.tableColHeader}> Owner Name</Text>
+              <Text style={styles.tableColHeader}> Total Coverings</Text>
+              <Text style={styles.tableColHeader}>Date</Text>
               
             
             </View>
             {dataList.map((process, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{process.process_ID}</Text>
                 <Text style={styles.tableCol}>{process.vehicle_no}</Text>
-                <Text style={styles.tableCol}>{process.driver_name}</Text>
-                <Text style={styles.tableCol}>{process.current_status}</Text>
+                <Text style={styles.tableCol}>{process.owner_name}</Text>
+                <Text style={styles.tableCol}>{process.total_coverings}</Text>
+                <Text style={styles.tableCol}>{process.date}</Text>
                 
               </View>
             ))}
@@ -83,4 +77,4 @@ const ProcessReport = ({ dataList }) => {
   );
 };
 
-export default ProcessReport;
+export default CoveringReport;

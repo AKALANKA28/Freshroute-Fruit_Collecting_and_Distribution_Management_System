@@ -3,8 +3,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from 'yup';
-import { addProcess } from "./ProcessSlice";
-
 
 const ProcessSchema = yup.object({
   process_ID: yup.string().nullable().required("Process ID is required"),
@@ -23,15 +21,16 @@ const ProcessForm = ({ handleSubmit, initialData }) => {
 
   const formik = useFormik({
     initialValues: {
-    process_ID:"",
-    vehicle_no:"",
-    driver_name:"",
-    current_status:"",
+    _id: initialData ? initialData._id : "", // Set _id from initialData if available
+    process_ID: initialData ? initialData.process_ID : "",
+    vehicle_no: initialData ? initialData.vehicle_no :"",
+    driver_name:initialData ? initialData.driver_name :"",
+    current_status:initialData ? initialData.current_status :"",
   
     },
     validationSchema: ProcessSchema,
     onSubmit: (values) => {
-      dispatch(addProcess(values));
+      handleSubmit(values);
     },
   });
 

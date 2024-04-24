@@ -10,6 +10,8 @@ import ScheduleForm from "./ScheduleForm";
 import ScheduleReport from "./ScheduleReport";
 import "./Schedule.css";
 import { ToastContainer } from "react-toastify";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -54,9 +56,21 @@ function Schedule() {
     getFetchData();
     
   };
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Schedule Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "schedule_report.xlsx");
+  };
 
   const handleButtonClick = () => {
     getFetchData();
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {

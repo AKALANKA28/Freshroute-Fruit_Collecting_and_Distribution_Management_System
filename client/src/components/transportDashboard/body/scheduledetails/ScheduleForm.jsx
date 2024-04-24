@@ -3,8 +3,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from 'yup';
-import { addSchedule } from "./ScheduleSlice";
-
 
 const ScheduleSchema = yup.object({
   schedule_ID: yup.string().nullable().required("Schedule ID is required"),
@@ -26,19 +24,20 @@ const ScheduleForm = ({ handleSubmit, initialData }) => {
 
   const formik = useFormik({
     initialValues: {
-    schedule_ID:"",
-    vehicle_no:"",
-    driver_name:"",
-    pickup_location:"",
-    destination:"",
-    date:"",
-    quantity:"",
+      _id: initialData ? initialData._id : "", // Set _id from initialData if available
+    schedule_ID: initialData ? initialData.schedule_ID : "",
+    vehicle_no: initialData ? initialData.vehicle_no : "",
+    driver_name: initialData ? initialData.driver_name : "",
+    pickup_location: initialData ? initialData.pickup_location : "",
+    destination: initialData ? initialData.destination : "",
+    date: initialData ? initialData.date : "",
+    quantity: initialData ? initialData.quantity : "",
 
   
     },
     validationSchema: ScheduleSchema,
     onSubmit: (values) => {
-      dispatch(addSchedule(values));
+      handleSubmit(values);
     },
   });
 
