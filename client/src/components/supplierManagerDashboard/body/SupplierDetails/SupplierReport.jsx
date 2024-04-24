@@ -1,6 +1,7 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import './farmers.css';
+import logo from '../../../../assests/logo.png';
 
 const styles = StyleSheet.create({
   page: {
@@ -15,10 +16,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginBottom: 10,
   },
+  headerTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   headerText: {
     fontSize: 20,
     color: "green",
     fontWeight: "bold",
+    marginLeft: 10,
+  },
+  reportDateTime: {
+    fontSize: 10,
+    color: "#333333",
+    textAlign: "right",
   },
   footer: {
     position: "absolute",
@@ -88,12 +99,21 @@ const Footer = () => (
 );
 
 const SupplierReport = ({ dataList }) => {
+  const reportDateTime = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+
   return (
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Supplier Details</Text>
-          <Text style={styles.headerText}>FreshRoute<br/></Text>
+          <View style={styles.header}>
+            <View style={styles.headerTextContainer}>
+              <Image src={logo} style={styles.logo} />
+              <Text style={styles.headerText}>FreshRoute</Text>
+            </View>
+            <Text style={styles.reportDateTime}>{reportDateTime}</Text>
+          </View>
+          <Text style={styles.heading}>Freshroute - Supplier Details</Text>
+          
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>NIC</Text>
