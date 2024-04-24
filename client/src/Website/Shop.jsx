@@ -144,7 +144,7 @@ const Shop = () => {
                     <option value="price-descending">Price, low to high</option>
                   </select>
                 </div>
-                <div className="d-flex align-items-center gap-10">
+                {/* <div className="d-flex align-items-center gap-10">
                   <p className="totalproducts">21 Fruits</p>
                     <div className="d-flex align-items-center gap-10">
                       <img src="" alt="grid" className="d-block img-fluid" />
@@ -152,7 +152,7 @@ const Shop = () => {
                       <img src="" alt="grid" className="d-block img-fluid" />
                       <img src="" alt="grid" className="d-block img-fluid" />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="products-list d-flex gap- pb-5">

@@ -20,7 +20,7 @@ const Cart = () => {
 
 
 
-  const userCartState = useSelector((state) => state.auth.cartProducts);
+  const userCartState = useSelector(state => state.auth.cartProducts);
   useEffect(() => {
     dispatch(getCart());
   }, []);
@@ -81,7 +81,7 @@ const Cart = () => {
                   >
                     <div className="cart-col-1 d-flex align-items-center gap-5">
                       <div className="w-25">
-                        <img src={img} alt="" className="img-fluid" />
+                        <img src={item?.productId.images} alt="" className="img-fluid" />
                       </div>
                       <div className="w-75">
                         <p>{item?.productId.title}</p>
@@ -96,10 +96,10 @@ const Cart = () => {
 
                       <input
                         type="number"
-                        className="form-control"
+                        className="form-control f-control"
                         name=""
                         min={1}
-                        max={10}
+                        max={100}
                         id=""
                         value={
                           productUpdateDetail?.quantity
@@ -114,7 +114,7 @@ const Cart = () => {
                         }}
                       />
 
-                      
+
                       <div>
                         <i
                           onClick={() => {

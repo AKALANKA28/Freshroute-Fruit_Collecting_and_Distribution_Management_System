@@ -12,7 +12,7 @@ const getTokenFromLocalStorage = localStorage.getItem("customer")
 //   },
 // };
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjYwYWE4YjU3YjY5MTVlMTI5OGU4ZiIsImlhdCI6MTcxMzc3Mzg0NywiZXhwIjoxNzEzODYwMjQ3fQ.N9I4qNpOMV4bYoiLIjHTQtTA8lIWBBj49jzP1ZyRuW4"; // Replace 'your-token' with the actual token
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjE4NTgyODNjMTIzZmI4ZmFlMmMwZCIsImlhdCI6MTcxMzg5NjQ2NywiZXhwIjoxNzE2NDg4NDY3fQ.w9u8VtbX9HKiacORtgIZmTCt9aaJuaj3Hptc5k4Ohlk"; // Replace 'your-token' with the actual token
 
 export const config = {
     headers: {

@@ -12,13 +12,13 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan")
 
-const stripe = require("stripe")("sk_test_51P85tiKciT9oiVpgb9vlJdOnOVjTZOf3y0KGLObSVItsZVQWWPWQIzph7lv3NlVH6jtCBkwVQHfM1YXRYF0fSmmV00LNhhhQHo")
 
 const authRouter = require('./routes/authRoute.js');
 const productRouter = require('./routes/productRoute.js');
 const categoryRouter = require('./routes/categoryRoute.js');
 const enqRouter = require('./routes/enqRoute.js');
 
+const revenueRouter = require("./routes/finance/revenueRoute");
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
 const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
@@ -80,6 +80,7 @@ app.use('/product', productRouter);
 app.use('/productCategory', categoryRouter);
 app.use('/enq', enqRouter);
 
+app.use("/revenue", revenueRouter);
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);

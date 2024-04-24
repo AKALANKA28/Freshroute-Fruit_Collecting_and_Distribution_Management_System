@@ -7,7 +7,7 @@ const ReportCharts = ({ filter }) => {
         series: [],
         options: {
             chart: {
-                height: 310,
+                height: 290,
                 type: 'area',
                 toolbar: {
                     show: false,

@@ -26,6 +26,22 @@ function Sales() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // Number of items per page
 
+  const handleStatus = status => {
+    switch (status) {
+        case 'Paid':
+            return 'success';
+            break;
+        case 'Pending':
+            return 'warning';
+            break;
+         case 'Rejected':
+            return 'danger';
+            break;
+         default:
+            return 'success';    
+    }   
+    };
+
   useEffect(() => {
     getFetchData();
   }, []);
@@ -281,7 +297,11 @@ function Sales() {
                     <td>Rs. {sales.amount.toFixed(2)}</td>
                     <td>Rs. {sales.paid.toFixed(2)}</td>
                     <td>Rs. {sales.due.toFixed(2)}</td>
-                    <td>{sales.status}</td>
+                    <td>
+                        <span className={`badge bg-${handleStatus(sales.status)}`}>
+                            {sales.status}
+                        </span>
+                    </td>
                     <td>
                       <div className="buttons">
                         <button

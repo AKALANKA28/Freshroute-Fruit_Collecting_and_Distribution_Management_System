@@ -97,6 +97,16 @@ export const updateProductFromCart = createAsyncThunk("user/cart/update", async(
     }
 })
 
+export const createAnOrder = createAsyncThunk("user/cart/ceate-order", async(orderDetail, thunkAPI) =>{
+    try{
+        const response = await axios.post('http://localhost:8070/user/order', orderDetail, config);
+        if(response.data){
+            return response.data;
+        }
+    }catch(error){
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 
 
 export const authSlice = createSlice ({
@@ -251,8 +261,32 @@ export const authSlice = createSlice ({
                 toast.error("Something Went Wrong");
 
             }
-        });
+        })
 
+
+        .addCase(createAnOrder.pending, (state) =>{
+            state.isLoading=true
+        })
+        .addCase(createAnOrder.fulfilled,(state, action) =>{
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess =true;
+            state.orderProduct = action.payload;
+            if(state.isSuccess){
+                toast.success("Ordered Succeefully")
+            }
+        })
+        .addCase(createAnOrder.rejected,(state,action) =>{
+            state.isLoading=false;
+            state.isError = true;
+            state.isSuccess=false;
+            state.message=action.error
+            if(state.isError === true){
+                // toast.error(action.error);
+                toast.error("Something Went Wrong");
+
+            }
+        });
 
 
     }

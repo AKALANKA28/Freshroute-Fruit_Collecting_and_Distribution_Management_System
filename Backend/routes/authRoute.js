@@ -2,6 +2,8 @@ const express=require('express');
 const router = express.Router();
 
 const userController = require("../controllers/userController");
+const paymentController = require("../controllers/paymentController");
+
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
 
 router.post('/register', userController.registerUser);
@@ -34,13 +36,15 @@ router.delete('/delete-product-from-cart/:cartItemId', authMiddleware, userContr
 // router.delete('/empty-cart', userController.emptyCart);
 
 
-
+// router.post('/order',  userController.createOrder);
 
 router.post('/order', authMiddleware, userController.createOrder);
-router.get('/order/', authMiddleware, userController.getAllOrders);
-router.get('/order/:id', authMiddleware, userController.getOrderByUserId);
-router.put('/update-status/:id', authMiddleware, isAdmin, userController.updateOrderStatus);
+// router.get('/order/', authMiddleware, userController.getAllOrders);
+// router.get('/order/:id', authMiddleware, userController.getOrderByUserId);
+// router.put('/update-status/:id', authMiddleware, isAdmin, userController.updateOrderStatus);
 
+router.post('/order/checkout', authMiddleware, paymentController.checkout);
+// router.post('/order/paymentVerification', authMiddleware, paymentController.paymentVerification);
 
 
 module.exports = router;
