@@ -28,7 +28,7 @@ const RecentSales = () => {
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Recent Sales<span>| {filter}</span>
+          Updated Salary Components<span>| {filter}</span>
         </h5>
         <RecentSalesTable items={items} />
       </div>

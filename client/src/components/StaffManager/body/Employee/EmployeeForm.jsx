@@ -12,6 +12,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
   const [filePerc, setFilePerc] = useState(0);
   const [dataList, setDataList] = useState([]);
   const [nicError, setNicError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   useEffect(() => {
     getFetchData();
@@ -85,17 +86,11 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "name" && /\d/.test(value)){
-      return;
-    
-    }
-    if (name === "bankname" && /\d/.test(value)){
-      return;
-    
-    }
     if (name === "nic") {
       validateNic(value);
+    }
+    if (name === "email") {
+      validateEmail(value);
     }
     setFormData((prev) => ({
       ...prev,
@@ -104,8 +99,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
   };
 
   const validateNic = (nic) => {
-    const nicRegex = /^(?:\d{9}[vV]|\d{12})$/;
-    
+    const nicRegex = /^[0-9]{9}[vVxX]$/;
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
     } else {
@@ -113,12 +107,21 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     }
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format. Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (nicError === "") {
+    if (nicError === "" && emailError === "") {
       handleSubmit(formData);
     } else {
-      alert("Please correct the NIC error before submitting.");
+      alert("Please correct the NIC and email errors before submitting.");
     }
   };
 
@@ -202,7 +205,6 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               onChange={handleChange}
               value={formData.nic}
               required
-              maxLength={12}
             />
             {nicError && <p className="text-danger">{nicError}</p>}
           </div>
@@ -236,6 +238,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               value={formData.email}
               required
             />
+            {emailError && <p className="text-danger">{emailError}</p>}
           </div>
           <div className="mb-3">
             <label htmlFor="accno" className="form-label">

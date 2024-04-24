@@ -6,7 +6,6 @@ import Reports from './Reports'
 import RecentSales from './RecentSales'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
-import BudgetReport from './BudgetReport'
 import WebTraffic from './WebTraffic'
 import News from './News'
 import BackToTop from './BackToTop'
@@ -34,10 +33,10 @@ const Body = () => {
                 </div>
             </div>
             <div className="col-lg-4">
+            <News />
               <RecentActivity />
-              <BudgetReport />
               <WebTraffic />
-              <News />
+              
             </div>
         </div>
         <BackToTop />

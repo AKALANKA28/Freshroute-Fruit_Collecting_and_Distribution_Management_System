@@ -40,19 +40,19 @@ const WebTrafficChart = () => {
                         },
                         {
                             value: 735,
-                            name: 'Direct',
+                            name: 'Quality Control',
                         },
                         {
                             value: 484,
-                            name: 'Email',
+                            name: 'Financial Section',
                         },
                         {
                             value: 300,
-                            name: 'Union Ads',
+                            name: 'Coordination Section',
                         },
                         {
                             value: 700,
-                            name: 'Video Ads',
+                            name: 'Transport Section',
                         },
                     ],
                
