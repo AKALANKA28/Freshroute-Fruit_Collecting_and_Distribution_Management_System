@@ -15,6 +15,7 @@ import Register from "./components/LoginRegister/Register";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
+import PDashboard from "./components/rpromotionDashboard/PDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
 import QualityList from "./components/orderManagement/body/QualityList/QualityList";
@@ -55,9 +56,9 @@ import EditOrder from './components/NormalOrder/EditOrder';
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
 import ResourcePage from "./components/researchDashboard/ResourcePage";
-import RevenuePage from "./components/researchDashboard/RevenuePage";
-import VolumePage from "./components/researchDashboard/VolumePage";
-import PricePage from "./components/researchDashboard/PricePage";
+import RevenuePage from "./components/rpromotionDashboard/RevenuePage";
+import VolumePage from "./components/rpromotionDashboard/VolumePage";
+import PricePage from "./components/rpromotionDashboard/PricePage";
 import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 
 //import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
@@ -211,7 +212,7 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
+  
   {
     path: "/RPDashboard",
     element: (
@@ -220,6 +221,16 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
+  {
+    path: "/PDashboard",
+    element: (
+      <div>
+        <PDashboard />
+      </div>
+    ),
+  },
+
 
   {
     path: "/DriverDashboard",

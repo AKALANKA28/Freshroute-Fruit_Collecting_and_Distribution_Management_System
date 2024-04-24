@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-// import './AccResource.css';
-// import SearchBar from './SearchBar';
+import React, { useState } from 'react';
+import './ResourceAccessForm.css';
+import SearchBar from './SearchBar';
 
-const ResourceAccessForm = ({ handleSubmit, initialData }) => {
+const ResourceAccessForm = () => {
     // Define state variables to hold form data
     const [formData, setFormData] = useState({
         name: '',
@@ -19,97 +19,49 @@ const ResourceAccessForm = ({ handleSubmit, initialData }) => {
         resourceDescription: ''
     });
 
-    useEffect(() => {
-        if (initialData) {
-          setFormData(initialData);
-        }
-      }, [initialData]);
-    
-      const handleChange = (e) => {
+    // Function to handle form input changes
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-          ...prev,
-          [name]: value
-        }));
-      };
-    
-      const handleFormSubmit = (e) => {
+        setFormData({ ...formData, [name]: value });
+    };
+
+    // Function to handle form submission
+    const handleSubmit = (e) => {
         e.preventDefault();
-        handleSubmit(formData);
-      };
-
-    // // Function to handle form input changes
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData({ ...formData, [name]: value });
-    // };
-
-    // // Function to handle form submission
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     // Perform form submission logic here (e.g., send formData to an API)
-    //     console.log('Form submitted:', formData);
-    // };
+        // Perform form submission logic here (e.g., send formData to an API)
+        console.log('Form submitted:', formData);
+    };
 
     return (
-        
-        // <div className="form-container">
-        //     {/* Render the SearchBar component */}
-        //     <SearchBar />
+        <div className="form-container">
+            {/* Render the SearchBar component */}
+            <SearchBar />
 
             <form className="resource-form" onSubmit={handleSubmit}>
                 <h2>Resource Access Application Form</h2>
 
                 {/* Applicant Information */}
-                <form onSubmit={handleFormSubmit}>
                 <div className="form-section">
                     <h3>Applicant Information</h3>
                     <label>
                         Your Name:
-                        <input 
-                        type="text" 
-                        name="name" 
-                        value={formData.name} 
-                        onChange={handleChange} 
-                        required 
-                        />
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
                     </label>
                     <label>
                         Email:
-                        <input 
-                        type="email" 
-                        name="email" 
-                        value={formData.email} 
-                        onChange={handleChange} 
-                        required 
-                        />
+                        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
                     </label>
                     <label>
                         Farm Name:
-                        <input type="text" 
-                        name="farmName" 
-                        value={formData.farmName} 
-                        onChange={handleChange} 
-                        required 
-                        />
+                        <input type="text" name="farmName" value={formData.farmName} onChange={handleChange} required />
                     </label>
                     <label>
                         Contact Number:
-                        <input type="text" 
-                        name="contactNumber" 
-                        value={formData.contactNumber} 
-                        onChange={handleChange} 
-                        required 
-                        />
+                        <input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleChange} required />
                     </label>
                     <label>
                         Location (City/Region):
-                        <input type="text" 
-                        name="location" 
-                        value={formData.location} 
-                        onChange={handleChange} 
-                        required 
-                        />
+                        <input type="text" name="location" value={formData.location} onChange={handleChange} required />
                     </label>
                 </div>
 
@@ -122,6 +74,7 @@ const ResourceAccessForm = ({ handleSubmit, initialData }) => {
                             <option value="">Select</option>
                             <option value="credit">Credit Facilities</option>
                             <option value="land">Land</option>
+                            <option value="email">Email</option>
                             <option value="seeds">Seeds</option>
                             <option value="fertilizer">Fertilizer</option>
                             <option value="other">Other</option>
@@ -185,11 +138,8 @@ const ResourceAccessForm = ({ handleSubmit, initialData }) => {
                     </p>
                     <button type="submit">Confirm</button>
                 </div>
-                </form>
             </form>
-
-        
-        
+        </div>
     );
 };
 

@@ -8,7 +8,7 @@ import RBody from './RBody'
 const Rmain = () => {
   return (
    
-    <main id='main' className='main'>
+    <main className='main'>
      <RTitle page="Revenue Analysis" />
      <RBody />
     </main>

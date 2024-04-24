@@ -8,7 +8,7 @@ import PBody from './PBody'
 const Pmain = () => {
   return (
    
-    <main id='main' className='main'>
+    <main  className='main'>
      <PTitle page="Price Analysis" />
      <PBody />
     </main>

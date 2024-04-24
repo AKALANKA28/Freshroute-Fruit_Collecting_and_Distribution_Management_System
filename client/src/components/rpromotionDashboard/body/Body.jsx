@@ -21,24 +21,25 @@ const Body = () => {
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8">
-                <div className="row">
+                <div className="row gap-1">
                     <TopCards />
                     <div className="col-12">
                         <Reports />
                     </div>
                     {/* <div className="col-12">
                      <RecentSales />
-                    </div> */}
-                    {/* <div className="col-12">
+                    </div>
+                    <div className="col-12">
                      <TopSellings />
                     </div> */}
                 </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
-              
+              {/* <RecentActivity /> */}
+              {/* <BudgetReport /> */}
               <WebTraffic />
               <News />
+              
             </div>
         </div>
         <BackToTop />

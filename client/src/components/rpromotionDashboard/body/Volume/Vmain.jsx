@@ -8,7 +8,7 @@ import VBody from './VBody'
 const Vmain = () => {
   return (
    
-    <main id='main' className='main'>
+    <main className='main'>
      <VTitle page="Volume Analysis" />
      <VBody />
     </main>
