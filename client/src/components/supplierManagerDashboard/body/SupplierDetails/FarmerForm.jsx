@@ -7,6 +7,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     username: "",
     name: "",
     email: "",
+    mobile: "",
     city: "",
     latitude: "",
     longitude: "",
@@ -18,6 +19,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     username: "",
     name: "",
     email: "",
+    mobile: "",
     city: "",
     lane: "",
   });
@@ -69,19 +71,20 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     let error = "";
     switch (name) {
       case "NIC":
-        error = value.trim().length === 0 ? "NIC is required" : "";
+        error = /^(?:[0-9]{9}[vVxX]|[0-9]{12})?$/.test(value) ? '' : 'Invalid NIC';
         break;
       case "username":
-        error = value.trim().length === 0 ? "Username is required" : "";
+        error = value.trim().length === 0 ? "Username is required" : (/\s/.test(value) ? "Username cannot contain spaces" : "");
         break;
       case "name":
-        error = value.trim().length === 0 ? "Name is required" : "";
+        error = /^[a-zA-Z\s]*$/.test(value) ? (value.length < 1 ? 'Name is required' : '') : 'Name should contain only letters and spaces';
         break;
       case "email":
-        error = !value.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)
-          ? "Invalid email address"
-          : "";
+        error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid email address';
         break;
+      case "mobile":
+        error = /^[0-9]{10}$/.test(value) ? '' : 'Mobile number should be 10 digits';
+        break;  
       case "city":
         error = value.trim().length === 0 ? "City is required" : "";
         break;
@@ -95,7 +98,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
       ...prev,
       [name]: error,
     }));
-  };
+};
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -210,6 +213,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           onChange={handleChange}
           value={formData.mobile}
         />
+        {formErrors.mobile && <div className="invalid-feedback">{formErrors.mobile}</div>}
       </div>
 
       <div className="mb-3">
