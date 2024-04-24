@@ -161,7 +161,6 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           className={`form-control ${formErrors.username && "is-invalid"}`}
           name="username"
           placeholder="Enter Username"
-          required
           onChange={handleChange}
           value={formData.username}
         />

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 10,
-    fontWeight: "bold", // Add bold font weight
+    fontWeight: "bold",
     color: "#333333",
     width: "14.285%",
     textAlign: "center",
