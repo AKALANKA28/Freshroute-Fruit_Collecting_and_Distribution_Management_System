@@ -83,7 +83,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
         error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid email address';
         break;
       case "mobile":
-        error = /^[0-9]{10}$/.test(value) ? '' : 'Mobile number should be 10 digits';
+        error = /^[0-9]{10}$/.test(value) && value[0] === '0' ? '' : 'Mobile number should be 10 digits and start with 0';
         break;  
       case "city":
         error = value.trim().length === 0 ? "City is required" : "";
@@ -205,7 +205,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           Mobile
         </label>
         <input
-          type="text"
+          type="Number"
           className="form-control"
           name="mobile"
           placeholder="Enter Mobile Number"
