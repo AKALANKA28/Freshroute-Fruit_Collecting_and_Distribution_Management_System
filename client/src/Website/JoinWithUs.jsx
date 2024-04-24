@@ -108,7 +108,7 @@ const JoinWithUs = () => {
         error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid email address';
         break;
       case 'mobile':
-        error = /^[0-9]{10}$/.test(value) ? '' : 'Mobile number should be 10 digits';
+        error = /^[0-9]{10}$/.test(value) && value[0] === '0' ? '' : 'Mobile number should be 10 digits and start with 0';
         break;
       case 'city':
         error = value.length < 1 ? 'City is required' : '';
@@ -239,7 +239,7 @@ const JoinWithUs = () => {
                   </div>
 
                   <div className="form-group">
-                    <input type="text" value={formData.mobile} name="mobile" className={`form-control ${formErrors.mobile && 'is-invalid'}`} onChange={handleChange} placeholder='Mobile' required/>
+                    <input type="Number" value={formData.mobile} name="mobile" className={`form-control ${formErrors.mobile && 'is-invalid'}`} onChange={handleChange} placeholder='Mobile' required/>
                     {formErrors.mobile && <div className="invalid-feedback">{formErrors.mobile}</div>}
                   </div>
 
