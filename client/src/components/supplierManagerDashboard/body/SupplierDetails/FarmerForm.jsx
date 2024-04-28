@@ -71,7 +71,20 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     let error = "";
     switch (name) {
       case "NIC":
-        error = /^(?:[0-9]{9}[vVxX]|[0-9]{12})?$/.test(value) ? '' : 'Invalid NIC';
+        const oldNICRegex = /^(?:[0-9]{9}[vVxX])$/;
+      const newNICRegex = /^(?:20(?:0[0-9]|1[0-9]|2[0-4])[0-9]{7}[0-9])$/;
+      if (!oldNICRegex.test(value) && !newNICRegex.test(value)) {
+        error = "Invalid NIC format";
+      } else if (value.length > 12) {
+        error = "Only 12 digits allowed";
+      } else if (value.length === 10 && !/^[7-9]\d/.test(value.substring(0, 2))) {
+        error = "Old NIC should start with digits between 72 and 99 and end with v, V, x, or X";
+      } else if (value.length === 12) {
+        const year = parseInt(value.substring(0, 4));
+        if (year > 2024) {
+          error = "NIC's year should be lower than 2025";
+        }
+      }
         break;
       case "username":
         error = value.trim().length === 0 ? "Username is required" : (/\s/.test(value) ? "Username cannot contain spaces" : "");
@@ -148,6 +161,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           required
           onChange={handleChange}
           value={formData.NIC}
+          maxLength={12}
         />
         {formErrors.NIC && <div className="invalid-feedback">{formErrors.NIC}</div>}
       </div>
