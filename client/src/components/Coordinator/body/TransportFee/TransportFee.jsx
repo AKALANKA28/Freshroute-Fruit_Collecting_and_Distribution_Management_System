@@ -158,7 +158,7 @@ function TransportFee() {
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
-            <th scope="col">Vehicle No</th>
+            
               <th scope="col">Vehicle Type</th>
               <th scope="col">Conditions</th>
               <th scope="col">Capacity</th>
@@ -170,7 +170,7 @@ function TransportFee() {
           {filteredDataList.length ? (
                   filteredDataList.map((transportfee) => (
                 <tr key={transportfee._id}>
-                  <td>{transportfee.vehicle_no}</td>
+                 
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>

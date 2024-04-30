@@ -48,25 +48,26 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
     }
   }, [initialData]);
 
-  useEffect(() => {
-    const getCurrentDate = () => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    };
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
+  useEffect(() => {
+    const currentDate = getCurrentDate();
     setFormData(prevState => ({
       ...prevState,
-      date: getCurrentDate()
+      date: currentDate
     }));
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
   
-    if (name === "name" && /\d/.test(value)) {
+    if (name === "name" && /[^\p{L}\s]/u.test(value)) {
       return; 
     }
   
@@ -75,6 +76,8 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
       [name]: value
     }));
   };
+  
+  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleSubmit(formData);
@@ -118,6 +121,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
           placeholder="Date"
           onChange={handleChange}
           value={formData.date}
+          min={getCurrentDate()} // Set the min attribute to today's date
           required
         />
       </div>

@@ -34,8 +34,9 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "category" && /\d/.test(value)) {
+    if (name === "category" && /[^\p{L}\s]/u.test(value)) {
       return; 
+    
     }
 
     setFormData((prev) => ({
