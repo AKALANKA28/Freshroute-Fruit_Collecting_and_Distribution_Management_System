@@ -28,6 +28,7 @@ function Category() {
   const [selectedQuality, setSelectedQuality] = useState("all");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  
 
   useEffect(() => {
     getFetchData();
@@ -145,7 +146,7 @@ function Category() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Category/add", formData);
+      await axios.post("/Category/add", { ...formData, imageUrl: formData.imageUrl });
       alert("Category Added");
       handleAddModalClose();
       getFetchData();
@@ -156,7 +157,7 @@ function Category() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Category/update/${formData._id}`, formData);
+      await axios.put(`/Category/update/${formData._id}`,  { ...formData, imageUrl: formData.imageUrl });
       alert("Category Updated");
       handleEditModalClose();
       getFetchData();
@@ -346,6 +347,7 @@ function Category() {
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
+              <th scope="col">Image</th>
                 <th scope="col">Date</th>
                 <th scope="col" onClick={() => handleSort("fruit")}>Fruit</th>
                 <th scope="col" onClick={() => handleSort("category")}>Category</th>
@@ -359,6 +361,15 @@ function Category() {
               {sortedDataList.length ? (
                 sortedDataList.map((category) => (
                   <tr key={category._id}>
+                    <td>
+                        {category.imageUrl && (
+                          <img
+                            src={category.imageUrl}
+                            alt="Fruit Image"
+                            style={{ width: "50px", height: "50px" }}
+                          />
+                        )}
+                      </td>
                     <td>{category.date}</td>
                     <td>{category.fruit}</td>
                     <td>{category.category}</td>

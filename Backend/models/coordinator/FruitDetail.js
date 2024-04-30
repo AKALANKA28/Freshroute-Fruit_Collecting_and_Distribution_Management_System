@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const FruitDetailSchema = new mongoose.Schema({
+  imageUrl: {
+    type: String,
+  },
   fruit: {
     type: String,
     required: true,
