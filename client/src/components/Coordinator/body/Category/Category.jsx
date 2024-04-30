@@ -351,7 +351,7 @@ function Category() {
                 <th scope="col" onClick={() => handleSort("category")}>Category</th>
                 <th scope="col">Quality</th>
                 <th scope="col">Quality Description</th>
-                <th scope="col">Price per Kg(Rs)</th>
+                <th scope="col">Price per Kg</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -363,8 +363,10 @@ function Category() {
                     <td>{category.fruit}</td>
                     <td>{category.category}</td>
                     <td>{category.quality}</td>
-                    <td className="description">{category.qualityDesc}</td>
-                    <td>{category.price}</td>
+                    <td className="description2">{category.qualityDesc}</td>
+                    <td>{typeof category.price === 'number' ? `Rs.${category.price.toFixed(2)}` : ''}</td>
+
+
                     <td className="action">
                       <div className="buttons">
                         <button

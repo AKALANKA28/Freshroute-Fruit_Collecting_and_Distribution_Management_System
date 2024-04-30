@@ -15,7 +15,7 @@ const FruitDetailSchema = new mongoose.Schema({
   },
 
   price: {
-    type: String,
+    type: Number,
   },
   quality: {
     type: String,

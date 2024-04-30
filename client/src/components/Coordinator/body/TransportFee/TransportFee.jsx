@@ -162,7 +162,7 @@ function TransportFee() {
               <th scope="col">Vehicle Type</th>
               <th scope="col">Conditions</th>
               <th scope="col">Capacity</th>
-              <th scope="col">Price per km (Rs)</th>
+              <th scope="col">Price per km</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -174,7 +174,7 @@ function TransportFee() {
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>
-                  <td>{transportfee.price}</td>
+                  <td>{`Rs.${transportfee.price.toFixed(2)}`}</td>
                   <td className="action">
                     <div className="buttons">
                       <button

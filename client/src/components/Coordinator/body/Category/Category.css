@@ -177,6 +177,13 @@
   color: #000000;
 }
 
+.table .description2{
+  padding: 8px;
+  /* border: 1px solid #ddd; */
+  width: 400px;
+ 
+}
+
 /*-------------------------------- Searchbar ------------------------------------*/
 
 .search-bar{
