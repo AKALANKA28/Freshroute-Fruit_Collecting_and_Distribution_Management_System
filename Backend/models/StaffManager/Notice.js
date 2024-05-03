@@ -1,4 +1,3 @@
-// .Backend/models/StaffManager/Employee.js
 const mongoose = require("mongoose");
 
 const NoticeSchema = new mongoose.Schema({

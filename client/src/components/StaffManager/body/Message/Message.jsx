@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
-import SearchBar from './SearchBar';
-import Excel from "../../../../assests/img/icons/excel.png";
-import Pdf from "../../../../assests/img/icons/pdf.png";
+import SearchBar from "./SearchBar";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-import SalaryForm from "./SalaryForm";
-import SalaryReport from "./SalaryReport";
-import SpinnerModal from '../../../spinner/SpinnerModal';
-import "./Salary.css";
-
+import MessageForm from "./MessageForm";
+import SpinnerModal from '../../../spinner/SpinnerModal'
+import "./Message.css";
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function Salary() {
+function Message() {
   const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false); // State for delete confirmation modal
   const [dataList, setDataList] = useState([]);
-  const [selectedSalary, setSelectedSalary] = useState(null);
-  const [filteredDataList, setFilteredDataList] = useState([]); 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]);
 
   useEffect(() => {
     // Fetch data
@@ -35,21 +29,22 @@ function Salary() {
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList);
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
 
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/Salary/");
+      const response = await axios.get("/Message/");
       setDataList(response.data);
     } catch (err) {
       alert(err.message);
     }
   };
 
+  // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`;
+    const filteredList = dataList.filter((message) => {
+      const fullName = `${message.title}  ${message.date}`; // Customize this according to your data structure
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
@@ -71,8 +66,8 @@ function Salary() {
     setAddModalOpen(false);
   };
 
-  const handleEditModalOpen = (salary) => {
-    setSelectedSalary(salary);
+  const handleEditModalOpen = (message) => {
+    setSelectedMessage(message);
     setEditModalOpen(true);
   };
 
@@ -80,22 +75,22 @@ function Salary() {
     setEditModalOpen(false);
   };
 
-  const handleShowDeleteModal = (id) => {
-    setDeleteId(id);
-    setShowDeleteModal(true);
+  // Function to open delete confirmation modal
+  const handleDeleteModalOpen = () => {
+    setDeleteModalOpen(true);
   };
 
-  const handleCloseDeleteModal = () => {
-    setDeleteId(null);
-    setShowDeleteModal(false);
+  // Function to close delete confirmation modal
+  const handleDeleteModalClose = () => {
+    setDeleteModalOpen(false);
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/Salary/delete/${id}`);
+      await axios.delete(`/Message/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
-      handleCloseDeleteModal();
+      handleDeleteModalClose(); // Close delete confirmation modal after successful deletion
     } catch (err) {
       alert(err.message);
     }
@@ -103,8 +98,8 @@ function Salary() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Salary/add", formData);
-      alert("Salary Added");
+      await axios.post("/Message/add", formData);
+      alert("Message Created");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -114,19 +109,14 @@ function Salary() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Salary/update/${formData._id}`, formData);
-      alert("Salary Updated");
+      await axios.put(`/Message/update/${formData._id}`, formData);
+      alert("Message Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
       alert(err.message);
     }
   };
-
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
 
   return (
     <div id='main' className='main'>
@@ -138,41 +128,10 @@ function Salary() {
         <div className="card-body">
           <div className="page-header">
             <div className="add-item d-flex">
-              <div className="card-title">
-                Salary Details
-                <h6>Manage employee salaries</h6>
-              </div>
+              <div className="card-title">Messages</div>
             </div>
+
             <ul className="table-top-head">
-              <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Salary Details Report</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <PDFViewer width="100%" height="500px">
-                        <SalaryReport dataList={dataList} />
-                      </PDFViewer>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleCloseReportModal}>
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </div>
-              </li>
-              <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
-                    <img src={Excel} alt="Excel Icon" className="icon" />
-                  </a>
-                </div>
-              </li>
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleRefreshClick}>
@@ -187,44 +146,42 @@ function Salary() {
                 className="btn btn-added"
                 onClick={handleAddModalOpen}
               >
-                <i className="bi bi-plus-circle"></i> Add Salary
+                <i className="bi bi-plus-circle"></i> Create Message
               </button>
             </div>
           </div>
-
           <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Add Salary</Modal.Title>
+              <Modal.Title>Create Message</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SalaryForm handleSubmit={handleAddSubmit} />
+              <MessageForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Salary</Modal.Title>
+              <Modal.Title>Edit Message Details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SalaryForm
+              <MessageForm
                 handleSubmit={handleEditSubmit}
-                initialData={selectedSalary}
+                initialData={selectedMessage}
               />
             </Modal.Body>
           </Modal>
 
-          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+          {/* Delete confirmation modal */}
+          <Modal show={deleteModalOpen} onHide={handleDeleteModalClose}>
             <Modal.Header closeButton>
               <Modal.Title>Confirm Delete</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Are you sure you want to delete this record?
-            </Modal.Body>
+            <Modal.Body>Are you sure you want to delete this Message?</Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+              <Button variant="secondary" onClick={handleDeleteModalClose}>
                 Cancel
               </Button>
-              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+              <Button variant="danger" onClick={() => handleDelete(selectedMessage._id)}>
                 Delete
               </Button>
             </Modal.Footer>
@@ -235,31 +192,33 @@ function Salary() {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">Job Role</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Salary</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Message</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredDataList.length ? (
-                  filteredDataList.map((salary) => (
-                    <tr key={salary._id}>
-                      <td>{salary.jobrole}</td>
-                      <td>{salary.date}</td>
-                      <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
-                      
-                      <td className="action">
+                  filteredDataList.map((message) => (
+                    <tr key={message._id}>
+                      <td>{message.date}</td>
+                      <td>{message.title}</td>
+                      <td className="message">{message.message}</td>
+                      <td>
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(salary)}
+                            onClick={() => handleEditModalOpen(message)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
                           <button
                             className="btn btn-delete"
-                            onClick={() => handleShowDeleteModal(salary._id)}
+                            onClick={() => {
+                              setSelectedMessage(message);
+                              handleDeleteModalOpen(); // Open delete confirmation modal
+                            }}
                           >
                             <i className="bi bi-trash-fill"></i>
                           </button>
@@ -269,7 +228,7 @@ function Salary() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5">No Data</td>
+                    <td colSpan="4">No Data</td>
                   </tr>
                 )}
               </tbody>
@@ -282,4 +241,4 @@ function Salary() {
   );
 }
 
-export default Salary;
+export default Message;
