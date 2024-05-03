@@ -8,10 +8,12 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import EmployeeForm from "./EmployeeForm";
 import EmployeeReport from "./EmployeeReport";
+import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./Employee.css";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Employee() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -21,7 +23,14 @@ function Employee() {
   const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -121,6 +130,9 @@ function Employee() {
   return (
     <div id='main' className='main'>
       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -292,6 +304,7 @@ function Employee() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
