@@ -26,7 +26,7 @@ function CalculateSalary() {
     // Simulate loading for 3 seconds
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1000);
     // Clear timeout on component unmount
     return () => clearTimeout(timeout);
   }, []);

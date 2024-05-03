@@ -52,6 +52,7 @@ const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 // const qualityRoute = require("./routes/q_and_o/qualityRoute");
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
+const MessageRouter = require("./routes/StaffManager/MessageRoute.js");
 
 const orderMangerRoute = require("./routes/q_and_o/OrderManagerRoute");
 const orderProcessorRoute = require("./routes/q_and_o/OrderProcessorRoute");
@@ -112,6 +113,7 @@ app.use("/Employee", EmployeeRouter);
 // app.use('/quality', qualityRoute);
 app.use("/CalculateSalary", CalculateSalaryRouter);
 app.use("/Notice", NoticeRouter);
+app.use("/Message", MessageRouter);
 app.use("/om", orderMangerRoute);
 app.use("/op", orderProcessorRoute);
 
