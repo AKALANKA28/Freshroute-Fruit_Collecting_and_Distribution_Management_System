@@ -6,11 +6,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-
 import "./navbar.css";
 import { getCart } from "../../features/user/userSlice";
-
-const Navbar = () => {
+const Navbar2 = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state.auth);
@@ -60,6 +58,7 @@ const Navbar = () => {
   // Check if user is logged in based on the token stored in localStorage
   const isUserLoggedIn = localStorage.getItem("token");
 
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -70,11 +69,7 @@ const Navbar = () => {
   };
 
   return (
-    <div
-      className={`main-header ${
-        isScrolled && !initialScroll ? "stricky-header" : ""
-      }`}
-    >
+    <div className="product-header">
       <nav className="nav">
         <div className="nav-logo">
           <a href="/">FreshRoute.</a>
@@ -92,46 +87,45 @@ const Navbar = () => {
           <li className="nav-list">
             <a href="/contact">Contact</a>
           </li>
-          <li className="">
+          <li >
             {isUserLoggedIn ? (
               <div>
-                <Link to="" className="me-2">
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                  >
-                    <Avatar
-                      alt={authState?.user?.name}
-                      src="/static/images/avatar/1.jpg"
-                    />
-                  </Button>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My Dashboard</MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  </Menu>
-                </Link>
-                <Link to="/cart">
-                  <Badge className="cart-badge"
-                    badgeContent={cartState?.length ? cartState?.length : 0}
-                    color="primary"
-                  >
+              <Link to="">
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  <Avatar
+                    alt={authState?.user?.name}
+                    src="/static/images/avatar/1.jpg"
+                  />
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My Dashboard</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </Link>
+              <Link to="/cart">
+              <Badge className="cart-badge"
+                  badgeContent={cartState?.length ? cartState?.length : 0}
+                >
                   <i className="fa fa-shopping-cart shopping-cart-icon"></i>
-                  </Badge>
-                </Link>
-                {/* <button onClick={handleLogout} className='nav-login'>Logout</button> */}
-              </div>
+                </Badge>
+              </Link>
+              {/* <button onClick={handleLogout} className='nav-login'>Logout</button> */}
+            </div>
             ) : (
               <button onClick={handleLogIn} className="nav-login">
                 Log In
@@ -144,4 +138,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar2;

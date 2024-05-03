@@ -1,107 +1,121 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import img from "../../assets/image1.jpg";
+import { Link, useNavigate } from "react-router-dom";
 import "./checkout.css";
 import Footer from "../../Footer/Footer";
 import Container from "../../Components/Container";
-// import { loadStripe } from "@stripe/stripe-js";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
-import { config } from "../../../Utils/Config";
-
-const shippingSchema = yup.object({
-  firstName: yup.string().required("First name is Required"),
-  lastName: yup.string().required("Last name is Required"),
-  address: yup.string().required("Address Details are Required"),
-  state: yup.string().required("State is required"),
-  city: yup.string().required("City is required"),
-  country: yup.string().required("country is required"),
-  pincode: yup.string().required("Postal Code is required"),
-});
+import { loadStripe } from "@stripe/stripe-js";
+import Navbar2 from "../../Navbar/Navbar2";
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const userCartState = useSelector((state) => state.auth.cartProducts);
   const [totalAmount, setTotalAmount] = useState(null);
-  const [shippingInfo, selectShippingInfo] = useState(null);
+  const [shippingInfo, setShippingInfo] = useState(null);
   const cartState = useSelector((state) => state.auth.cartProducts);
+  const authState = useSelector((state) => state.auth);
+  const [cartProductState, setCartProductState] = useState([]);
 
-  //total amount
+  const navigate = useNavigate();
+
   useEffect(() => {
+    // Calculate total amount
     let sum = 0;
-    if (userCartState) {
-      for (let index = 0; index < userCartState.length; index++) {
-        sum =
-          sum +
-          Number(userCartState[index].quantity) * userCartState[index].price;
-        setTotalAmount(sum);
+    if (cartState) {
+      for (let index = 0; index < cartState.length; index++) {
+        sum += Number(cartState[index].quantity) * cartState[index].price;
       }
+      setTotalAmount(sum);
     }
-  }, [userCartState]);
+  }, [cartState]);
 
+  // Formik form setup
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
       address: "",
       state: "",
       city: "",
       country: "",
       pincode: "",
-      other: "",
     },
-    validationSchema: shippingSchema,
+    validationSchema: yup.object({
+      address: yup.string().required("Address is required"),
+      state: yup.string().required("State is required"),
+      city: yup.string().required("City is required"),
+      country: yup.string().required("Country is required"),
+      pincode: yup.string().required("Pincode is required"),
+    }),
     onSubmit: (values) => {
-      selectShippingInfo(values);
+      localStorage.setItem("address", JSON.stringify(values));
+      setShippingInfo(JSON.parse(localStorage.getItem("address")));
     },
   });
 
-  // const makePayment = async () => {
-  //     const stripe = await loadStripe(
-  //       "pk_test_51P85tiKciT9oiVpgZ0v6tWCBKxPZKw7UOl9hOeK44Ce25o4wkz4gIPtvcMvWGfYfbSINuAgMYAO3dn5w41GZsVli00WkqVK56w"
-  //     );
-  //     const body = {
-  //         // products: carts
-  //     }
-  //     const headers = {
-  //         "Content-Type" : "application/json"
-  //     }
+  useEffect(() => {
+    let items = [];
+    for (let index = 0; index < cartState?.length; index++) {
+      items.push({
+        product: cartState[index]?.productId?._id,
+        quantity: cartState[index]?.quantity,
+        price: cartState[index]?.price,
+        color: cartState[index]?.color?._id,
+      });
+    }
+    setCartProductState(items);
+  }, [cartState]);
 
-  //     const res = await fetch("", {
-  //         method: "POST",
-  //         headers: headers,
-  //         body: JSON.stringify(body)
-  //     })
-  //     const session = await res.json();
+  // payment integration
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51P85tiKciT9oiVpgZ0v6tWCBKxPZKw7UOl9hOeK44Ce25o4wkz4gIPtvcMvWGfYfbSINuAgMYAO3dn5w41GZsVli00WkqVK56w"
+    );
 
-  //     const result = stripe.redirectToCheckout({
-  //         sessionId:session.id
-  //     })
+    const body = {
+      products: cartState,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
 
-  //     if(result.error){
+    const getToken = localStorage.getItem("customer")
+      ? JSON.parse(localStorage.getItem("customer"))
+      : null;
 
-  //     }
-  //   };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken?.token}`,
+        Accept: "application/json",
+      },
+    };
 
-  const handleAddSubmit = async () => {
-    try {
-        const orderDetail = {
-            ...formik.values,
-            totalAmount: totalAmount,
-            cartProducts: cartState,
-        };
-        const response = await axios.post('http://localhost:8070/user/order', orderDetail, config);
-      alert("Order placed successfully");
-    } catch (error) {
-      console.error("Error placing order: ", error);
-      alert("Failed to place order");
+    const response = await fetch(
+      "http://localhost:8070/user/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          ...config.headers, // Merge config headers
+          "Content-Type": "application/json", // Add Content-Type header
+        },
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
     }
   };
   return (
     <div>
-      <div className="product-header">
+      <Navbar2 />
+      {/* <div className="product-header">
         <nav className="nav">
           <div className="nav-logo">
             <a href="/home">FreshRoute.</a>
@@ -126,7 +140,7 @@ const Checkout = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
       <Container class1="checkout-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-7">
@@ -150,9 +164,15 @@ const Checkout = () => {
               </nav>
               <h4 className="title mt-5">Contact Information</h4>
               <p className="user-details">
-                Nethmina Akalanka (nethminaakalanka@gmail.com)
+                {authState?.user?.name}
+                <br />
+                {authState?.user?.email}
+                <br />
+                {authState?.user?.mobile}
               </p>
               <h4 className=" mt-4 mb-3 title">Shipping Address</h4>
+              {/* {authState?.user?.address} */}
+
               <form
                 action=""
                 className="d-flex gap-15 flex-wrap justify-content-between"
@@ -168,42 +188,24 @@ const Checkout = () => {
                     value={formik.values.country}
                   >
                     <option value="" selected disabled>
-                      Select Country
+                      Select Suburb
                     </option>
-                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
+                    <option value="Western">Western</option>
                   </select>
                   <div className="error">
                     {formik.touched.country && formik.errors.country}
                   </div>
                 </div>
-                <div className="flex-grow-1">
-                  <input
-                    name="firstName"
-                    type="text"
-                    placeholder="First Name"
-                    className="form-control"
-                    onChange={formik.handleChange("firstName")}
-                    onBlur={formik.handleChange("firstName")}
-                    value={formik.values.firstName}
-                  />
-                  <div className="error">
-                    {formik.touched.firstName && formik.errors.firstName}
-                  </div>
-                </div>
-                <div className="flex-grow-1">
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    className="form-control"
-                    name="lastName"
-                    onChange={formik.handleChange("lastName")}
-                    onBlur={formik.handleChange("lastName")}
-                    value={formik.values.lastName}
-                  />
-                  <div className="error">
-                    {formik.touched.lastName && formik.errors.lastName}
-                  </div>
-                </div>
+
                 <div className="w-100">
                   <input
                     type="text"
@@ -289,10 +291,9 @@ const Checkout = () => {
                     <Link to="/cart" className="text-dark text-decoration-none">
                       <i class="bi bi-chevron-left me-2"></i>Back to cart
                     </Link>
-                    {/* <Link to='/payment' className='product-button'>Continue to Payment</Link> */}
-                    {/* <button to={makePayment} className='product-button'>Continue to Shipping</button> */}
+
                     <button
-                      onClick={() => handleAddSubmit()}
+                      onClick={makePayment}
                       type="submit"
                       className="product-button"
                     >
@@ -325,7 +326,11 @@ const Checkout = () => {
                             >
                               {item?.quantity}
                             </span>
-                            <img src={item?.productId?.images} alt="img" className="img-fluid" />
+                            <img
+                              src={item?.productId?.images}
+                              alt="img"
+                              className="img-fluid"
+                            />
                           </div>
                           <div>
                             <div className="title">

@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSingleProduct } from "../../../features/products/productSlice";
 import { ToastContainer } from "react-toastify";
 import { addToCart, getCart } from "../../../features/user/userSlice";
-import Navbar from "../../Navbar/Navbar";
 import axios from "axios";
+import Navbar2 from "../../Navbar/Navbar2";
 // import Grades from "../../Components/Grades";
 
 const SingleProduct = () => {
@@ -24,8 +24,8 @@ const SingleProduct = () => {
   // console.log(getProductId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productState = useSelector( state => state.product.singleproduct);
-  const cartState = useSelector(state => state.auth.cartProducts )
+  const productState = useSelector( (state) => state?.product?.singleproduct);
+  const cartState = useSelector((state) => state?.auth?.cartProducts )
 
   useEffect(() => {
     dispatch(getSingleProduct(getProductId));
@@ -56,18 +56,32 @@ const SingleProduct = () => {
   }
 }, [cartState]); // Add cartState to the dependency array of useEffect
 
+  // const uploadCart = () => {
+    // if(grade == null) {
+    //   toast.error("Please Choose a Grade")
+    //   return false
+    // } else {
+      // dispatch(
+      // addToCart({productId: productState?._id, quantity, price: productState?.price}))
+    // navigate('./cart')
+  // }
+
+  // };
+  // console.log(uploadCart);
+
+
   const uploadCart = () => {
     dispatch(
       addToCart({productId: productState?._id, quantity, price: productState?.price})
     )
-    // navigate('./cart')
+    // navigate('../cart')
   };
   // console.log(uploadCart);
 
   return (
     <div>
-      {/* <Navbar /> */}
-      <div className="product-header">
+      <Navbar2 />
+      {/* <div className="product-header">
         <nav className="nav">
           <div className="nav-logo">
             <a href="/home">FreshRoute.</a>
@@ -92,7 +106,7 @@ const SingleProduct = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
 
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">

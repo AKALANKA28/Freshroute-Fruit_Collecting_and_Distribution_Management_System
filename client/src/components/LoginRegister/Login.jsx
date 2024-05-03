@@ -4,13 +4,13 @@ import { Link, redirect, useNavigate } from 'react-router-dom'
 
 import video from '../../assests/video.mp4'
 import logo from '../../assests/logo.png'
-import Container from '../../Website/Components/Container'
 
 import * as yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../features/user/userSlice';
 import { useFormik } from 'formik'
+import Container from '../../Website/Components/Container'
 
 
 
@@ -20,7 +20,7 @@ const loginSchema = yup.object({
 });
 
 const Login = () => {
-
+  const authState = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Using useNavigate hook for navigation
 
@@ -32,12 +32,23 @@ const Login = () => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
+      // navigate('/')
     },
   });
 
-  const authState = useSelector((state) => state);
+  useEffect(() => {
+    if(authState.user !== null && authState.isSuccess == true) {
+      navigate('/')
+    }
+  }, [authState])
 
-  const { user, isError, isSuccess, isLoading, message } = authState.auth;
+
+
+  // const authState = useSelector((state) => state);
+
+  // const { user, isError, isSuccess, isLoading, message } = authState;
+
+
 
   // useEffect(() => {
   //   if (isSuccess) {

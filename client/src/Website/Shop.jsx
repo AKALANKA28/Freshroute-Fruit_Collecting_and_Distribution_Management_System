@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Container from './Components/Container'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../features/products/productSlice';
+import Navbar2 from './Navbar/Navbar2'
 
 
 
@@ -24,7 +25,7 @@ const Shop = () => {
 
   return (
    <>
-    <div className="product-header">
+    {/* <div className="product-header">
       <nav className='nav'>
         <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>
           <ul className='nav-menu'>
@@ -39,7 +40,9 @@ const Shop = () => {
             </li>
           </ul> 
       </nav>
-      </div>
+      </div> */}
+
+      <Navbar2 />
 
     <Container class1='shop-wrapper home-wrapper-2 py-5'>
         <div className="row">

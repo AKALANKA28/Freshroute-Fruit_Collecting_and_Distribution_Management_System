@@ -13,7 +13,8 @@ import CardFilter from "../CardFilter";
 import { ToastContainer } from "react-toastify";
 import Pagination from "../../components/Pagination";
 import ReportModal from "../../components/ReportModal";
-
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -59,6 +60,23 @@ function Sales() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "suppliers_report.xlsx");
+  };
+  
+  const handleButtonClick = () => {
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
   };
 
   // Search functionality
@@ -134,9 +152,6 @@ function Sales() {
     getFetchData();
   };
 
-  const handleButtonClick = () => {
-    getFetchData();
-  };
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);

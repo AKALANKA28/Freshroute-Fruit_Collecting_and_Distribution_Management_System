@@ -1,27 +1,41 @@
-const stripe = require("stripe")
-const instance = new stripe({
-    key_id:"", key_secret:"sk_test_51P85tiKciT9oiVpgb9vlJdOnOVjTZOf3y0KGLObSVItsZVQWWPWQIzph7lv3NlVH6jtCBkwVQHfM1YXRYF0fSmmV00LNhhhQHo"
-})   
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const asyncHandler = require("express-async-handler");
 
-// ("sk_test_51P85tiKciT9oiVpgb9vlJdOnOVjTZOf3y0KGLObSVItsZVQWWPWQIzph7lv3NlVH6jtCBkwVQHfM1YXRYF0fSmmV00LNhhhQHo")
+exports.checkout = asyncHandler(async (req, res) => {
+  try {
+    const { products } = req.body; // Assuming cartProducts contains the products in the cart
 
-exports.checkout = async (req, res) => {
-    const options = {
-        amount: 50000,
-        currency: "inr"
+    if (!products || !Array.isArray(products) || products.length === 0) {
+      throw new Error('No products found in the request body');
     }
 
-    const order = await instance.orders.create(options)
+    const lineItems = products.map(item => {
+      if (!item.productId || !item.productId.title || !item.productId.price) {
+        throw new Error('Invalid product data');
+      }
 
-    res.json({
-        success: true,
-        order
-    })
-}
+      return {
+        price_data: {
+          currency: 'LKR',
+          product_data: {
+            name: item.productId.title, // Name of the product
+          },
+          unit_amount: item.productId.price * 100, // Price in the smallest currency unit (e.g., cents)
+        },
+        quantity: item.quantity || 1, // Default to quantity 1 if not provided
+      };
+    });
 
-// exports.paymentVerification = async (req, res) => {
-//     const { stripeOrderId, stripePaymentId } = req.body
-//     res.json({
-//         stripeOrderId, stripePaymentId
-//     })      
-// }
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      mode: 'payment',
+      success_url: `http://localhost:3000/?success=true`, // Customize the success URL
+      cancel_url: `http://localhost:3000/?canceled=true`, // Customize the cancel URL
+    });
+
+    res.json({ id: session.id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});

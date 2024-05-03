@@ -20,7 +20,7 @@ const Sidebar = () => {
     return (
         <div>
             <aside id='sidebar' className='sidebar'>
-                <a href='/' className='logo d-flex align-items-center'>
+                <a href='/finance' className='logo d-flex align-items-center'>
                     <img src={logo} alt='logo image' />
                     <span className=''>FreshRoute</span>
                 </a>
@@ -29,7 +29,7 @@ const Sidebar = () => {
 
                 <ul className="sidebar-nav" id='sidebar-nav'>
                     <li className={`nav-item ${activeItem === 'dashboard' ? 'active' : ''}`} onClick={() => handleItemClick('dashboard')}>
-                        <a className='nav-link' href='/'>
+                        <a className='nav-link' href='/finance'>
                             <i className='bi bi-grid-1x2'></i>
                             <span>Dashboard</span>
                         </a>

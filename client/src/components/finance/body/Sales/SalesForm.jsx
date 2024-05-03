@@ -6,13 +6,13 @@ import * as yup from 'yup';
 
 
 const salesSchema = yup.object({
-  customer_name: yup.string().nullable().required("Password is required"),
-  date: yup.string().required("Password is required"),
-  fruit_name: yup.string().required("Password is required"),
-  amount: yup.string().required("Password is required"),
-  paid: yup.string().required("Password is required"),
-  due: yup.string().required("Password is required"),
-  status: yup.string().required("Password is required"),
+  customer_name: yup.string().nullable().required("Name is required"),
+  date: yup.string().required("Date is required"),
+  fruit_name: yup.string().required("Fruit Name is required"),
+  amount: yup.string().required("Amount is required"),
+  paid: yup.string(),
+  due: yup.string(),
+  status: yup.string(),
 
 });
 
@@ -106,13 +106,13 @@ const SalesForm = ({ handleSubmit, initialData }) => {
         </div>
         <div className="mb-3">
           <label htmlFor="amount" className="form-label">
-           Amount
+           Amount (Rs)
           </label>
           <input
             type="text"
             className="form-control"
             name="amount"
-            placeholder="10 000.00"
+            placeholder="Rs. 10 000.00"
             value={formik.values.amount}
             onChange={formik.handleChange("amount")}
             onBlur={formik.handleBlur("amount")}/>
@@ -124,13 +124,13 @@ const SalesForm = ({ handleSubmit, initialData }) => {
         <div className="col">
         <div className="mb-3">
           <label htmlFor="paid" className="form-label">
-          Paid
+          Paid (Rs)
           </label>
           <input
             type="text"
             className="form-control"
             name="paid"
-            placeholder="10 000.00"
+            placeholder="Rs.10 000.00"
             value={formik.values.paid}
             onChange={formik.handleChange("paid")}
             onBlur={formik.handleBlur("paid")}/>
@@ -140,7 +140,7 @@ const SalesForm = ({ handleSubmit, initialData }) => {
         </div>
         <div className="mb-3">
           <label htmlFor="due" className="form-label">
-          Due
+          Due (Rs)
           </label>
           <input
             type="text"

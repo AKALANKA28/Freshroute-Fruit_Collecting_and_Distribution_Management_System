@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import CardFilter from './CardFilter'
-import RecentActivityItem from './AssingedOrdersItem'
+import AssingedOrdersItem from './AssingedOrdersItem'
 
 
-const RecentActivity = () => {
+const AssingedOrders = () => {
 
     const [items, setItems] = useState([])
    
 
     const fetchData = () => {
-        fetch("")
+        fetch("http://localhost:8070/schedule/")
          .then(res => res.json())
          .then(data => {
             setItems(data);
@@ -27,12 +27,13 @@ const RecentActivity = () => {
         <h5 className="card-title">
           Assigned Orders
         </h5>
+        <div className="activity text-dark">
+      
 
-        <div className="activity">
           {items &&
           items.lenght > 0 &&
           items.map(item => (
-            <RecentActivityItem key={item._id} item={item}/>
+            <AssingedOrdersItem key={item._id} item={item}/>
             ))}
       </div>
        
@@ -41,4 +42,4 @@ const RecentActivity = () => {
   )
 }
 
-export default RecentActivity
+export default AssingedOrders

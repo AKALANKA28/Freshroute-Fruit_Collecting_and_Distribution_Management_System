@@ -81,7 +81,7 @@ import JoinWithUsSupplier from "./Website/JoinWithUs";
 const router = createBrowserRouter([
  
   {
-    path: "/home",
+    path: "/",
     element: (
       <div>
         <Home />
@@ -110,9 +110,7 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: (
-      <div>
         <Cart />
-      </div>
     ),
   },
 
@@ -172,7 +170,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/",
+    path: "/finance",
     element: (
       <div>
         <Dashboard />
@@ -218,7 +216,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/DriverDashboard",
+    path: "/Driver",
     element: (
       <div>
         <DriverDashboard />

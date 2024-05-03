@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import CardFilter from './CardFilter';
 import NewsPostItem from './TransactionsPostItem';
 
-const News = () => {
+const Transactions = () => {
 
     const [news, setNews] = useState([])
     const [filter, setFilter] = useState('Today');
@@ -48,4 +48,4 @@ const News = () => {
   )
 }
 
-export default News
+export default Transactions
