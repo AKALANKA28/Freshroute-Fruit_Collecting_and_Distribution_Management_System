@@ -8,10 +8,12 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import CalculateSalaryForm from "./CalculateSalaryForm";
 import CalculateSalaryReport from "./CalculateSalaryReport";
+import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./CalculateSalary.css";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function CalculateSalary() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -19,7 +21,14 @@ function CalculateSalary() {
   const [filteredDataList, setFilteredDataList] = useState([]);
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -101,6 +110,9 @@ function CalculateSalary() {
     
     <div id='main' className='main'>
       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
     <div className="card recent-sales overflow-auto">
      
           <div className="card-body">
@@ -109,8 +121,8 @@ function CalculateSalary() {
               <div class="add-item d-flex">
 
               <div class="card-title">
-                  Employee Details
-                  <h6>Manage employee details</h6>
+                  Employee Salary Details
+                  <h6>Manage employee salary details</h6>
                 </div>
               </div>
 
@@ -122,7 +134,7 @@ function CalculateSalary() {
                       </a>
                       <Modal show={showReportModal} onHide={handleCloseReportModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Employee Details Report</Modal.Title>
+            <Modal.Title>Employee Salary Details Report</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <PDFViewer width="100%" height="500px" >
@@ -216,6 +228,7 @@ function CalculateSalary() {
         </div>
       </div>
       </div>
+      )}
       </div>
     
   );

@@ -9,11 +9,13 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import TransportFeeForm from "./TransportFeeForm";
 import TransportFeeReport from "./TransportFeeReport";
+import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./TransportFee.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function TransportFee() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -21,7 +23,14 @@ function TransportFee() {
   const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -90,6 +99,9 @@ function TransportFee() {
   return (
     <div id='main' className='main'>
       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -198,6 +210,7 @@ function TransportFee() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

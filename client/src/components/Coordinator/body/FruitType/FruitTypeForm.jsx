@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import storage from "../../../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
+
 const FruitTypeForm = ({ handleSubmit, initialData }) => {
   const [img, setImg] = useState(undefined);
   const [imgPerc, setImgPerc] = useState(0);
@@ -11,6 +12,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
     date: "",
     description: ""
   });
+  const [uploading, setUploading] = useState(false); // Track if image is being uploaded
 
   useEffect(() => {
     img && uploadFile(img, "imageUrl");
@@ -20,6 +22,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, 'images/fruits/' + fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
+    setUploading(true); // Start uploading
 
     uploadTask.on(
       "state_changed",
@@ -29,6 +32,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
       },
       (error) => {
         console.log(error);
+        setUploading(false); // Stop uploading on error
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -37,6 +41,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
             ...prev,
             [fileType]: downloadURL
           }));
+          setUploading(false); // Stop uploading after successful upload
         });
       }
     );
@@ -77,7 +82,6 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
     }));
   };
   
-  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleSubmit(formData);
@@ -86,20 +90,16 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
-        <label htmlFor="imageUrl" className="form-label">{imgPerc > 0 && "Uploading: "+ imgPerc+ "%"}
-          Image
-        </label>
+        <label htmlFor="imageUrl" className="form-label">{uploading ? `Uploading: ${imgPerc}%` : "Image"}</label>
         <input
-         type="file"
+          type="file"
           className="form-control"
           name="imageUrl"
-         onChange={(e) => setImg(e.target.files[0])}
-/>
+          onChange={(e) => setImg(e.target.files[0])}
+        />
       </div>
       <div className="mb-3">
-        <label htmlFor="name" className="form-label">
-          Fruit Name
-        </label>
+        <label htmlFor="name" className="form-label">Fruit Name</label>
         <input
           type="text"
           className="form-control"
@@ -111,9 +111,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="date" className="form-label">
-          Date
-        </label>
+        <label htmlFor="date" className="form-label">Date</label>
         <input
           type="date"
           className="form-control"
@@ -126,9 +124,7 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          Description
-        </label>
+        <label htmlFor="description" className="form-label">Description</label>
         <input
           type="text"
           className="form-control"
@@ -139,9 +135,8 @@ const FruitTypeForm = ({ handleSubmit, initialData }) => {
           required
         />
       </div>
-      <button type="submit" className="btn btn-success">
-        Submit
-      </button>
+      
+      <button type="submit" className="btn btn-success">Submit</button>
     </form>
   );
 };
