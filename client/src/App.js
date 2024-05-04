@@ -8,8 +8,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Dashboard from "./components/finance/Finance";
-import Login from "./components/LoginRegister/Login";
-import Register from "./components/LoginRegister/Register";
+import Login from "./Website/LoginRegister/Login";
+import Register from "./Website/LoginRegister/Register";
+import AdminLogin from "./components/LoginRegister/AdminLogin";
+
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
@@ -142,6 +144,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <SingleProduct />
+      </div>
+    ),
+  },
+
+  {
+    path: "/admin",
+    element: (
+      <div>
+        <AdminLogin />
       </div>
     ),
   },

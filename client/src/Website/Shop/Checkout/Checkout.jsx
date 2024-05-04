@@ -9,7 +9,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import Navbar2 from "../../Navbar/Navbar2";
-import { emptyCart } from "../../../features/user/userSlice";
+import { createAnOrder, emptyCart } from "../../../features/user/userSlice";
 import Badge from "@mui/material/Badge";
 
 const Checkout = () => {
@@ -106,6 +106,8 @@ const Checkout = () => {
         },
         body: JSON.stringify(body),
       }
+
+      
     );
 
     const session = await response.json();
@@ -120,6 +122,26 @@ const Checkout = () => {
       // Clear the cart after successful payment
       clearCartAfterPayment();
     }
+
+    // Dispatch the createAnOrder thunk with the order details
+  dispatch(
+    createAnOrder({
+      user: authState.user._id,
+      shippingInfo: {
+        address: formik.values.address,
+        city: formik.values.city,
+        state: formik.values.state,
+        apartment: formik.values.other,
+        pincode: formik.values.pincode,
+      },
+      orderItems: cartProductState.map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      totalPrice: totalAmount,
+    })
+  );
   };
   return (
     <div>

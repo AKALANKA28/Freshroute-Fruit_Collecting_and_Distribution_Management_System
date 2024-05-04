@@ -15,6 +15,12 @@ import Pagination from "../../components/Pagination";
 import ReportModal from "../../components/ReportModal";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import {
+  getOrders,
+  getSingleOrderData,
+} from "../../../../features/orders/orderSlice";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -27,21 +33,46 @@ function Sales() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // Number of items per page
 
-  const handleStatus = status => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const getUserId = location.pathname.split("/")[3];
+  // console.log(getUserId)
+
+  const getTokenFromLocalStorage = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      Accept: "application/json",
+    },
+  };
+
+  useEffect(() => {
+    dispatch(getOrders(config));
+  }, [dispatch]);
+
+  const orderState = useSelector((state) => state.orders.orders);
+  console.log(orderState);
+
+  const handleStatus = (status) => {
     switch (status) {
-        case 'Paid':
-            return 'success';
-            break;
-        case 'Pending':
-            return 'warning';
-            break;
-         case 'Rejected':
-            return 'danger';
-            break;
-         default:
-            return 'success';    
-    }   
-    };
+      case "Paid":
+        return "success";
+        break;
+      case "Pending":
+        return "warning";
+        break;
+      case "Rejected":
+        return "danger";
+        break;
+      default:
+        return "success";
+    }
+  };
 
   useEffect(() => {
     getFetchData();
@@ -51,8 +82,6 @@ function Sales() {
     setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
 
-
-  
   const getFetchData = async () => {
     try {
       const response = await axios.get("/sales/");
@@ -65,15 +94,15 @@ function Sales() {
   const generateExcelFile = () => {
     // Define the worksheet
     const ws = XLSX.utils.json_to_sheet(dataList);
-  
+
     // Define the workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
-  
+
     // Generate the Excel file
     writeFile(wb, "suppliers_report.xlsx");
   };
-  
+
   const handleButtonClick = () => {
     getFetchData(); // Fetch the latest data if needed
     generateExcelFile();
@@ -151,7 +180,6 @@ function Sales() {
   const handleRefreshClick = () => {
     getFetchData();
   };
-
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);
@@ -285,12 +313,78 @@ function Sales() {
               />
             </Modal.Body>
           </Modal>
+          {dataList.length > 0 && (
+            <div className="table-container">
+              <SearchBar onSearch={handleSearch} />
 
-          <div className="table-container">
-            <SearchBar onSearch={handleSearch} />
-
-            {/* ---------------table--------------- */}
-            <table className="table table-bordeless datatable">
+              {/* ---------------table--------------- */}
+              <table className="table table-bordeless datatable">
+                <thead className="table-light">
+                  <tr>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Fruit</th>
+                    <th scope="col">Price (Rs)</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Tax Rate</th>
+                    <th scope="col">Total (Rs)</th>
+                    <th className="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderState.map((sales) => (
+                    <tr key={sales._id}>
+                      <td>{sales?.user?.name}</td>
+                      <td>{sales?.createdAt}</td>
+                      <td>
+                        <ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id}>{item.product.title}</li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td><ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id}>Rs. {item.price.toFixed(2)}</li>
+                          ))}
+                        </ul></td>
+                      <td>
+                        <ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id}>{item.quantity}</li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td>2%</td>
+                      <td>
+                        Rs. {((sales?.totalPrice * 2) / 100 + sales?.totalPrice).toFixed(2)}
+                      </td>
+                      {/* <td>
+                        <span className={`badge bg-${handleStatus(sales.orderStatus)}`}>
+                            {sales.orderStatus}
+                        </span>
+                    </td> */}
+                      <td>
+                        <div className="buttons">
+                          <button
+                            className="btn btn-edit"
+                            onClick={() => handleEditModalOpen(sales)}
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button
+                            className="btn btn-delete"
+                            onClick={() => handleDelete(sales._id)}
+                          >
+                            <i className="bi bi-trash3-fill"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {/* <table className="table table-bordeless datatable">
               <thead className="table-light">
                 <tr>
                   <th scope="col">Customer</th>
@@ -336,8 +430,9 @@ function Sales() {
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+            </table> */}
+            </div>
+          )}
         </div>
       </div>
       <ToastContainer
