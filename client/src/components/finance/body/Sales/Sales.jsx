@@ -13,7 +13,8 @@ import CardFilter from "../CardFilter";
 import { ToastContainer } from "react-toastify";
 import Pagination from "../../components/Pagination";
 import ReportModal from "../../components/ReportModal";
-
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -25,6 +26,22 @@ function Sales() {
   const [filteredDataList, setFilteredDataList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // Number of items per page
+
+  const handleStatus = status => {
+    switch (status) {
+        case 'Paid':
+            return 'success';
+            break;
+        case 'Pending':
+            return 'warning';
+            break;
+         case 'Rejected':
+            return 'danger';
+            break;
+         default:
+            return 'success';    
+    }   
+    };
 
   useEffect(() => {
     getFetchData();
@@ -43,6 +60,23 @@ function Sales() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+  
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+  
+    // Generate the Excel file
+    writeFile(wb, "suppliers_report.xlsx");
+  };
+  
+  const handleButtonClick = () => {
+    getFetchData(); // Fetch the latest data if needed
+    generateExcelFile();
   };
 
   // Search functionality
@@ -118,9 +152,6 @@ function Sales() {
     getFetchData();
   };
 
-  const handleButtonClick = () => {
-    getFetchData();
-  };
 
   const handleAddModalOpen = () => {
     setAddModalOpen(true);
@@ -281,7 +312,11 @@ function Sales() {
                     <td>Rs. {sales.amount.toFixed(2)}</td>
                     <td>Rs. {sales.paid.toFixed(2)}</td>
                     <td>Rs. {sales.due.toFixed(2)}</td>
-                    <td>{sales.status}</td>
+                    <td>
+                        <span className={`badge bg-${handleStatus(sales.status)}`}>
+                            {sales.status}
+                        </span>
+                    </td>
                     <td>
                       <div className="buttons">
                         <button

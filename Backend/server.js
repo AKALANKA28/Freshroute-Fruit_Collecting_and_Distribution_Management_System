@@ -5,21 +5,20 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const app = express();
 require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const { errorHandler, notFound } = require("./middlewares/errorHandler.js");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
-const stripe = require("stripe")(
-  "sk_test_51P85tiKciT9oiVpgb9vlJdOnOVjTZOf3y0KGLObSVItsZVQWWPWQIzph7lv3NlVH6jtCBkwVQHfM1YXRYF0fSmmV00LNhhhQHo"
-);
 
 const authRouter = require("./routes/authRoute.js");
 const productRouter = require("./routes/productRoute.js");
 const categoryRouter = require("./routes/categoryRoute.js");
 const enqRouter = require("./routes/enqRoute.js");
 
+const revenueRouter = require("./routes/finance/revenueRoute");
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
 const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
@@ -80,6 +79,7 @@ app.use("/product", productRouter);
 app.use("/productCategory", categoryRouter);
 app.use("/enq", enqRouter);
 
+app.use("/revenue", revenueRouter);
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
@@ -117,29 +117,67 @@ app.use("/Message", MessageRouter);
 app.use("/om", orderMangerRoute);
 app.use("/op", orderProcessorRoute);
 
-app.post("/user/checkout", async (req, res) => {
-  const { product } = req.body;
 
-  const lineItems = product.map((product) => ({
-    price_data: {
-      currency: "inr",
-      product_data: {
-        name: product.dish,
-      },
-      unit_amount: product.price * 100,
-    },
-    quantity: product.qnty,
-  }));
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: lineItems,
-    mode: "payment",
-    success_url: "",
-    cancel_url: "",
-  });
-  res.json({ id: session.id });
-});
+
+
+// app.post("/user/checkout", async(req, res) => {
+//   const {product} = req.body;
+
+//   const lineItems = product.map((product) => ({
+//     price_data: {
+//       currency: "inr",
+//       product_data: {
+//         name: product.dish
+//       },
+//       unit_amount: product.price * 100,
+//     },
+//     quantity:product.qnty
+//   }));
+
+//   const session = await stripe.checkout.sessions.create({
+//     payment_method_types: ["card"],
+//     line_items:lineItems,
+//     mode: "payment",
+//     success_url:"",
+//     cancel_url:"",
+//   })
+//   res.json({id:session.id})
+
+// })
+
+// app.post("/create-checkout-session", async (req, res) => {
+//   // const { products } = req.body; 
+//   // console.log(products);
+//   try {
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       line_items: [
+//         {
+//           price_data: {
+//             currency: "usd",
+//             product_data: {
+//               name: "Stubborn Attachments",
+//               images: ["https://i.imgur.com/EHyR2nP.png"],
+//             },
+//             unit_amount: 2000,
+//           },
+//           quantity: 1,
+//         },
+//       ],
+//       mode: "payment",
+//       success_url: `http://localhost:3000/?success=true`,
+//       cancel_url: `http://localhost:3000/?canceled=true`,
+//     });
+
+//     res.json({ id: session.id });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+
+
 
 app.use(notFound);
 app.use(errorHandler);

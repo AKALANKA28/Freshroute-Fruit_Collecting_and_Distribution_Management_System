@@ -29,17 +29,19 @@ var productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    sold: {
-        type: Number,
-        default: 0,
-    },
+
+    // sold: {
+    //     type: Number,
+    //     default: 0,
+    // },
+
     images: [],
     
  
-    ratings: [{
-        star:Number,
-        postedby: {type:mongoose.Schema.Types.ObjectId, ref: "User"},
-    }]
+    // ratings: [{
+    //     star:Number,
+    //     postedby: {type:mongoose.Schema.Types.ObjectId, ref: "User"},
+    // }]
 
 }, 
 {

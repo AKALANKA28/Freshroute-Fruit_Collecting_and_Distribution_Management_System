@@ -275,3 +275,8 @@ font-family:'Trebuchet MS', sans-serif;
         box-shadow: none ;    
   }
 
+.chart{
+    position: absolute;
+    right: 50px;
+    top: 2px;
+}
