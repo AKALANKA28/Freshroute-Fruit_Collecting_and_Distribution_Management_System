@@ -1,9 +1,10 @@
 const Category = require("../../models/coordinator/FruitDetail");
 
 const addCategory = async (req, res) => {
-  const { fruit, category, date, weight, quality, price } = req.body;
+  const { imageUrl, fruit, category, date, weight, quality, price } = req.body;
   try {
     const newCategory = await Category.create({
+      imageUrl,
       fruit,
       category,
       date,
@@ -48,9 +49,10 @@ const deleteCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   const id = req.params.id;
-  const { fruit, category, date, weight, quality, price } = req.body;
+  const { imageUrl, fruit, category, date, weight, quality, price } = req.body;
   try {
     await Category.findByIdAndUpdate(id, {
+      imageUrl,
       fruit,
       category,
       date,

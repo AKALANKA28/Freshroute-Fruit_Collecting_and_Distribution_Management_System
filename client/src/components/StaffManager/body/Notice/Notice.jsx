@@ -4,10 +4,12 @@ import { Button, Modal } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import NoticeForm from "./NoticeForm";
+import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./Notice.css";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Notice() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false); // State for delete confirmation modal
@@ -16,7 +18,14 @@ function Notice() {
   const [filteredDataList, setFilteredDataList] = useState([]);
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -112,6 +121,9 @@ function Notice() {
   return (
     <div id='main' className='main'>
       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -224,6 +236,7 @@ function Notice() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
