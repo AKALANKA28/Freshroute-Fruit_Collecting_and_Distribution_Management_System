@@ -1,0 +1,382 @@
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+.wrapper{
+    background: #ececec;
+    padding: 0 20px 0 20px;
+}
+
+.login-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.side-video {
+    position: relative;
+    display: flex;
+    flex-basis: 50%;
+    width: 70%;
+    height: 100%;
+    padding: 0 1.5rem;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+}
+
+video,
+.footerDiv {
+    position: absolute;
+}
+
+video {
+    height: 100%;
+    width: 200%;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.textDiv {
+    position: relative;
+    align-items: center;
+}
+
+.title {
+    color: #FFFFFF;
+    font-size: 35px;
+    font-weight: 800;
+}
+
+.textDiv p {
+    color: #FFFFFF;
+    padding: 1rem;
+    font-weight: 400;
+}
+
+.footerDiv {
+    bottom: 20px;
+    padding: 0 1rem;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.248);
+    left: 10px;
+    right: 10px;
+    justify-content: space-between;
+    backdrop-filter: blur(1px);
+    border-radius: 60px;
+}
+
+.footerDiv .text {
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 20px;
+
+}
+
+.footerDiv .btn {
+    background: #FFFFFF;
+    color: var(--primaryColor);
+    padding: .5rem 1.2rem;
+    border-radius: 60px;
+}
+
+.footerDiv .btn:hover {
+    background-color: var(--hoverColor);
+    color: #FFFFFF;
+}
+
+
+.login-row{
+  display: flex;
+  flex-wrap: wrap;  
+  width:  900px;
+  height:550px;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0px;
+  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
+}
+
+
+.sign-in-options{
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+.signin a i {
+    margin-right: 10px;
+}
+
+.signin a {
+    display: inline-block;
+    margin-right: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.signin a:hover {
+    color: #555;
+}
+
+.signin a.google {
+    width: 178px;
+    height: var(--48, 48px);
+    flex-shrink: 0;
+    border-radius: 48px;
+    border: 1px solid #EEE;
+    background: #FAFAFA;
+}
+
+.signin a.facebook {
+    width: 178px;
+    height: var(--48, 48px);
+    flex-shrink: 0;
+    border-radius: 48px;
+    border: 1px solid #EEE;
+    background: #FAFAFA;
+}
+
+
+/* .text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text p{
+    color: #fff;
+    font-size: 20px; 
+} */
+
+/* i{
+    font-weight: 400;
+    font-size: 15px;
+} */
+.right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.input-box{
+  width: 330px;
+  box-sizing: border-box;
+}
+
+.login-img{
+    width: 80px;
+    position: absolute;
+    top: 50px;
+    left: 11rem;
+}
+
+.headerDiv img {
+    width: 60px;
+    padding-bottom: .5rem;
+}
+
+.input-box h4{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 45px;
+}
+.input-field{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 10px 0 10px;
+}
+.input{
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    margin-bottom: 20px;
+    color: #40414a;
+}
+.input-box .input-field label{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    transition: .5s;
+}
+.input-field input:focus ~ label
+   {
+    top: -10px;
+    font-size: 13px;
+  }
+  .input-field input:valid ~ label
+  {
+   top: -10px;
+   font-size: 13px;
+   color: #757575;
+ }
+ .input-field .input:focus, .input-field .input:valid{
+    border-bottom: 1px solid #BDBDBD;
+ }
+ .submit{
+    border: none;
+    outline: none;
+    height: 45px;
+    background: #ececec;
+    border-radius: 57px;
+    transition: .4s;
+ }
+
+ .submit{
+    background: var(--primaryColor);
+    color: #fff;
+ }
+ .submit:hover{
+    background: var(--hoverColor);
+    color: #fff;
+ }
+ .signin{
+    text-align: center;
+    font-size: small;
+    margin-top: 25px;
+}
+span a{
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    transition: .5s;
+}
+span a:hover{
+    text-decoration: underline;
+    color: #000;
+}
+@media only screen and (max-width: 768px){
+    .side-video{
+        border-radius: 10px 10px 0 0;
+    }
+    img{
+        width: 35px;
+        position: absolute;
+        top: 20px;
+        left: 47%;
+    }
+    .text{
+        position: absolute;
+        top: 70%;
+        text-align: center;
+    }
+    .text p, i{
+        font-size: 16px;
+    }
+    .row{
+        max-width:420px;
+        width: 100%;
+    }
+}
+
+
+
+/* .formDiv {
+    flex-basis: 50%;
+    margin: auto;
+    flex-direction: column;
+    gap: 1.5rem;
+    transform: translateY(-1rem);
+}
+
+.headerDiv {
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.headerDiv img {
+    width: 60px;
+    padding-bottom: .5rem;
+}
+
+.headerDiv h3 {
+    font-size: 25px;
+    color: #000000;
+    font-weight: 600;
+}
+
+.form {
+    gap: 1rem;
+}
+
+.inputDiv .icon {
+    color: rgb(131, 129, 129);
+}
+
+.inputDiv input {
+    background: none;
+    outline: none;
+    border: none;
+    width: 200px;
+}
+
+.inputDiv label {
+    color: #000000;
+    font-weight: 400;
+    font-size: 14px;
+    padding: .5rem 0;
+    display: block;
+}
+
+.inputDiv .input {
+    gap: .5rem;
+    padding: 1rem;
+    background: #FFFFFF ;
+    border-radius: 10px;
+}
+
+.btn {
+    padding: 0.8rem;
+    background: var(--primaryColor);
+    border-radius: 10px;
+    color: #FFFFFF;
+    align-items: center;
+    margin: auto;
+    justify-content: center;
+    font-size: 16px;
+    width: 100%;
+    gap: 0.5rem;
+    transition: .3s ease;
+}
+
+.btn .icon {
+    font-size: 25px;
+    transition: .3s ease;
+}
+
+.btn:hover {
+    background: var(--hoverColor);
+    color: #ffffff;
+}
+
+.forgotPassword {
+    font-size: 13px;
+    color: #000000;
+    opacity: 0.7;
+    text-align: center;
+} */ 
