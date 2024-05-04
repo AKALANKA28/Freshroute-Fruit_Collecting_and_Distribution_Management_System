@@ -1001,6 +1001,7 @@ header .search-form input:hover{
 
 .table {
   text-transform: capitalize;
+  --bs-table-border-color: #c3c3c3;
 }
 
 .table td {
