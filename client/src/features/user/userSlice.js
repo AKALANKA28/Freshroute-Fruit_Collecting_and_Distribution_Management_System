@@ -120,48 +120,14 @@ export const removeProductFromCart = createAsyncThunk("user/cart/delete", async(
 })
 
 
-// export const getCart = createAsyncThunk("user/cart/get", async (data, thunkAPI) => {
-//   try {
-//     const response = await axios.get(
-//       "http://localhost:8070/user/get-cart/",
-//       data
-//     );
-//     console.log(response);
-//     if (response.data) {
-//       return response.data;
-//     }
-//   } catch (error) {
-//     return thunkAPI.rejectWithValue(error);
-//   }
-// });
-
-// export const removeProductFromCart = createAsyncThunk(
-//   "user/cart/delete",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await axios.delete(
-//         `http://localhost:8070/user/delete-product-from-cart/${data.id}`,
-//         data.config2
-//       );
-//       console.log(response);
-//       if (response.data) {
-//         return response.data;
-//       }
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
-
 export const updateProductFromCart = createAsyncThunk(
   "user/cart/update",
   async (cartDetail, thunkAPI) => {
     try {
       const response = await axios.put(
-        `http://localhost:8070/user/update-product-from-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
+        `http://localhost:8070/user/update-product-from-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,"",
         config
       );
-      console.log(response);
       if (response.data) {
         return response.data;
       }
@@ -192,11 +158,11 @@ export const createAnOrder = createAsyncThunk(
 
 
 export const userOrders = createAsyncThunk(
-  "user/cart/my-order",
+  "user/get-order",
   async (thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8070/user/getmyorders",
+      const response = await axios.get(
+        "http://localhost:8070/user/order/get",
         config
       );
       if (response.data) {
@@ -228,7 +194,25 @@ export const updateProfile = createAsyncThunk(
     }
   );
   
-  
+
+  export const emptyCart = createAsyncThunk(
+    "user/emptyCart",
+    async (thunkAPI) => {
+      try {
+        const response = await axios.delete(
+          "http://localhost:8070/user/empty-cart",
+          config
+        );
+        if (response.data) {
+          return response.data;
+        }
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  );
+
+
 
 export const authSlice = createSlice({
   name: "auth",
@@ -428,7 +412,32 @@ export const authSlice = createSlice({
         }
       })
 
-      .addDefaultCase((state) => state);
+
+
+      .addCase(emptyCart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(emptyCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.emptyUserCart = action.payload;
+        // if (state.isSuccess) {
+        //   toast.success("Profile Updated Succefully");
+        // }
+      })
+      .addCase(emptyCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.emptyUserCart = [];
+        state.message = action.error;
+        // if (state.isError === true) {
+        //   // toast.error(action.error);
+        //   toast.error("Something Went Wrong");
+        // }
+      })
+
   },
 });
 

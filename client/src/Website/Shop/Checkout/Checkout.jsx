@@ -9,6 +9,8 @@ import * as yup from "yup";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import Navbar2 from "../../Navbar/Navbar2";
+import { emptyCart } from "../../../features/user/userSlice";
+import Badge from "@mui/material/Badge";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -66,6 +68,10 @@ const Checkout = () => {
     setCartProductState(items);
   }, [cartState]);
 
+  const clearCartAfterPayment = () => {
+    dispatch(emptyCart()); // Dispatch the clearCart action
+  };
+
   // payment integration
   const makePayment = async () => {
     const stripe = await loadStripe(
@@ -110,37 +116,15 @@ const Checkout = () => {
 
     if (result.error) {
       console.log(result.error);
+    } else {
+      // Clear the cart after successful payment
+      clearCartAfterPayment();
     }
   };
   return (
     <div>
       <Navbar2 />
-      {/* <div className="product-header">
-        <nav className="nav">
-          <div className="nav-logo">
-            <a href="/home">FreshRoute.</a>
-          </div>
-          <ul className="nav-menu">
-            <li className="nav-list">
-              <a href="/home">Home</a>
-            </li>
-            <li className="nav-list">
-              <a href="/about">About</a>
-            </li>
-            <li className="nav-list">
-              <a href="/shop">Shop</a>
-            </li>
-            <li className="nav-list">
-              <a href="/contact">Contact</a>
-            </li>
-            <li className="nav-login">
-              <Link to="/Login">
-                <span>Login</span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div> */}
+
       <Container class1="checkout-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-7">
@@ -316,21 +300,19 @@ const Checkout = () => {
                       >
                         <div className="w-75 d-flex gap-3 mt-3">
                           <div className="w-25 position-relative">
-                            <span
-                              style={{
-                                top: "-15px",
-                                left: "75px",
-                                padding: "10px 15px",
-                              }}
-                              className="badge bg-secondary text-white rounded-circle  position-absolute"
+                           
+
+                            <Badge
+                              className="cart-badge"
+                              badgeContent={item?.quantity}
+                              color="primary"
                             >
-                              {item?.quantity}
-                            </span>
-                            <img
-                              src={item?.productId?.images}
-                              alt="img"
-                              className="img-fluid"
-                            />
+                              <img
+                                src={item?.productId?.images}
+                                alt="img"
+                                className="img-fluid"
+                              />{" "}
+                            </Badge>
                           </div>
                           <div>
                             <div className="title">

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./cart.css";
-import img from "../../assets/image1.jpg";
 import { Link } from "react-router-dom";
 import Container from "../../Components/Container";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +9,6 @@ import {
   updateProductFromCart,
 } from "../../../features/user/userSlice";
 import { ToastContainer } from "react-toastify";
-import { loadStripe } from "@stripe/stripe-js";
 import Navbar2 from "../../Navbar/Navbar2";
 
 const Cart = () => {
@@ -40,19 +38,6 @@ const config2 = {
     dispatch(getCart());
   }, []);
 
-  // useEffect(() => {
-  //   if (productUpdateDetail !== null)
-  //     dispatch(
-  //       updateProductFromCart({
-  //         cartItemId: productUpdateDetail?.cartItemId,
-  //         quantity: productUpdateDetail?.quantity,
-  //       })
-  //     );
-  //   setTimeout(() => {
-  //     dispatch(getCart());
-  //   }, 200);
-  // }, [productUpdateDetail]);
-
 
   const deleteACartProduct = (id) => {
     dispatch(removeProductFromCart(id));
@@ -61,12 +46,6 @@ const config2 = {
     }, 300);
   };
 
-
-
-  // const userCartState = useSelector((state) => state.auth.cartProducts);
-  // useEffect(() => {
-  //   dispatch(getCart(config2));
-  // }, []);
 
   //update cart product
   useEffect(() => {
@@ -78,7 +57,7 @@ const config2 = {
         })
       );
     setTimeout(() => {
-      dispatch(getCart(config2));
+      dispatch(getCart());
     }, 200);
   }, [productUpdateDetail]);
 
@@ -103,61 +82,12 @@ const config2 = {
     }
   }, [userCartState]);
 
-  const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51P85tiKciT9oiVpgZ0v6tWCBKxPZKw7UOl9hOeK44Ce25o4wkz4gIPtvcMvWGfYfbSINuAgMYAO3dn5w41GZsVli00WkqVK56w"
-    );
-    const body = {
-      products: userCartState,
-    };
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    const res = await fetch("http://localhost:8070/user/order/checkout", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(body),
-    });
-    const session = await res.json();
-
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-    }
-  };
+ 
 
   return (
     <>
     <Navbar2 />
-      {/* <div className="product-header">
-        <nav className="nav">
-          <div className="nav-logo">
-            <a href="/">FreshRoute.</a>
-          </div>
-          <ul className="nav-menu">
-            <li className="nav-list">
-              <a href="/">Home</a>
-            </li>
-            <li className="nav-list">
-              <a href="/about">About</a>
-            </li>
-            <li className="nav-list">
-              <a href="/shop">Shop</a>
-            </li>
-            <li className="nav-list">
-              <a href="/contact">Contact</a>
-            </li>
-            <li className="nav-login">
-              <Link to="/Login">
-                <span>Login</span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div> */}
+      
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -192,15 +122,17 @@ const config2 = {
                       <h5 className="price">Rs.{item?.price}</h5>
                     </div>
                     <div className="cart-col-3 d-flex align-items-center gap-3">
-                      <input
+                    <input
                         type="number"
-                        className="form-control f-control"
-                        name={"quantity"+item?._id}
+                        className="form-control form-quantity"
+                        name=""
                         min={1}
-                        max={100}
-                        id={"cart"+item?._id}
+                        max={10}
+                        id=""
                         value={
-                         item?.quantity
+                          productUpdateDetail?.quantity
+                            ? productUpdateDetail?.quantity
+                            : item?.quantity
                         }
                         onChange={(e) => {
                           setProductUpdateDetail({

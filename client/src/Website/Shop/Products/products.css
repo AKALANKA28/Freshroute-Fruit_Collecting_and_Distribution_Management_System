@@ -168,8 +168,8 @@
 
 
 .product-button {
-  background-color: #ffffff00;
-  color: #1c1c1b;
+  background-color: var(--hoverColor);
+  color: #ffffff;
   text-decoration: none;
   font-size: 12px;
   font-weight: 500;
@@ -182,7 +182,7 @@
 }
 
 .product-button:hover {
-  background-color: var(--hoverColor);
+  background-color: black;
 }
 
 .accordion{

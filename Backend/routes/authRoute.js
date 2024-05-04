@@ -31,11 +31,11 @@ router.put('/update-product-from-cart/:newQuantity', authMiddleware, userControl
 
 router.delete("/delete/:id", userController.deleteUser);
 router.delete('/delete-product-from-cart/:cartItemId', authMiddleware, userController.removeProductFromCart);
+router.delete('/empty-cart', authMiddleware, userController.emptyCart);
 
 
 
 
-// router.delete('/empty-cart', authMiddleware, userController.emptyCart);
 // router.post('/cart',  userController.userCart);
 // router.get('/get-cart', userController.getUserCart);
 // router.delete('/empty-cart', userController.emptyCart);
