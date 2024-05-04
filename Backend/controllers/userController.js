@@ -550,49 +550,42 @@ exports.getMyOrders = asyncHandler(async (req, res) => {
 //   }
 // });
 
-// exports.getAllOrders = asyncHandler(async (req, res) => {
-//   try {
-//     const alluserorders = await Order.find()
-//       .populate("products.product")
-//       .populate("orderby")
-//       .exec();
-//     res.json(alluserorders);
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// });
+//Get All Orders
+exports.getAllOrders = asyncHandler(async (req, res) => {
+  try {
+    const orders = await Order.find({})
+      .populate("user")
+      .populate("orderItems.product")
+      .populate("orderItems.color");
+    res.json(orders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
-// exports.getOrderByUserId = asyncHandler(async (req, res) => {
-//   const { id } = req.params;
-//   validateMongoDbId(id);
-//   try {
-//     const userorders = await Order.findOne({ orderby: id })
-//       .populate("products.product")
-//       .populate("orderby")
-//       .exec();
-//     res.json(userorders);
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// });
+//Get Single Order
+exports.getSingleOrder = asyncHandler(async (req, res) => {
+      const { id } = req.params;
+      validateMongoDbId(id)
+      try {
+          const userOrders = await Order.findOne({_id: id}).populate('orderItems.product').populate('orderItems.color').populate('user').exec()
+          res.json(userOrders)
+      } catch (error) {
+          throw new Error(error)
+      }
+  })
 
-// exports.updateOrderStatus = asyncHandler(async (req, res) => {
-//   const { status } = req.body;
-//   const { id } = req.params;
-//   validateMongoDbId(id);
-//   try {
-//     const updateOrderStatus = await Order.findByIdAndUpdate(
-//       id,
-//       {
-//         orderStatus: status,
-//         paymentIntent: {
-//           status: status,
-//         },
-//       },
-//       { new: true }
-//     );
-//     res.json(updateOrderStatus);
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// });
+  //Update Order Status
+  exports.updateOrderStatus = asyncHandler(async (req, res) => {
+        const { status } = req.body
+        const { id } = req.params
+        try {
+            const updateStatus = await Order.findByIdAndUpdate(id,
+                {
+                  orderStatus: status,
+                }, { new: true })
+                res.json(updateStatus)
+        } catch (error) {
+            throw new Error(error)
+        }
+    })

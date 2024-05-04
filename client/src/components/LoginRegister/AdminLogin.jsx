@@ -11,15 +11,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../features/user/userSlice';
 import { useFormik } from 'formik'
 import Container from '../../Website/Components/Container'
+import { login } from '../../features/admin/adminSlice'
 
 
 
-const loginSchema = yup.object({
+const adminSchema = yup.object({
   email: yup.string().nullable().email("Email Should be Valid"),
   password: yup.string().required("Password is required"),
 });
 
-const Login = () => {
+const AdminLogin = () => {
   const authState = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Using useNavigate hook for navigation
@@ -29,18 +30,21 @@ const Login = () => {
       email: '',
       password: '',
     },
-    validationSchema: loginSchema,
+    validationSchema: adminSchema,
     onSubmit: (values) => {
-      dispatch(loginUser(values));
-      // navigate('/')
+      dispatch(login(values))
+      alert(JSON.stringify(values, null, 2));
     },
   });
 
+  const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
   useEffect(() => {
-    if(authState.user !== null && authState.isSuccess == true) {
-      navigate('/')
+    if(user){
+      navigate("/finance")
+    }else{
+      navigate("/")
     }
-  }, [authState])
+  },[navigate, isSuccess])
 
 
 
@@ -164,4 +168,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

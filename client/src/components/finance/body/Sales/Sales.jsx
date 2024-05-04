@@ -15,6 +15,9 @@ import Pagination from "../../components/Pagination";
 import ReportModal from "../../components/ReportModal";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { getSingleOrderData } from "../../../../features/orders/orderSlice";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -27,7 +30,36 @@ function Sales() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // Number of items per page
 
+
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const getUserId = location.pathname.split("/")[3]
+  // console.log(getUserId)
+
+  const getTokenFromLocalStorage = localStorage.getItem("user")
+? JSON.parse(localStorage.getItem("user"))
+: null;
+
+const config = {
+headers: {
+  Authorization: `Bearer ${
+    getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+  }`,
+  Accept: "application/json",
+},
+};
+
+  useEffect(() => {
+    const data = {id: getUserId, config: config}
+      dispatch(getSingleOrderData(data))
+  },[dispatch, getUserId])
+  const orderState = useSelector((state) => state?.order?.orderByUser)
+  console.log(orderState)
+
+  
   const handleStatus = status => {
+
+
     switch (status) {
         case 'Paid':
             return 'success';
