@@ -556,7 +556,7 @@ exports.getAllOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({})
       .populate("user")
       .populate("orderItems.product")
-      .populate("orderItems.color");
+      // .populate("orderItems.color");
     res.json(orders);
   } catch (error) {
     throw new Error(error);

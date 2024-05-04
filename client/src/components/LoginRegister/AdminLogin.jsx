@@ -42,7 +42,7 @@ const AdminLogin = () => {
     if(user){
       navigate("/finance")
     }else{
-      navigate("/")
+      navigate("/admin")
     }
   },[navigate, isSuccess])
 
