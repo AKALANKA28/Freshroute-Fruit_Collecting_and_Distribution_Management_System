@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const FruitDetailSchema = new mongoose.Schema({
+  imageUrl: {
+    type: String,
+  },
   fruit: {
     type: String,
     required: true,
@@ -15,7 +18,7 @@ const FruitDetailSchema = new mongoose.Schema({
   },
 
   price: {
-    type: String,
+    type: Number,
   },
   quality: {
     type: String,
