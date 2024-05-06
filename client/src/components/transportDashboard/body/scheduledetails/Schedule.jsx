@@ -16,7 +16,7 @@ import { writeFile } from "xlsx";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function Schedule() {
+function Schedule(item, handleAssign) {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -240,6 +240,13 @@ function Schedule() {
                       <td>{schedule.quantity}</td>
                       <td className="action">
                         <div className="buttons">
+
+                        <button
+                            className="btn btn-edit"
+                            onClick={() => handleAssign(item)}
+                          >
+                          Assign
+                          </button>
                           <button
                             className="btn btn-edit"
                             onClick={() => handleEditModalOpen(schedule)}
