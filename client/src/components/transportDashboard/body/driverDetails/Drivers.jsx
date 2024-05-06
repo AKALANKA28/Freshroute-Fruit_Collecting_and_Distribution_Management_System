@@ -2,29 +2,27 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
-import SearchBar from './SearchBar';
+import SearchBar from "./SearchBar";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-import ScheduleForm from "./ScheduleForm";
-import ScheduleReport from "./ScheduleReport";
-import "./Schedule.css";
+import "../scheduledetails/Schedule.css";
 import { ToastContainer } from "react-toastify";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 
-
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function Schedule() {
+function Drivers() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
-  const [filter, setFilter] = useState('Today');
+  const [filter, setFilter] = useState("Today");
+  const [assignedDrivers, setAssignedDrivers] = useState([]);
 
-  const [filteredDataList, setFilteredDataList] = useState([]); 
-  
+  const [filteredDataList, setFilteredDataList] = useState([]);
+
   useEffect(() => {
     getFetchData();
   }, []);
@@ -35,15 +33,13 @@ function Schedule() {
 
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/Schedule/");
+      const response = await axios.get("/schedule/get/drivers");
       setDataList(response.data);
       console.log(response);
-
     } catch (err) {
       alert(err.message);
     }
   };
-
 
   // Search functionality
   const handleSearch = (query) => {
@@ -54,19 +50,17 @@ function Schedule() {
     setFilteredDataList(filteredList);
   };
 
-
   const handleRefreshClick = () => {
     getFetchData();
-    
   };
   const generateExcelFile = () => {
     // Define the worksheet
     const ws = XLSX.utils.json_to_sheet(dataList);
-  
+
     // Define the workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Schedule Report");
-  
+
     // Generate the Excel file
     writeFile(wb, "schedule_report.xlsx");
   };
@@ -130,8 +124,9 @@ function Schedule() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
-
-
+  const handleAssign = (driver) => {
+    setAssignedDrivers((prev) => [...prev, driver._id]);
+  };
 
   return (
     <div className="main">
@@ -140,34 +135,36 @@ function Schedule() {
           <div className="page-header">
             <div class="add-item d-flex">
               <div class="card-title">
-              Schedule Details<span>| {filter}</span>
-
-                <h6>Manage Schedule</h6>
+                Driver Details
+                <h6>Assign Drivers</h6>
               </div>
             </div>
             <ul class="table-top-head">
-            <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Schedule Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <ScheduleReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
+              <li>
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+                  {/* <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Schedule Details Report</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PDFViewer width="100%" height="500px">
+                        <ScheduleReport dataList={dataList} />
+                      </PDFViewer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        variant="secondary"
+                        onClick={handleCloseReportModal}
+                      >
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal> */}
+                </div>
+              </li>
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
@@ -189,19 +186,19 @@ function Schedule() {
                 className="btn btn-added"
                 onClick={handleAddModalOpen}
               >
-                <i className="bi bi-plus-circle"></i> Add Schedule
+                <i className="bi bi-plus-circle"></i> Add Driver
               </button> */}
             </div>
           </div>
-
-          {/* <Modal show={addModalOpen} onHide={handleAddModalClose}>
+          {/* 
+          <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
               <Modal.Title>Add Schedule</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <ScheduleForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
-          </Modal> */}
+          </Modal>
 
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
@@ -213,54 +210,67 @@ function Schedule() {
                 initialData={selectedSchedule}
               />
             </Modal.Body>
-          </Modal>
+          </Modal> */}
 
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">Schedule ID</th>
-                  <th scope="col">Vehicle No</th>
+                  <th scope="col">Image</th>
                   <th scope="col">Driver Name</th>
-                  <th scope="col">Pickup Location</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Status</th>
-
+                  <th scope="col">NIC</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Address</th>
+                  {/* <th scope="col">Date</th>
+                  <th scope="col">Quantity</th> */}
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-              {filteredDataList.length ? (
-                  filteredDataList.map((schedule) => (
-                    <tr key={schedule._id}>
-                      <td>{schedule.schedule_ID}</td>
-                      <td>{schedule.vehicle_no}</td>
-                      <td>{schedule.driver_name}</td>
-                      <td>{schedule.pickup_location}</td>
-                      <td>{schedule.destination}</td>
-                      <td>{new Date(schedule.date).toLocaleDateString()}</td>
-                      <td>{schedule.quantity}</td>
-                      <td>Pending</td>
-
+                {filteredDataList.length ? (
+                  filteredDataList.map((driver) => (
+                    <tr key={driver._id}>
+                      <td>
+                        {driver.imageUrl && (
+                          <img
+                            src={driver.imageUrl}
+                            alt="Employee Profile"
+                            className="rounded-circle"
+                            style={{ width: "45px", height: "45px" }}
+                          />
+                        )}
+                      </td>
+                      <td>{driver.name}</td>
+                      <td>{driver.nic}</td>
+                      <td>{driver.email}</td>
+                      <td>{driver.address}</td>
+                      {/* <td>{driver.date}</td>
+                      <td>{driver.quantity}</td> */}
                       <td className="action">
                         <div className="buttons">
-
-
                           <button
                             className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(schedule)}
+                            onClick={() => handleAssign(driver)}
+                            disabled={assignedDrivers.includes(driver._id)}
+                            style={{padding: "5px 15px"}}
+                          >
+                            {assignedDrivers.includes(driver._id)
+                              ? "Assigned"
+                              : "Assign"}
+                          </button>
+                          {/* <button
+                            className="btn btn-edit"
+                            onClick={() => handleEditModalOpen(driver)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
                           <button
                             className="btn btn-delete"
-                            onClick={() => handleDelete(schedule._id)}
+                            onClick={() => handleDelete(driver._id)}
                           >
                             <i className="bi bi-trash-fill"></i>
-                          </button>
+                          </button> */}
                         </div>
                       </td>
                     </tr>
@@ -292,4 +302,4 @@ function Schedule() {
   );
 }
 
-export default Schedule;
+export default Drivers;

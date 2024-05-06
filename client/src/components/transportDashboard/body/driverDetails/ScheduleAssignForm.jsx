@@ -5,17 +5,17 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8070/";
 function ScheduleAssignForm({ show, onHide, formData, handleSubmit, handleOnChange }) {
 
-    const [orderProcessor, setOrderProcessor] = useState([]);
+    const [vehicle, setVehicle] = useState([]);
 
     useEffect(() => {
         if (show) {
-            getOrderProcessor()
+            getVehicle()
         }
     }, [show])
 
     const handleVehicleChange = (event) => {
         const { value } = event.target;
-        orderProcessor.map((op) => {
+        vehicle.map((op) => {
             if (op.id === value) {
                 event.target.opName = op.name;
                 event.target.opId = value;
@@ -29,12 +29,12 @@ function ScheduleAssignForm({ show, onHide, formData, handleSubmit, handleOnChan
         onHide();
     };
 
-    const getOrderProcessor = async () => {
+    const getVehicle = async () => {
         try {
-            const response = await axios.get("/om/processorList");
-            const orderProcessorList = response.data;
-            if (orderProcessorList) {
-                setOrderProcessor(orderProcessorList.opList);
+            const response = await axios.get("/vehicle/");
+            const vehicleList = response.data;
+            if (vehicleList) {
+                setVehicle(vehicleList.opList);
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
@@ -85,7 +85,7 @@ function ScheduleAssignForm({ show, onHide, formData, handleSubmit, handleOnChan
                             <Form.Label>Vehicle</Form.Label>
                             <Form.Select name="vehicle" required onChange={handleVehicleChange} value={formData.opId}>
                                 <option value="">Select Vehicle</option>
-                                {orderProcessor.map((vehicle, index) => (
+                                {vehicle.map((vehicle, index) => (
                                     <option key={index} value={vehicle.id}>
                                         {vehicle.vehicle_no}
                                     </option>

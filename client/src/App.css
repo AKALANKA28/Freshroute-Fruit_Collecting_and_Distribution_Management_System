@@ -121,6 +121,11 @@ body{
   font-size: 12px !important;
 }
 
+td{
+  vertical-align: middle;
+  /* text-align: center; */
+}
+
 /*----------------------------------------------------
 #overrride some default bootsstrap styling
 -----------------------------------------------------*/

@@ -130,3 +130,13 @@ exports.createSchedulesForDrivers = async () => {
 
 
 
+  exports.getAllDrivers = async (req, res) => {
+    try {
+
+        const drivers = await Employee.find({ jobrole: 'Driver' });
+        res.json(drivers);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error retrieving drivers", error: err.message });
+    }
+};

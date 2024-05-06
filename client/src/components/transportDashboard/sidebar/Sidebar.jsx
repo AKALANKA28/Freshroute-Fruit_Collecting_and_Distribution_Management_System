@@ -59,6 +59,13 @@ const Sidebar = () => {
                 </a>
             </li>
 
+            <li className='nav-item'>
+                <a className='nav-link collapsed' href='/DriverDetails'>
+                    <i className='bi bi-journal-medical'></i>
+                    <span>Driver Details</span>
+                </a>
+            </li>
+
 
 
             <div className='mt-15'>

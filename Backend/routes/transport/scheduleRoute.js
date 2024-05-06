@@ -7,6 +7,7 @@ router.post("/add", scheduleController.addSchedule);
 
 // Retrieve all schedule records
 router.get("/", scheduleController.getAllSchedule);
+router.get("/get/drivers", scheduleController.getAllDrivers);
 
 // Retrieve a specific schedule record by ID
 router.get("/get/:id", scheduleController.getScheduleById);
