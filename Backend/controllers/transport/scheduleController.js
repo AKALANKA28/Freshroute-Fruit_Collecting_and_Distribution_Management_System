@@ -1,4 +1,5 @@
 const Schedule = require('../../models/transport/schedule');
+const Employee = require('../../models/StaffManager/Employee')
 
 // Add a new schedule record
 exports.addSchedule = async (req, res) => {
@@ -93,3 +94,39 @@ exports.deleteSchedule = async (req, res) => {
         res.status(500).json({ status: "Error deleting schedule record", error: err.message });
     }
 };
+
+
+
+// Function to create schedules for drivers
+exports.createSchedulesForDrivers = async () => {
+    try {
+      // Query employees with jobrole "driver"
+      const drivers = await Employee.find({ jobrole: 'driver' });
+  
+      // Iterate over each driver
+      for (const driver of drivers) {
+        // Create a new schedule entry for the driver
+        const newSchedule = new Schedule({
+          vehicle_no: driver.vehicle_no, // Assuming vehicle_no is a field in the Employee model
+          driver_name: driver.name, // Assuming name is a field in the Employee model
+          pickup_location: driver.address, // Assuming address is a field in the Employee model
+          destination: 'Destination Address', // Set the destination as required
+          date: new Date(), // Set the date as required
+          quantity: 1, // Set the quantity as required
+          // Add any other fields you need to populate in the schedule model
+        });
+  
+        // Save the new schedule entry
+        await newSchedule.save();
+      }
+  
+      console.log('Schedules created successfully for drivers.');
+    } catch (error) {
+      console.error('Error creating schedules:', error);
+    }
+  };
+
+
+
+
+

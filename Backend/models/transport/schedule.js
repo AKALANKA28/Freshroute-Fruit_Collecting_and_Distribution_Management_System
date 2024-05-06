@@ -8,10 +8,16 @@ const schedule = mongoose.Schema({
         type: Number,
         required: true
     },
+
+    image: {
+        type: String,
+    }, 
+
     vehicle_no: {
         type: String,
         required: true
     },
+
     driver_name : {
         type : String,
         required: true,

@@ -16,7 +16,7 @@ import { writeFile } from "xlsx";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
-function Schedule(item, handleAssign) {
+function Schedule() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -24,7 +24,7 @@ function Schedule(item, handleAssign) {
   const [filter, setFilter] = useState('Today');
 
   const [filteredDataList, setFilteredDataList] = useState([]); 
-
+  
   useEffect(() => {
     getFetchData();
   }, []);
@@ -37,10 +37,13 @@ function Schedule(item, handleAssign) {
     try {
       const response = await axios.get("/Schedule/");
       setDataList(response.data);
+      console.log(response);
+
     } catch (err) {
       alert(err.message);
     }
   };
+
 
   // Search functionality
   const handleSearch = (query) => {
@@ -243,7 +246,7 @@ function Schedule(item, handleAssign) {
 
                         <button
                             className="btn btn-edit"
-                            onClick={() => handleAssign(item)}
+                            // onClick={() => handleAssign(item)}
                           >
                           Assign
                           </button>

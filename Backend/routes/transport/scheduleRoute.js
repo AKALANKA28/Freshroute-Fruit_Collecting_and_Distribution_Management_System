@@ -18,3 +18,5 @@ router.patch("/update/:id", scheduleController.updateSchedule);
 router.delete("/delete/:id", scheduleController.deleteSchedule);
 
 module.exports = router;
+
+
