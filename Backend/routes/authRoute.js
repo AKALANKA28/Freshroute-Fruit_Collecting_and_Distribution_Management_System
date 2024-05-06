@@ -34,9 +34,9 @@ router.delete('/delete-product-from-cart/:cartItemId', authMiddleware, userContr
 router.delete('/empty-cart', authMiddleware, userController.emptyCart);
 
 
-router.get('/allorders', authMiddleware, isAdmin, userController.getAllOrders)
+router.get('/allorders',  userController.getAllOrders)
 router.get('/getsingleorder/:id', authMiddleware, isAdmin, userController.getSingleOrder)
-router.put('/order/update-order-status/:id', authMiddleware, isAdmin, userController.updateOrderStatus)
+router.put('/order/update/:id', authMiddleware, isAdmin, userController.updateOrderStatus)
 
 // router.post('/cart',  userController.userCart);
 // router.get('/get-cart', userController.getUserCart);

@@ -200,7 +200,7 @@ function Sales() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/sales/add", formData);
+      await axios.post("/users/order/add", formData);
       alert("Sales Added");
       handleAddModalClose();
       getFetchData();
@@ -211,7 +211,7 @@ function Sales() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/sales/delete/${id}`);
+      await axios.delete(`/user/order/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
@@ -221,7 +221,7 @@ function Sales() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.patch(`/sales/update/${formData._id}`, formData);
+      await axios.patch(`/user/order/update/${formData._id}`, formData);
       alert("Sales Updated");
       handleEditModalClose();
       getFetchData();
