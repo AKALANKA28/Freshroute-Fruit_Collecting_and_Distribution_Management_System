@@ -21,6 +21,7 @@ function Employee() {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]);
   const [employeeToDelete, setEmployeeToDelete] = useState(null);
+  const [jobRoleFilter, setJobRoleFilter] = useState("all"); 
 
   useEffect(() => {
     // Fetch data
@@ -127,6 +128,21 @@ function Employee() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
+  // Step 2: Get unique job roles from data
+  const jobRoles = Array.from(new Set(dataList.map(employee => employee.jobrole)));
+
+  // Step 3: Handle changes in the dropdown selection
+  const handleJobRoleChange = (e) => {
+    const selectedRole = e.target.value;
+    setJobRoleFilter(selectedRole);
+    if (selectedRole === "all") {
+      setFilteredDataList(dataList); // Show all data when "All Job Roles" is selected
+    } else {
+      const filteredList = dataList.filter(employee => employee.jobrole === selectedRole);
+      setFilteredDataList(filteredList);
+    }
+  };
+
   return (
     <div id='main' className='main'>
       <br/><br/>
@@ -190,6 +206,7 @@ function Employee() {
                 <i className="bi bi-plus-circle"></i> Add New Employee
               </button>
             </div>
+            
           </div>
           <Modal show={addModalOpen} onHide={handleAddModalClose}>
             <Modal.Header closeButton>
@@ -230,7 +247,20 @@ function Employee() {
           </Modal>
 
           <div className="table-container">
+            
             <SearchBar onSearch={handleSearch} />
+         
+            <div className="dropdown">
+              <select 
+                className="form-select"
+                value={jobRoleFilter} 
+                onChange={handleJobRoleChange}>
+                <option value="all">All Job Roles</option>
+                {jobRoles.map((role, index) => (
+                  <option key={index} value={role}>{role}</option>
+                ))}
+              </select>
+            </div>
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
