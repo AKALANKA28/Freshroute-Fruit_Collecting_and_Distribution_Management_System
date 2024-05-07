@@ -121,60 +121,6 @@ app.use("/op", orderProcessorRoute);
 
 
 
-// app.post("/user/checkout", async(req, res) => {
-//   const {product} = req.body;
-
-//   const lineItems = product.map((product) => ({
-//     price_data: {
-//       currency: "inr",
-//       product_data: {
-//         name: product.dish
-//       },
-//       unit_amount: product.price * 100,
-//     },
-//     quantity:product.qnty
-//   }));
-
-//   const session = await stripe.checkout.sessions.create({
-//     payment_method_types: ["card"],
-//     line_items:lineItems,
-//     mode: "payment",
-//     success_url:"",
-//     cancel_url:"",
-//   })
-//   res.json({id:session.id})
-
-// })
-
-// app.post("/create-checkout-session", async (req, res) => {
-//   // const { products } = req.body; 
-//   // console.log(products);
-//   try {
-//     const session = await stripe.checkout.sessions.create({
-//       payment_method_types: ["card"],
-//       line_items: [
-//         {
-//           price_data: {
-//             currency: "usd",
-//             product_data: {
-//               name: "Stubborn Attachments",
-//               images: ["https://i.imgur.com/EHyR2nP.png"],
-//             },
-//             unit_amount: 2000,
-//           },
-//           quantity: 1,
-//         },
-//       ],
-//       mode: "payment",
-//       success_url: `http://localhost:3000/?success=true`,
-//       cancel_url: `http://localhost:3000/?canceled=true`,
-//     });
-
-//     res.json({ id: session.id });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 
 
 

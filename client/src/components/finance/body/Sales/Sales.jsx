@@ -200,7 +200,7 @@ function Sales() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/sales/add", formData);
+      await axios.post("/users/order/add", formData);
       alert("Sales Added");
       handleAddModalClose();
       getFetchData();
@@ -211,7 +211,7 @@ function Sales() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/sales/delete/${id}`);
+      await axios.delete(`/user/order/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
@@ -221,7 +221,7 @@ function Sales() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.patch(`/sales/update/${formData._id}`, formData);
+      await axios.patch(`/user/order/update/${formData._id}`, formData);
       alert("Sales Updated");
       handleEditModalClose();
       getFetchData();
@@ -335,23 +335,23 @@ function Sales() {
                   {orderState.map((sales) => (
                     <tr key={sales._id}>
                       <td>{sales?.user?.name}</td>
-                      <td>{sales?.createdAt}</td>
+                      <td>{new Date(sales.createdAt).toLocaleDateString()}</td>
                       <td>
                         <ul>
                           {sales.orderItems.map((item) => (
-                            <li key={item._id}>{item.product.title}</li>
+                            <li key={item._id} className="border-bottom">{item.product.title}</li>
                           ))}
                         </ul>
                       </td>
                       <td><ul>
                           {sales.orderItems.map((item) => (
-                            <li key={item._id}>Rs. {item.price.toFixed(2)}</li>
+                            <li key={item._id} className="border-bottom">Rs. {item.price.toFixed(2)}</li>
                           ))}
                         </ul></td>
                       <td>
                         <ul>
                           {sales.orderItems.map((item) => (
-                            <li key={item._id}>{item.quantity}</li>
+                            <li key={item._id} className="border-bottom">{item.quantity}</li>
                           ))}
                         </ul>
                       </td>
