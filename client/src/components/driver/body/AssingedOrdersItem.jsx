@@ -1,13 +1,13 @@
 import React from 'react'
 
-const RecentActivityItem = ({item}) => {
+const AssingedOrdersItem = ({item}) => {
   return (
     <div className='activity-item- d-flex'>
-        <div className="activaty-label">{item.time}</div>
+        <div className="activaty-label">{item.location}</div>
         <i className= {`bi bi-circle-fill activity-badge ${item.color} align-self-start`}>
         </i>
         {item.highlight === '' ? (
-            <div className="activity-content">{item.content}</div>
+            <div className="activity-content">{item.location}</div>
         ) : (
             <div className="activity-content">
                 {item.content.substring(0, item.content.indexOf(item.highlight))}
@@ -24,4 +24,4 @@ const RecentActivityItem = ({item}) => {
   )
 }
 
-export default RecentActivityItem
+export default AssingedOrdersItem

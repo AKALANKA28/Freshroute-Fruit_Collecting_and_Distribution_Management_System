@@ -2,6 +2,7 @@ import React from 'react'
 import '../../../App.css'
 import navList from './navItem';
 import logo from '../../../assests/logo.png'
+import { FaChevronRight } from "react-icons/fa";
 
 const Sidebar = () => {
 
@@ -16,7 +17,8 @@ const Sidebar = () => {
         < img src={logo} alt='logo image'/>
            <span className='d-none d-lg-block'>FreshRoute</span>
         </a>
-       <i className='bi bi-list toggle-sidebar-btn' onClick={handleToggleSideBar}></i>
+        <hr className='hr'></hr>        
+        <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
        </div>
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
@@ -74,17 +76,19 @@ const Sidebar = () => {
             </a>
           </li>
 
-          <li className="nav-heading">Pages</li>
-          <div className="navList">
-            {navList.map((nav) => (
-              <li className="nav-item" key={nav._id}>
-                <a className="nav-link collapsed" href={"/login"}>
-                  <i className={nav.icon}></i>
-                  <span>{nav.name}</span>
+          <div className="mt-16 ">
+            <li className='nav-item'>
+                <a className='nav-link collapsed' href='/login'>
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
                 </a>
-              </li>
-            ))}
-          </div>
+            </li> <li className='nav-item'>
+                <a className='nav-link collapsed' href='/login'>
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+            </div>
         </ul>
       </aside>
     </div>

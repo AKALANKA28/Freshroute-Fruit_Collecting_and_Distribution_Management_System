@@ -8,19 +8,12 @@ const ReportCharts = () => {
                 name:'Sales',
                 data: [31, 40, 28, 51, 42, 82, 56],
             },
-            {
-                name:'Revenue',
-                data: [31, 0, 28, 81, 92, 82, 66],
-            },
-            {
-                name:'Customers',
-                data: [31, 30, 70, 59, 42, 32, 96],
-            },
+
         ],
 
         options: {
             chart: {
-                height: 350,
+                height: 150,
                 type: 'area',
                 toolbar: {
                     show: false,

@@ -91,6 +91,10 @@ body{
 }
 
 
+.mt-8{
+  margin-top: 4rem;
+
+}
 .mt-15{
   margin-top: 15rem;
 }
@@ -108,6 +112,10 @@ body{
   gap: 6px;
 }
 
+.gap-9{
+  gap: 4.6rem;
+}
+
 
 
 .btn-success{
@@ -119,6 +127,7 @@ body{
 .error{
   color: red !important;
   font-size: 12px !important;
+  text-transform: capitalize;
 }
 
 td{
@@ -678,9 +687,9 @@ header .search-form input:hover{
   align-items: center;
   font-size: 16px;
   font-weight: 500;
-  color: var(--textColor);
+  color: #ffff;
   transition: 0.3s;
-  background: #f6fde8;
+  background: var(--primaryColor);
   padding: 10px 15px;
   border-radius: 4px;
 
@@ -696,7 +705,7 @@ header .search-form input:hover{
 .sidebar-nav .nav-link i{
   font-size: 20px;
   margin-right: 10px;
-  color:var(--textColor);
+  color:var(--bgColor);
 }
 
 
@@ -995,6 +1004,19 @@ header .search-form input:hover{
   min-height: 75vh;
 }
 
+.table {
+  text-transform: capitalize;
+}
+
+.table td {
+  font-size: 14px;
+}
+
+.badge{
+  padding: 8px 20px;
+  font-weight: 500;
+  font-size: 14px;
+}
 /* ---------------------------------------------------- */
 
 

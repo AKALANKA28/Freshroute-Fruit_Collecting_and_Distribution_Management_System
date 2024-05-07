@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: 110px;
+    width: 95px;
     background-color: #ffffff;
     transition: all 0.3s;
     padding: 20px;
@@ -18,3 +18,7 @@
     }
   }
   
+
+  .driver-sidebar .collapsed{
+    margin-top: 30rem;
+  }

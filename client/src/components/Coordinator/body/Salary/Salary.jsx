@@ -8,11 +8,13 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import SalaryForm from "./SalaryForm";
 import SalaryReport from "./SalaryReport";
+import SpinnerModal from '../../../spinner/SpinnerModal';
 import "./Salary.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Salary() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -22,7 +24,14 @@ function Salary() {
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -122,6 +131,9 @@ function Salary() {
   return (
     <div id='main' className='main'>
       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -225,7 +237,7 @@ function Salary() {
                 <tr>
                   <th scope="col">Job Role</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Salary(Rs)</th>
+                  <th scope="col">Salary</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -235,7 +247,8 @@ function Salary() {
                     <tr key={salary._id}>
                       <td>{salary.jobrole}</td>
                       <td>{salary.date}</td>
-                      <td>{salary.salary}</td>
+                      <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
+                      
                       <td className="action">
                         <div className="buttons">
                           <button
@@ -264,6 +277,7 @@ function Salary() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

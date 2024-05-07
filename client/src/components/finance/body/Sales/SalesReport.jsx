@@ -1,15 +1,8 @@
 import React from "react";
 import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
-import logo from "../../../../assests/logo.png"; // Import your logo image
+// import logo from "../../../../assests/logo.png"; // Import your logo image
 
 const styles = StyleSheet.create({
-
-  logo: {
-    width: 100, // Adjust the width of your logo as needed
-    height: 100, // Adjust the height of your logo as needed
-    marginBottom: 10, // Adjust the margin as needed
-    alignItems: "center"
-  },
 
   page: {
     flexDirection: "row",
@@ -20,80 +13,43 @@ const styles = StyleSheet.create({
     padding: 10,
     flexGrow: 1,
   },
-
   heading: {
     fontSize: 24,
     marginBottom: 10,
     textAlign: "center",
-    color: "#333333",
   },
-
-  top: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 15,
-
-  },
-
-  info: {
-    flex: "1",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-    overflow: "hidden",
-
-  },
-
-  leftTable: {
-    width: "30%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    backgroundColor: "#FFFFFF",
-    borderColor: "#FFFFFF",
-    borderRadius: 5,
-    overflow: "hidden",
-  },
-
-  topTableColHeader: {
-    padding: 8,
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#333333",
-    textAlign: "center",
-  },
-
-
-  rightTable: {
-  },
-
   table: {
+    display: "table",
     width: "100%",
     borderStyle: "solid",
     borderWidth: 1,
-    borderColor: "#AAAAAA",
-    borderRadius: 5,
-    overflow: "hidden",
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
   },
-  tableRow: {
+  tableRow: { 
     flexDirection: "row",
-    backgroundColor: "#F0F0F0",
-    borderBottomWidth: 1,
-    borderBottomColor: "#AAAAAA",
+    backgroundColor: "#FFF",
   },
   tableColHeader: {
-    padding: 8,
+    borderStyle: "solid",
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    padding: 5,
+    flex: 1,
     fontSize: 12,
-    fontWeight: "bold",
-    color: "#333333",
-    textAlign: "center",
   },
   tableCol: {
-    padding: 8,
+    borderStyle: "solid",
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    padding: 5,
+    flex: 1,
     fontSize: 10,
-    color: "#333333",
-    textAlign: "center",
   },
-
+  // logo: {
+  //   width: 100,
+  //   height: 100
+  // }
     paddingRight: 2,
 
     hr: {
@@ -117,7 +73,7 @@ const SalesReport = ({ dataList }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-        <Image src={logo} style={styles.logo} /> {/* Include your logo */}
+        {/* <Image src={logo} style={styles.logo} /> */}
         <View style={styles.hr} /> {/* Horizontal rule */}
 
           <Text style={styles.heading}>Sales Report</Text>
