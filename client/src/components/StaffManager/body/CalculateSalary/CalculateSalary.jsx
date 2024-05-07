@@ -101,6 +101,21 @@ function CalculateSalary() {
     }
   };
 
+  const handlePay = async (calculateSalary) => {
+    try {
+      const { _id } = calculateSalary;
+      await axios.put(`/CalculateSalary/update/${_id}`, { allowance: null, netsalary: null });
+      alert("Salary Paid");
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+  
+  
+
+  
+
   const [showReportModal, setShowReportModal] = useState(false);
 
   const handleCloseReportModal = () => setShowReportModal(false);
@@ -192,6 +207,7 @@ function CalculateSalary() {
                 <th scope="col">Allowance</th>
                 <th scope="col">Net Salary</th>
                 <th>Calculator</th>
+                <th>Pay Salary</th>
               </tr>
             </thead>
             <tbody>
@@ -207,12 +223,22 @@ function CalculateSalary() {
                     <td>{employee.allowance}</td>
                     <td>{employee.netsalary}</td>
                     <td>
-                      <div className="buttons">
+                      <div className="justify-content-center buttons">
                         <button
                           className="btn btn-edit"
                           onClick={() =>handleEditModalOpen(employee)}
                         >
                           <i className="bi bi-calculator"></i>
+                        </button>
+                        </div>
+                        </td>
+                        <td>
+                          <div>
+                        <button
+                          className="btn btn-success"
+                          onClick={() =>handlePay(employee)}
+                        >
+                          <i className="bi bi-paypal">Pay</i>
                         </button>
                       </div>
                     </td>
@@ -220,7 +246,7 @@ function CalculateSalary() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="9">No Data</td>
+                  <td colSpan="10">No Data</td>
                 </tr>
               )}
             </tbody>
