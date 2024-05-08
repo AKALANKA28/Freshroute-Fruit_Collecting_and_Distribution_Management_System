@@ -242,16 +242,18 @@ function Schedule() {
                       <td>{schedule.pickup_location}</td>
                       <td>{schedule.destination}</td>
                       <td>{new Date(schedule.date).toLocaleDateString()}</td>
-                      <td>{schedule.quantity}</td>
-                      <td>Pending</td>
+                      <td>{schedule.quantity} kg</td>
+                      <td><span className="bg-warning rounded" style={{padding: "7px 10px", color: "White"}}>On The Way</span></td>
 
                       <td className="action">
                         <div className="buttons">
 
 
-                          <button
+                          <button disabled
                             className="btn btn-edit"
+
                             onClick={() => handleEditModalOpen(schedule)}
+                            style={{backgroundColor:"rgb(255 193 7 / 58%)", border:"solid 1px rgb(255 193 7 / 58%)", color:"#ffffff"}}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>

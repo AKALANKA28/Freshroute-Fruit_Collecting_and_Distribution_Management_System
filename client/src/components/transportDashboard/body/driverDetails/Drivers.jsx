@@ -264,8 +264,8 @@ function Drivers() {
                             onClick={() => handleEditModalOpen(driver)}
                           >
                             <i className="bi bi-pencil-square"></i>
-                          </button>
-                          <button
+                          </button> */}
+                          {/* <button
                             className="btn btn-delete"
                             onClick={() => handleDelete(driver._id)}
                           >

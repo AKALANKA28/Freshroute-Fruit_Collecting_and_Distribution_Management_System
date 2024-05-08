@@ -8,7 +8,7 @@ const TopCards = () => {
     const [totalRevenueAmount, setTotalRevenueAmount] = useState(0);
 
 
-    const [filter, setFilter] = useState('Today');
+    const [filter, setFilter] = useState('This Week');
     const handleFilterChange = filter => {
         setFilter(filter)
     };
