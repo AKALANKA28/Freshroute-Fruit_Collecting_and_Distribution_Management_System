@@ -1007,13 +1007,28 @@ header .search-form input:hover{
   min-height: 75vh;
 }
 
+
 .table {
-  text-transform: capitalize;
-  --bs-table-border-color: #c3c3c3;
+  width: 100%;
+  border-collapse: collapse;
+  /* margin-top: 30px; */
+  white-space: normal; /* Enable text wrapping */
+  word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
+  padding: 8px;
+
+}
+
+.table th{
+ /* background-color: #808080; */
+ padding: 8px;
+ width: 100px;
 }
 
 .table td {
   font-size: 14px;
+  padding: 8px;
+  width: 100px;
+
 }
 
 .badge{

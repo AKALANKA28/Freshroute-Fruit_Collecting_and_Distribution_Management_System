@@ -280,3 +280,12 @@ font-family:'Trebuchet MS', sans-serif;
     right: 50px;
     top: 2px;
 }
+
+
+
+.vehicle-details .vehicle-img{
+    width: 100%;
+    object-fit: cover;
+    margin-top: -15px;
+    filter: drop-shadow(-2px 4px 5px rgba(0, 0, 0, 0.3))  /* Example shadow */
+}
