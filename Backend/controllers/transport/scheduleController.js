@@ -1,9 +1,10 @@
 const Schedule = require('../../models/transport/schedule');
+const Employee = require('../../models/StaffManager/Employee')
 
 // Add a new schedule record
 exports.addSchedule = async (req, res) => {
     try {
-        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, time, quantity} = req.body;
+        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, quantity} = req.body;
 
         const newSchedule = new Schedule({
             schedule_ID,
@@ -12,7 +13,6 @@ exports.addSchedule = async (req, res) => {
             pickup_location,
             destination,
             date: new Date(date),
-            time,
             quantity,
       
         });
@@ -58,7 +58,7 @@ exports.getScheduleById = async (req, res) => {
 exports.updateSchedule = async (req, res) => {
     try {
         const scheduleId = req.params.id;
-        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, time, quantity } = req.body;
+        const {schedule_ID, vehicle_no, driver_name, pickup_location, destination, date, quantity } = req.body;
 
         const updateSchedule = {
             schedule_ID,
@@ -67,7 +67,6 @@ exports.updateSchedule = async (req, res) => {
             pickup_location,
             destination,
             date: new Date(date),
-            time,
             quantity,
         };
 
@@ -93,5 +92,51 @@ exports.deleteSchedule = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: "Error deleting schedule record", error: err.message });
+    }
+};
+
+
+
+// Function to create schedules for drivers
+exports.createSchedulesForDrivers = async () => {
+    try {
+      // Query employees with jobrole "driver"
+      const drivers = await Employee.find({ jobrole: 'driver' });
+  
+      // Iterate over each driver
+      for (const driver of drivers) {
+        // Create a new schedule entry for the driver
+        const newSchedule = new Schedule({
+          vehicle_no: driver.vehicle_no, // Assuming vehicle_no is a field in the Employee model
+          driver_name: driver.name, // Assuming name is a field in the Employee model
+          pickup_location: driver.address, // Assuming address is a field in the Employee model
+          destination: 'Destination Address', // Set the destination as required
+          date: new Date(), // Set the date as required
+          quantity: 1, // Set the quantity as required
+          // Add any other fields you need to populate in the schedule model
+        });
+  
+        // Save the new schedule entry
+        await newSchedule.save();
+      }
+  
+      console.log('Schedules created successfully for drivers.');
+    } catch (error) {
+      console.error('Error creating schedules:', error);
+    }
+  };
+
+
+
+
+
+  exports.getAllDrivers = async (req, res) => {
+    try {
+
+        const drivers = await Employee.find({ jobrole: 'Driver' });
+        res.json(drivers);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error retrieving drivers", error: err.message });
     }
 };

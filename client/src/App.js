@@ -38,6 +38,7 @@ import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupp
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+import ProcessDetails from "./components/transportDashboard/ProcessDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder";
@@ -76,6 +77,8 @@ import Cart from "./Website/Shop/Cart/Cart";
 import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
+import Drivers from "./components/transportDashboard/body/driverDetails/Drivers";
+import DriverDetails from "./components/transportDashboard/DriverDetails";
 
 const router = createBrowserRouter([
   {
@@ -521,6 +524,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/ProcessDetails",
+    element: (
+      <div>
+        <ProcessDetails />
+      </div>
+    ),
+  },
 
   {
     path: "/QualityList",
@@ -544,6 +555,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ScheduleDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/DriverDetails",
+    element: (
+      <div>
+        <DriverDetails />
       </div>
     ),
   },

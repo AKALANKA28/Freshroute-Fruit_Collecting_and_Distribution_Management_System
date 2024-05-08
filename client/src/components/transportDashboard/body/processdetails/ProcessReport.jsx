@@ -1,5 +1,6 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import logo from '../../../../assests/logo.png';
 
 const styles = StyleSheet.create({
   page: {
@@ -44,6 +45,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 10,
   },
+  // logo: {
+  //   width: 100,
+  //   height: 100
+  // }
 });
 
 const ProcessReport = ({ dataList }) => {
@@ -51,6 +56,7 @@ const ProcessReport = ({ dataList }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
+          {/* <Image src={logo} style={styles.logo}></Image> */}
           <Text style={styles.heading}>Process Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
