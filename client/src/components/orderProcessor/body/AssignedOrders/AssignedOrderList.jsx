@@ -85,7 +85,7 @@ const AssignedOrderList = () => {
      const handleShowReportModal = () => setShowReportModal(true);
 
     return (
-        <main className='main' id='main'>
+        <main className='main'>
             <div className="body" id='body'>
                 <div className="card recent-sales overflow-auto">
 

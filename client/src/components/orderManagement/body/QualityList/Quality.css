@@ -1,13 +1,4 @@
 
-@media(max-width: 1199px){
-    #main{
-        padding: 0px;
-    }
-}
-
-.body .recent-sales{
-    font-size: 14px;
-}
 
 .body .recent-sales .table thead{
     background: #f6f6fe !important;
