@@ -2,7 +2,7 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import ScheduleDetailsBody from './body/scheduledetails/ScheduleDetailsBody'
+import Schedule from './body/scheduledetails/Schedule'
 import Footer from './footer/Footer'
 
 
@@ -11,7 +11,7 @@ const ScheduleDetails = () => {
     <div>
       <Header />
       <Sidebar />
-      <ScheduleDetailsBody />
+      <Schedule />
       <Footer />
     </div>
   )

@@ -3,13 +3,14 @@ import './main.css'
 
 import Cards from './Cards'
 import Reports from './Reports'
-import RecentSales from './RecentSales'
+import CurrentProcess from './CurrentProcess'
 import TopSellings from './TopSellings'
 import RecentActivity from './RecentActivity'
 import BudgetReport from './BudgetReport'
-import WebTraffic from './WebTraffic'
+import Deliverymetrics from './Deliverymetrics'
 import News from './News'
 import BackToTop from './BackToTop'
+import TopCards from './TopCards'
 
 const Body = () => {
 
@@ -21,23 +22,25 @@ const Body = () => {
         <div className="row">
             <div className="col-lg-8">
                 <div className="row">
-                    <Cards />
+                  <TopCards />
+                    {/* <Cards /> */}
                     {/* <div className="col-12">
                         <Reports />
                     </div> */}
                     <div className="col-12">
-                     <RecentSales />
+                     <CurrentProcess />
                     </div>
                     <div className="col-12">
-                     <TopSellings />
+
+                     {/* <TopSellings /> */}
                     </div>
                 </div>
             </div>
             <div className="col-lg-4">
               <RecentActivity />
-              <BudgetReport />
-              <WebTraffic />
-              <News />
+              {/* <BudgetReport /> */}
+              <Deliverymetrics />
+         {/*< News />*/}
             </div>
         </div>
         <BackToTop />

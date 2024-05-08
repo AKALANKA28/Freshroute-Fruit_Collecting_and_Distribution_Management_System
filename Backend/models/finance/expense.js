@@ -4,6 +4,8 @@ const expenseSchema = mongoose.Schema({
     date: {
         type: Date,
         required: true,
+        default: Date.now
+
         // validate: {
         //     validator: function(value) {
         //         // Check if date is not in the future

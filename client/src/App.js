@@ -3,15 +3,15 @@ import "remixicon/fonts/remixicon.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-
-
 import Dashboard from "./components/finance/Finance";
-import Login from "./components/LoginRegister/Login";
-import Register from "./components/LoginRegister/Register";
+import Login from "./Website/LoginRegister/Login";
+import Register from "./Website/LoginRegister/Register";
+import AdminLogin from "./components/LoginRegister/AdminLogin";
+
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
@@ -29,6 +29,7 @@ import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import Notice from "./components/StaffManager/Notice";
+import Message from "./components/StaffManager/Message";
 import SalesPage from "./components/finance/SalesPage";
 import SupplierRequests from "./components/supplierManagerDashboard/SupplierRequests";
 import FDashboard from "./components/farmer/FDashboard";
@@ -37,20 +38,20 @@ import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupp
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+import ProcessDetails from "./components/transportDashboard/ProcessDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
-import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder"
-import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder"
-import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder"
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder";
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder";
+import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder";
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
 
-
-import RequestedOrder from './components/RequestedOrder/RequestedOrder';
-import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
-import NormalOrder from './components/NormalOrder/NormalOrder';
-import EditOrder from './components/NormalOrder/EditOrder';
+import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+import NormalOrder from "./components/NormalOrder/NormalOrder";
+import EditOrder from "./components/NormalOrder/EditOrder";
 
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
@@ -61,14 +62,13 @@ import ResourcePage from "./components/researchDashboard/ResourcePage";
 //import NormalOrder from "./components/NormalOrder/NormalOrder";
 //import EditOrder from "./components/NormalOrder/EditOrder";
 
-
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
 import OPDashboard from "./components/orderProcessor/body/OPDashboard";
 import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
 
-import Home from './Website/Home';
+import Home from "./Website/Home";
 import About from "./Website/About";
 import Shop from "./Website/Shop";
 import Contact from "./Website/Contact";
@@ -77,11 +77,12 @@ import Cart from "./Website/Shop/Cart/Cart";
 import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
+import Drivers from "./components/transportDashboard/body/driverDetails/Drivers";
+import DriverDetails from "./components/transportDashboard/DriverDetails";
 
 const router = createBrowserRouter([
- 
   {
-    path: "/home",
+    path: "/",
     element: (
       <div>
         <Home />
@@ -110,9 +111,7 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: (
-      <div>
         <Cart />
-      </div>
     ),
   },
 
@@ -124,7 +123,6 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
 
   {
     path: "/JoinWithUsSupplier",
@@ -154,6 +152,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/admin",
+    element: (
+      <div>
+        <AdminLogin />
+      </div>
+    ),
+  },
+
+  {
     path: "/login",
     element: (
       <div>
@@ -172,7 +179,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/",
+    path: "/finance",
     element: (
       <div>
         <Dashboard />
@@ -198,7 +205,6 @@ const router = createBrowserRouter([
     ),
   },
 
-
   {
     path: "/BMDashboard",
     element: (
@@ -218,7 +224,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/DriverDashboard",
+    path: "/Driver",
     element: (
       <div>
         <DriverDashboard />
@@ -229,54 +235,52 @@ const router = createBrowserRouter([
   {
     path: "/OMDashboard",
     element: (
-        <div>
-          <OrderManagerHomePage />
-        </div>
+      <div>
+        <OrderManagerHomePage />
+      </div>
     ),
-    children: [ {
+    children: [
+      {
         path: "/OMDashboard/",
-        element: <OMDashboard/>,
+        element: <OMDashboard />,
       },
       {
         path: "/OMDashboard/QualityList",
-        element: <QualityList/>,
+        element: <QualityList />,
       },
       {
         path: "/OMDashboard/RequestedOrderList",
-        element: <RequestedOrderList/>,
-      }
-
-    ]
+        element: <RequestedOrderList />,
+      },
+    ],
   },
 
   {
     path: "/OPDashboard",
     element: (
-        <div>
-          <OrderProcessorHomePage />
-        </div>
+      <div>
+        <OrderProcessorHomePage />
+      </div>
     ),
     children: [
       {
         path: "/OPDashboard/",
-        element: <OPDashboard/>,
+        element: <OPDashboard />,
       },
       {
         path: "/OPDashboard/AssignedOrders",
-        element: <AssignedOrder/>,
+        element: <AssignedOrder />,
       },
       {
         path: "/OPDashboard/OngoingOrders",
-        element: <OngoingOrder/>,
+        element: <OngoingOrder />,
       },
       {
         path: "/OPDashboard/CompletedOrders",
-        element: <CompletedOrder/>,
+        element: <CompletedOrder />,
       },
-
-    ]
+    ],
   },
-
 
   {
     path: "/SMDashboard",
@@ -449,7 +453,6 @@ const router = createBrowserRouter([
     ),
   },
 
-
   {
     path: "/TransportFee",
     element: (
@@ -496,6 +499,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/Message",
+    element: (
+      <div>
+        <Message />
+      </div>
+    ),
+  },
+
+  {
     path: "/SalesPage",
     element: (
       <div>
@@ -509,6 +521,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <VehicleDetails />
+      </div>
+    ),
+  },
+  {
+    path: "/ProcessDetails",
+    element: (
+      <div>
+        <ProcessDetails />
       </div>
     ),
   },
@@ -535,6 +555,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ScheduleDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/DriverDetails",
+    element: (
+      <div>
+        <DriverDetails />
       </div>
     ),
   },

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import storage from "../../../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const CategoryForm = ({ handleSubmit, initialData }) => {
+  const [img, setImg] = useState(undefined);
+  const [imgPerc, setImgPerc] = useState(0);
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
@@ -20,11 +24,41 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
   };
 
   const [formData, setFormData] = useState({
+    imageUrl: "",
     fruit: "",
     category: "",
     date: "",
     quality: "",
   });
+  useEffect(() => {
+    img && uploadFile(img, "imageUrl");
+  }, [img]);
+
+  const uploadFile = (file, fileType) => {
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, 'images/fruits/' + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImgPerc(Math.round(progress));
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('DownloadURL - ', downloadURL);
+          setFormData((prev) => ({
+            ...prev,
+            [fileType]: downloadURL
+          }));
+        });
+      }
+    );
+  };
 
   useEffect(() => {
     if (initialData) {
@@ -34,8 +68,9 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "category" && /\d/.test(value)) {
+    if (name === "category" && /[^\p{L}\s]/u.test(value)) {
       return; 
+    
     }
 
     setFormData((prev) => ({
@@ -66,6 +101,17 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
   return (
     <div>
       <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+        <label htmlFor="imageUrl" className="form-label">{imgPerc > 0 && "Uploading: "+ imgPerc+ "%"}
+          Image
+        </label>
+        <input
+         type="file"
+          className="form-control"
+          name="imageUrl"
+         onChange={(e) => setImg(e.target.files[0])}
+/>
+      </div>
         <div className="mb-3">
           <label htmlFor="fruit" className="form-label">
             Fruit

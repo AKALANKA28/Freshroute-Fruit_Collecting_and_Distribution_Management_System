@@ -1,0 +1,7 @@
+/* styles.css or your preferred CSS file */
+.modal-transparent .modal-content {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+  }
+  

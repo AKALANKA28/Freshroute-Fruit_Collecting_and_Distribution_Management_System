@@ -91,6 +91,10 @@ body{
 }
 
 
+.mt-8{
+  margin-top: 4rem;
+
+}
 .mt-15{
   margin-top: 15rem;
 }
@@ -108,7 +112,14 @@ body{
   gap: 6px;
 }
 
+.gap-9{
+  gap: 4.6rem;
+}
 
+
+ul{
+  padding-left: 0;
+}
 
 .btn-success{
   color: #FFFFFF;
@@ -119,6 +130,12 @@ body{
 .error{
   color: red !important;
   font-size: 12px !important;
+  text-transform: capitalize;
+}
+
+td{
+  vertical-align: middle;
+  /* text-align: center; */
 }
 
 /*----------------------------------------------------
@@ -297,7 +314,7 @@ body{
 
 }
 
-.header .search-form input{
+/* .header .search-form input{
   border: 0;
   font-size: 14px;
   color: #000000;
@@ -307,7 +324,7 @@ body{
   width: 100%;
   transition: 0.3s;
 
-}
+} */
 
 header .search-form input:focus,
 header .search-form input:hover{
@@ -673,9 +690,9 @@ header .search-form input:hover{
   align-items: center;
   font-size: 16px;
   font-weight: 500;
-  color: var(--textColor);
+  color: #ffff;
   transition: 0.3s;
-  background: #f6fde8;
+  background: var(--primaryColor);
   padding: 10px 15px;
   border-radius: 4px;
 
@@ -691,7 +708,7 @@ header .search-form input:hover{
 .sidebar-nav .nav-link i{
   font-size: 20px;
   margin-right: 10px;
-  color:var(--textColor);
+  color:var(--bgColor);
 }
 
 
@@ -990,7 +1007,39 @@ header .search-form input:hover{
   min-height: 75vh;
 }
 
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  /* margin-top: 30px; */
+  white-space: normal; /* Enable text wrapping */
+  word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
+  padding: 8px;
+
+}
+
+.table th{
+ /* background-color: #808080; */
+ padding: 8px;
+ width: 100px;
+}
+
+.table td {
+  font-size: 14px;
+  padding: 8px;
+  width: 100px;
+
+}
+
+.badge{
+  padding: 8px 20px;
+  font-weight: 500;
+  font-size: 14px;
+}
 /* ---------------------------------------------------- */
+
+
+
 
 
 ::-webkit-scrollbar {

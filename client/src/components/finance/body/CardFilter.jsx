@@ -18,6 +18,11 @@ const CardFilter = ({filterChange}) => {
                 </a>
             </li>
             <li>
+                <a className="dropdown-item" onClick={() => filterChange('This Week')}>
+                    This Week
+                </a>
+            </li>
+            <li>
                 <a className="dropdown-item" onClick={() => filterChange('This Month')}>
                     This Month
                 </a>

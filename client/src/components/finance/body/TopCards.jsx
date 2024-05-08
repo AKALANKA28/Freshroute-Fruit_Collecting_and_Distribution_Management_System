@@ -4,6 +4,7 @@ import CardFilter from './CardFilter'
 const TopCards = () => {
     const [totalSalesAmount, setTotalSalesAmount] = useState(0);
     const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
+    const [totalRevenueAmount, setTotalRevenueAmount] = useState(0);
 
 
     const [filter, setFilter] = useState('Today');
@@ -11,9 +12,9 @@ const TopCards = () => {
         setFilter(filter)
     };
 
-    const [sales, setSales] = useState([]);
-    const [expenses, setExpenses] = useState([]);
-    const [revenue, setRevenue] = useState([]);
+    // const [sales, setSales] = useState([]);
+    // const [expenses, setExpenses] = useState([]);
+    // const [revenue, setRevenue] = useState([]);
 
     const fetchSales = () => {
         fetch("http://localhost:8070/sales/")
@@ -41,7 +42,7 @@ const TopCards = () => {
         fetch("http://localhost:8070/revenue/")
             .then(res => res.json())
             .then(data => {
-                setRevenue(data);
+                setTotalRevenueAmount(data.totalRevenue || 0);
             })
             .catch(error => console.error('Error fetching revenue data:', error));
     };
@@ -103,7 +104,7 @@ const TopCards = () => {
 
                     <div className="d-flex align-items-center">
                         <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className= ""></i>
+                          <i class="bi bi-graph-down-arrow"></i>
                         </div>
                         <div className="ps-3">
                         <h6 className='card-price'>
@@ -142,24 +143,23 @@ const TopCards = () => {
                             <i className= ""></i>
                         </div>
                         <div className="ps-3">
-                            {/* <h6 className='card-price'>
-                                {card.name === 'Revenue' || 'Sales'
-                                ? 'Rs. ' + card.amount.toLocaleString('en-US')
-                                : card.amount.toLocaleString('en-US')}
-                            </h6> */}
+                           <h6 className='card-price'>
+                              Rs. {totalRevenueAmount.toLocaleString('en-US')}
+                            </h6> 
                             {/* <span className= {`${
-                                card.percentage > 0 ? 'text-success' : 'text-danger' 
-                                } small pt-1 fw-bold`}
-                            >
-                                {card.percentage > 0 
+                                sales.percentage > 0 ? 'text-success' : 'text-danger' 
+                                } small pt-1 fw-bold`} */}
+                            <span className= 'text-danger small pt-1 fw-bold'> -0.9%   
+                                {/* {card.percentage > 0 
                                 ? card.percentage * 100 
                                 : -card.percentage * 100} 
-                                %
-                                
-                            </span> */}
-                            {/* <span className="text-muted small pt-2 ps-1">
-                                {card.percentage > 0 ? 'increase' : 'decrease'}
-                            </span> */}
+                                % */}
+                                                           
+                            </span>
+                            <span className="text-muted small pt-2 ps-1">
+                                decrease
+                                {/* {card.percentage > 0 ? 'increase' : 'decrease'} */}
+                            </span>
                         </div>
                     </div>
                 </div>

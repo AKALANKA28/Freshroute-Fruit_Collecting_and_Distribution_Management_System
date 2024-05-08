@@ -2,32 +2,22 @@ const Vehicle = require("../../models/transport/vehicle");
 
 // Add a new vehicle record
 exports.addVehicle = async (req, res) => {
-  try {
-    const {
-      vehicle_no,
-      type,
-      conditions,
-      capacity,
-      owner_name,
-      nic,
-      email,
-      phone,
-      account_no,
-      price,
-    } = req.body;
+    try {
+        const {vehicle_no, type,conditions, capacity, owner_name, nic, email, phone, Bank, Branch, account_no} = req.body;
 
-    const newVehicle = new Vehicle({
-      vehicle_no,
-      type,
-      conditions,
-      capacity,
-      owner_name,
-      nic,
-      email,
-      phone,
-      account_no,
-      price,
-    });
+        const newVehicle = new Vehicle({
+            vehicle_no,
+            type,
+            conditions,
+            capacity,
+            owner_name,
+            nic,
+            email,
+            phone,
+            Bank,
+            Branch,
+            account_no,
+        });
 
     await newVehicle.save();
     res.json("Vehicle Added");
@@ -73,33 +63,23 @@ exports.getVehicleById = async (req, res) => {
 
 // Update a vehicle record
 exports.updateVehicle = async (req, res) => {
-  try {
-    const vehicleId = req.params.id;
-    const {
-      vehicle_no,
-      type,
-      conditions,
-      capacity,
-      owner_name,
-      nic,
-      email,
-      phone,
-      account_no,
-      price,
-    } = req.body;
+    try {
+        const vehicleId = req.params.id;
+        const { vehicle_no, type,conditions, capacity, owner_name, nic, email, phone, Bank, Branch, account_no} = req.body;
 
-    const updateVehicle = {
-      vehicle_no,
-      type,
-      conditions,
-      capacity,
-      owner_name,
-      nic,
-      email,
-      phone,
-      account_no,
-      price,
-    };
+        const updateVehicle = {
+                vehicle_no,
+                type,
+                conditions,
+                capacity,
+                owner_name,
+                nic,
+                email,
+                phone,
+                Bank,
+                Branch,
+                account_no,
+        };
 
     const updatedVehicle = await Vehicle.findByIdAndUpdate(
       vehicleId,

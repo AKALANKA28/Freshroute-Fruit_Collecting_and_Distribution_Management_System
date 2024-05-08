@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./cart.css";
-import img from "../../assets/image1.jpg";
 import { Link } from "react-router-dom";
 import Container from "../../Components/Container";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,21 +9,45 @@ import {
   updateProductFromCart,
 } from "../../../features/user/userSlice";
 import { ToastContainer } from "react-toastify";
+import Navbar2 from "../../Navbar/Navbar2";
 
 const Cart = () => {
+
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
+
+const config2 = {
+  headers: {
+    Authorization: `Bearer ${
+      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+    }`,
+    Accept: "application/json",
+  },
+};
+
+
+
   const dispatch = useDispatch();
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
   console.log(productUpdateDetail);
-
-
-
 
   const userCartState = useSelector((state) => state.auth.cartProducts);
   useEffect(() => {
     dispatch(getCart());
   }, []);
 
+
+  const deleteACartProduct = (id) => {
+    dispatch(removeProductFromCart(id));
+    setTimeout(() => {
+      dispatch(getCart());
+    }, 300);
+  };
+
+
+  //update cart product
   useEffect(() => {
     if (productUpdateDetail !== null)
       dispatch(
@@ -38,29 +61,33 @@ const Cart = () => {
     }, 200);
   }, [productUpdateDetail]);
 
+  //delete cart product
+  // const deleteACartProduct = (id) => {
+  //   dispatch(removeProductFromCart({id:id, config2:config2}));
+  //   setTimeout(() => {
+  //     dispatch(getCart(config2));
+  //   }, 300);
+  // };
 
-  const deleteACartProduct = (id) => {
-    dispatch(removeProductFromCart(id));
-    setTimeout(() => {
-      dispatch(getCart());
-    }, 300);
-  };
-
-
-
+  //total amount
   useEffect(() => {
     let sum = 0;
-    if(userCartState) {
+    if (userCartState) {
       for (let index = 0; index < userCartState.length; index++) {
-        sum = sum + (Number(userCartState[index].quantity) * userCartState[index].price)
-        setTotalAmount(sum) 
-       }
+        sum =
+          sum +
+          Number(userCartState[index].quantity) * userCartState[index].price;
+        setTotalAmount(sum);
+      }
     }
-    
-  }, [userCartState])
+  }, [userCartState]);
+
+ 
 
   return (
     <>
+    <Navbar2 />
+      
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -79,7 +106,11 @@ const Cart = () => {
                   >
                     <div className="cart-col-1 d-flex align-items-center gap-5">
                       <div className="w-25">
-                        <img src={img} alt="" className="img-fluid" />
+                        <img
+                          src={item?.productId.images}
+                          alt=""
+                          className="img-fluid"
+                        />
                       </div>
                       <div className="w-75">
                         <p>{item?.productId.title}</p>
@@ -91,9 +122,9 @@ const Cart = () => {
                       <h5 className="price">Rs.{item?.price}</h5>
                     </div>
                     <div className="cart-col-3 d-flex align-items-center gap-3">
-                      <input
+                    <input
                         type="number"
-                        className="form-control"
+                        className="form-control form-quantity"
                         name=""
                         min={1}
                         max={10}
@@ -110,6 +141,7 @@ const Cart = () => {
                           });
                         }}
                       />
+
                       <div>
                         <i
                           onClick={() => {
@@ -130,19 +162,21 @@ const Cart = () => {
 
             <div className="col-12 py-2 mt-4">
               <div className="d-flex justify-content-between align-items-baseline">
-                <Link to="/store" className="product-button">
+                <Link to="/shop" className="product-button">
                   Continue Shopping
                 </Link>
-                {
-                  (totalAmount !== null || totalAmount !== 0) && 
+                {(totalAmount !== null || totalAmount !== 0) && (
                   <div className="d-flex flex-column align-items-end">
-                  <h4>SubTotal: Rs.{totalAmount}</h4>
-                  <p>Taxes and shipping calculate at checkout</p>
-                  <Link to="/checkout" className="product-button">
+                    <h4>SubTotal: Rs.{totalAmount}</h4>
+                    <p>Taxes and shipping calculate at checkout</p>
+                    {/* <button onClick={makePayment} className="product-button">
+                      Checkout
+                    </button> */}
+                    <Link to="/checkout" className="product-button">
                     Checkout
                   </Link>
-                </div>
-                }
+                  </div>
+                )}
               </div>
             </div>
           </div>
