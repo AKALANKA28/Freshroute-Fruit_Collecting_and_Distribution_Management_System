@@ -40,7 +40,7 @@ const AssingedOrders = () => {
         <h5 className="card-title">Assigned Orders</h5>
         <div className="activity text-dark">
           <div>
-            <table className="table table-bordeless datatable">
+            <table className="table table-bordeless datatable mb-0">
               <thead className="table-light">
                 <tr>
                   <th className="col" d>
