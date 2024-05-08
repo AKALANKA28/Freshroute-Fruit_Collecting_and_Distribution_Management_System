@@ -7,7 +7,6 @@ import "./main.css";
 const Transactions = () => {
   const [news, setNews] = useState([]);
 
-
   const fetchData = () => {
     fetch("")
       .then((res) => res.json())
@@ -24,25 +23,55 @@ const Transactions = () => {
   return (
     <div>
       <div className="card">
-        <div className="card-body pb-0">
+        <div className="card-body pb-2">
           <h5 className="card-title">
             Assigned Vehicle <span></span>
           </h5>
 
-          <div className="vehicle-details mb-4">
+          <div className="vehicle-details mb-3">
             <img src={img} alt="" className="vehicle-img" />
             <div className="vehicle-content">
-              <p className="" style={{ fontSize: "14px", color: "black" }}>
-                <span className=""> Vehicle No:</span><span className="me-3"> CP4592</span>
-                <span className="text-bold"> Engine:</span><span> 5.2L - Diesel</span>
-                <span className="text-bold"> Transmission:</span><span> Automatic Transmision</span>  <br/>
-                <span className="text-bold"> Tank Capacity:</span><span> 30 Galloon</span>  <br/> 
-                <span className="text-bold"> Payload:</span><span> 10,000 lbs </span>
-
-               </p>
+                <span className="text-bold"> </span>
+                <span className="me-3"> </span>
+                <span className="text-bold"> </span>
+               
+                
+                <tboady style={{ fontSize: "14px", color: "black"}}>
+                <tr>
+                    <td>
+                      <span className="text-bold me-5"> Vehicle No:</span>
+                    </td>
+                    <td>
+                      <span className="text-bold"> Engine:</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span> CP4592</span>
+                    </td>
+                    <td>
+                      <span> 5.2L - Diesel</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-bold me-5"> Tank Capacity:</span>
+                    </td>
+                    <td>
+                      <span className="text-bold"> Payload:</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span> 30 Galloon</span>
+                    </td>
+                    <td>
+                      <span> 10,000 lbs </span>
+                    </td>
+                  </tr>
+                </tboady>
             </div>
           </div>
-
           {/* <div className='news'>
             {
                 news &&
