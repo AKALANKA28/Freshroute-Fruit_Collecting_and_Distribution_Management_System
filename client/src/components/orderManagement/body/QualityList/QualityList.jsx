@@ -7,14 +7,21 @@ import SearchBar from '../SearchBar'
 import QualityTable from "./QualityTable";
 import axios from 'axios';
 import QualityPopupForm from "./QualityPopupForm";
+import { PDFViewer } from "@react-pdf/renderer";
+import QualityReport from "./QualityReport";
+import { Button, Modal } from "react-bootstrap";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
+
 axios.defaults.baseURL = "http://localhost:8070/";
-const QualityList = () => {
+const QualityList = ({isViewOnly}) => {
 
     const [items, setItems] = useState([]);
     const [tableData, setTableData] = useState([]);
     const [tab, setTab] = useState("A")
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [clearFilter, setClearFilter] = useState(false);
     const [formData, setFormData] = useState({
         id: "",
         fruit: "",
@@ -69,7 +76,7 @@ const QualityList = () => {
 
         try {
             const response = await axios.put("/om/quality/update", data);
-            alert(response.data);
+            alert(isEdit? "Quality Updated Successfully":"Quality Added Successfully");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
                 alert(err.response.data.error);
@@ -127,8 +134,31 @@ const QualityList = () => {
         setTableData(items.filter((item) => item.quality === value))
     }
 
+    //pdf
+    const [showReportModal, setShowReportModal] = useState(false);
+    const handleCloseReportModal = () => setShowReportModal(false);
+    const handleShowReportModal = () => setShowReportModal(true);
+
+    //excel
+    const generateExcelFile = () => {
+        // Define the worksheet
+        const ws = XLSX.utils.json_to_sheet(items);
+      
+        // Define the workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Quality Report");
+      
+        // Generate the Excel file
+        writeFile(wb, "quality_report.xlsx");
+      };
+      
+      const handleExcelButtonClick = () => {
+        getQualityList(); // Fetch the latest data if needed
+        generateExcelFile();
+      };
+
     return (
-        <main className='main' id='main'>
+        <main className='main'>
           <div className="body" id='body'>
               <div className="card recent-sales overflow-auto">
 
@@ -150,42 +180,64 @@ const QualityList = () => {
                               <li>
                                   <div className="button-container">
                                       <a href="#">
+                                        <a onClick={handleShowReportModal}>
                                           <img src={Pdf} alt="Pdf Icon" className="icon"/>
+                                        </a>
                                       </a>
                                   </div>
                               </li>
                               <li>
                                   <div className="button-container">
                                       <a href="#">
+                                      <a onClick={handleExcelButtonClick}>  
                                           <img src={Excel} alt="Excel Icon" className="icon"/>
+                                          </a>
                                       </a>
                                   </div>
                               </li>
                               <li>
                                   <div className="button-container">
-                                      <a href="#" onClick={() => getQualityList()}>
+                                      <a href="#" onClick={() => {
+                                          getQualityList();
+                                          setClearFilter(!clearFilter);
+                                      }}>
                                           <img src={Refresh} alt="Refresh Icon" className="icon"/>
                                       </a>
                                   </div>
                               </li>
                           </ul>
+                          <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Quality Details Report</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <PDFViewer width="100%" height="500px">
+                                <QualityReport dataList={items} />
+                                </PDFViewer>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseReportModal}>
+                                Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
 
 
                           {/* --------------------add button------------------ */}
 
-                          <div className="page-btn">
+                          {!isViewOnly && <div className="page-btn">
                               <button type="button" className="btn btn-added" onClick={handleAddNew}>
                                   <i className="bi bi-plus-circle" style={{marginRight: '10px'}}></i>
                                   Add Quality
                               </button>
-                          </div>
+                          </div>}
 
                           {/* --------------------imported search bar and table data ------------------------*/}
                       </div>
                       <div className="w-100">
 
                       </div>
-                      <ul className="nav nav-tabs m-0 mt-2 justify-content-start" id="myTab" role="tablist">
+                      <ul className="nav nav-tabs m-0 mt-2 justify-content-start tab-container" id="myTab" role="tablist">
                           <li className="nav-item m-0 " role="presentation">
                               <button className="nav-link active tab-height" id="home-tab" data-bs-toggle="tab"
                                       data-bs-target="#home-tab-pane" type="button" role="tab"
@@ -217,10 +269,6 @@ const QualityList = () => {
                                                      tag: "category"
                                                  },
                                                  {
-                                                     name: "Grade",
-                                                     tag: "quality"
-                                                 },
-                                                 {
                                                      name: "Quality Description",
                                                      tag: "qualityDesc"
                                                  },
@@ -230,12 +278,13 @@ const QualityList = () => {
                                                  }
                                              ]
                                          }
+                                         clearInputField={clearFilter}
                                          handleSearch={handleSearchOnClick}
                               />
                           </li>
                       </ul>
 
-                      <QualityTable items={tableData} updateQualityList={getQualityList} editItem={handleEdit}/>
+                      <QualityTable items={tableData} updateQualityList={getQualityList} editItem={handleEdit} isViewOnly={isViewOnly}/>
                   </div>
                   <div>
                       <QualityPopupForm

@@ -34,6 +34,17 @@ exports.getAllQualities = async (req, res) => {
         res.status(500).json({ status: "Error retrieving quality records", error: err.message });
     }
 };
+// Retrieve all quality records
+exports.getUndefinedQualityList = async (req, res) => {
+    try {
+        const filter = { qualityStatus: 0 }; // get quality added records only
+        const allQualities = await FruitDetail.find(filter);
+        res.json(allQualities);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error retrieving quality records", error: err.message });
+    }
+};
 
 // Retrieve all quality records
 exports.getCategorizedFruitDetail = async (req, res) => {
@@ -74,27 +85,29 @@ exports.getQualityById = async (req, res) => {
 
 // Delete a quality record
 exports.removeQuality = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
-            $unset: {
-                qualityDesc: "",
-                storageCond: "",
-            },
-            $set: {
-                qualityStatus: 0,
+    
+        try {
+            const id = req.params.id;
+            const updatedQuality = await FruitDetail.findByIdAndUpdate(id, {
+                $unset: {
+                    qualityDesc: "",
+                    storageCond: "",
+                },
+                $set: {
+                    qualityStatus: 0,
+                }
+            }, { new: true });
+
+            if (!updatedQuality) {
+                return res.status(404).json({ status: "Quality not found" });
             }
-        }, { new: true });
 
-        if (!updatedQuality) {
-            return res.status(404).json({ status: "Quality not found" });
+            res.status(200).json({ status: "Quality record deleted", updatedQuality });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ status: "Error deleting quality record", error: err.message });
         }
-
-        res.status(200).json({ status: "Quality record updated", updatedQuality });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error updating quality record", error: err.message });
-    }
+   
 };
 
 // Retrieve filtered quality records
@@ -106,23 +119,24 @@ exports.getFilteredQualities = async (req, res) => {
 
         switch (filterType) {
             case 'fruit':
-                filter = { fruit: new RegExp(filterValue, 'i') };
+                filter = { fruit: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'category':
-                filter = { category: new RegExp(filterValue, 'i') };
+                filter = { category: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'quality':
-                filter = { quality: new RegExp(filterValue, 'i') };
+                filter = { quality: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'qualityDesc':
-                filter = { qualityDesc: new RegExp(filterValue, 'i') };
+                filter = { qualityDesc: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             case 'storageCond':
-                filter = { storageCond: new RegExp(filterValue, 'i') };
+                filter = { storageCond: new RegExp(filterValue, 'i'), qualityStatus: 1 };
                 break;
             default:
                 return res.status(400).json({ message: 'Invalid filter type' });
         }
+
         const filteredQualities = await FruitDetail.find(filter);
         res.json(filteredQualities);
     } catch (err) {

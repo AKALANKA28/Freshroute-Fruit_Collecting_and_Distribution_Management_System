@@ -43,9 +43,9 @@ import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import ProcessDetails from "./components/transportDashboard/ProcessDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
-import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder";
-import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder";
-import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder";
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrderList"
+import SupplierList from "./components/orderProcessor/body/SupplierList/SuppliersList"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -68,7 +68,10 @@ import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
 import OPDashboard from "./components/orderProcessor/body/OPDashboard";
-import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
+import RequestedOrderList from "./components/orderManagement/body/RequestedOrderList/RequestedOrderList";
+import AssignedOrderList from "./components/orderManagement/body/AssignedOrderList/AssignedOrderList";
+import CompletedOrderList from "./components/orderManagement/body/CompletedOrderList/CompletedOrderList";
+import CompletedOrders from "./components/orderProcessor/body/CompletedOrders/CompletedOrderList";
 
 import Home from "./Website/Home";
 import About from "./Website/About";
@@ -276,40 +279,62 @@ const router = createBrowserRouter([
       },
       {
         path: "/OMDashboard/QualityList",
-        element: <QualityList />,
+        element: <QualityList isViewOnly={false}/>,
       },
       {
         path: "/OMDashboard/RequestedOrderList",
-        element: <RequestedOrderList />,
+        element: <RequestedOrderList/>,
       },
-    ],
+      {
+        path: "/OMDashboard/AssignedOrderList",
+        element: <AssignedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/CompletedOrderList",
+        element: <CompletedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/SupplierList",
+        element: <SupplierList/>,
+      }
+
+    ]
   },
 
   {
     path: "/OPDashboard",
     element: (
-      <div>
-        <OrderProcessorHomePage />
-      </div>
+        <div>
+          <OrderProcessorHomePage />
+        </div>
     ),
     children: [
       {
         path: "/OPDashboard/",
-        element: <OPDashboard />,
+        element: <OPDashboard/>,
       },
       {
         path: "/OPDashboard/AssignedOrders",
-        element: <AssignedOrder />,
+        element: <AssignedOrder/>,
       },
       {
         path: "/OPDashboard/OngoingOrders",
-        element: <OngoingOrder />,
+        element: <OngoingOrder/>,
       },
       {
         path: "/OPDashboard/CompletedOrders",
-        element: <CompletedOrder />,
+        element: <CompletedOrders/>,
       },
-    ],
+      {
+        path: "/OPDashboard/QualityList",
+        element: <QualityList isViewOnly={true}/>,
+      },
+      {
+        path: "/OPDashboard/SupplierList",
+        element: <SupplierList/>,
+      }
+
+    ]
   },
 
   {
