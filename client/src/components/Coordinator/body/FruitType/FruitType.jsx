@@ -244,6 +244,7 @@ function FruitType() {
             </Modal>
             <div className="table-container">
               <SearchBar onSearch={handleSearch} />
+              <br/>
               <table className="table table-borderless datatable">
                 <thead className="table-light">
                   <tr>

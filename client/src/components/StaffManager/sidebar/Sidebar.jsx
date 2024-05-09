@@ -30,11 +30,42 @@ const Sidebar = () => {
           </li>
 
           <li className="nav-item">
-            <a className="nav-link collapsed" href="/Employee">
+            <a
+              className="nav-link collapsed"
+              data-bs-target="#components-nav"
+              data-bs-toggle="collapse"
+              href="#"
+            >
               <i class="bi bi-people"></i>
               <span>Employees</span>
+              <i className="bi bi-chevron-down ms-auto"></i>
             </a>
+
+            <ul
+              id="components-nav"
+              className="nav-content collapse"
+              data-bs-parent="#sidebar-nav"
+            >
+
+              <li>
+                <a href="/Unregistered">
+                  <i className="bi bi-circle">
+                    <span>Unregistered</span>
+                  </i>
+                </a>
+              </li>
+              <li>
+                <a href="/Employee">
+                  <i className="bi bi-circle">
+                    <span>Registered</span>
+                  </i>
+                </a>
+              </li>
+              
+            </ul>
           </li>
+
+         
 
           <li className="nav-item">
             <a className="nav-link collapsed" href="/CalculateSalary">

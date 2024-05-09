@@ -163,6 +163,13 @@
  
 }
 
+.table .actionSize{
+  padding: 8px;
+  /* border: 1px solid #ddd; */
+  width: 20px;
+ 
+}
+
 .btn-table .bi-pencil-square{
   color: #ffbb00;
 }
@@ -212,3 +219,4 @@
 .search-form i{
   color: #012970;
 }
+

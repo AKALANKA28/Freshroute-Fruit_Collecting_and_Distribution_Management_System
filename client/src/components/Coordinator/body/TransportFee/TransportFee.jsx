@@ -167,10 +167,12 @@ function TransportFee() {
           </Modal>
       <div className="table-container">
       <SearchBar onSearch={handleSearch} />
+      <br/>
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
             
+            <th scope="col">Vehicle No</th>
               <th scope="col">Vehicle Type</th>
               <th scope="col">Conditions</th>
               <th scope="col">Capacity</th>
@@ -183,11 +185,13 @@ function TransportFee() {
                   filteredDataList.map((transportfee) => (
                 <tr key={transportfee._id}>
                  
+                 <td>{transportfee.vehicle_no}</td>
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>
-                  <td>{`Rs.${transportfee.price.toFixed(2)}`}</td>
-                  <td className="action">
+                  <td >{transportfee.price ? `Rs.${transportfee.price.toFixed(2)}` : 'N/A'}</td>
+
+                  <td className="actionSize" >
                     <div className="buttons">
                       <button
                         className="btn btn-edit"

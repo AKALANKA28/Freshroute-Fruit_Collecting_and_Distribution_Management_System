@@ -12,7 +12,6 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
-
 const authRouter = require("./routes/authRoute.js");
 const productRouter = require("./routes/productRoute.js");
 const categoryRouter = require("./routes/categoryRoute.js");
@@ -48,6 +47,7 @@ const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
 
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+const UnregisteredRouter = require("./routes/StaffManager/UnregisteredRoute.js");
 // const qualityRoute = require("./routes/q_and_o/qualityRoute");
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
@@ -110,20 +110,13 @@ app.use("/declinedSupplier", declinedSupplierRouter);
 app.use(itemRouter);
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
+app.use("/Unregistered", UnregisteredRouter);
 // app.use('/quality', qualityRoute);
 app.use("/CalculateSalary", CalculateSalaryRouter);
 app.use("/Notice", NoticeRouter);
 app.use("/Message", MessageRouter);
 app.use("/om", orderMangerRoute);
 app.use("/op", orderProcessorRoute);
-
-
-
-
-
-
-
-
 
 app.use(notFound);
 app.use(errorHandler);
