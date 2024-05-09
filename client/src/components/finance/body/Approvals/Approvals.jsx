@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from "../../components/SearchBar";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-import SalesForm from "./SalesForm";
-import SalesReport from "./SalesReport";
+// import SalesForm from "./SalesForm";
+// import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
 import { ToastContainer } from "react-toastify";
@@ -21,9 +21,8 @@ import {
   getOrders,
   getSingleOrderData,
 } from "../../../../features/orders/orderSlice";
-axios.defaults.baseURL = "http://localhost:8070/";
 
-function Sales() {
+function Approvals() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -83,21 +82,21 @@ function Sales() {
   const orderState = useSelector((state) => state.orders.orders);
   console.log(orderState);
 
-  // const handleStatus = (status) => {
-  //   switch (status) {
-  //     case "Paid":
-  //       return "success";
-  //       break;
-  //     case "Pending":
-  //       return "warning";
-  //       break;
-  //     case "Rejected":
-  //       return "danger";
-  //       break;
-  //     default:
-  //       return "success";
-  //   }
-  // };
+  const handleStatus = (status) => {
+    switch (status) {
+      case "Paid":
+        return "success";
+        break;
+      case "Pending":
+        return "warning";
+        break;
+      case "Rejected":
+        return "danger";
+        break;
+      default:
+        return "success";
+    }
+  };
 
   useEffect(() => {
     getFetchData();
@@ -111,7 +110,6 @@ function Sales() {
     try {
       const response = await axios.get("/user/allorders");
       setDataList(response.data);
-
     } catch (err) {
       alert(err.message);
     }
@@ -145,60 +143,16 @@ function Sales() {
   };
 
   const handleRefreshClick = () => {
-    // getFetchData();
-  };
-
-  const handleAddModalOpen = () => {
-    setAddModalOpen(true);
-  };
-
-  const handleAddModalClose = () => {
-    setAddModalOpen(false);
-  };
-
-  const handleEditModalOpen = (sales) => {
-    setSelectedSales(sales);
-    setEditModalOpen(true);
-  };
-
-  const handleEditModalClose = () => {
-    setEditModalOpen(false);
-  };
-
-  const handleAddSubmit = async (formData) => {
-    try {
-      await axios.post("/sales/add", formData);
-      alert("Sales Added");
-      handleAddModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/user/order/delete/${id}`);
-      alert("Successfully Deleted");
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleEditSubmit = async (formData) => {
-    try {
-      await axios.patch(`/user/order/update/${formData._id}`, formData);
-      alert("Sales Updated");
-      handleEditModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
+    getFetchData();
   };
 
 
 
+
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const handleCloseReportModal = () => setShowReportModal(false);
+  const handleShowReportModal = () => setShowReportModal(true);
 
   return (
     <div className="main">
@@ -207,26 +161,21 @@ function Sales() {
           <div class="page-header">
             <div class="add-item d-flex">
               <div class="card-title">
-                Sales Details<span>| {filter}</span>
-                <h6>Manage your sales</h6>
+                Approval Details<span>| {filter}</span>
+                <h6>Manage your Approvals</h6>
               </div>
             </div>
             {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
 
             <ul class="table-top-head">
               <li>
-                <BlobProvider
-                  document={<SalesReport />}
-                  fileName="SalesReport.pdf"
-                >
-                  {({ url, blob }) => (
-                    <div className="button-container">
-                      <a href={url} target="_blank">
-                        <img src={Pdf} alt="Pdf Icon" className="icon" />
-                      </a>
-                    </div>
-                  )}
-                </BlobProvider>
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+
+  
+                </div>
               </li>
 
               <li>
@@ -245,40 +194,12 @@ function Sales() {
               </li>
             </ul>
 
-            <div class="page-btn">
-              <button
-                type="button"
-                className="btn btn-added"
-                onClick={handleAddModalOpen}
-              >
-                <i className="bi bi-plus-circle"></i> Add Sales
-              </button>
-            </div>
+           
           </div>
-          <Modal
-            show={addModalOpen}
-            onHide={handleAddModalClose}
-            className="p-0 m-0"
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Add Sales</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <SalesForm handleSubmit={handleAddSubmit} />
-            </Modal.Body>
-          </Modal>
+        
+   
 
-          <Modal show={editModalOpen} onHide={handleEditModalClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Sales</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <SalesForm
-                handleSubmit={handleEditSubmit}
-                initialData={selectedSales}
-              />
-            </Modal.Body>
-          </Modal>
+         
           {dataList.length > 0 && (
             <div className="table-container">
               <SearchBar onSearch={handleSearch} />
@@ -287,17 +208,134 @@ function Sales() {
               <table className="table table-bordeless datatable">
                 <thead className="table-light">
                   <tr>
-                    <th scope="col">Customer</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Fruit</th>
-                    <th scope="col">Price (Rs)</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Tax Rate</th>
-                    <th scope="col">Total (Rs)</th>
-                    <th className="col">Action</th>
+                    {/* <th scope="col">Payment ID</th> */}
+                    <th scope="col">Requested Date</th>
+                    <th scope="col">Requester</th>
+                    <th scope="col">Purpose </th>
+                    <th scope="col">Amount (Rs)</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Action</th>
+                    {/* <th className="col"></th> */}
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td>20/05/2024</td>
+                    <td>PMC Manager</td>
+                    <td>Promotion Cost</td>
+                    <td>20000.00</td>
+                    <td>Reasearch & Promotion</td>
+                    <td>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                        //   onClick={() => handleEditModalOpen(sales)}
+                        >
+                          <i class="bi bi-check-lg"></i>{" "}
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                        //   onClick={() => handleDelete(sales._id)}
+                        >
+                          <i class="bi bi-x-lg"></i>{" "}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>19/05/2024</td>
+                    <td>PMC Manager</td>
+                    <td>Promotion Cost</td>
+                    <td>90000.00</td>
+                    <td>Reasearch & Promotion</td>
+                    <td>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                        //   onClick={() => handleEditModalOpen(sales)}
+                        >
+                          <i class="bi bi-check-lg"></i>{" "}
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                        //   onClick={() => handleDelete(sales._id)}
+                        >
+                          <i class="bi bi-x-lg"></i>{" "}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>  <tr>
+                    <td>19/05/2024</td>
+                    <td>Coordinator</td>
+                    <td>Office Supplies</td>
+                    <td>70000.00</td>
+                    <td>Supplies</td>
+                    <td>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                        //   onClick={() => handleEditModalOpen(sales)}
+                        >
+                          <i class="bi bi-check-lg"></i>{" "}
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                        //   onClick={() => handleDelete(sales._id)}
+                        >
+                          <i class="bi bi-x-lg"></i>{" "}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>  <tr>
+                    <td>30/04/2024</td>
+                    <td>Dilmi Gayuththra</td>
+                    <td>Marketing Materials Cost</td>
+                    <td>50000.00</td>
+                    <td>Reasearch & Promotion</td>
+                    <td>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit " style={{backgroundColor:"#ffbb0085"}}
+                        //   onClick={() => handleEditModalOpen(sales)}
+                        >
+                          Accepted
+                          {/* <i class="bi bi-check-lg"></i>{" "} */}
+                        </button>
+                        {/* <button
+                          className="btn btn-delete"
+                        //   onClick={() => handleDelete(sales._id)}
+                        >
+                          <i class="bi bi-x-lg"></i>{" "}
+                        </button> */}
+                      </div>
+                    </td>
+                  </tr>  <tr>
+                    <td>06/04/2024</td>
+                    <td>Dilmi Gayuththra</td>
+                    <td>Travel Expenses</td>
+                    <td>28000.00</td>
+                    <td>Reasearch & Promotion</td>
+                    <td>
+                      <div className="buttons">
+                        {/* <button
+                          className="btn btn-edit"
+                        //   onClick={() => handleEditModalOpen(sales)}
+                        >
+                          <i class="bi bi-check-lg"></i>{" "}
+                        </button> */}
+                        <button
+                          className="btn btn-delete"
+                          style={{backgroundColor:"#ff000080"}}
+
+                        //   onClick={() => handleDelete(sales._id)}
+                        >
+                          Rejected
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                {/* <tbody>
                   {currentPageItems.map((sales) => (
                     <tr key={sales._id}>
                       <td>{sales?.user?.name}</td>
@@ -336,13 +374,13 @@ function Sales() {
                           (sales?.totalPrice * 2) / 100 +
                           sales?.totalPrice
                         ).toFixed(2)}
-                      </td>
-                      {/* <td>
+                      </td> */}
+                {/* <td>
         <span className={`badge bg-${handleStatus(sales.orderStatus)}`}>
           {sales.orderStatus}
         </span>
       </td> */}
-                      <td>
+                {/* <td>
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
@@ -360,7 +398,7 @@ function Sales() {
                       </td>
                     </tr>
                   ))}
-                </tbody>
+                </tbody> */}
               </table>
               {/* Render pagination component */}
               <div className="pagination align-items-center  justify-content-end">
@@ -425,4 +463,4 @@ function Sales() {
   );
 }
 
-export default Sales;
+export default Approvals;

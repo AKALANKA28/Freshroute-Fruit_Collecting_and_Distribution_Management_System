@@ -25,22 +25,7 @@ const Shop = () => {
 
   return (
    <>
-    {/* <div className="product-header">
-      <nav className='nav'>
-        <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>
-          <ul className='nav-menu'>
-            <li className='nav-list'><a href='/home'>Home</a></li>
-            <li className='nav-list'><a href='/about'>About</a></li>
-            <li className='nav-list'><a href='/shop'>Shop</a></li>
-            <li className='nav-list'><a href='/contact'>Contact</a></li>
-            <li className='nav-login'>
-                <Link to='/Login'>
-                    <span>Login</span>
-                </Link>
-            </li>
-          </ul> 
-      </nav>
-      </div> */}
+ 
 
       <Navbar2 />
 
@@ -56,7 +41,7 @@ const Shop = () => {
                   <li>Grapes</li>
                 </ul>
             </div>
-            <div className="filter-card mb-3">
+            <div className="filter-card mb-3" style={{paddingBottom:"16.3rem"}}>
                 <h3 className='filter-title'>Filter By</h3>
 
                 <h5 className="sub-title">Avalability</h5>
@@ -161,10 +146,37 @@ const Shop = () => {
               <div className="products-list d-flex gap- pb-5">
                 <div className="d-flex gap-3 flex-wrap">
                   <Card data={productState ? productState: []}/>
+                    {/* Render pagination component */}
+          <div className="pagination align-items-center  justify-content-end">
+              <button disabled
+                // onClick={handlePreviousPage}
+                // disabled={currentPage === 1}
+                className="me-4"
+                style={{ backgroundColor: "#ffffff", border: "none", padding:"0px 10px" }}
+
+              >
+                <i class="bi bi-chevron-left"></i>{" "}
+              </button>
+              <span className="text-dark" style={{fontSize:"18px", fontWeight:"500"}}>
+                <span className="me-4">1</span><span>2</span>
+              </span>
+              <button
+                // onClick={handleNextPage}
+                // disabled={currentPage === totalPages}
+                className="ms-4"
+                style={{ backgroundColor: "#ffffff", border: "none", padding:"0px 10px" }}
+
+              >
+                <i class="bi bi-chevron-right"></i>{" "}
+              </button>
+            </div>
                 </div>
+
+                
               </div>
 
           </div>
+        
         </div>             
     </Container>
     <Footer />

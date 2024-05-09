@@ -24,7 +24,7 @@ const Main = () => {
                   <img src={img} className='img-fluid rounded-circle profile-img' alt='profile-img'></img>
                   </div>
                  <div className="profile-name-col col-8">
-                 <h6>Aashani Samarakoon</h6>
+                 <h6>Sunil Samarakoon</h6>
                  <Link to={""} className='Link'>
                    <p>View Profile</p>
                  </Link>
