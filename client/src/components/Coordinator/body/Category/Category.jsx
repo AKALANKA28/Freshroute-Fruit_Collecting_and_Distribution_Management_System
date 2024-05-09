@@ -359,7 +359,7 @@ function Category() {
               </select>
             </div>
           </div>
-
+          <br/>
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>

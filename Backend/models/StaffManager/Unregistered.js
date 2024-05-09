@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const EmployeeSchema = new mongoose.Schema({
+const UnregisteredSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
   },
@@ -59,6 +59,6 @@ const EmployeeSchema = new mongoose.Schema({
   },
 });
 
-const Employee = mongoose.model("Employee", EmployeeSchema);
+const Unregistered = mongoose.model("Unregistered", UnregisteredSchema);
 
-module.exports = Employee;
+module.exports = Unregistered;
