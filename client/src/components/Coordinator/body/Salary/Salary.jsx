@@ -232,6 +232,7 @@ function Salary() {
 
           <div className="table-container">
             <SearchBar onSearch={handleSearch} />
+            <br/>
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -249,7 +250,7 @@ function Salary() {
                       <td>{salary.date}</td>
                       <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
                       
-                      <td className="action">
+                      <td className="actionSize">
                         <div className="buttons">
                           <button
                             className="btn btn-edit"

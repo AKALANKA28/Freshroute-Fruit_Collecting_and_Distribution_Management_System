@@ -22,11 +22,13 @@ import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
+import JoinWithUsStaff from "./components/Coordinator/JoinWithUsStaff";
 import Category from "./components/Coordinator/Category";
 import Salary from "./components/Coordinator/Salary";
 import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
+import Unregistered from "./components/StaffManager/Unregistered";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import Notice from "./components/StaffManager/Notice";
 import Message from "./components/StaffManager/Message";
@@ -113,9 +115,7 @@ const router = createBrowserRouter([
 
   {
     path: "/cart",
-    element: (
-        <Cart />
-    ),
+    element: <Cart />,
   },
 
   {
@@ -132,6 +132,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <JoinWithUsSupplier />
+      </div>
+    ),
+  },
+
+  {
+    path: "/JoinWithUsStaff",
+    element: (
+      <div>
+        <JoinWithUsStaff />
       </div>
     ),
   },
@@ -497,6 +506,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Employee />
+      </div>
+    ),
+  },
+
+  {
+    path: "/Unregistered",
+    element: (
+      <div>
+        <Unregistered />
       </div>
     ),
   },
