@@ -99,6 +99,7 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
       </div>
       <div className="d-flex justify-content-end border-top">
         <button type="submit" className="btn btn-success">Submit</button>
+
       </div>
     </form>
   );

@@ -1,6 +1,6 @@
-.cart-wrapper{
+/* .cart-wrapper{
   margin-top: 30px;
-}
+} */
 
 .cart-header .cart-data{
   border-bottom: 1px solid #eaeaea;
@@ -26,7 +26,7 @@
 }
 
 .cart-col-3{
-  width: 8%;
+  width: 13%;
 }
 
 .cart-col-4{

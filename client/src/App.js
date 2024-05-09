@@ -79,6 +79,9 @@ import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
 import Drivers from "./components/transportDashboard/body/driverDetails/Drivers";
 import DriverDetails from "./components/transportDashboard/DriverDetails";
+import Approvals from "./components/finance/body/Approvals/Approvals";
+import ApprovalPage from "./components/finance/ApprovalPage";
+import PaymentsPage from "./components/finance/PaymentsPage";
 
 const router = createBrowserRouter([
   {
@@ -187,6 +190,24 @@ const router = createBrowserRouter([
     ),
   },
 
+  {
+    path: "/approvals",
+    element: (
+      <div>
+        <ApprovalPage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/payments_page",
+    element: (
+      <div>
+        <PaymentsPage />
+      </div>
+    ),
+  },
+  
   {
     path: "/tdashboard",
     element: (

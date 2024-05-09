@@ -18,6 +18,7 @@ exports.addSale = async (req, res) => {
         await newSale.validate(); // Validate the schema
 
         await newSale.save();
+        
         res.json("Sales Added");
     } catch (err) {
         if (err.name === 'ValidationError') {
@@ -98,3 +99,5 @@ exports.deleteSale = async (req, res) => {
         res.status(500).json({ status: "Error deleting sales record", error: err.message });
     }
 };
+
+

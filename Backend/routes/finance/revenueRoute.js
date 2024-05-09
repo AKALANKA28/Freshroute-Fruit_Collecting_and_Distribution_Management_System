@@ -7,6 +7,7 @@ const revenueController = require('../../controllers/finance/revenueController')
 
 // Retrieve all Revenue records
 router.get("/", revenueController.calculateRevenue);
+router.delete("/deleteAll", revenueController.deleteAllRevenue);
 
 // Retrieve a specific Revenue record by ID
 // router.get("/get/:id", revenueController.getRevenueById);

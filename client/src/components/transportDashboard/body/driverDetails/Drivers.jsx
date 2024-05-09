@@ -131,7 +131,7 @@ function Drivers() {
   return (
     <div className="main">
       <div className="card recent-sales overflow-auto">
-        <div className="card-body">
+        <div className="card-body" style={{minHeight:"615px"}}>
           <div className="page-header">
             <div class="add-item d-flex">
               <div class="card-title">
