@@ -204,3 +204,10 @@
 .search-form i{
   color: #012970;
 }
+
+.table .actionSize{
+  padding: 8px;
+  /* border: 1px solid #ddd; */
+  width: 20px;
+ 
+}
