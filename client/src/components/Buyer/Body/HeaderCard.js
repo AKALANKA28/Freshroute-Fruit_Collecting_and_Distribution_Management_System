@@ -1,6 +1,9 @@
 import React,{useState, useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BuyerOrder from "./NomalOrder"
+import Swal from 'sweetalert2';
+
 
 
 export default function () {
@@ -10,34 +13,45 @@ export default function () {
     const [quantity, setQuantity] = useState("");
     const [quality, setQuality] = useState("");
     const [date, setDate] = useState("");
+    const [datetobe, setDateToBe] = useState("");
     const navigate = useNavigate();
     
     
 
     function sendData(a){
-
-
-        a.preventDefault();
-        const newOrder = {
-              rname,
-              fruit,
-              category,
-              quantity,
-              quality,
-              date,
-        }
-              
-      
-          axios.post("http://localhost:8070/request/save", newOrder).then(() =>{
-              alert("Order Record Added") 
-              navigate("/BuyerDashboard");
-              window.location.reload();
-          }).catch((err)=>{
-              alert(err)
+      a.preventDefault();
+      const newOrder = {
+          rname,
+          fruit,
+          category,
+          quantity,
+          quality,
+          date,
+          datetobe,
+      };
+  
+      axios.post("http://localhost:8070/request/save", newOrder)
+          .then(() => {
+              Swal.fire({
+                  title: 'Success!',
+                  text: 'Order Record Added',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              }).then(() => {
+                  navigate("/BuyerDashboard");
+                  window.location.reload();
+              });
           })
-      
-      
-      }
+          .catch((err) => {
+              Swal.fire({
+                  title: 'Error!',
+                  text: err.message || 'Failed to add order',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              });
+          });
+  }
+  
 
       useEffect(() => {
         // Get the current date
@@ -54,10 +68,26 @@ export default function () {
         dateInput.setAttribute('max', maxDate);
         dateInput.setAttribute('min', maxDate); // Set the minimum date to the current date
   }, []);
+
+  const validateName = () => {
+    const { d_name } = this.state;
+    if (!d_name) {
+      return "Name is required";
+    }
+
+    // Check if the name contains any uppercase letters
+    if (/[A-Z]/.test(d_name)) {
+      return "Please enter name in lowercase letters";
+    }
+
+    return "";
+  };
     
   return (
     <div id="main">
-         <div className='container' >
+ 
+    
+         <div className='container' style={{marginTop:"5%"}}>
         <div className='row'>
             <div className="col">
             <div class="card" style={{width: "18rem"}}>
@@ -107,11 +137,20 @@ export default function () {
       <div className="mb-3">
         <label for="exampleInputPassword1" className="form-label">Customer</label>
         <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Enter Customer Name"
-        
+          pattern="[A-Za-z\s]+" title="Please enter only letters and spaces"
+          onKeyPress={(e) => {
+            const pattern = /[a-zA-Z\s]/; // Regular expression to match letters and spaces
+            if (!pattern.test(e.key)) {
+                e.preventDefault(); // Prevents the input of characters other than letters and spaces
+            }
+        }}
+
         onChange={(e) => {
             setRname(e.target.value);
         }}
     />
+    {!/^[A-Za-z\s]+$/.test(rname) && (
+        <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>Please enter only letters and spaces</p>)}
 </div>
 
         <div className="mb-3">
@@ -122,9 +161,11 @@ export default function () {
           }}
         >
   <option selected>Open this select menu</option>
-  <option value="banana">Banana</option>
-  <option value="mango">Mango</option>
-  <option value="pineapple">Pineapple</option>
+  <option value="Banana">Banana</option>
+  <option value="Mango">Mango</option>
+  <option value="Pineapple">Pineapple</option>
+  <option value="Woodapple">Woodapple</option>
+  <option value="Orange">Orange</option>
 </select>
 </div>
 
@@ -136,14 +177,20 @@ export default function () {
           }}
         >
   <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+  <option value="Kolikuttu">Kolikuttu</option>
+  <option value="Ambul">Ambul</option>
+  <option value="Seeni">Seeni</option> 
+  <option value="Vilad">Vilad</option>
+  <option value="Alphonso">Alphonso</option>
+  <option value="Mauritius">Mauritius</option> 
+  <option value="Mandarin">Mandarin</option>
+  <option value="Sweet">Sweet</option> 
+ 
 </select>
 </div>
 
 <div className="mb-3">
-        <label for="exampleInputPassword1" className="form-label">Quantity</label>
+        <label for="exampleInputPassword1" className="form-label">Quantity (Kg) </label>
         <input type="number" className="form-control" id="exampleInputPassword1" placeholder="Enter Quantity"
          min={"1"}
         onChange={(e) => {
@@ -160,25 +207,36 @@ export default function () {
           }}
         >
   <option selected>Open this select menu</option>
-  <option value="1">A</option>
-  <option value="2">B</option>
-  <option value="3">C</option>
+  <option value="A">A</option>
+  <option value="B">B</option>
+  <option value="C">C</option>
 </select>
 </div>
 
 <div className="mb-3">
-    <label htmlFor="dateInput" className="form-label">Date</label>
+    <label htmlFor="dateInput" className="form-label">Order placed date</label>
     <input type="date" id="dateInput" name="date" max={""} value={date}
     className="form-control"
      onChange={(e) => setDate(e.target.value)}
       required/>
   </div>
 
+  <div className="mb-3">
+            <label htmlFor="dateInput" className="form-label">Due Date</label>
+            <input 
+                type="date"
+                className="form-control"
+                min={date} // Set the minimum date to today
+                value={datetobe}
+                onChange={(e) => setDateToBe(e.target.value)}
+                required
+            />
+        </div>
         
       </div>
       <div class="modal-footer">
         
-        <button type="submit" class="btn">Request for Order</button>
+        <button type="submit" class="btn btn-success">Request for Order</button>
        
       </div>
       </form>
@@ -187,6 +245,7 @@ export default function () {
 </div>
 
       </div>
+      <BuyerOrder/>
     </div>
   )
 }

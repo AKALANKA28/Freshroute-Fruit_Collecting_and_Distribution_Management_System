@@ -47,19 +47,18 @@ import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
 
 
-import RequestedOrder from './components/RequestedOrder/RequestedOrder';
-import BuyerDashBoard from './components/Buyer/BuyerDashBoard';
-import NormalOrder from './components/NormalOrder/NormalOrder';
-import EditOrder from './components/NormalOrder/EditOrder';
+
 
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
 import ResourcePage from "./components/researchDashboard/ResourcePage";
 
-//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-//import NormalOrder from "./components/NormalOrder/NormalOrder";
-//import EditOrder from "./components/NormalOrder/EditOrder";
+import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+import NormalOrder from "./components/NormalOrder/NormalOrder";
+import EditOrder from "./components/NormalOrder/EditOrder";
+
+
 
 
 import PredictionDetails from "./components/farmer/PredictionDetails";
@@ -77,6 +76,7 @@ import Cart from "./Website/Shop/Cart/Cart";
 import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
+import BuyerEdit from "./components/Buyer/Body/BuyerEdit";
 
 const router = createBrowserRouter([
   {
@@ -529,6 +529,15 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/buyer/edit/:id",
+    element: (
+      <div>
+        <BuyerEdit />
+      </div>
+    ),
+  },
+
 
   {
     path: "/ScheduleDetails",
@@ -540,6 +549,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+
+
 function App() {
   return (
     <div>
@@ -549,3 +560,4 @@ function App() {
 }
 
 export default App;
+

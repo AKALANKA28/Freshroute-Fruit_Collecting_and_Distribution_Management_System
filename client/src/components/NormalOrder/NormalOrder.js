@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import axios from "axios";
 import Sidebar from '../buyerManager/sidebar/Sidebar';
 import Header from '../buyerManager/header/header';
-import Chart from 'chart.js/auto';
 import "./style.css"
+import PdfButton from '../buyerManager/PdfButton';
+import Swal from 'sweetalert2';
 
 export default class NormalOrder extends Component {
 
@@ -17,7 +18,7 @@ export default class NormalOrder extends Component {
 
     componentDidMount(){
         this.retriveRequest()
-        this.initializeChart(this.state.requests);
+        
     }
 
     retriveRequest(){
@@ -26,8 +27,6 @@ export default class NormalOrder extends Component {
             if(res.data.success){
                 this.setState({
                     requests:res.data. existingRequest,
-                }, () =>{
-                    this.initializeChart(this.state.requests);
                 });
                 
 
@@ -37,23 +36,12 @@ export default class NormalOrder extends Component {
     }
 
 
-    onDelete = (id) =>{
-        const isConfirmed = window.confirm('Are you sure you want to delete this Order?');
-
-        if (isConfirmed) {
-            axios.delete(`http://localhost:8070/request/delete/${id}`)
-                .then((res) => {
-                    this.retriveRequest();
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }
-    }
+    
 
     filterData(requests, searchKey){
         const result = requests.filter((request) =>
-            request.rname.toLowerCase().includes(searchKey) 
+            request.rname.toLowerCase().includes(searchKey) ||
+            request.fruit.toLowerCase().includes(searchKey) 
             
         );
     
@@ -70,76 +58,17 @@ export default class NormalOrder extends Component {
         });
       };
 
-    initializeChart(requests) {
-        const ctxB = document.getElementById('barChart');
+      
     
-        if (!ctxB || !requests) return;
-    
-        if (this.chartInstance) {
-          this.chartInstance.destroy(); // Destroy existing chart instance
-        }
-    
-        const labels = requests.map((request) => request.fruit );
-        const data = requests.map((request) => request.quantity);
-    
-        this.chartInstance = new Chart(ctxB, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: 'Quantity',
-                data: data,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red background
-                borderColor: 'rgba(255, 99, 132, 1)', // Red border
-                borderWidth: 1,
-                
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                display: false,
-              },
-            },
-            scales: {
-              x: {
-                display: true,
-                title: {
-                  display: true,
-                  text: 'Fruits',
-                  color:"red"
-                  
-                },
-              },
-              y: {
-                display: true,
-                title: {
-                  display: true,
-                  text: 'Quantity',
-                  color:"red"
-                },
-              },
-            },
-          },
-        });
-      }
 
   render() {
     return (
-      <div id="main">
+      <div id="main" style={{marginTop:"1%"}}>
         <Header/>
         <Sidebar/>
 
         <div className='container'>
 
-        <div id='barChartContainer' style={{ marginBottom: '5%' }}>
-            Friut and Selling Quantity
-            <canvas id='barChart'></canvas>
-
-          </div>
 
           <div className='col-lg-3 mt-2 mb-2'>
             <input
@@ -161,7 +90,7 @@ export default class NormalOrder extends Component {
                     <th scope='col'>Sub Category</th>
                     <th scope='col'>Quality</th>
                     <th scope='col'>Quantity</th>
-                    <th scope='col'>Date</th>
+                    <th scope='col'>Due Date</th>
                     <th scope='col'>Action</th>
                     
                 </tr>
@@ -178,13 +107,7 @@ export default class NormalOrder extends Component {
                     <td>{requests.quality}</td>
                     <td>{requests.date}</td>
                     <td>
-                        <a className='btn' href={`/EditOrder/${requests._id}`} style={{backgroundColor: "white", width:"50px", height:"45px", borderRadius:"50%"}}>
-                        <i className='fas fa-pen' style={{color:"black"}}></i>
-                        </a>
-                        &nbsp;
-                        <a className='btn' href='# 1' onClick={() => this.onDelete(requests._id)} style={{backgroundColor: "white", width:"50px", height:"45px", borderRadius:"50%"}}>
-                            <i className='fas fa-trash-alt' style={{color:"red"}}></i>
-                        </a>
+                       <PdfButton request={requests}/>
                     </td>
                 </tr>
             ))}

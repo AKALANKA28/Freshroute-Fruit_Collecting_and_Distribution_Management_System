@@ -101,9 +101,9 @@ export default function EditOrder(props) {
             value={fruit}
           >
             <option selected>Open this select menu</option>
-            <option value="1">Banana</option>
-            <option value="2">Mango</option>
-            <option value="3">Pineapple</option>
+            <option value="Banana">Banana</option>
+            <option value="Mango">Mango</option>
+            <option value="Pineapple">Pineapple</option>
           </select>
         </div>
 
@@ -116,9 +116,9 @@ export default function EditOrder(props) {
             value={category}
           >
             <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="One">One</option>
+            <option value="Two">Two</option>
+            <option value="Three">Three</option>
           </select>
         </div>
 
@@ -142,9 +142,9 @@ export default function EditOrder(props) {
             value={quality}
           >
             <option selected>Open this select menu</option>
-            <option value="1">A</option>
-            <option value="2">B</option>
-            <option value="3">C</option>
+            <option value="One">One</option>
+            <option value="Two">Two</option>
+            <option value="Three">Three</option>
           </select>
         </div>
 

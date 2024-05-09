@@ -19,7 +19,7 @@ const requestschema = new mongoose.Schema({
     },
 
     quantity: {
-        type: String ,//
+        type: String ,
         required: true,
     },
 
@@ -29,38 +29,15 @@ const requestschema = new mongoose.Schema({
     },
 
     date: {
-        type: String, //date to be delivered 
+        type: String, // order placed date
+        required: true,
+    },
+    
+    datetobe: {
+        type: String, //  date to be delivered
         required: true,
     },
 
-//     placedDate: {
-//         type: Date,
-//         required: true
-//     },
-
-//     assignedDate: {
-//         type: Date,
-//         required: true
-//     },
-
-//     customerId : {
-//         type : String,
-//         required: true,   
-//     },
-
-//     customerName : {
-//         type : String,
-//         required: true,   
-//     },
-
-//     orderStatus: {   // PENDING  ASSIGNED IN_PROGRESS  COMPLETED
-//         type: String,
-//         required: true,
-//         default: "PENDING",
-//     },
-//     opName: String,
-//     opId: String
-   
 });
 
 module.exports = mongoose.model("Request", requestschema);

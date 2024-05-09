@@ -44,8 +44,11 @@ const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
 const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
 const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
 
-
+//Buyer-Aseni
 const itemRouter = require("./routes/buyers/Bmanager");
+
+
+
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
 // const qualityRoute = require("./routes/q_and_o/qualityRoute");
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
@@ -124,7 +127,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 8070;
 app.listen(PORT, () => {
 
-  console.log("\nYes Whotto Yes🥳\nDatabase Connected 😎\n");
+  console.log("Database Connected 😎\n");
 
   console.log(`Server is up and running on port: ${PORT}`);
 });

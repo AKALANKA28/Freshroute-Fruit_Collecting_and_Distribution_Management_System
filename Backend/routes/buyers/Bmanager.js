@@ -38,18 +38,34 @@ router.put("/request/update/:id", (req, res) => {
         });
 });
 
-// Delete request
+//delete
+
 router.delete("/request/delete/:id", (req, res) => {
-    Request.findByIdAndRemove(req.params.id).exec()
-        .then((deleteRequest) => {
-            res.status(200).json({ message: "Delete Successful", deleteRequest });
+    Request.findOneAndDelete({ _id: req.params.id })
+        .then((deletedRequest) => {
+            if (!deletedRequest) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Request not found"
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: "Delete Successful",
+                deletedRequest: deletedRequest
+            });
         })
         .catch((err) => {
-            res.status(400).json({ message: "Delete Unsuccessful", error: err });
+            return res.status(400).json({
+                success: false,
+                message: "Delete Unsuccessful",
+                error: err
+            });
         });
 });
 
-// Get a specific request
+
+// Get a specific request by id
 router.get("/request/:id", (req, res) => {
     Request.findById(req.params.id).exec()
         .then((request) => {
@@ -59,5 +75,7 @@ router.get("/request/:id", (req, res) => {
             res.status(400).json({ success: false, error: err });
         });
 });
+
+
 
 module.exports = router;
