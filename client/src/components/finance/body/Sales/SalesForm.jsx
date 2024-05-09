@@ -1,41 +1,51 @@
-import React, { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as yup from 'yup';
+
+
+const salesSchema = yup.object({
+  customer_name: yup.string().nullable().required("Name is required"),
+  date: yup.string().required("Date is required"),
+  fruit_name: yup.string().required("Fruit Name is required"),
+  amount: yup.string().required("Amount is required"),
+  paid: yup.string(),
+  due: yup.string(),
+  status: yup.string(),
+
+});
+
 
 const SalesForm = ({ handleSubmit, initialData }) => {
-  const [formData, setFormData] = useState({
-    customer_name: "",
-    date: "",
-    fruit_name: "",
-    amount: "",
-    paid: "",
-    due: "",
-    status: "",
 
-
+  const formik = useFormik({
+    initialValues: {
+      _id: initialData ? initialData._id : "", // Set _id from initialData if available
+      customer_name: initialData ? initialData.customer_name : "",
+      fruit_name: initialData ? initialData.fruit_name : "",
+      amount: initialData ? initialData.amount : "",
+      paid: initialData ? initialData.paid : "",
+      due: initialData ? initialData.due : "",
+      status: initialData ? initialData.status : "",
+    },
+    validationSchema: salesSchema,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
   });
 
 
-  useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-    }
-  }, [initialData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    handleSubmit(formData);
-  };
+
+
   return (
 
     
-      <form onSubmit={handleFormSubmit}>
+    <form 
+    action=""
+    onSubmit={formik.handleSubmit}>
 
       
       <div className="container">
@@ -43,7 +53,7 @@ const SalesForm = ({ handleSubmit, initialData }) => {
 
         <div className="row">
           
-        <div className="col-6">
+        <div className="col">
         <div className="mb-3">
           <label htmlFor="customer_name" className="form-label">
           Customer Name
@@ -53,24 +63,30 @@ const SalesForm = ({ handleSubmit, initialData }) => {
             className="form-control"
             name="customer_name"
             placeholder="Full Name"
-            onChange={handleChange}
-            value={formData.customer_name}
+            value={formik.values.customer_name}
+            onChange={formik.handleChange("customer_name")}
+            onBlur={formik.handleBlur("customer_name")}/>
+            <div className='error'>
+               {formik.touched.customer_name && formik.errors.customer_name}
+            </div>
             
-          />
+        
         </div>
         <div className="mb-3">
           <label htmlFor="date" className="form-label">
             Date
           </label>
           <input
-            type="date"
+            type="datetime-local"
             className="form-control"
             name="date"
             placeholder="Date"
-            onChange={handleChange}
-            value={formData.date}
-            
-          />
+            value={formik.values.date}
+            onChange={formik.handleChange("date")}
+            onBlur={formik.handleBlur("date")}/>
+            <div className='error'>
+               {formik.touched.date && formik.errors.date}
+            </div>
         </div>
         <div className="mb-3">
           <label htmlFor="fruit_name" className="form-label">
@@ -81,66 +97,76 @@ const SalesForm = ({ handleSubmit, initialData }) => {
             className="form-control"
             name="fruit_name"
             placeholder="Mango"
-            onChange={handleChange}
-            value={formData.fruit_name}
-            
-          />
+            value={formik.values.fruit_name}
+            onChange={formik.handleChange("fruit_name")}
+            onBlur={formik.handleBlur("fruit_name")}/>
+            <div className='error'>
+               {formik.touched.fruit_name && formik.errors.fruit_name}
+            </div>
         </div>
         <div className="mb-3">
           <label htmlFor="amount" className="form-label">
-           Amount
+           Amount (Rs)
           </label>
           <input
             type="text"
             className="form-control"
             name="amount"
-            placeholder="10 000.00"
-            onChange={handleChange}
-            value={formData.amount}
-          />
+            placeholder="Rs. 10 000.00"
+            value={formik.values.amount}
+            onChange={formik.handleChange("amount")}
+            onBlur={formik.handleBlur("amount")}/>
+            <div className='error'>
+               {formik.touched.amount && formik.errors.amount}
+            </div>
         </div>
         </div>
-        <div className="col-6">
+        <div className="col">
         <div className="mb-3">
           <label htmlFor="paid" className="form-label">
-          Paid
+          Paid (Rs)
           </label>
           <input
             type="text"
             className="form-control"
             name="paid"
-            placeholder="10 000.00"
-            onChange={handleChange}
-            value={formData.paid}
-            
-          />
+            placeholder="Rs.10 000.00"
+            value={formik.values.paid}
+            onChange={formik.handleChange("paid")}
+            onBlur={formik.handleBlur("paid")}/>
+            <div className='error'>
+               {formik.touched.paid && formik.errors.paid}
+            </div>
         </div>
         <div className="mb-3">
           <label htmlFor="due" className="form-label">
-          Due
+          Due (Rs)
           </label>
           <input
             type="text"
             className="form-control"
             name="due"
             placeholder="Due"
-            onChange={handleChange}
-            value={formData.due}
-            
-          />
+            value={formik.values.due}
+            onChange={formik.handleChange("due")}
+            onBlur={formik.handleBlur("due")}/>
+            <div className='error'>
+               {formik.touched.due && formik.errors.due}
+            </div>
         </div><div className="mb-3">
           <label htmlFor="status" className="form-label">
-          Status
-          </label>
+          Status/          </label>
           <input
             type="text"
             className="form-control"
             name="status"
             placeholder="Paid"
-            onChange={handleChange}
-            value={formData.status}
-            
-          />
+            value={formik.values.status}
+            onChange={formik.handleChange("status")}
+            onBlur={formik.handleBlur("status")}/>
+            <div className='error'>
+               {formik.touched.status && formik.errors.status}
+            </div>
         </div>
         </div>
 
@@ -148,10 +174,9 @@ const SalesForm = ({ handleSubmit, initialData }) => {
               </div>
             </div>
       
-       <div className="d-flex justify-content-end border-top">
-              {/* <button type="submit" className="btn btn-secondary "> Cancel </button> */}
-              <button type="submit" className="btn btn-success"> Submit </button>
-
+        <div className="d-flex justify-content-end border-top">
+          {/* <button type="submit" className="btn btn-secondary "> Cancel </button> */}
+          <button type="submit" className="btn btn-success"> Submit </button>
        </div>
       </form>
   

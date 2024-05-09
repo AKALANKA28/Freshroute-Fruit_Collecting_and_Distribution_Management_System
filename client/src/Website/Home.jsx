@@ -8,6 +8,9 @@ import Count from './Home/Count/Count';
 import Features from './Home/Features/Features';
 import Partners from './Home/Partners/Partners';
 import Footer from './Footer/Footer';
+import Contact from './Home/Contact/Contact';
+import Blog from './Home/Blog/Blog';
+import Describe from './Home/Describe/Describe';
 
 const Home = () => {
 
@@ -46,9 +49,12 @@ const Home = () => {
       </div>
       <div>
         <Features />
-        <About/>
         <Count/>
+        <About/>
         <Partners />
+        <Describe />
+        <Contact />
+        {/* <Blog /> */}
         <Footer />
       </div>
         

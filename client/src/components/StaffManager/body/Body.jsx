@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import './main.css'
 
 import Cards from './Cards'
@@ -10,13 +10,27 @@ import BudgetReport from './BudgetReport'
 import WebTraffic from './WebTraffic'
 import News from './News'
 import BackToTop from './BackToTop'
+import SpinnerModal from '../../spinner/SpinnerModal';
 
 const Body = () => {
+  const [loading, setLoading] = useState(true);
+
+  // Simulate loading
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the timeout as needed
+
+    return () => clearTimeout(timeout);
+  }, []);
 
 
    
   return (
     <div> 
+      {loading ? (
+        <SpinnerModal show={true} /> // Show SpinnerModal while loading
+      ) : (
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8">
@@ -42,7 +56,7 @@ const Body = () => {
         </div>
         <BackToTop />
    </section>
-
+  )}
    </div>
   )
 }

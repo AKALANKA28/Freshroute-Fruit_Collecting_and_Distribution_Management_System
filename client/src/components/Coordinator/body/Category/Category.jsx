@@ -9,11 +9,13 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import CategoryForm from "./CategoryForm";
 import CategoryPriceForm from "./CategoryPriceForm";
 import CategoryReport from "./CategoryReport";
+import SpinnerModal from '../../../spinner/SpinnerModal';
 import "./Category.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Category() {
+  const [loading, setLoading] = useState(true); 
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [priceModalOpen, setPriceModalOpen] = useState(false);
@@ -28,9 +30,21 @@ function Category() {
   const [selectedQuality, setSelectedQuality] = useState("all");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+  
     fetchFruitNames();
   }, []);
 
@@ -145,7 +159,7 @@ function Category() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/Category/add", formData);
+      await axios.post("/Category/add", { ...formData, imageUrl: formData.imageUrl });
       alert("Category Added");
       handleAddModalClose();
       getFetchData();
@@ -156,7 +170,7 @@ function Category() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.put(`/Category/update/${formData._id}`, formData);
+      await axios.put(`/Category/update/${formData._id}`,  { ...formData, imageUrl: formData.imageUrl });
       alert("Category Updated");
       handleEditModalClose();
       getFetchData();
@@ -201,7 +215,11 @@ function Category() {
   });
 
   return (
-    <div className="main">
+    <div id='main' className='main'>
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -341,16 +359,17 @@ function Category() {
               </select>
             </div>
           </div>
-
+          <br/>
           <table className="table table-borderless datatable">
             <thead className="table-light">
               <tr>
+              <th scope="col">Image</th>
                 <th scope="col">Date</th>
                 <th scope="col" onClick={() => handleSort("fruit")}>Fruit</th>
                 <th scope="col" onClick={() => handleSort("category")}>Category</th>
                 <th scope="col">Quality</th>
                 <th scope="col">Quality Description</th>
-                <th scope="col">Price per Kg(Rs)</th>
+                <th scope="col">Price per Kg</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -358,12 +377,23 @@ function Category() {
               {sortedDataList.length ? (
                 sortedDataList.map((category) => (
                   <tr key={category._id}>
+                    <td>
+                        {category.imageUrl && (
+                          <img
+                            src={category.imageUrl}
+                            alt="Fruit Image"
+                            style={{ width: "50px", height: "50px" }}
+                          />
+                        )}
+                      </td>
                     <td>{category.date}</td>
                     <td>{category.fruit}</td>
                     <td>{category.category}</td>
                     <td>{category.quality}</td>
-                    <td>{category.qualityDesc}</td>
-                    <td>{category.price}</td>
+                    <td className="description2">{category.qualityDesc}</td>
+                    <td>{typeof category.price === 'number' ? `Rs.${category.price.toFixed(2)}` : ''}</td>
+
+
                     <td className="action">
                       <div className="buttons">
                         <button
@@ -397,6 +427,7 @@ function Category() {
           </table>
         </div>
       </div>
+       )}
     </div>
   );
 }

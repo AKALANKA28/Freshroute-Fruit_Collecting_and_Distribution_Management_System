@@ -1,7 +1,6 @@
 
 /*----------------------- Recent Sales ---------------------*/
 
-
 .body .recent-sales{
     font-size: 14px;
 }
@@ -53,6 +52,9 @@
 
 .body .activity{
     font-size: 14px;
+    margin-top: -25px;
+    margin-bottom: -5px;
+    overflow: hidden;
 }
 
 .body .activity .activity-item .activite-label {
@@ -131,5 +133,4 @@
     color: #777777;
     margin-left: 95px;
 }
-
 

@@ -15,15 +15,20 @@ var userSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
+
     mobile:{
-        type:String,
-        required:true,
-        unique:true,
+      type:String,
     },
+
     password:{
         type:String,
         required:true,
     },
+
+    address: {
+      type:String,
+    }, 
+
     role:{
       type: String,
       default: "user"
@@ -39,7 +44,6 @@ var userSchema = new mongoose.Schema({
     address: {
       type: String
     },
-    wishList: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
     refreshToken: {
         type: String,
     },

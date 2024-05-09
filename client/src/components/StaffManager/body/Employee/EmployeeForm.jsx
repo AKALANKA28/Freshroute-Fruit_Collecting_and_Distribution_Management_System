@@ -11,6 +11,16 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [dataList, setDataList] = useState([]);
+  const [nicError, setNicError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+
 
   useEffect(() => {
     getFetchData();
@@ -31,12 +41,13 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     nic: "",
     address: "",
     email: "",
+    password: "",
     accno: "",
     bankname: "",
     qualifications: "",
     joineddate: "",
-    imageUrl: "", // Corrected key name for image URL
-    fileUrl: "", // Corrected key name for file URL
+    imageUrl: "",
+    fileUrl: "",
   });
 
   useEffect(() => {
@@ -82,17 +93,89 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     }
   }, [initialData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  // Function to validate password
+const validatePassword = (password) => {
+  if (password.length < 8) {
+    return "Password must be at least 8 characters long.";
+  } else if (!/\d/.test(password) || !/[a-zA-Z]/.test(password) || !/[A-Z]/.test(password)) {
+    return "Password must contain at least one uppercase letter, one lowercase letter, and one number.";
+  } else {
+    return ""; // No error
+  }
+};
+
+
+// Function to validate email
+const validateEmail = (email) => {
+  if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+    return "Invalid email address. Please enter a valid email.";
+  } else {
+    return ""; // No error
+  }
+};
+
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  if (name === "name" && /\d/.test(value)) {
+    return;
+  }
+  if (name === "bankname" && /\d/.test(value)) {
+    return;
+  }
+  if (name === "nic") {
+    validateNic(value);
+  }
+  
+  // Email validation
+  if (name === "email") {
+    const emailError = validateEmail(value);
+    setEmailError(emailError);
+  }
+
+  // Password validation
+  if (name === "password") {
+    const passwordError = validatePassword(value);
+    setPasswordError(passwordError);
+  }
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+
+  
+
+  const validateNic = (nic) => {
+    const nicRegex = /^(1|2)\d{8}[vV]?$|^(1|2)\d{11}$/;
+    
+    if (!nicRegex.test(nic)) {
+      setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
+    } else {
+      setNicError("");
+    }
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(formData);
+    const currentDate = getCurrentDate();
+  const formDataWithDate = { ...formData, joineddate: currentDate };
+
+    if (nicError === "") {
+      handleSubmit(formDataWithDate);
+    } else {
+      alert("Please correct the NIC error before submitting.");
+    }
+  };
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
   useEffect(() => {
@@ -168,14 +251,16 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               NIC
             </label>
             <input
-              type="text"
+              type=""
               className="form-control"
               name="nic"
               placeholder="NIC"
               onChange={handleChange}
               value={formData.nic}
               required
+              maxLength={12}
             />
+            {nicError && <p className="text-danger">{nicError}</p>}
           </div>
           <div className="mb-3">
             <label htmlFor="address" className="form-label">
@@ -195,19 +280,51 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
         <div className="col-md-6">
           {/* Right section of the form */}
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email Address
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="email"
-              placeholder="Email Address"
-              onChange={handleChange}
-              value={formData.email}
-              required
-            />
-          </div>
+  <label htmlFor="email" className="form-label">
+    Email Address
+  </label>
+  <input
+    type="email"
+    className="form-control"
+    name="email"
+    placeholder="Email Address"
+    onChange={handleChange}
+    value={formData.email}
+    required
+  />
+  {emailError && <p className="text-danger">{emailError}</p>}
+</div>
+
+           <div className="mb-3">
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <div className="input-group">
+          <input
+            type={showPassword ? "text" : "password"}
+            className="form-control"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={toggleShowPassword}
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+          
+        </div>
+        {passwordError && <p className="text-danger">{passwordError}</p>}
+      </div>
+  
+
+
+
           <div className="mb-3">
             <label htmlFor="accno" className="form-label">
               Account Number
@@ -248,20 +365,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
-          <div className="mb-3">
-            <label htmlFor="joineddate" className="form-label">
-              Joined Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              name="joineddate"
-              placeholder="Joined Date"
-              onChange={handleChange}
-              value={formData.joineddate}
-              required
-            />
-          </div>
+          
         </div>
       </div>
       <div className="d-flex justify-content-center">

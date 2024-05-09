@@ -2,7 +2,7 @@ import React from 'react'
 
 import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
-import VehicleDetailsBody from './body/transportdetails/VehicleDetailsBody'
+import Vehicle from './body/transportdetails/Vehicle'
 import Footer from './footer/Footer'
 
 
@@ -11,7 +11,7 @@ const VehicleDetails = () => {
     <div>
       <Header />
       <Sidebar />
-      <VehicleDetailsBody />
+      <Vehicle/>
       <Footer />
     </div>
   )
