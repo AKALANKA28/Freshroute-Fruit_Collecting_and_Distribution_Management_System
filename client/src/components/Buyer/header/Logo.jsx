@@ -8,10 +8,10 @@ function Logo(){
     }
   
     return (
-        <div className='d-flex align-items-center justify-content-between' id="main" >
+        <div className='d-flex align-items-center justify-content-between'>
         <a href='/' className='logo d-flex align-items-center'>
         < img src={logo} alt='logo image'/>
-           <span className='d-none d-lg-block'>Fresh Route</span>
+           <span className='d-none d-lg-block'>FreshRoute</span>
         </a>
        <i className='bi bi-list toggle-sidebar-btn' onClick={handleToggleSideBar}></i>
        </div>
