@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSingleProduct } from "../../../features/products/productSlice";
 import { ToastContainer } from "react-toastify";
 import { addToCart, getCart } from "../../../features/user/userSlice";
-import Navbar from "../../Navbar/Navbar";
+import axios from "axios";
+import Navbar2 from "../../Navbar/Navbar2";
 // import Grades from "../../Components/Grades";
 
 const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   // const [grade, setGrade] = useState(1);
+  const [productData, setProductData] = useState(null);
 
   const [alreadyAdded, setAlreadyAdded] = useState(false)
   // console.log(quantity);
@@ -22,13 +24,25 @@ const SingleProduct = () => {
   // console.log(getProductId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productState = useSelector( state => state.product.singleproduct);
-  const cartState = useSelector(state => state.auth.cartProducts )
+  const productState = useSelector( (state) => state?.product?.singleproduct);
+  const cartState = useSelector((state) => state?.auth?.cartProducts )
 
   useEffect(() => {
     dispatch(getSingleProduct(getProductId));
     dispatch(getCart())
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/FruitType/");
+      // Assuming the response data is an array of product objects
+      // Find the product with the matching ID and set it to the state
+      const product = response.data.find(product => product.id === getProductId);
+      setProductData(product);
+    } catch (err) {
+      console.error("Error fetching product data:", err);
+    }
+  };
 
 
   useEffect(() => {
@@ -42,18 +56,32 @@ const SingleProduct = () => {
   }
 }, [cartState]); // Add cartState to the dependency array of useEffect
 
+  // const uploadCart = () => {
+    // if(grade == null) {
+    //   toast.error("Please Choose a Grade")
+    //   return false
+    // } else {
+      // dispatch(
+      // addToCart({productId: productState?._id, quantity, price: productState?.price}))
+    // navigate('./cart')
+  // }
+
+  // };
+  // console.log(uploadCart);
+
+
   const uploadCart = () => {
     dispatch(
       addToCart({productId: productState?._id, quantity, price: productState?.price})
     )
-    // navigate('./cart')
+    // navigate('../cart')
   };
   // console.log(uploadCart);
 
   return (
     <div>
-      {/* <Navbar /> */}
-      <div className="product-header">
+      <Navbar2 />
+      {/* <div className="product-header">
         <nav className="nav">
           <div className="nav-logo">
             <a href="/home">FreshRoute.</a>
@@ -78,13 +106,13 @@ const SingleProduct = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
 
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
             <div className="main-product-image">
-              <img src={img} alt="" />
+              <img src={productState?.images} alt="" />
             </div>
           </div>
           <div className="col-6">
@@ -104,15 +132,7 @@ const SingleProduct = () => {
                   <div className="d-flex flex-column gap-2 pb-4">
                     <h3 className="product-heading">Description</h3>
                     <p className="product-description">
-                      Latin words, combined with a handful of model sentence
-                      structures, to generate Lorem Ipsum which looks
-                      reasonable. aLatin words, cobined with a handful of model
-                      sentence structures, to generate Lorem Ipsum which looks
-                      reasonable. Latin words, combined with a handful of model
-                      sentence structures, to generate Lorem Ipsum which looks
-                      reasonable. aLatin words, cobined with a handful of model
-                      sentence structures, to generate Lorem Ipsum which looks
-                      reasonable.
+                    {productState?.description}
                     </p>
                   </div>
                   {
@@ -143,7 +163,7 @@ const SingleProduct = () => {
                         type="number"
                         name=""
                         min={1}
-                        max={10}
+                        max={100}
                         className="form-control"
                         style={{ width: "70px", height: "40px" }}
                         id=""
@@ -155,7 +175,7 @@ const SingleProduct = () => {
                    }
                     <div className={alreadyAdded? "ms-0" : "ms-5" + "d-flex align-items-center gap-2"}>
                       <button
-                        className="product-button"
+                        className="product-button me-4"
                         type="submit"
                         onClick={() => { alreadyAdded? navigate('../cart') : uploadCart()}}
                       >

@@ -39,23 +39,25 @@ const WebTrafficChart = () => {
                trigger: 'item',
             },
             legend: {
-                top: '5%',
-                left: 'center',
+                orient: 'vertical', // Set orientation to vertical
+                right: -4, // Adjust right distance
+                top: 'center', // Align to center vertically
+                
             },
             series: [
                 {
                     name: 'Access From',
                     type: 'pie',
-                    radius: ['40%', '70%'],
+                    radius: ['37%', '65%'],
                     avoidLabelOverlap : false,
                     label: {
-                        show: false,
+                        show: true,
                         position: 'center',
                     },
                     emphasis: {
                         label: {
                             show: true,
-                            fontSize: '18',
+                            fontSize: '20',
                             fontWeight: 'bold',
                         },
                     },
@@ -74,7 +76,7 @@ const WebTrafficChart = () => {
   return (
     <div
         id='expenseChart'
-        style={{minHeight: '480px'}}
+        style={{  width: '400px', height: '290px', minHeight: '290px', marginTop: "-55px", left: "-40px", marginBottom: "-20px"}}
         className='echart'> 
     </div>
   );

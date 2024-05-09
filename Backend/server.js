@@ -5,21 +5,19 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const app = express();
 require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const { errorHandler, notFound } = require("./middlewares/errorHandler.js");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
-const stripe = require("stripe")(
-  "sk_test_51P85tiKciT9oiVpgb9vlJdOnOVjTZOf3y0KGLObSVItsZVQWWPWQIzph7lv3NlVH6jtCBkwVQHfM1YXRYF0fSmmV00LNhhhQHo"
-);
-
 const authRouter = require("./routes/authRoute.js");
 const productRouter = require("./routes/productRoute.js");
 const categoryRouter = require("./routes/categoryRoute.js");
 const enqRouter = require("./routes/enqRoute.js");
 
+const revenueRouter = require("./routes/finance/revenueRoute");
 const salesRouter = require("./routes/finance/salesRoute");
 const expenseRouter = require("./routes/finance/expenseRoute");
 const FruitTypeRouter = require("./routes/coordinator/FruitTypeRoute.js");
@@ -49,9 +47,11 @@ const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
 
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
+const UnregisteredRouter = require("./routes/StaffManager/UnregisteredRoute.js");
 // const qualityRoute = require("./routes/q_and_o/qualityRoute");
 const CalculateSalaryRouter = require("./routes/StaffManager/CalculateSalaryRoute.js");
 const NoticeRouter = require("./routes/StaffManager/NoticeRoute.js");
+const MessageRouter = require("./routes/StaffManager/MessageRoute.js");
 
 const orderMangerRoute = require("./routes/q_and_o/OrderManagerRoute");
 const orderProcessorRoute = require("./routes/q_and_o/OrderProcessorRoute");
@@ -79,6 +79,7 @@ app.use("/product", productRouter);
 app.use("/productCategory", categoryRouter);
 app.use("/enq", enqRouter);
 
+app.use("/revenue", revenueRouter);
 app.use("/sales", salesRouter);
 app.use("/expense", expenseRouter);
 app.use("/cards", cardsRouter);
@@ -109,35 +110,13 @@ app.use("/declinedSupplier", declinedSupplierRouter);
 app.use(itemRouter);
 app.use("/TransportFee", TransportFeeRouter);
 app.use("/Employee", EmployeeRouter);
+app.use("/Unregistered", UnregisteredRouter);
 // app.use('/quality', qualityRoute);
 app.use("/CalculateSalary", CalculateSalaryRouter);
 app.use("/Notice", NoticeRouter);
+app.use("/Message", MessageRouter);
 app.use("/om", orderMangerRoute);
 app.use("/op", orderProcessorRoute);
-
-app.post("/user/checkout", async (req, res) => {
-  const { product } = req.body;
-
-  const lineItems = product.map((product) => ({
-    price_data: {
-      currency: "inr",
-      product_data: {
-        name: product.dish,
-      },
-      unit_amount: product.price * 100,
-    },
-    quantity: product.qnty,
-  }));
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: lineItems,
-    mode: "payment",
-    success_url: "",
-    cancel_url: "",
-  });
-  res.json({ id: session.id });
-});
 
 app.use(notFound);
 app.use(errorHandler);

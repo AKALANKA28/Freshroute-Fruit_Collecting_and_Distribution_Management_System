@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const vehicle = mongoose.Schema({
   vehicle_no: {
-    type: Number,
+    type: String,
     required: true,
   },
   type: {
@@ -13,7 +13,7 @@ const vehicle = mongoose.Schema({
 
   conditions: {
     type: String,
-    required: true,
+    // required: true,
   },
 
   capacity: {
@@ -25,10 +25,7 @@ const vehicle = mongoose.Schema({
     type: String,
     required: true,
   },
-  owner_name: {
-    type: String,
-    required: true,
-  },
+
   nic: {
     type: String,
     required: true,
@@ -41,12 +38,12 @@ const vehicle = mongoose.Schema({
     type: String,
     required: true,
   },
-  account_no: {
-    type: Number,
+  Bank: {
+    type: String,
     required: true,
   },
-  account_no: {
-    type: Number,
+  Branch: {
+    type: String,
     required: true,
   },
   account_no: {

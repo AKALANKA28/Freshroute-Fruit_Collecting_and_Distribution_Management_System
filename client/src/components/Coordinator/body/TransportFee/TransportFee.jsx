@@ -9,11 +9,13 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import TransportFeeForm from "./TransportFeeForm";
 import TransportFeeReport from "./TransportFeeReport";
+import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./TransportFee.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function TransportFee() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -21,7 +23,14 @@ function TransportFee() {
   const [filteredDataList, setFilteredDataList] = useState([]); 
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -90,6 +99,9 @@ function TransportFee() {
   return (
     <div id='main' className='main'>
       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -155,14 +167,16 @@ function TransportFee() {
           </Modal>
       <div className="table-container">
       <SearchBar onSearch={handleSearch} />
+      <br/>
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
+            
             <th scope="col">Vehicle No</th>
               <th scope="col">Vehicle Type</th>
               <th scope="col">Conditions</th>
               <th scope="col">Capacity</th>
-              <th scope="col">Price per km (Rs)</th>
+              <th scope="col">Price per km</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -170,12 +184,14 @@ function TransportFee() {
           {filteredDataList.length ? (
                   filteredDataList.map((transportfee) => (
                 <tr key={transportfee._id}>
-                  <td>{transportfee.vehicle_no}</td>
+                 
+                 <td>{transportfee.vehicle_no}</td>
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>
-                  <td>{transportfee.price}</td>
-                  <td className="action">
+                  <td >{transportfee.price ? `Rs.${transportfee.price.toFixed(2)}` : 'N/A'}</td>
+
+                  <td className="actionSize" >
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
@@ -198,6 +214,7 @@ function TransportFee() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

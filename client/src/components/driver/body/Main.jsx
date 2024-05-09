@@ -6,6 +6,8 @@ import RecentActivity from './AssingedOrders'
 import img from "../../../assests/transport.jpg"
 import { Link } from 'react-router-dom'
 import News from './Transactions'
+import AssignedOrder from '../../orderProcessor/body/AssignedOrders/AssignedOrder'
+import AssingedOrders from './AssingedOrders'
 
 const Main = () => {
   return (
@@ -33,7 +35,7 @@ const Main = () => {
                   <i className="bi bi-chevron-right rounded-circle "></i>
                 </div> 
                 </div>
-              <RecentActivity />
+              <AssingedOrders />
               <News />
 
             </div>

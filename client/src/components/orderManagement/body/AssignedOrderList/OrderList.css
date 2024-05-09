@@ -72,7 +72,7 @@
 }
 
 .btn-secondary {
-
+    
     background: var(--primaryColor);
     border: 0px;
     color: #FFFFFF;
@@ -91,7 +91,7 @@
 }
 
 .table-top-head {
-
+    
     display: flex;
     align-items: center;
     -webkit-box-align: center;
@@ -105,7 +105,7 @@
     .page-header h6 {
         font-size: 12px;
     }
-}
+}    
 .page-header .card-title h6 {
     font-size: 14px;
     color: #495057;
@@ -125,7 +125,7 @@
 
 .btn-table {
     border: none;
-    padding: 5px 10px;
+    padding: 5px 10px; 
     background: #FFFFFF;
     border: 1px solid #DDDDDD;
     border-radius: 10px;

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const coverings = mongoose.Schema({
 
     vehicle_no: {
-        type: Number,
+        type: String,
         required: true
     },
     owner_name : {
