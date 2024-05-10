@@ -99,10 +99,20 @@ const updateUnregistered = async (req, res) => {
   }
 };
 
+const getUnregisteredCount = async (req, res) => {
+  try {
+    const unregistereds = await Unregistered.find();
+    res.json({ count: unregistereds.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addUnregistered,
   getAllUnregistereds,
   getOneUnregistered,
   deleteUnregistered,
   updateUnregistered,
+  getUnregisteredCount,
 };
