@@ -107,7 +107,18 @@ const JoinWithUs = () => {
         ...prev,
         [name]: newValue
       }));
-    } else if (name === "fieldArea") {
+    } else if (name === "mobile") {
+      // Allow only numbers and ensure the first digit is 0
+      newValue = newValue.replace(/[^\d]/g, '');
+      if (!newValue.startsWith("0")) {
+        newValue = newValue.substring(1); // Remove first character if it's not 0
+      }
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    }
+    else if (name === "fieldArea") {
       // Allow numbers and one decimal point
       newValue = newValue.replace(/[^0-9.]/g, '');
       // Allow only one decimal point
@@ -352,7 +363,7 @@ const JoinWithUs = () => {
                   </div>
 
                   <div className="form-group">
-                    <input type="Number" value={formData.mobile} name="mobile" className={`form-control ${formErrors.mobile && 'is-invalid'}`} onChange={handleChange} placeholder='Mobile' required/>
+                    <input type="text" value={formData.mobile} name="mobile" className={`form-control ${formErrors.mobile && 'is-invalid'}`} onChange={handleChange} placeholder='Mobile' maxLength={10} required/>
                     {formErrors.mobile && <div className="invalid-feedback">{formErrors.mobile}</div>}
                   </div>
 
