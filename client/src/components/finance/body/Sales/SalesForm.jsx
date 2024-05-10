@@ -1,33 +1,42 @@
+import axios from "axios";
 import { useFormik } from "formik";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import * as yup from 'yup';
 
-
 const salesSchema = yup.object({
-  customer_name: yup.string().nullable().required("Name is required"),
-  date: yup.string().required("Date is required"),
-  fruit_name: yup.string().required("Fruit Name is required"),
-  amount: yup.string().required("Amount is required"),
-  paid: yup.string(),
-  due: yup.string(),
-  status: yup.string(),
-
+  shippingInfo: yup.object().shape({
+    address: yup.string().required("Address is required"),
+    city: yup.string().required("City is required"),
+    state: yup.string().required("State is required"),
+    apartment: yup.string().required("Apartment is required"),
+    pincode: yup.number().required("Pincode is required"),
+  }),
+  orderItems: yup.array().of(yup.object().shape({
+    product: yup.string().required("Product is required"),
+    quantity: yup.number().required("Quantity is required"),
+    price: yup.number().required("Price is required"),
+  })).required("At least one order item is required"),
+  totalPrice: yup.number().required("Total Price is required"),
+  orderStatus: yup.string(),
 });
-
 
 const SalesForm = ({ handleSubmit, initialData }) => {
 
+
+  const [products, setProducts] = useState([]);
+
   const formik = useFormik({
     initialValues: {
-      _id: initialData ? initialData._id : "", // Set _id from initialData if available
-      customer_name: initialData ? initialData.customer_name : "",
-      fruit_name: initialData ? initialData.fruit_name : "",
-      amount: initialData ? initialData.amount : "",
-      paid: initialData ? initialData.paid : "",
-      due: initialData ? initialData.due : "",
-      status: initialData ? initialData.status : "",
+      shippingInfo: {
+        address: initialData ? initialData.shippingInfo.address : "",
+        city: initialData ? initialData.shippingInfo.city : "",
+        state: initialData ? initialData.shippingInfo.state : "",
+        apartment: initialData ? initialData.shippingInfo.apartment : "",
+        pincode: initialData ? initialData.shippingInfo.pincode : "",
+      },
+      orderItems: initialData ? initialData.orderItems : [{ product: "", quantity: "", price: "" }],
+      totalPrice: initialData ? initialData.totalPrice : "",
+      orderStatus: initialData ? initialData.orderStatus : "",
     },
     validationSchema: salesSchema,
     onSubmit: (values) => {
@@ -35,151 +44,119 @@ const SalesForm = ({ handleSubmit, initialData }) => {
     },
   });
 
+  useEffect(() => {
+    // Fetch products from backend API
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8070/product/");
+        setProducts(response.data); // Assuming response.data is an array of products
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
-
-
+    fetchProducts();
+  }, []); // Run this effect only once when the component mounts
 
 
   return (
-
-    
-    <form 
-    action=""
-    onSubmit={formik.handleSubmit}>
-
-      
+    <form onSubmit={formik.handleSubmit}>
       <div className="container">
-      <div className="d-flex align-items-center gap-15">
-
+        {/* Shipping Information */}
         <div className="row">
-          
-        <div className="col">
-        <div className="mb-3">
-          <label htmlFor="customer_name" className="form-label">
-          Customer Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="customer_name"
-            placeholder="Full Name"
-            value={formik.values.customer_name}
-            onChange={formik.handleChange("customer_name")}
-            onBlur={formik.handleBlur("customer_name")}/>
-            <div className='error'>
-               {formik.touched.customer_name && formik.errors.customer_name}
-            </div>
-            
-        
-        </div>
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Date
-          </label>
-          <input
-            type="datetime-local"
-            className="form-control"
-            name="date"
-            placeholder="Date"
-            value={formik.values.date}
-            onChange={formik.handleChange("date")}
-            onBlur={formik.handleBlur("date")}/>
-            <div className='error'>
-               {formik.touched.date && formik.errors.date}
-            </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="fruit_name" className="form-label">
-          Fruit Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="fruit_name"
-            placeholder="Mango"
-            value={formik.values.fruit_name}
-            onChange={formik.handleChange("fruit_name")}
-            onBlur={formik.handleBlur("fruit_name")}/>
-            <div className='error'>
-               {formik.touched.fruit_name && formik.errors.fruit_name}
-            </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="amount" className="form-label">
-           Amount (Rs)
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="amount"
-            placeholder="Rs. 10 000.00"
-            value={formik.values.amount}
-            onChange={formik.handleChange("amount")}
-            onBlur={formik.handleBlur("amount")}/>
-            <div className='error'>
-               {formik.touched.amount && formik.errors.amount}
-            </div>
-        </div>
-        </div>
-        <div className="col">
-        <div className="mb-3">
-          <label htmlFor="paid" className="form-label">
-          Paid (Rs)
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="paid"
-            placeholder="Rs.10 000.00"
-            value={formik.values.paid}
-            onChange={formik.handleChange("paid")}
-            onBlur={formik.handleBlur("paid")}/>
-            <div className='error'>
-               {formik.touched.paid && formik.errors.paid}
-            </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="due" className="form-label">
-          Due (Rs)
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="due"
-            placeholder="Due"
-            value={formik.values.due}
-            onChange={formik.handleChange("due")}
-            onBlur={formik.handleBlur("due")}/>
-            <div className='error'>
-               {formik.touched.due && formik.errors.due}
-            </div>
-        </div><div className="mb-3">
-          <label htmlFor="status" className="form-label">
-          Status/          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="status"
-            placeholder="Paid"
-            value={formik.values.status}
-            onChange={formik.handleChange("status")}
-            onBlur={formik.handleBlur("status")}/>
-            <div className='error'>
-               {formik.touched.status && formik.errors.status}
-            </div>
-        </div>
+          <div className="col">
+            {/* <div className="mb-3">
+              <label htmlFor="shippingInfo.address" className="form-label">Address</label>
+              <input
+                type="text"
+                className="form-control"
+                name="shippingInfo.address"
+                value={formik.values.shippingInfo.address}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.shippingInfo?.address && formik.errors.shippingInfo?.address && (
+                <div className='error'>{formik.errors.shippingInfo.address}</div>
+              )}
+            </div> */}
+            {/* Add other shipping fields similarly */}
+          </div>
         </div>
 
-        </div> 
+        {/* Order Items */}
+        {formik.values.orderItems.map((orderItem, index) => (
+          <div key={index} className="row">
+            <div className="col">
+            <div className="mb-3">
+                <label htmlFor={`orderItems[${index}].product`} className="form-label">Product</label>
+                <select
+                  className="form-select"
+                  name={`orderItems[${index}].product`}
+                  value={orderItem.product}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="">Select Product</option>
+                  {/* Map over products and create options */}
+                  {products.map(product => (
+                    <option key={product._id} value={product._id}>{product.title}</option>
+                  ))}
+                </select>
+                {/* Display validation errors */}
+                {formik.touched[`orderItems[${index}].product`] && formik.errors[`orderItems[${index}].product`] && (
+                  <div className='error'>{formik.errors[`orderItems[${index}].product`]}</div>
+                )}
               </div>
+
+              {/* Add other order item fields similarly */}
             </div>
-      
-        <div className="d-flex justify-content-end border-top">
-          {/* <button type="submit" className="btn btn-secondary "> Cancel </button> */}
-          <button type="submit" className="btn btn-success"> Submit </button>
-       </div>
-      </form>
-  
+          </div>
+        ))}
+
+        {/* Total Price */}
+        <div className="row">
+          <div className="col">
+            <div className="mb-3">
+              <label htmlFor="totalPrice" className="form-label">Total Price</label>
+              <input
+                type="text"
+                className="form-control"
+                name="totalPrice"
+                value={formik.values.totalPrice}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.totalPrice && formik.errors.totalPrice && (
+                <div className='error'>{formik.errors.totalPrice}</div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Order Status */}
+        <div className="row">
+          <div className="col">
+            <div className="mb-3">
+              <label htmlFor="orderStatus" className="form-label">Order Status</label>
+              <input
+                type="text"
+                className="form-control"
+                name="orderStatus"
+                value={formik.values.orderStatus}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {/* Add validation messages for orderStatus similarly */}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Submit Button */}
+      <div className="d-flex justify-content-end border-top">
+        <button type="submit" className="btn btn-success">Submit</button>
+      </div>
+    </form>
   );
 };
 
