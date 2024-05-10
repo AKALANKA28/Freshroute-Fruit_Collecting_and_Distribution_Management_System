@@ -1,58 +1,116 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import './predictions.css';
+import logo from '../../../../assests/logo.png';
 
 const styles = StyleSheet.create({
   page: {
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+  },
+  header: {
     flexDirection: "row",
-    backgroundColor: "#E4E4E4",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginBottom: 10,
+  },
+  // headerText: {
+  //   fontSize: 20,
+  //   color: "green",
+  //   fontWeight: "bold",
+  // },
+
+  headerText: {
+    fontSize: 20,
+    color: "green",
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  headerTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  footer: {
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    fontSize: 10,
+    color: "#666666",
   },
   section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+    marginBottom: 20,
   },
   heading: {
     fontSize: 24,
     marginBottom: 10,
     textAlign: "center",
+    color: "#333333",
+    textTransform: "uppercase",
   },
   table: {
-    display: "table",
     width: "100%",
-    borderStyle: "solid",
     borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
   },
-  tableRow: { 
+  tableRow: {
     flexDirection: "row",
-    backgroundColor: "#FFF",
+    backgroundColor: "#F0F0F0",
   },
   tableColHeader: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 12,
+    borderWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 10,
+    fontWeight: "bold", // Add bold font weight
+    color: "#333333",
+    width: "16.666%",
+    textAlign: "center",
   },
   tableCol: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 10,
+    borderWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 8,
+    color: "#333333",
+    width: "16.666%",
+    textAlign: "center",
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  line: {
+    borderBottom: "1px solid #333333",
+    marginBottom: 10,
   },
 });
 
+const Footer = () => (
+  <Text style={styles.footer}>© 2024 Freshroute.lk copyright all right reserved.</Text>
+);
+
 const PredictionReport = ({ dataList }) => {
+  const reportDateTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo'});
+
   return (
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>Predictions Details Report</Text>
+          <View style={styles.header}>
+            <View style={styles.headerTextContainer}>
+              <Image src={logo} style={styles.logo} />
+              <Text style={styles.headerText}>FreshRoute</Text>
+            </View>
+            <Text style={styles.reportDateTime}>{reportDateTime}</Text>
+          </View>
+          <Text style={styles.heading}>Freshroute - Supplier Details</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
@@ -74,6 +132,7 @@ const PredictionReport = ({ dataList }) => {
             ))}
           </View>
         </View>
+        <Footer />
       </Page>
     </Document>
   );

@@ -10,6 +10,8 @@ import FarmerForm from "./FarmerForm";
 import SupplierReport from "./SupplierReport";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './farmers.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -19,14 +21,15 @@ function SuppliersList() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFarmer, setSelectedFarmer] = useState(null);
-  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [filteredDataList, setFilteredDataList] = useState([]);
+  const [declineModalShow, setDeclineModalShow] = useState(false); 
 
   useEffect(() => {
     getFetchData();
   }, []);
 
   useEffect(() => {
-    setFilteredDataList(dataList); // InitialidataListze filteredDataList with 
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
 
   const getFetchData = async () => {
@@ -77,42 +80,51 @@ function SuppliersList() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this farmer?");
-    if (confirmDelete) {
-      try {
-        await axios.delete(`/Farmer/delete/${id}`);
-        alert("Successfully Deleted");
+  const handleDelete = async () => {
+    if (!selectedFarmer) return;
+    try {
+        await axios.delete(`/Farmer/delete/${selectedFarmer._id}`);
         getFetchData();
+        window.location.reload();
+        toast.success("Successfully Deleted");
+        handleCloseDeclineModal();
       } catch (err) {
-        alert(err.message);
+        toast.error(err.message);
       }
-    }
+  };
+
+  const handleShowDeclineModal = (farmer) => {
+    setSelectedFarmer(farmer);
+    setDeclineModalShow(true);
+  };
+          
+  const handleCloseDeclineModal = () => {
+    setSelectedFarmer(null);
+    setDeclineModalShow(false);
   };
 
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Farmer/add", formData);
-      alert("Farmer Added");
       window.location.reload();
       handleAddModalClose();
       getFetchData();
+      toast.success("Farmer Added");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Farmer/update/${formData._id}`, formData);
-      alert("Farmer Updated");
       handleEditModalClose();
       getFetchData();
+      toast.success("Farmer Updated");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
-
 
 
   // Search functionality
@@ -141,9 +153,6 @@ function SuppliersList() {
   const handleSearchAttributeChange = (event) => {
     setSearchAttribute(event.target.value);
   };
-
-
-
 
 
   const [showReportModal, setShowReportModal] = useState(false);
@@ -234,10 +243,11 @@ function SuppliersList() {
           </Modal>
 
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
+            <SearchBar onSearch={handleSearch} searchAttribute={searchAttribute} onSearchAttributeChange={handleSearchAttributeChange} />
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
+                  <th scope="col">#</th>
                   <th scope="col">NIC</th>
                   <th scope="col">Username</th>
                   <th scope="col">Name</th>
@@ -250,8 +260,9 @@ function SuppliersList() {
               </thead>
               <tbody>
                 {filteredDataList.length ? (
-                  filteredDataList.map((farmer) => (
+                  filteredDataList.map((farmer, index) => (
                     <tr key={farmer._id}>
+                      <td>{index + 1}</td>
                       <td>{farmer.NIC}</td>
                       <td>{farmer.username}</td>
                       <td>{farmer.name}</td>
@@ -271,7 +282,7 @@ function SuppliersList() {
                           <button
                             className="btn btn-delete"
                             title="Delete"
-                            onClick={() => handleDelete(farmer._id)}
+                            onClick={() => handleShowDeclineModal(farmer)}
                           >
                             <i className="bi bi-trash-fill"></i>
                           </button>
@@ -289,6 +300,37 @@ function SuppliersList() {
           </div>
         </div>
       </div>
+
+      <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
+         <Modal.Header closeButton>
+           <Modal.Title>Delete Farmer</Modal.Title>
+         </Modal.Header>
+         <Modal.Body>
+           Are you sure you want to Delete the farmer?
+         </Modal.Body>
+         <Modal.Footer>
+           <Button variant="" onClick={handleCloseDeclineModal}>
+             Cancel
+           </Button>
+           <Button variant="danger" onClick={handleDelete}>
+             Decline
+           </Button>
+         </Modal.Footer>
+       </Modal>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
     </div>
   );
 }

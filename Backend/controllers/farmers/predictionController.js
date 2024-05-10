@@ -79,6 +79,15 @@ const declinePrediction = async (req, res) => {
   }
 };
 
+const getTotalPredictionsCount = async (req, res) => {
+  try {
+    const count = await Prediction.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addPrediction,
   getAllPredictions,
@@ -87,4 +96,5 @@ module.exports = {
   updatePrediction,
   acceptPrediction,
   declinePrediction,
+  getTotalPredictionsCount
 };

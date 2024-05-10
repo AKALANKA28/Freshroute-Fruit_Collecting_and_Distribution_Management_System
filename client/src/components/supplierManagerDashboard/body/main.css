@@ -132,3 +132,25 @@ body .top-selling img{
     color: #777777;
     margin-left: 95px;
 }
+
+.supply-status {
+    font-size: 14px;
+  }
+  
+  .status-label {
+    font-size: 12px;
+  }
+
+  .pending {
+    color: rgb(234, 179, 40);
+    border: black;
+  }
+
+  .declined {
+    color: red;
+  }
+
+  .link {
+    text-decoration: underline;
+    color: inherit;
+  }
