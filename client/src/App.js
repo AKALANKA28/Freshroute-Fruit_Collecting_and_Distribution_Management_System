@@ -79,6 +79,7 @@ import Cart from "./Website/Shop/Cart/Cart";
 import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
+import JoinWithUsSelect from "./Website/JoinWithUsSelect";
 import Drivers from "./components/transportDashboard/body/driverDetails/Drivers";
 import DriverDetails from "./components/transportDashboard/DriverDetails";
 
@@ -120,6 +121,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Checkout />
+      </div>
+    ),
+  },
+
+  {
+    path: "/JoinWithUsSelect",
+    element: (
+      <div>
+        <JoinWithUsSelect />
       </div>
     ),
   },

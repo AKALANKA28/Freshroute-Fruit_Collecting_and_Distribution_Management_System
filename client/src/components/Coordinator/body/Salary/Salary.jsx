@@ -9,6 +9,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import SalaryForm from "./SalaryForm";
 import SalaryReport from "./SalaryReport";
 import SpinnerModal from '../../../spinner/SpinnerModal';
+import { ToastContainer, toast } from 'react-toastify';
 import "./Salary.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -93,7 +94,7 @@ function Salary() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Salary/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted !");
       getFetchData();
       handleCloseDeleteModal();
     } catch (err) {
@@ -104,7 +105,7 @@ function Salary() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Salary/add", formData);
-      alert("Salary Added");
+      toast.success("Salary Added !");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -115,7 +116,8 @@ function Salary() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Salary/update/${formData._id}`, formData);
-      alert("Salary Updated");
+      toast.success("Salary Updated !");
+      
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -279,6 +281,18 @@ function Salary() {
         </div>
       </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
