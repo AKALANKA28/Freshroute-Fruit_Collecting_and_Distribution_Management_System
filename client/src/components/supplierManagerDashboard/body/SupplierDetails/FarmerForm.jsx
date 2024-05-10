@@ -35,12 +35,92 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Validate input on change
-    validateInput(name, value);
+    let newValue = value;
+  
+    if (name === "NIC") {
+      // Show NIC type based on the first two digits
+      let nicType = '';
+      if (value.length >= 1) {
+        const firstTwoDigits = value.substring(0, 2);
+        nicType = firstTwoDigits === "20" ? "New NIC" : /^[1-9]\d/.test(firstTwoDigits) ? "Old NIC" : "";
+      }
+        
+      // Remove special characters from NIC
+      newValue = newValue.replace(/[^\dVvXx]/g, ""); // Allow only digits, v, V, x, X
+        
+      // Restrict the number of digits based on NIC type
+      if (nicType === "Old NIC" && newValue.length > 10) {
+        newValue = newValue.slice(0, 10);
+      } else if (nicType === "New NIC" && newValue.length > 12) {
+        newValue = newValue.slice(0, 12);
+      }
+  
+      // Allow only one instance of v, V, x, or X
+      const allowedChars = ['v', 'V', 'x', 'X'];
+      const charCount = newValue.split('').filter(char => allowedChars.includes(char)).length;
+      if (charCount > 1) {
+        newValue = newValue.substring(0, newValue.lastIndexOf(newValue.charAt(newValue.length - 1)));
+      }
+  
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue,
+        nicType: nicType
+      }));
+    } else if (name === "name" || name === "city") {
+      // Remove space as the first character
+      newValue = value.replace(/^\s+/, '');
+      // Allow only letters and spaces
+      newValue = newValue.replace(/[^a-zA-Z\s]/g, "");
+        
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    } else if (name === "email") {
+      // Remove uppercase letters
+      newValue = newValue.toLowerCase();
+      // Don't allow @ as the first character
+      if (newValue.startsWith("@") || newValue.includes(" ")) {
+        return;
+      }
+      // Allow only @ as a special character
+      if (newValue.split("@").length > 2) {
+        return; // Prevent more than one @ symbol
+      }
+      newValue = newValue.replace(/[^a-z0-9@.]/g, '');
+      // Remove leading space
+      newValue = newValue.replace(/^\s+/, '');
+  
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    } else if (name === "username") {
+      // Remove space as the first character
+      newValue = value.replace(/^\s+/, '');
+      // Don't allow space
+      newValue = newValue.replace(/\s/g, '');
+      // Remove special characters
+      newValue = newValue.replace(/[^\w]/g, '');
+      // Remove leading numbers
+      if (/^\d/.test(newValue)) {
+        newValue = '';
+      }
+        
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    }
+    
+    validateField(name, newValue);
+    
     // If city is changed, fetch coordinates
     if (name === "city") {
       fetchCoordinates(value);
@@ -67,39 +147,40 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
     }
   };
 
-  const validateInput = (name, value) => {
-    let error = "";
-    switch (name) {
-      case "NIC":
-        const oldNICRegex = /^(?:[0-9]{9}[vVxX])$/;
-      const newNICRegex = /^(?:20(?:0[0-9]|1[0-9]|2[0-4])[0-9]{7}[0-9])$/;
-      if (!oldNICRegex.test(value) && !newNICRegex.test(value)) {
-        error = "Invalid NIC format";
-      } else if (value.length > 12) {
-        error = "Only 12 digits allowed";
-      } else if (value.length === 10 && !/^[7-9]\d/.test(value.substring(0, 2))) {
-        error = "Old NIC should start with digits between 72 and 99 and end with v, V, x, or X";
-      } else if (value.length === 12) {
-        const year = parseInt(value.substring(0, 4));
-        if (year > 2024) {
-          error = "NIC's year should be lower than 2025";
-        }
+  const validateNIC = (nic) => {
+    const oldNICRegex = /^(?:[0-9]{9}[vVxX])$/;
+    const newNICRegex = /^(?:20(?:0[0-9]|1[0-9]|2[0-4])[0-9]{7}[0-9])$/;
+    if (!oldNICRegex.test(nic) && !newNICRegex.test(nic)) {
+      return "Invalid NIC format";
+    } else if (nic.length === 12) {
+      const year = parseInt(nic.substring(0, 4));
+      if (year > new Date().getFullYear()) {
+        return "NIC's year should be lower than or equal to the current year";
       }
+    }
+    return "";
+  };
+
+  const validateField = (name, value) => {
+    let error = '';
+    switch (name) {
+      case 'name':
+        error = /^[a-zA-Z\s]*$/.test(value) ? (value.length < 1 ? 'Name is required' : '') : 'Name should contain only letters and spaces';
         break;
       case "username":
         error = value.trim().length === 0 ? "Username is required" : (/\s/.test(value) ? "Username cannot contain spaces" : "");
-        break;
-      case "name":
-        error = /^[a-zA-Z\s]*$/.test(value) ? (value.length < 1 ? 'Name is required' : '') : 'Name should contain only letters and spaces';
-        break;
-      case "email":
+        break;  
+      case 'email':
         error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Invalid email address';
         break;
-      case "mobile":
+      case 'mobile':
         error = /^[0-9]{10}$/.test(value) && value[0] === '0' ? '' : 'Mobile number should be 10 digits and start with 0';
-        break;  
-      case "city":
-        error = value.trim().length === 0 ? "City is required" : "";
+        break;
+      case 'city':
+        error = value.length < 1 ? 'City is required' : '';
+        break;
+      case "NIC":
+        error = validateNIC(value);
         break;
       case "lane":
         error = value.trim().length === 0 ? "Lane is required" : "";
@@ -107,11 +188,11 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
       default:
         break;
     }
-    setFormErrors((prev) => ({
-      ...prev,
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
       [name]: error,
     }));
-};
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -177,6 +258,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           placeholder="Enter Username"
           onChange={handleChange}
           value={formData.username}
+          maxLength={20}
         />
         {formErrors.username && <div className="invalid-feedback">{formErrors.username}</div>}
       </div>
@@ -209,6 +291,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           required
           onChange={handleChange}
           value={formData.email}
+          maxLength={50}
         />
         {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
       </div>
@@ -225,6 +308,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           required
           onChange={handleChange}
           value={formData.mobile}
+          maxLength={10}
         />
         {formErrors.mobile && <div className="invalid-feedback">{formErrors.mobile}</div>}
       </div>
@@ -241,6 +325,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           required
           onChange={handleCityChange}
           value={formData.city}
+          maxLength={20}
         />
         {showSuggestions && citySuggestions.length > 0 && (
           <ul className="list-group">
@@ -269,6 +354,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           placeholder="Enter Lane"
           onChange={handleChange}
           value={formData.lane}
+          maxLength={50}
         />
         {formErrors.lane && <div className="invalid-feedback">{formErrors.lane}</div>}
       </div>
