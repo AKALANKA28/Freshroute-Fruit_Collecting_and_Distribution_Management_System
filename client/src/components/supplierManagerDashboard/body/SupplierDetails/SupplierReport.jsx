@@ -99,7 +99,7 @@ const Footer = () => (
 );
 
 const SupplierReport = ({ dataList }) => {
-  const reportDateTime = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+  const reportDateTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo'});
 
   return (
     <Document>
