@@ -47,7 +47,7 @@ const JoinWithUs = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     let newValue = value;
-    
+  
     if (name === "NIC") {
       // Show NIC type based on the first two digits
       let nicType = '';
@@ -65,14 +65,14 @@ const JoinWithUs = () => {
       } else if (nicType === "New NIC" && newValue.length > 12) {
         newValue = newValue.slice(0, 12);
       }
-
+  
       // Allow only one instance of v, V, x, or X
       const allowedChars = ['v', 'V', 'x', 'X'];
       const charCount = newValue.split('').filter(char => allowedChars.includes(char)).length;
       if (charCount > 1) {
         newValue = newValue.substring(0, newValue.lastIndexOf(newValue.charAt(newValue.length - 1)));
       }
-
+  
       setFormData((prev) => ({
         ...prev,
         [name]: newValue,
@@ -92,11 +92,7 @@ const JoinWithUs = () => {
       // Remove uppercase letters
       newValue = newValue.toLowerCase();
       // Don't allow @ as the first character
-      if (newValue.startsWith("@")) {
-        return;
-      }
-      // Don't allow space as the first character
-      if (newValue.startsWith(" ")) {
+      if (newValue.startsWith("@") || newValue.includes(" ")) {
         return;
       }
       // Allow only @ as a special character
@@ -107,6 +103,19 @@ const JoinWithUs = () => {
       // Remove leading space
       newValue = newValue.replace(/^\s+/, '');
   
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    } else if (name === "fieldArea") {
+      // Allow numbers and one decimal point
+      newValue = newValue.replace(/[^0-9.]/g, '');
+      // Allow only one decimal point
+      const decimalCount = newValue.split('.').length - 1;
+      if (decimalCount > 1) {
+        newValue = newValue.substring(0, newValue.lastIndexOf('.'));
+      }
+      
       setFormData((prev) => ({
         ...prev,
         [name]: newValue
@@ -128,8 +137,6 @@ const JoinWithUs = () => {
   
   
   
-  
-
   const handleCityChange = (e) => {
     const { value } = e.target;
     setFormData((prev) => ({
@@ -208,9 +215,6 @@ const JoinWithUs = () => {
         break;
       case 'landAddress':
         error = value.length < 1 ? 'Field address is required' : '';
-        break;
-      case 'fieldArea':
-        error = /^[0-9]+$/.test(value) ? '' : 'Field area should be a number';
         break;
       default:
         break;
@@ -343,7 +347,7 @@ const JoinWithUs = () => {
                   </div>
                   
                   <div className="form-group">
-                    <input type="email" value={formData.email} name="email" className={`form-control ${formErrors.email && 'is-invalid'}`} onChange={handleChange} placeholder='Email' maxLength={50} required/>
+                    <input type="text" value={formData.email} name="email" className={`form-control ${formErrors.email && 'is-invalid'}`} onChange={handleChange} placeholder='Email' maxLength={50} required/>
                     {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
                   </div>
 
@@ -379,12 +383,12 @@ const JoinWithUs = () => {
                   <legend>Field Details</legend> 
 
                   <div className="form-group">
-                    <input type="text" value={formData.landAddress} name="landAddress" className={`form-control ${formErrors.landAddress && 'is-invalid'}`} onChange={handleChange} placeholder='Address of the field' required/>
+                    <input type="text" value={formData.landAddress} name="landAddress" className={`form-control ${formErrors.landAddress && 'is-invalid'}`} onChange={handleChange} placeholder='Address of the field' maxLength={70} required/>
                     {formErrors.landAddress && <div className="invalid-feedback">{formErrors.landAddress}</div>}
                   </div>
 
                   <div className="form-group">
-                    <input type="Number" value={formData.fieldArea} name="fieldArea" className={`form-control ${formErrors.fieldArea && 'is-invalid'}`} onChange={handleChange} placeholder='Field-Area (in perches)' required/>
+                    <input type="Float" value={formData.fieldArea} name="fieldArea" className={`form-control ${formErrors.fieldArea && 'is-invalid'}`} onChange={handleChange} placeholder='Field-Area (in perches)' maxLength={12} required/>
                     {formErrors.fieldArea && <div className="invalid-feedback">{formErrors.fieldArea}</div>}
                   </div>
 
