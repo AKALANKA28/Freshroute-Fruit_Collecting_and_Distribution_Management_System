@@ -10,6 +10,7 @@ import WebTraffic from './WebTraffic'
 import News from './News'
 import BackToTop from './BackToTop'
 import SpinnerModal from '../../spinner/SpinnerModal';
+import TopCards from '../../StaffManager/body/TopCards';
 
 const Body = () => {
   const [loading, setLoading] = useState(true);
@@ -33,8 +34,9 @@ const Body = () => {
    <section className="body" id='body'>
         <div className="row">
             <div className="col-lg-8">
-                <div className="row">
-                    <Cards />
+                <div className="row gap-1">
+                <TopCards/>
+                 {  /* <Cards />*/}
                     <div className="col-12">
                         <Reports />
                     </div>
@@ -47,7 +49,7 @@ const Body = () => {
                 </div>
             </div>
             <div className="col-lg-4">
-            <News />
+            {/*<News />*/}
               <RecentActivity />
               <WebTraffic />
               
