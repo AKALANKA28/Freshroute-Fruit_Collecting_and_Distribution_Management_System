@@ -17,7 +17,7 @@ const RecentActivity = () => {
   return (
     <div className='card'>
       <CardFilter filterChange={handleFilterChange} />
-      <div className="card-body" style={{ minHeight: '292px', overflowY: 'auto' }}>
+      <div className="card-body" style={{ minHeight: '292px', maxHeight:'288px', overflowY: 'auto' }}>
         <h5 className="card-title">
           Recent Sales<span>| {filter}</span>
         </h5>
