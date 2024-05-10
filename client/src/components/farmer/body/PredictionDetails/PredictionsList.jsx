@@ -10,6 +10,8 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './predictions.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -21,6 +23,7 @@ function PredictionsList() {
   const [selectedPrediction, setSelectedPrediction] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
   const [searchAttribute, setSearchAttribute] = useState('fruit'); // Initialize with 'fruit'
+  const [declineModalShow, setDeclineModalShow] = useState(false); 
 
   useEffect(() => {
     getFetchData();
@@ -87,18 +90,28 @@ function PredictionsList() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this prediction?");
-    if (confirmDelete) {
-      try {
-        await axios.delete(`/Prediction/delete/${id}`);
-        await axios.delete(`/pendingSupply/deleteByPredictionID/${id}`);
-        alert("Successfully Deleted");
+  const handleDelete = async () => {
+    if (!selectedPrediction) return;
+    try {
+        await axios.delete(`/Prediction/delete/${selectedPrediction._id}`);
+        await axios.delete(`/pendingSupply/deleteByPredictionID/${selectedPrediction._id}`);
         getFetchData();
+        window.location.reload();
+        toast.success("Successfully Deleted");
+        handleCloseDeclineModal();
       } catch (err) {
         alert(err.message);
       }
-    }
+  };
+
+  const handleShowDeclineModal = (prediction) => {
+    setSelectedPrediction(prediction);
+    setDeclineModalShow(true);
+  };
+          
+  const handleCloseDeclineModal = () => {
+    setSelectedPrediction(null);
+    setDeclineModalShow(false);
   };
 
   const handleAddSubmit = async (formData) => {
@@ -116,23 +129,22 @@ function PredictionsList() {
       // Add supply prediction to the pendingSupplies collection
       await axios.post("/pendingSupply/add", pendingSupplyData);
   
-      alert("Prediction Added");
-      window.location.reload();
       handleAddModalClose();
       getFetchData();
+      toast.success("Supply Prediction Added");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Prediction/update/${formData._id}`, formData);
-      alert("Prediction Updated");
       handleEditModalClose();
       getFetchData();
+      toast.success("Prediction Updated");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -325,7 +337,7 @@ const getStatusClassName = (status) => {
                         
                         <button
                           className="btn btn-delete"
-                          onClick={() => handleDelete(prediction._id)}
+                          onClick={() => handleShowDeclineModal(prediction)}
                         >
                           <i className="bi bi-trash-fill"></i>
                         </button>
@@ -345,6 +357,37 @@ const getStatusClassName = (status) => {
           </div>
         </div>
       </div>
+
+      <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
+         <Modal.Header closeButton>
+           <Modal.Title>Delete Prediction</Modal.Title>
+         </Modal.Header>
+         <Modal.Body>
+           Are you sure you want to Delete the supply prediction?
+         </Modal.Body>
+         <Modal.Footer>
+           <Button variant="" onClick={handleCloseDeclineModal}>
+             Cancel
+           </Button>
+           <Button variant="danger" onClick={handleDelete}>
+             Delete
+           </Button>
+         </Modal.Footer>
+       </Modal>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
     </div>
   );
 }
