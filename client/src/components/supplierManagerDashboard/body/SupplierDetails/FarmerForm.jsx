@@ -77,6 +77,16 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
         ...prev,
         [name]: newValue
       }));
+    } else if (name === "mobile") {
+      // Allow only numbers and ensure the first digit is 0
+      newValue = newValue.replace(/[^\d]/g, '');
+      if (!newValue.startsWith("0")) {
+        newValue = newValue.substring(1); // Remove first character if it's not 0
+      }
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
     } else if (name === "email") {
       // Remove uppercase letters
       newValue = newValue.toLowerCase();
