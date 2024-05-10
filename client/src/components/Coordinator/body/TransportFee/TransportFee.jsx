@@ -10,6 +10,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import TransportFeeForm from "./TransportFeeForm";
 import TransportFeeReport from "./TransportFeeReport";
 import SpinnerModal from '../../../spinner/SpinnerModal'
+import { ToastContainer, toast } from 'react-toastify';
 import "./TransportFee.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -82,7 +83,7 @@ function TransportFee() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.patch(`http://localhost:8070/vehicle/update/${formData._id}`, formData);
-      alert("Transport Fee Added");
+      toast.success("Transport Fee Added !")
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -215,6 +216,18 @@ function TransportFee() {
         </div>
       </div>
       )}
+       <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

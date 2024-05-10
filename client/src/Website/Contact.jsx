@@ -46,7 +46,8 @@ const Contact = () => {
 
   return (
           <div>
-            <Navbar2/>
+            <Navbar/>
+            {/* <Navbar2/> */}
             {/* <div className="product-header">
             <nav className='nav'>
               <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>

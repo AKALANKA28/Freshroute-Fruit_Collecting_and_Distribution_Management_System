@@ -6,4 +6,6 @@ router.get("/:id", CalculateSalaryCtrl.getOneEmployee);
 router.put("/update/:id", CalculateSalaryCtrl.updateCalculateSalary);
 router.get("/salary/:jobRole", CalculateSalaryCtrl.getSalaryByJobRole);
 
+
+
 module.exports = router;

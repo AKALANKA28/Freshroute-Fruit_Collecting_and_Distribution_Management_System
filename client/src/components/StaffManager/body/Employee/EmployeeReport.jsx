@@ -1,6 +1,8 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
+// Import your logo image
+import logo from "../../../../assests/logo.png";
 
 const styles = StyleSheet.create({
   page: {
@@ -16,6 +18,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 10,
     textAlign: "center",
+  },
+  logoContainer: {
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  logo: {
+    width: 100, // Adjust width as needed
+    height: 100, // Adjust height as needed
   },
   table: {
     display: "table",
@@ -53,11 +63,13 @@ const EmployeeReport = ({ dataList }) => {
     <Document>
       <Page size="A3" style={styles.page}>
         <View style={styles.section}>
+          <View style={styles.logoContainer}>
+            <Image src={logo} style={styles.logo} />
+          </View>
           <Text style={styles.heading}>Employee Details Report</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
-
-            <Text style={styles.tableColHeader}>Name</Text>
+              <Text style={styles.tableColHeader}>Name</Text>
               <Text style={styles.tableColHeader}>Job Role</Text>
               <Text style={styles.tableColHeader}>NIC</Text>
               <Text style={styles.tableColHeader}>Address</Text>
@@ -65,8 +77,6 @@ const EmployeeReport = ({ dataList }) => {
               <Text style={styles.tableColHeader}>Account Number</Text>
               <Text style={styles.tableColHeader}>Bank Name</Text>
               <Text style={styles.tableColHeader}>Joined Date</Text>
-              
-            
             </View>
             {dataList.map((employee, index) => (
               <View key={index} style={styles.tableRow}>
@@ -77,7 +87,6 @@ const EmployeeReport = ({ dataList }) => {
                 <Text style={styles.tableCol}>{employee.email}</Text>
                 <Text style={styles.tableCol}>{employee.accno}</Text>
                 <Text style={styles.tableCol}>{employee.bankname}</Text>
-               
                 <Text style={styles.tableCol}>{employee.joineddate}</Text>
               </View>
             ))}

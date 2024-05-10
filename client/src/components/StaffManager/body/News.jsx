@@ -1,52 +1,39 @@
-import React, { useEffect, useState} from 'react'
+import React, { useState, useEffect } from 'react';
 import CardFilter from './CardFilter';
 import NewsPostItem from './NewsPostItem';
+import newsData from './newsData.json';
 
 const News = () => {
-
-    const [news, setNews] = useState([])
+    const [news, setNews] = useState([]);
     const [filter, setFilter] = useState('Today');
+
     const handleFilterChange = filter => {
-        setFilter(filter)
-    };
-
-
-    const fetchData = () => {
-        fetch("")
-         .then(res => res.json())
-         .then(data => {
-            setNews(data);
-         })
-         .catch(e => console.log(e.message))
+        setFilter(filter);
     };
 
     useEffect(() => {
-        fetchData();
-    }, [])
+        setNews(newsData);
+    }, []);
 
+    return (
+        <div>
+            <div className='card'>
+                <CardFilter filterChange={handleFilterChange} />
 
-  return (
-    <div>
-      <div className='card'>
-      <CardFilter filterChange={handleFilterChange} />
+                <div className="card-body pb-0">
+                    <h5 className="card-title">
+                        News &amp; Updates <span>| {filter}</span>
+                    </h5>
 
-      <div className="card-body pb-0">
-        <h5 className="card-title">
-          News &amp; Updates <span>| {filter}</span>
-        </h5>
-
-        <div className='news'>
-            {
-                news &&
-                news.length > 0 &&
-                news.map(item => <NewsPostItem key={item._id} item={item}/>)
-            }
+                    <div className='news'>
+                        {news &&
+                            news.map(item => <NewsPostItem key={item.id} item={item} />)
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-        
-      </div>
-    </div>
-    </div>
-  )
-}
+    );
+};
 
-export default News
+export default News;
