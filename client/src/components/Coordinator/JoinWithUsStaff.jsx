@@ -8,7 +8,7 @@ import "../../Website/website.css";
 import Container from '../../Website/Components/Container';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import image1 from "../../Website/assets/image1.jpg";
+import fruits from "../../Website/assets/fruits.jpg";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -203,7 +203,7 @@ const JoinWithUsStaff = () => {
       <Navbar/>
       <div className='hero' style={{height:800}}>
         <div>
-          <img src={image1} className='background' alt="Hero Background"></img>
+          <img src={fruits} className='background' alt="Hero Background"></img>
         </div>
         <div className="container">
           <div className="col-lg-12">
@@ -252,29 +252,7 @@ const JoinWithUsStaff = () => {
                   required
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="jobrole" className="form-label">
-                  Job role
-                </label>
-                <select
-                  className="form-select"
-                  name="jobrole"
-                  onChange={handleChange}
-                  value={formData.jobrole}
-                  required
-                >
-                  <option value="">Select Job Role</option>
-                  {dataList.length ? (
-                    dataList.map((emp, index) => (
-                      <option key={index} value={emp.jobrole}>
-                        {emp.jobrole}
-                      </option>
-                    ))
-                  ) : (
-                    <option value="">No Job Roles</option>
-                  )}
-                </select>
-              </div>
+              
               <div className="mb-3">
                 <label htmlFor="nic" className="form-label">
                   NIC
@@ -323,6 +301,29 @@ const JoinWithUsStaff = () => {
           <div className="col-md-6">
             <h3 className="contact-title mb-5 mt-5">Account Information</h3>
             <form>
+            <div className="mb-3">
+                <label htmlFor="jobrole" className="form-label">
+                  Job role
+                </label>
+                <select
+                  className="form-select"
+                  name="jobrole"
+                  onChange={handleChange}
+                  value={formData.jobrole}
+                  required
+                >
+                  <option value="">Select Job Role</option>
+                  {dataList.length ? (
+                    dataList.map((emp, index) => (
+                      <option key={index} value={emp.jobrole}>
+                        {emp.jobrole}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No Job Roles</option>
+                  )}
+                </select>
+              </div>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email Address

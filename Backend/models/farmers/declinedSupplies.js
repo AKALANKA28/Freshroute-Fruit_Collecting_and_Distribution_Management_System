@@ -35,6 +35,7 @@ const DeclinedSupplySchema = new mongoose.Schema({
         type : String,
         required: true
     },
+    supplierName: String,
 });
 
 const DeclinedSupply = mongoose.model("DeclinedSupply", DeclinedSupplySchema);

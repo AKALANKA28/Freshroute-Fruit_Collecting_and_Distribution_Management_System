@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from "../../components/SearchBar";
 import Excel from "../../../../assests/img/icons/excel.png";
@@ -11,8 +11,8 @@ import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
 import { ToastContainer } from "react-toastify";
-import Pagination from "../../components/Pagination";
-import ReportModal from "../../components/ReportModal";
+// import Pagination from "../../components/Pagination";
+import ReportModal from "../../components/PDFReport";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,13 +30,38 @@ function Sales() {
   const [selectedSales, setSelectedSales] = useState(null);
   const [filter, setFilter] = useState("Today");
   const [filteredDataList, setFilteredDataList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6); // Number of items per page
-
   const dispatch = useDispatch();
   const location = useLocation();
   const getUserId = location.pathname.split("/")[3];
   // console.log(getUserId)
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [pageSize, setPageSize] = useState(5); // Number of items per page
+
+  // Calculate total number of pages based on 5 rows per page
+  const totalPages = Math.ceil(filteredDataList.length / pageSize);
+
+  // Calculate the start and end index of items for the current page
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, filteredDataList.length);
+
+  // Get the current page of items to display (5 rows)
+  const currentPageItems = filteredDataList.slice(startIndex, endIndex);
+
+  // Function to handle next page
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Function to handle previous page
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   const getTokenFromLocalStorage = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
@@ -58,21 +83,21 @@ function Sales() {
   const orderState = useSelector((state) => state.orders.orders);
   console.log(orderState);
 
-  const handleStatus = (status) => {
-    switch (status) {
-      case "Paid":
-        return "success";
-        break;
-      case "Pending":
-        return "warning";
-        break;
-      case "Rejected":
-        return "danger";
-        break;
-      default:
-        return "success";
-    }
-  };
+  // const handleStatus = (status) => {
+  //   switch (status) {
+  //     case "Paid":
+  //       return "success";
+  //       break;
+  //     case "Pending":
+  //       return "warning";
+  //       break;
+  //     case "Rejected":
+  //       return "danger";
+  //       break;
+  //     default:
+  //       return "success";
+  //   }
+  // };
 
   useEffect(() => {
     getFetchData();
@@ -84,8 +109,9 @@ function Sales() {
 
   const getFetchData = async () => {
     try {
-      const response = await axios.get("/sales/");
+      const response = await axios.get("/user/allorders");
       setDataList(response.data);
+
     } catch (err) {
       alert(err.message);
     }
@@ -104,7 +130,7 @@ function Sales() {
   };
 
   const handleButtonClick = () => {
-    getFetchData(); // Fetch the latest data if needed
+    // getFetchData();
     generateExcelFile();
   };
 
@@ -118,67 +144,8 @@ function Sales() {
     setCurrentPage(1); // Reset current page to 1 when a new search is performed
   };
 
-  //Pagination
-
-  // Calculate total number of pages
-  const totalPages = Math.ceil(filteredDataList.length / pageSize);
-
-  // Calculate the start and end index of items for the current page
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = Math.min(startIndex + pageSize, filteredDataList.length);
-
-  // Get the current page of items to display
-  const currentPageItems = filteredDataList.slice(startIndex, endIndex);
-
-  // Function to handle next page
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  // Function to handle previous page
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  // Function to handle page navigation
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Function to handle page size change
-  const handlePageSizeChange = (size) => {
-    setPageSize(size);
-    setCurrentPage(1); // Reset current page to 1 when page size changes
-  };
-
-  // Render pagination component
-  const renderPagination = () => {
-    // Generate an array of page numbers from 1 to totalPages
-    const pages = [...Array(totalPages).keys()].map((i) => i + 1);
-    return (
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        {pages.map((page) => (
-          <button key={page} onClick={() => handlePageChange(page)}>
-            {page}
-          </button>
-        ))}
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div>
-    );
-  };
-  //Pagination End
-
   const handleRefreshClick = () => {
-    getFetchData();
+    // getFetchData();
   };
 
   const handleAddModalOpen = () => {
@@ -200,7 +167,7 @@ function Sales() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/users/order/add", formData);
+      await axios.post("/sales/add", formData);
       alert("Sales Added");
       handleAddModalClose();
       getFetchData();
@@ -230,10 +197,8 @@ function Sales() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
 
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
+
 
   return (
     <div className="main">
@@ -250,17 +215,18 @@ function Sales() {
 
             <ul class="table-top-head">
               <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-
-                  <ReportModal
-                    show={showReportModal}
-                    handleClose={handleCloseReportModal}
-                    dataList={dataList}
-                  />
-                </div>
+                <BlobProvider
+                  document={<SalesReport />}
+                  fileName="SalesReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
 
               <li>
@@ -332,38 +298,50 @@ function Sales() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderState.map((sales) => (
+                  {currentPageItems.map((sales) => (
                     <tr key={sales._id}>
                       <td>{sales?.user?.name}</td>
                       <td>{new Date(sales.createdAt).toLocaleDateString()}</td>
                       <td>
                         <ul>
                           {sales.orderItems.map((item) => (
-                            <li key={item._id} className="border-bottom">{item.product.title}</li>
+                            <li key={item._id} className="border-bottom">
+                              {item.product.title}
+                            </li>
                           ))}
                         </ul>
                       </td>
-                      <td><ul>
-                          {sales.orderItems.map((item) => (
-                            <li key={item._id} className="border-bottom">Rs. {item.price.toFixed(2)}</li>
-                          ))}
-                        </ul></td>
                       <td>
                         <ul>
                           {sales.orderItems.map((item) => (
-                            <li key={item._id} className="border-bottom">{item.quantity}</li>
+                            <li key={item._id} className="border-bottom">
+                              Rs. {item.price.toFixed(2)}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td>
+                        <ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id} className="border-bottom">
+                              {item.quantity} kg
+                            </li>
                           ))}
                         </ul>
                       </td>
                       <td>2%</td>
                       <td>
-                        Rs. {((sales?.totalPrice * 2) / 100 + sales?.totalPrice).toFixed(2)}
+                        Rs.{" "}
+                        {(
+                          (sales?.totalPrice * 2) / 100 +
+                          sales?.totalPrice
+                        ).toFixed(2)}
                       </td>
                       {/* <td>
-                        <span className={`badge bg-${handleStatus(sales.orderStatus)}`}>
-                            {sales.orderStatus}
-                        </span>
-                    </td> */}
+        <span className={`badge bg-${handleStatus(sales.orderStatus)}`}>
+          {sales.orderStatus}
+        </span>
+      </td> */}
                       <td>
                         <div className="buttons">
                           <button
@@ -384,53 +362,40 @@ function Sales() {
                   ))}
                 </tbody>
               </table>
-              {/* <table className="table table-bordeless datatable">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col">Customer</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Fruit</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Paid (Rs)</th>
-                  <th scope="col">Due (Rs)</th>
-                  <th scope="col">Status</th>
-                  <th className="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentPageItems.map((sales) => (
-                  <tr key={sales._id}>
-                    <td>{sales.customer_name}</td>
-                    <td>{sales.date}</td>
-                    <td>{sales.fruit_name}</td>
-                    <td>Rs. {sales.amount.toFixed(2)}</td>
-                    <td>Rs. {sales.paid.toFixed(2)}</td>
-                    <td>Rs. {sales.due.toFixed(2)}</td>
-                    <td>
-                        <span className={`badge bg-${handleStatus(sales.status)}`}>
-                            {sales.status}
-                        </span>
-                    </td>
-                    <td>
-                      <div className="buttons">
-                        <button
-                          className="btn btn-edit"
-                          onClick={() => handleEditModalOpen(sales)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn btn-delete"
-                          onClick={() => handleDelete(sales._id)}
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table> */}
+              {/* Render pagination component */}
+              <div className="pagination align-items-center  justify-content-end">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className="me-4"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <i class="bi bi-chevron-left"></i>{" "}
+                </button>
+                <span
+                  className="text-dark"
+                  style={{ fontSize: "18px", fontWeight: "500" }}
+                >
+                  <span className="me-4">{currentPage}</span>
+                  <span>{totalPages}</span>
+                </span>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className="ms-4"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <i class="bi bi-chevron-right"></i>{" "}
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -449,13 +414,13 @@ function Sales() {
         // transition: Bounce
       />
       {/* Render pagination */}
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
         handlePageChange={handlePageChange}
-      />{" "}
+      />{" "} */}
     </div>
   );
 }

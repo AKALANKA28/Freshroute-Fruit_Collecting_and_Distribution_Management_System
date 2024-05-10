@@ -69,8 +69,7 @@ const TopCards = () => {
 
                     <div className="d-flex align-items-center">
                         <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className= "bi bi-cart"></i>
-                        </div>
+                        <i class="bi bi-cash"></i>                        </div>
                         <div className="ps-3">
                         <h6 className='card-price'>
                                 Rs. {totalSalesAmount.toLocaleString('en-US')}
@@ -113,29 +112,29 @@ const TopCards = () => {
                 <CardFilter filterChange={handleFilterChange} />
                 <div className="card-body">
                     <h5 className="card-title">
-                        Revenue<span> | {filter} </span>
+                        Weekly Cover<span> | {filter} </span>
                     </h5>
 
                     <div className="d-flex align-items-center">
                         <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className= ""></i>
-                        </div>
+                        <i class="bi bi-truck"></i>                        </div>
                         <div className="ps-3">
                            <h6 className='card-price'>
-                              Rs. {totalRevenueAmount.toLocaleString('en-US')}
+                              {/* Rs. {totalRevenueAmount.toLocaleString('en-US')} */}
+                              10 Tours
                             </h6> 
                             {/* <span className= {`${
                                 sales.percentage > 0 ? 'text-success' : 'text-danger' 
                                 } small pt-1 fw-bold`} */}
-                            <span className= 'text-danger small pt-1 fw-bold'> -0.9%   
+                            <span className= 'text-danger small pt-1 fw-bold'>
                                 {/* {card.percentage > 0 
                                 ? card.percentage * 100 
                                 : -card.percentage * 100} 
                                 % */}
-                                                           
+                                Last Week:                            
                             </span>
                             <span className="text-muted small pt-2 ps-1">
-                                decrease
+                                15 tours
                                 {/* {card.percentage > 0 ? 'increase' : 'decrease'} */}
                             </span>
                         </div>
