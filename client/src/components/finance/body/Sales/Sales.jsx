@@ -21,6 +21,7 @@ import {
   getOrders,
   getSingleOrderData,
 } from "../../../../features/orders/orderSlice";
+import ProductDropdown from "./ProductDropdown";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -167,7 +168,7 @@ function Sales() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/sales/add", formData);
+      await axios.post("/user/order", formData);
       alert("Sales Added");
       handleAddModalClose();
       getFetchData();
@@ -197,7 +198,10 @@ function Sales() {
     }
   };
 
-
+  const handleProductSelect = (productId) => {
+    console.log("Selected product:", productId);
+    // Handle the selected product here
+  };
 
 
   return (
@@ -212,7 +216,7 @@ function Sales() {
               </div>
             </div>
             {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-
+           
             <ul class="table-top-head">
               <li>
                 <BlobProvider
@@ -282,7 +286,10 @@ function Sales() {
           {dataList.length > 0 && (
             <div className="table-container">
               <SearchBar onSearch={handleSearch} />
-
+              <div>
+      <h1>Select Product</h1>
+      <ProductDropdown onSelect={handleProductSelect} className="text-dark"/>
+    </div>
               {/* ---------------table--------------- */}
               <table className="table table-bordeless datatable">
                 <thead className="table-light">

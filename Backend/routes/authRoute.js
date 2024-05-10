@@ -28,15 +28,16 @@ router.put("/block/:id", authMiddleware, isAdmin, userController.blockUser);
 router.put("/unblock/:id", authMiddleware, isAdmin, userController.unblockUser);
 router.put("/save-address", authMiddleware, userController.saveAddress);
 router.put('/update-product-from-cart/:newQuantity', authMiddleware, userController.updateProductQuantityFromCart);
+router.put('/order/update/:id', authMiddleware, isAdmin, userController.updateOrderStatus)
 
 router.delete("/delete/:id", userController.deleteUser);
 router.delete('/delete-product-from-cart/:cartItemId', authMiddleware, userController.removeProductFromCart);
 router.delete('/empty-cart', authMiddleware, userController.emptyCart);
+router.delete('/order/delete/:id', userController.deleteOrder);
 
 
 router.get('/allorders',  userController.getAllOrders)
 router.get('/getsingleorder/:id', authMiddleware, isAdmin, userController.getSingleOrder)
-router.put('/order/update/:id', authMiddleware, isAdmin, userController.updateOrderStatus)
 
 // router.post('/cart',  userController.userCart);
 // router.get('/get-cart', userController.getUserCart);

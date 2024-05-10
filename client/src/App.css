@@ -619,6 +619,7 @@ header .search-form input:hover{
 .rotated {
   transform: rotate(90deg); /* Adjust the rotation angle as needed */
 }
+
 /*-------------- logo -------------*/
 
 .logo{
