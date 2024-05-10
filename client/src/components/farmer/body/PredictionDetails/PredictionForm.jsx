@@ -54,6 +54,21 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+
+    if (name === "quantity" || name === "price") {
+    // Allow numbers and one decimal point
+    newValue = newValue.replace(/[^0-9.]/g, '');
+    // Allow only one decimal point
+    const decimalCount = newValue.split('.').length - 1;
+    if (decimalCount > 1) {
+      newValue = newValue.substring(0, newValue.lastIndexOf('.'));
+    }setFormData((prev) => ({
+      ...prev,
+      [name]: newValue
+    }));
+  }
+
     if (name === "fruit") {
       fetchSubCategories(value);
     }
@@ -176,13 +191,14 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
           Total Quantity(kg)
           </label>
           <input
-            type="Number"
+            type="text"
             className="form-control"
             name="quantity"
             placeholder="Enter Quantity"
             required
             onChange={handleChange}
             value={formData.quantity}
+            maxLength={15}
           />
           {formErrors.quantity && <div className="invalid-feedback">{formErrors.quantity}</div>}
       </div>
@@ -192,13 +208,14 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
             Price for 1kg (Rs)
           </label>
           <input
-            type="Number"
+            type="text"
             className="form-control"
             name="price"
             placeholder="Enter Price of One"
             required
             onChange={handleChange}
             value={formData.price}
+            maxLength={15}
           />
           {formErrors.price && <div className="invalid-feedback">{formErrors.price}</div>}
         </div>
