@@ -8,10 +8,9 @@ const Sidebar = () => {
   const [activeItem, setActiveItem] = useState(null);
 
   const handleItemClick = (item) => {
-    console.log("Clicked item:", item);
-
     setActiveItem(item);
   };
+
 
   const handleToggleSideBar = () => {
     document.body.classList.toggle("toggle-sidebar");
@@ -103,30 +102,19 @@ const Sidebar = () => {
             className={`nav-item ${activeItem === "reports" ? "active" : ""}`}
             onClick={() => handleItemClick("reports")}
           >
-            <a
-              className="nav-link collapsed"
-              data-bs-target="#tables-nav"
-              data-bs-toggle="collapse"
-              href="/approvals"
-            >
+            <Link to="/approvals" className="nav-link collapsed">
               <i className="bi bi-archive"></i>
               <span>Approvals</span>
-            </a>
+            </Link>
           </li>
 
           <li
             className={`nav-item ${activeItem === "reports" ? "active" : ""}`}
             onClick={() => handleItemClick("reports")}
-          >
-            <a
-     href="/payments"
-
-              className="nav-link collapsed"
-              data-bs-target="#tables-nav"
-              data-bs-toggle="collapse"
-            >
-              <i class="bi bi-credit-card"></i> <span>Payments</span>
-            </a>
+          > <Link to="/payments_page" className="nav-link collapsed">
+<i class="bi bi-credit-card"></i>          <span>Payments</span>
+        </Link>
+       
           </li>
 
           <div className="mt-16 ">
