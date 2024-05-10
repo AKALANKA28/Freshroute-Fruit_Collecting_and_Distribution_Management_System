@@ -5,6 +5,9 @@ import Footer from './Footer/Footer';
 import storage from "../../src/firebase"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import cityCoordinates from "../components/supplierManagerDashboard/body/SupplierDetails/cityCoordinates.json"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import fruits from "../Website/assets/fruits2.jpg";
 
 import "./website.css";
 import Container from './Components/Container';
@@ -43,16 +46,89 @@ const JoinWithUs = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    validateField(name, value);
+    let newValue = value;
+    
+    if (name === "NIC") {
+      // Show NIC type based on the first two digits
+      let nicType = '';
+      if (value.length >= 1) {
+        const firstTwoDigits = value.substring(0, 2);
+        nicType = firstTwoDigits === "20" ? "New NIC" : /^[1-9]\d/.test(firstTwoDigits) ? "Old NIC" : "";
+      }
+        
+      // Remove special characters from NIC
+      newValue = newValue.replace(/[^\dVvXx]/g, ""); // Allow only digits, v, V, x, X
+        
+      // Restrict the number of digits based on NIC type
+      if (nicType === "Old NIC" && newValue.length > 10) {
+        newValue = newValue.slice(0, 10);
+      } else if (nicType === "New NIC" && newValue.length > 12) {
+        newValue = newValue.slice(0, 12);
+      }
+
+      // Allow only one instance of v, V, x, or X
+      const allowedChars = ['v', 'V', 'x', 'X'];
+      const charCount = newValue.split('').filter(char => allowedChars.includes(char)).length;
+      if (charCount > 1) {
+        newValue = newValue.substring(0, newValue.lastIndexOf(newValue.charAt(newValue.length - 1)));
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue,
+        nicType: nicType
+      }));
+    } else if (name === "name" || name === "city") {
+      // Remove space as the first character
+      newValue = value.replace(/^\s+/, '');
+      // Allow only letters and spaces
+      newValue = newValue.replace(/[^a-zA-Z\s]/g, "");
+        
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    } else if (name === "email") {
+      // Remove uppercase letters
+      newValue = newValue.toLowerCase();
+      // Don't allow @ as the first character
+      if (newValue.startsWith("@")) {
+        return;
+      }
+      // Don't allow space as the first character
+      if (newValue.startsWith(" ")) {
+        return;
+      }
+      // Allow only @ as a special character
+      if (newValue.split("@").length > 2) {
+        return; // Prevent more than one @ symbol
+      }
+      newValue = newValue.replace(/[^a-z0-9@.]/g, '');
+      // Remove leading space
+      newValue = newValue.replace(/^\s+/, '');
+  
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: newValue
+      }));
+    }
+    
+    validateField(name, newValue);
+    
     // If city is changed, fetch coordinates
     if (name === "city") {
       fetchCoordinates(value);
     }
   };
+  
+  
+  
+  
 
   const handleCityChange = (e) => {
     const { value } = e.target;
@@ -98,6 +174,20 @@ const JoinWithUs = () => {
     }
   };
 
+  const validateNIC = (nic) => {
+    const oldNICRegex = /^(?:[0-9]{9}[vVxX])$/;
+    const newNICRegex = /^(?:20(?:0[0-9]|1[0-9]|2[0-4])[0-9]{7}[0-9])$/;
+    if (!oldNICRegex.test(nic) && !newNICRegex.test(nic)) {
+      return "Invalid NIC format";
+    } else if (nic.length === 12) {
+      const year = parseInt(nic.substring(0, 4));
+      if (year > new Date().getFullYear()) {
+        return "NIC's year should be lower than or equal to the current year";
+      }
+    }
+    return "";
+  };
+
   const validateField = (name, value) => {
     let error = '';
     switch (name) {
@@ -113,8 +203,8 @@ const JoinWithUs = () => {
       case 'city':
         error = value.length < 1 ? 'City is required' : '';
         break;
-      case 'NIC':
-        error = /^(?:[0-9]{9}[vVxX]|[0-9]{12})?$/.test(value) ? '' : 'Invalid NIC';
+      case "NIC":
+        error = validateNIC(value);
         break;
       case 'landAddress':
         error = value.length < 1 ? 'Field address is required' : '';
@@ -209,16 +299,35 @@ const JoinWithUs = () => {
         await axios.post("/pendingSupplier/add", pendingSupplierData);
       }
   
-      alert("Your request has been submitted successfully!");
+      toast.success("Your Joining Request has been sent sucessfully");
   
     } catch (error) {
-      console.error('Error submitting form:', error);
+      toast.error("Error occurred while sending request.");
     }
   };
 
   return (
     <div>
       <Navbar />
+
+      <div className='hero' style={{height:800}}>
+        <div>
+          <img src={fruits} className='background' alt="Hero Background"></img>
+        </div>
+        <div className="container">
+          <div className="col-lg-12">
+            <div className="hero-text">
+              <br/>
+              <p className='text1 '>Join With Us</p>
+              <p className='text2 fs-3'>Let's spread the freshness together!</p>
+            </div>
+            <div className="hero-dot-play">
+              
+            </div>
+          </div>
+        </div>   
+      </div>
+
       <Container class1="contact-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12 mt-5 ">
@@ -229,12 +338,12 @@ const JoinWithUs = () => {
                   
                   <legend>Personal Details</legend>
                   <div className="form-group">
-                    <input type="text" value={formData.name} name="name" className={`form-control ${formErrors.name && 'is-invalid'}`} onChange={handleChange} placeholder='Name' required />
+                    <input type="text" value={formData.name} name="name" className={`form-control ${formErrors.name && 'is-invalid'}`} onChange={handleChange} placeholder='Name' maxLength={50} required />
                     {formErrors.name && <div className="invalid-feedback">{formErrors.name}</div>}
                   </div>
                   
                   <div className="form-group">
-                    <input type="email" value={formData.email} name="email" className={`form-control ${formErrors.email && 'is-invalid'}`} onChange={handleChange} placeholder='Email' required/>
+                    <input type="email" value={formData.email} name="email" className={`form-control ${formErrors.email && 'is-invalid'}`} onChange={handleChange} placeholder='Email' maxLength={50} required/>
                     {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
                   </div>
 
@@ -262,7 +371,7 @@ const JoinWithUs = () => {
                   </div>
 
                   <div className="form-group">
-                    <input type="text" value={formData.NIC} name="NIC" className={`form-control ${formErrors.NIC && 'is-invalid'}`} onChange={handleChange} placeholder='NIC' required/>
+                    <input type="text" value={formData.NIC} name="NIC" className={`form-control ${formErrors.NIC && 'is-invalid'}`} onChange={handleChange} placeholder='NIC' maxLength={12} required/>
                     {formErrors.NIC && <div className="invalid-feedback">{formErrors.NIC}</div>}
                   </div>
 
@@ -310,6 +419,19 @@ const JoinWithUs = () => {
           </div>        
         </div>
       </Container>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Footer />
 
