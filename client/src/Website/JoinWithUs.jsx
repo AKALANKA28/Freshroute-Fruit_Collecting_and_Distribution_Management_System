@@ -357,7 +357,7 @@ const JoinWithUs = () => {
                   </div>
 
                   <div className="form-group">
-                    <input type="text" value={formData.city} name="city" className={`form-control ${formErrors.city && 'is-invalid'}`} onChange={handleCityChange} placeholder='City' required/>
+                    <input type="text" value={formData.city} name="city" className={`form-control ${formErrors.city && 'is-invalid'}`} onChange={handleCityChange} placeholder='City' maxLength={20} required/>
                     {formErrors.city && <div className="invalid-feedback">{formErrors.city}</div>}
                     {showSuggestions && citySuggestions.length > 0 && (
                       <ul className="list-group">
