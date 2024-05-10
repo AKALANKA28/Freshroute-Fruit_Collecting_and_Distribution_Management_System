@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './Navbar/Navbar';
+import Navbar2 from './Navbar/Navbar2'
 import Footer from './Footer/Footer';
 import icon1 from './assets/delivery-truck.png';
 import icon2 from './assets/fresh.png';
@@ -7,13 +7,13 @@ import icon2 from './assets/fresh.png';
 const JoinWithUsSelect = () => {
   return (
     <div>
-     <Navbar/>
-      <div className='hero' style={{height:800}}>
-      <div className='section feature-section d-flex justify-content-center align-items-center'  style={{backgroundColor:"#32CD32"}}>
+     <Navbar2 />
+      
+      <div className='section feature-section d-flex justify-content-center align-items-center'  >
       <div className="container">
         <div className="row text-center">
           <div className="col-12">
-            <br/>
+            
             <p className='subheading'><span>Select one to Join With us </span> </p>
           </div>
           <div className="col-lg-12 card-column d-flex justify-content-center">
@@ -41,7 +41,7 @@ const JoinWithUsSelect = () => {
         </div>
       </div>
     </div>
-      </div>
+     
    
     <Footer />
     </div>
