@@ -301,7 +301,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           Mobile
         </label>
         <input
-          type="Number"
+          type="text"
           className="form-control"
           name="mobile"
           placeholder="Enter Mobile Number"
