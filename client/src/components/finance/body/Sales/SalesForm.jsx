@@ -155,8 +155,7 @@ const SalesForm = ({ handleSubmit, initialData }) => {
             </div>
         </div><div className="mb-3">
           <label htmlFor="status" className="form-label">
-          Status
-          </label>
+          Status/          </label>
           <input
             type="text"
             className="form-control"

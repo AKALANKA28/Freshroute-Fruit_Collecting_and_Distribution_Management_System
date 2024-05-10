@@ -16,16 +16,16 @@ const Contact = () => {
                     <h6 className='heading mt-5'>Join with us</h6>
                     <p className='subheading'>Like to Join with us?</p>
                     <p className='_text'>
-                    this is dummy tethis is dummy text for this below is use to countxtt for this below is u se to countxt for 
-                    Libero nunc facilisis auctor diam suspendisse pharetra nisi. Mauris ornare imperdiet.
+                    Whether you're a small-scale farmer looking to optimize your harvest or a large distributor seeking to streamline your operations, Harvest Hub is here to support you every step of the way. Together, let's revolutionize the fruit industry and create a brighter, more sustainable future for generations to come.
                     </p>
                 </div>
                 <div className="button_row d-flex gap-3 mt-5">
                   <Link to="/contact">
-                  <button className='home-button'>Contact Us</button></Link>
-                  <Link to="/JoinWithUsSupplier">
-                  <button className='home-button'>Post Your Resume</button></Link>
-
+                  <button className='home-button bg-dark'>Contact Us</button>
+                  </Link>
+                  <a href="/JoinWithUsSelect" className="text-decoration-none">
+                  <button className='home-button'>Post Your Resume</button>
+                  </a>
                 </div>
             </div>
            

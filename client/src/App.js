@@ -22,11 +22,13 @@ import SMDashboard from "./components/supplierManagerDashboard/SMDashboard";
 import SupplierDetails from "./components/supplierManagerDashboard/SupplierDetails";
 import Coordinator from "./components/Coordinator/Coordinator";
 import FruitType from "./components/Coordinator/FruitType";
+import JoinWithUsStaff from "./components/Coordinator/JoinWithUsStaff";
 import Category from "./components/Coordinator/Category";
 import Salary from "./components/Coordinator/Salary";
 import TransportFee from "./components/Coordinator/TransportFee";
 import StaffManager from "./components/StaffManager/StaffManager";
 import Employee from "./components/StaffManager/Employee";
+import Unregistered from "./components/StaffManager/Unregistered";
 import CalculateSalary from "./components/StaffManager/CalculateSalary";
 import Notice from "./components/StaffManager/Notice";
 import Message from "./components/StaffManager/Message";
@@ -38,11 +40,12 @@ import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupp
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
+import ProcessDetails from "./components/transportDashboard/ProcessDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
-import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrder";
-import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrder";
-import CompletedOrder from "./components/orderProcessor/body/CompletedOrders/CompletedOrder";
+import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
+import OngoingOrder from "./components/orderProcessor/body/OngoingOrders/OngoingOrderList"
+import SupplierList from "./components/orderProcessor/body/SupplierList/SuppliersList"
 
 import ExpensePage from "./components/finance/ExpensePage";
 import ScheduleDetails from "./components/transportDashboard/ScheduleDetails";
@@ -65,7 +68,10 @@ import PredictionDetails from "./components/farmer/PredictionDetails";
 
 import OMDashboard from "./components/orderManagement/body/OMDashboard";
 import OPDashboard from "./components/orderProcessor/body/OPDashboard";
-import RequestedOrderList from "./components/orderManagement/body/PendingOrderList/RequestedOrderList";
+import RequestedOrderList from "./components/orderManagement/body/RequestedOrderList/RequestedOrderList";
+import AssignedOrderList from "./components/orderManagement/body/AssignedOrderList/AssignedOrderList";
+import CompletedOrderList from "./components/orderManagement/body/CompletedOrderList/CompletedOrderList";
+import CompletedOrders from "./components/orderProcessor/body/CompletedOrders/CompletedOrderList";
 
 import Home from "./Website/Home";
 import About from "./Website/About";
@@ -76,6 +82,12 @@ import Cart from "./Website/Shop/Cart/Cart";
 import Checkout from "./Website/Shop/Checkout/Checkout";
 import Map from "./components/transportDashboard/Map";
 import JoinWithUsSupplier from "./Website/JoinWithUs";
+import JoinWithUsSelect from "./Website/JoinWithUsSelect";
+import Drivers from "./components/transportDashboard/body/driverDetails/Drivers";
+import DriverDetails from "./components/transportDashboard/DriverDetails";
+import Approvals from "./components/finance/body/Approvals/Approvals";
+import ApprovalPage from "./components/finance/ApprovalPage";
+import PaymentsPage from "./components/finance/PaymentsPage";
 
 const router = createBrowserRouter([
   {
@@ -107,9 +119,7 @@ const router = createBrowserRouter([
 
   {
     path: "/cart",
-    element: (
-        <Cart />
-    ),
+    element: <Cart />,
   },
 
   {
@@ -122,10 +132,28 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/JoinWithUsSelect",
+    element: (
+      <div>
+        <JoinWithUsSelect />
+      </div>
+    ),
+  },
+
+  {
     path: "/JoinWithUsSupplier",
     element: (
       <div>
         <JoinWithUsSupplier />
+      </div>
+    ),
+  },
+
+  {
+    path: "/JoinWithUsStaff",
+    element: (
+      <div>
+        <JoinWithUsStaff />
       </div>
     ),
   },
@@ -185,6 +213,24 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/approvals",
+    element: (
+      <div>
+        <ApprovalPage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/payments_page",
+    element: (
+      <div>
+        <PaymentsPage />
+      </div>
+    ),
+  },
+  
+  {
     path: "/tdashboard",
     element: (
       <div>
@@ -243,40 +289,62 @@ const router = createBrowserRouter([
       },
       {
         path: "/OMDashboard/QualityList",
-        element: <QualityList />,
+        element: <QualityList isViewOnly={false}/>,
       },
       {
         path: "/OMDashboard/RequestedOrderList",
-        element: <RequestedOrderList />,
+        element: <RequestedOrderList/>,
       },
-    ],
+      {
+        path: "/OMDashboard/AssignedOrderList",
+        element: <AssignedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/CompletedOrderList",
+        element: <CompletedOrderList/>,
+      },
+      {
+        path: "/OMDashboard/SupplierList",
+        element: <SupplierList/>,
+      }
+
+    ]
   },
 
   {
     path: "/OPDashboard",
     element: (
-      <div>
-        <OrderProcessorHomePage />
-      </div>
+        <div>
+          <OrderProcessorHomePage />
+        </div>
     ),
     children: [
       {
         path: "/OPDashboard/",
-        element: <OPDashboard />,
+        element: <OPDashboard/>,
       },
       {
         path: "/OPDashboard/AssignedOrders",
-        element: <AssignedOrder />,
+        element: <AssignedOrder/>,
       },
       {
         path: "/OPDashboard/OngoingOrders",
-        element: <OngoingOrder />,
+        element: <OngoingOrder/>,
       },
       {
         path: "/OPDashboard/CompletedOrders",
-        element: <CompletedOrder />,
+        element: <CompletedOrders/>,
       },
-    ],
+      {
+        path: "/OPDashboard/QualityList",
+        element: <QualityList isViewOnly={true}/>,
+      },
+      {
+        path: "/OPDashboard/SupplierList",
+        element: <SupplierList/>,
+      }
+
+    ]
   },
 
   {
@@ -478,6 +546,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/Unregistered",
+    element: (
+      <div>
+        <Unregistered />
+      </div>
+    ),
+  },
+
+  {
     path: "/CalculateSalary",
     element: (
       <div>
@@ -521,6 +598,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/ProcessDetails",
+    element: (
+      <div>
+        <ProcessDetails />
+      </div>
+    ),
+  },
 
   {
     path: "/QualityList",
@@ -544,6 +629,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ScheduleDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/DriverDetails",
+    element: (
+      <div>
+        <DriverDetails />
       </div>
     ),
   },

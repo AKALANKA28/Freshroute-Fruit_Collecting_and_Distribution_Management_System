@@ -28,7 +28,6 @@ const body = () => {
             <div className="row">
                 <Expense />
             </div>
-            <BackToTop />
       </div>
    </div>
   )

@@ -8,7 +8,9 @@ const orderManageController = require('../../controllers/q_and_o/OrderManageCont
 router.put("/quality/update", qualityController.addEditQuality);
 
 // Retrieve all quality records
-router.get("/quality/", qualityController.getAllQualities); // Corrected function name
+router.get("/quality/", qualityController.getAllQualities);
+
+router.get("/quality/undefinedQuality", qualityController.getUndefinedQualityList);
 
 // Retrieve a specific quality record by ID
 router.get("/quality/get/:id", qualityController.getQualityById);
@@ -25,11 +27,12 @@ router.get("/quality/categorizedData", qualityController.getCategorizedFruitDeta
 /** Order Manager */
 
 //Get Order List from Buyer Manager
+router.get("/orderList", orderManageController.getAllOrderList);
 router.get("/pendingOrderList", orderManageController.getPendingOrderList);
 router.get("/ongoingOrderList", orderManageController.getOngoingOrderList);
 router.get("/completedOrderList", orderManageController.getCompletedOrderList);
 
-//Get Order List from Buyer Manager
+//Get filtered Order List from Buyer Manager
 router.post("/pendingOrderList", orderManageController.getPendingOrderListByFilter);
 router.post("/ongoingOrderList", orderManageController.getOngoingOrderListByFilter);
 router.post("/completedOrderList", orderManageController.getCompletedOrderListByFilter);
@@ -40,5 +43,6 @@ router.get("/processorList", orderManageController.getOrderProcessorList);
 
 // Assign order to order processor
 router.post("/assignOrder", orderManageController.assignOrder);
+router.post("/editAssignOrder", orderManageController.editAssignOrder);
 router.delete("/unAssignOrder/:orderId", orderManageController.unAssignOrder);
 module.exports = router;

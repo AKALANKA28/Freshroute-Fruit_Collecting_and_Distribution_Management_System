@@ -1,20 +1,5 @@
 const mongoose = require('mongoose');
 
-const ExecutionHistorySchema = mongoose.Schema({
-    
-    supplier: String,
-    
-    execNo: Number,
-
-    execQuantity: Number,
-
-    filledQuantity: Number,
-
-    execTime: Date,
-
-});
-
-
 const OrderExecutionDetailSchema = mongoose.Schema({
     orderId: {
         type : String,
@@ -23,6 +8,10 @@ const OrderExecutionDetailSchema = mongoose.Schema({
     opName : {
         type : String,
         required: true,   
+    },
+    fruit:{
+        type : String,
+        required: true,
     },
     opId : {
         type : String,
@@ -63,7 +52,12 @@ const OrderExecutionDetailSchema = mongoose.Schema({
         required: true,
         default: "ASSIGNED",
     },
-    executionHistory:[ExecutionHistorySchema]
+    executionHistory:[{}],
+    filledQuantity: {
+        type: Number,
+        default: 0
+    },
+    lastUpdatedTime: Date,
    
 });
 

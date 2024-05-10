@@ -13,6 +13,7 @@ const jwt = require("jsonwebtoken");
 const { generateToken } = require("../config/jwtToken");
 const crypto = require("crypto");
 const sendEmail = require("./emailController");
+const { updateRevenueOnSalesAdd } = require("../middlewares/revenueUpdate");
 
 // Register a User
 exports.registerUser = asyncHandler(async (req, res) => {
@@ -445,6 +446,8 @@ exports.createOrder = asyncHandler(async (req, res) => {
       user: _id,
     });
     res.json(order);
+    await updateRevenueOnSalesAdd(req, res, next);
+
   } catch (error) {
     throw new Error(error);
   }

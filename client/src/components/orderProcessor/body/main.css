@@ -132,3 +132,26 @@ body .top-selling img{
     margin-left: 95px;
 }
 
+.status-box {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    width: 150px;
+}
+
+.status-box.not-started {
+    background-color: #8c8f8c;
+    color: white;
+}
+
+.status-box.in-progress {
+    background-color: #79c973;
+    color: white;
+}
+
+.status-box.completed {
+    background-color: #3c79d7;
+    color: white;
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
-import SearchBar from './SearchBar';
+import SearchBar from "./SearchBar";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
@@ -10,8 +10,7 @@ import ExpenseForm from "./ExpenseForm";
 import ExpenseReport from "./ExpenseReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
-import { ToastContainer } from "react-toastify";
-
+import { ToastContainer, toast } from "react-toastify";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -20,27 +19,59 @@ function Expense() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedExpense, setSelectedExpense] = useState(null);
-  const [filter, setFilter] = useState('Today');
-  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [filter, setFilter] = useState("Today");
+  const [filteredDataList, setFilteredDataList] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
+
   const [pageSize, setPageSize] = useState(6); // Number of items per page
 
+  //Pagination
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(filteredDataList.length / pageSize);
+
+  // Calculate the start and end index of items for the current page
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, filteredDataList.length);
+
+  // Get the current page of items to display
+  const currentPageItems = filteredDataList.slice(startIndex, endIndex);
+
+  // Function to handle next page
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Function to handle previous page
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Function to handle page navigation
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Function to handle page size change
+  const handlePageSizeChange = (size) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset current page to 1 when page size changes
+  };
 
 
 
-
-
-  
   useEffect(() => {
     getFetchData();
   }, []);
 
-
   useEffect(() => {
     setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
-
 
   const getFetchData = async () => {
     try {
@@ -51,16 +82,14 @@ function Expense() {
     }
   };
 
-
-   // Search functionality
-   const handleSearch = (query) => {
+  // Search functionality
+  const handleSearch = (query) => {
     const filteredList = dataList.filter((expense) => {
-      const fullName = `${expense.customer_name} ${expense.date} ${expense.fruit_name} ${expense.amount} ${expense.paid} ${expense.due} ${expense.status}`; 
+      const fullName = `${expense.customer_name} ${expense.date} ${expense.fruit_name} ${expense.amount} ${expense.paid} ${expense.due} ${expense.status}`;
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
   };
-
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -90,25 +119,23 @@ function Expense() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/expense/add", formData);
-      alert("Expense Added");
+      toast.success("Expense Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
       alert(err.message);
     }
   };
-  
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/expense/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted"); // Correct placement of toast function
       getFetchData();
     } catch (err) {
       alert(err.message);
     }
   };
-
-
 
   const handleEditSubmit = async (formData) => {
     try {
@@ -126,74 +153,71 @@ function Expense() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
-
   return (
-    <div className="">
-     <div className="card recent-sales overflow-auto">    
-        <div className="card-body">           
+    <>
+      <div className="card recent-sales overflow-auto">
+        <div className="card-body table-body">
           <div class="page-header">
+            {/* Your other components and UI elements */}
             <div class="add-item d-flex">
               <div class="card-title">
-                    Expense Details<span>| {filter}</span>
-                    <h6>Manage your expense</h6>
-                </div>
+                Expense Details<span>| {filter}</span>
+                <h6>Manage your expense</h6>
+              </div>
             </div>
-{/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-
+            {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
             <ul class="table-top-head">
-            <li>
-             <div className="button-container">
-                <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                </a>
-
-                <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Active campaigns Report</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <PDFViewer width="100%" height="500px">
-                      <ExpenseReport dataList={dataList} />
-                    </PDFViewer>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseReportModal}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-
-            </div>
-            </li>
-
+              <li>
+                <div className="button-container">
+                  <a onClick={handleShowReportModal}>
+                    <img src={Pdf} alt="Pdf Icon" className="icon" />
+                  </a>
+                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Active campaigns Report</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PDFViewer width="100%" height="500px">
+                        <ExpenseReport dataList={dataList} />
+                      </PDFViewer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        variant="secondary"
+                        onClick={handleCloseReportModal}
+                      >
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              </li>
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
-                      <img src={Excel} alt="Excel Icon"  className="icon"  />
+                    <img src={Excel} alt="Excel Icon" className="icon" />
                   </a>
                 </div>
-              </li>  
+              </li>
               <li>
                 <div className="button-container">
-                    <a href="#" onClick={handleRefreshClick}>
-                    <img src={Refresh} alt="Refresh Icon"  className="icon"  />
-                    </a>
+                  <a href="#" onClick={handleRefreshClick}>
+                    <img src={Refresh} alt="Refresh Icon" className="icon" />
+                  </a>
                 </div>
-              </li>    
+              </li>
             </ul>
-
             <div class="page-btn">
               <button
-                  type="button"
-                  className="btn btn-added"
-                  onClick={handleAddModalOpen}
-                >
+                type="button"
+                className="btn btn-added"
+                onClick={handleAddModalOpen}
+              >
                 <i className="bi bi-plus-circle"></i> Add Expense
               </button>
             </div>
           </div>
           <Modal show={addModalOpen} onHide={handleAddModalClose}>
-            
             <Modal.Header closeButton>
               <Modal.Title>Add Expense</Modal.Title>
             </Modal.Header>
@@ -201,7 +225,6 @@ function Expense() {
               <ExpenseForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
-
           <Modal show={editModalOpen} onHide={handleEditModalClose}>
             <Modal.Header closeButton>
               <Modal.Title>Edit Expense</Modal.Title>
@@ -213,49 +236,75 @@ function Expense() {
               />
             </Modal.Body>
           </Modal>
-    
           <div className="table-container">
-          <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} />
+            {/* ---------------table--------------- */}
+            <table className="table table-bordeless datatable">
+              <thead className="table-light">
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Action</th>
 
-{/* ---------------table--------------- */}
-          <table className="table table-bordeless datatable">
-          <thead className="table-light">
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col" >Category</th>
-                <th scope="col" >Amount</th>
-                <th scope="col" >Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredDataList &&
-              filteredDataList.length > 0 &&
-              filteredDataList.map((expense) => (
-                <tr key={expense._id}>
-                  <td>{expense.date}</td>
-                  <td>{expense.category}</td>
-                  <td>Rs. {expense.amount.toFixed(2)}</td>
-                  <td>{expense.description}</td>
-                  {/* <td>{expense.status}</td> */}
-                  <td>
-                    <div className="buttons">
-                      <button className="btn btn-edit" onClick={() => handleEditModalOpen(expense)}>
-                        <i className="bi bi-pencil-square"></i>
-                      </button>
-                      <button className="btn btn-delete" onClick={() => handleDelete(expense._id)}>
-                        <i className="bi bi-trash3-fill"></i>
-                      </button>
-                    </div>
-                  </td>
                 </tr>
-              ))}
-          </tbody>
+              </thead>
+              <tbody>
+                {currentPageItems.map((expense) => (
+                  <tr key={expense._id}>
+                    <td>{new Date(expense.date).toLocaleDateString()}</td>
+                    <td>{expense.category}</td>
+                    <td>Rs. {expense.amount.toFixed(2)}</td>
+                    <td>{expense.description}</td>
+                    <td>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-edit"
+                          onClick={() => handleEditModalOpen(expense)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                          className="btn btn-delete"
+                          onClick={() => handleDelete(expense._id)}
+                        >
+                          <i className="bi bi-trash3-fill"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {/* Render pagination component */}
+            <div className="pagination align-items-center  justify-content-end">
+              <button
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                className="me-4"
+                style={{ backgroundColor: "#ffffff", border: "none", padding:"0px 10px" }}
 
-        </table>
+              >
+                <i class="bi bi-chevron-left"></i>{" "}
+              </button>
+              <span className="text-dark" style={{fontSize:"18px", fontWeight:"500"}}>
+                <span className="me-4">{currentPage}</span><span>{totalPages}</span>
+              </span>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className="ms-4"
+                style={{ backgroundColor: "#ffffff", border: "none", padding:"0px 10px" }}
+
+              >
+                <i class="bi bi-chevron-right"></i>{" "}
+              </button>
+            </div>
           </div>
         </div>
-    </div>
-    <ToastContainer
+      </div>
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -268,8 +317,8 @@ function Expense() {
         theme="light"
         // transition: Bounce
       />
-  </div>
-  
+      <ToastContainer />
+    </>
   );
 }
 

@@ -35,6 +35,7 @@ const AcceptedSupplySchema = new mongoose.Schema({
         type : String,
         required: true
     },
+    supplierName: String,
 });
 
 const AcceptedSupply = mongoose.model("AcceptedSupply", AcceptedSupplySchema);

@@ -10,6 +10,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import TransportFeeForm from "./TransportFeeForm";
 import TransportFeeReport from "./TransportFeeReport";
 import SpinnerModal from '../../../spinner/SpinnerModal'
+import { ToastContainer, toast } from 'react-toastify';
 import "./TransportFee.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -82,7 +83,7 @@ function TransportFee() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.patch(`http://localhost:8070/vehicle/update/${formData._id}`, formData);
-      alert("Transport Fee Added");
+      toast.success("Transport Fee Added !")
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -167,10 +168,12 @@ function TransportFee() {
           </Modal>
       <div className="table-container">
       <SearchBar onSearch={handleSearch} />
+      <br/>
         <table className="table table-borderless datatable">
           <thead className="table-light">
             <tr>
             
+            <th scope="col">Vehicle No</th>
               <th scope="col">Vehicle Type</th>
               <th scope="col">Conditions</th>
               <th scope="col">Capacity</th>
@@ -183,11 +186,13 @@ function TransportFee() {
                   filteredDataList.map((transportfee) => (
                 <tr key={transportfee._id}>
                  
+                 <td>{transportfee.vehicle_no}</td>
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>
-                  <td>{`Rs.${transportfee.price.toFixed(2)}`}</td>
-                  <td className="action">
+                  <td >{transportfee.price ? `Rs.${transportfee.price.toFixed(2)}` : 'N/A'}</td>
+
+                  <td className="actionSize" >
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
@@ -211,6 +216,18 @@ function TransportFee() {
         </div>
       </div>
       )}
+       <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import SalaryForm from "./SalaryForm";
 import SalaryReport from "./SalaryReport";
 import SpinnerModal from '../../../spinner/SpinnerModal';
+import { ToastContainer, toast } from 'react-toastify';
 import "./Salary.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -93,7 +94,7 @@ function Salary() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Salary/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted !");
       getFetchData();
       handleCloseDeleteModal();
     } catch (err) {
@@ -104,7 +105,7 @@ function Salary() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Salary/add", formData);
-      alert("Salary Added");
+      toast.success("Salary Added !");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -115,7 +116,8 @@ function Salary() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Salary/update/${formData._id}`, formData);
-      alert("Salary Updated");
+      toast.success("Salary Updated !");
+      
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -232,6 +234,7 @@ function Salary() {
 
           <div className="table-container">
             <SearchBar onSearch={handleSearch} />
+            <br/>
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -249,7 +252,7 @@ function Salary() {
                       <td>{salary.date}</td>
                       <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
                       
-                      <td className="action">
+                      <td className="actionSize">
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
@@ -278,6 +281,18 @@ function Salary() {
         </div>
       </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

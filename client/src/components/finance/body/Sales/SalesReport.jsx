@@ -1,146 +1,219 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
-// import logo from "../../../../assests/logo.png"; // Import your logo image
+import logo from "../../../../assests/logo.png"; // Import your logo image
 
-const styles = StyleSheet.create({
 
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  heading: {
-    fontSize: 24,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  table: {
-    display: "table",
-    width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: { 
-    flexDirection: "row",
-    backgroundColor: "#FFF",
-  },
-  tableColHeader: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 12,
-  },
-  tableCol: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 10,
-  },
-  // logo: {
-  //   width: 100,
-  //   height: 100
-  // }
-    paddingRight: 2,
 
-    hr: {
-      borderBottomWidth: 1,
-      borderBottomColor: "#AAAAAA",
-      marginVertical: 10, // Adjust the vertical margin as needed
-    },
-  textMargin: {
-    paddingRight: 1, // Adjust the padding as needed
-  },
-  // space: {
-  //   width: 2, // Adjust the width as needed
-  // },
 
-  
-});
+
 
 const SalesReport = ({ dataList }) => {
-  console.log(dataList);
+
+
+  const reciept_data = {
+    "id": "642be0b4bbe5d71a5341dfb1",
+    "invoice_no": "20200669",
+    "name": "Akalanka Dias",
+    "date": "09-05-2024",
+    "items": [
+      {
+        "id": 1,
+        "date": "08/05/2024",
+        "category": "Employee",
+        "price": 20000.00,
+        "description": "Employee Cost",
+      },
+      {
+        "id": 2,
+        "date": "08/05/2024	",
+        "category": "Transport",
+        "price": 50000.00,
+        "description": "Fuel Cost",
+      },
+      {
+        "id": 3,
+        "date": "08/05/2024",
+        "category": "Promotion",
+        "price":30000.00,
+        "description": "Promotion Cost",
+      },
+      {
+        "id": 4,
+        "date": "08/05/2024",
+        "category": "Research",
+        "price": 10000.00,
+        "description": "Reasearch Cost",
+      },
+      {
+        "id": 5,
+        "date": "08/05/2024",
+        "category": "Transport",
+        "price": 25000.00,
+        "description": "Transport Cost",
+      },
+      {
+        "id": 5,
+        "date": "08/05/2024",
+        "category": "Research	",
+        "price": 30000.00,
+        "description": "Expenses",
+      }
+    ]
+  };
+  
+  const styles = StyleSheet.create({
+    page: {fontSize: 11,paddingTop: 20,paddingLeft: 40,paddingRight: 40,lineHeight: 1.5,flexDirection: 'column' },
+
+    spaceBetween : {flex : 1,flexDirection: 'row',alignItems:'center',justifyContent:'space-between',color: "#3E3E3E" },
+
+    titleContainer: {flexDirection: 'row',marginTop: 24},
+    
+    logo: { width: 90 },
+
+    reportTitle: {  fontWeight: '800' , fontSize: 16,  textAlign: 'center', },
+
+    addressTitle : {fontSize: 11,fontStyle: 'bold'}, 
+    
+    invoice : {fontWeight: '800',fontSize: 20, textDecoration: "underline"},
+    
+    invoiceNumber : {fontSize: 11,fontWeight: 'bold'}, 
+    
+    address : { fontWeight: 400, fontSize: 13},
+    
+    theader : {marginTop : 20,fontSize : 10,fontStyle: 'bold',paddingTop: 4 ,paddingLeft: 7 ,flex:1,height:20,backgroundColor : '#DEDEDE',borderColor : 'whitesmoke',borderRightWidth:1,borderBottomWidth:1},
+
+    theader2 : { flex:2, borderRightWidth:0, borderBottomWidth:1},
+
+    tbody:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1, borderColor : 'whitesmoke', borderRightWidth:1, borderBottomWidth:1},
+
+    total:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1.5, borderColor : 'whitesmoke', borderBottomWidth:1},
+
+    tbody2:{ flex:2, borderRightWidth:1, }
+    
+});
+
+
+const InvoiceTitle = () => (
+  <View style={styles.titleContainer}>
+    <View style={styles.spaceBetween}>
+      <Image style={styles.logo} src={logo} />
+      <Text style={styles.reportTitle}>FreshRoute Distributors</Text>
+    </View>
+  </View>
+);
+
+
+const Address = () => (
+  <View style={styles.titleContainer}>
+    <View style={styles.spaceBetween}>
+      <View>
+        <Text style={styles.invoice}>Expense Report</Text>
+        {/* <Text style={styles.invoiceNumber}>Invoice number: {reciept_data.invoice_no} </Text> */}
+      </View>
+      {/* <View>
+        <Text style={styles.addressTitle}>7, Ademola Odede, </Text>
+        <Text style={styles.addressTitle}>Ikeja,</Text>
+        <Text style={styles.addressTitle}>Lagos, Nigeria.</Text>
+      </View> */}
+    </View>
+  </View>
+);
+const UserAddress = () => {
+  return (
+    <View style={styles.titleContainer}>
+      <View style={styles.spaceBetween}>
+        <View style={{maxWidth : 200}}>
+          <Text style={styles.addressTitle}>Finance Manger: </Text>
+          <Text style={styles.address}>
+              {reciept_data.name}
+          </Text>
+        </View>
+        <Text style={styles.addressTitle}>{reciept_data.date}</Text>
+      </View>
+    </View>
+  );
+};
+
+const TableHead = () => {
+  return (
+    <View style={{ width:'100%', flexDirection :'row', marginTop:10}}>
+      <View style={[styles.theader, styles.theader2]}>
+        <Text>Date</Text>   
+      </View>
+      <View style={styles.theader}>
+        <Text>Category</Text>   
+      </View>
+      <View style={styles.theader}>
+        <Text>Amount</Text>   
+      </View>
+      <View style={styles.theader}>
+        <Text>Description</Text>   
+      </View>
+    </View>
+  );
+};
+
+const TableBody = () => {
+  return (
+    reciept_data.items.map((receipt) => (
+      <Fragment key={receipt.id}>
+        <View style={{ width:'100%', flexDirection :'row'}}>
+          <View style={[styles.tbody, styles.tbody2]}>
+            <Text>{receipt.date}</Text>   
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receipt.category}</Text>   
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receipt.description}</Text>   
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receipt.price}</Text>   
+          </View>
+          
+        </View>
+      </Fragment>
+    ))
+  );
+};
+
+const TableTotal = () => {
+  return (
+    <View style={{ width:'100%', flexDirection :'row'}}>
+      <View style={styles.total}>
+        <Text></Text>   
+      </View>
+      <View style={styles.total}>
+        <Text> </Text>   
+      </View>
+      <View style={styles.tbody}>
+        <Text>Total</Text>   
+      </View>
+      <View style={styles.tbody}>
+        <Text>
+        {reciept_data.items.reduce((sum, item) => sum + (item.price), 0)}
+
+          {/* {reciept_data.items.reduce((sum, item) => sum + (item.price * item.qty), 0)} */}
+        </Text>  
+      </View>
+    </View>
+  );
+};
+
+
+
+
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-        {/* <Image src={logo} style={styles.logo} /> */}
-        <View style={styles.hr} /> {/* Horizontal rule */}
-
-          <Text style={styles.heading}>Sales Report</Text>
-          <View style={styles.top}>
-            <View style={styles.leftTable}>
-              <View style={styles.tableRow}>
-              <Text style={styles.topTableColHeader}>Sales Person</Text>
-              <Text style={styles.topTableColHeader}>Date</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={styles.tableCol}>Akalanka Dias</Text>
-                <Text style={styles.tableCol}>2024/04/24</Text>
-              </View>
-               
-
-            </View>
-            <View styel= {styles.col2}>
-            <View style={styles.topTable}>
-              <View style={styles.tableRow}>
-              <Text style={styles.topTableColHeader}>Sales Amount</Text>
-              <Text style={styles.topTableColHeader}>Rs. 20000.00</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={styles.topTableColHeader}>Sales Tax</Text>
-                <Text style={styles.topTableColHeader}>Rs. 30000.00</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={styles.topTableColHeader}>Sales Total</Text>
-                <Text style={styles.topTableColHeader}>Rs. 50000.00</Text>
-              </View>
-              {/* <View style={styles.tableRow}>
-                <Text style={styles.topTableColHeader}>Customer Name</Text>
-                <Text style={styles.topTableColHeader}>Date</Text>
-              </View> */}
-               
-
-            </View>
-            </View>
-          </View>
-          <View style={styles.hr} /> {/* Horizontal rule */}
-
-          <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>Customer Name</Text>
-              <Text style={styles.tableColHeader}>Date</Text>
-              <Text style={styles.tableColHeader}>Fruit Name</Text>
-              <Text style={styles.tableColHeader}>Amount </Text>
-              <Text style={styles.tableColHeader}>Paid</Text>
-              <Text style={styles.tableColHeader}>Due</Text>
-              <Text style={styles.tableColHeader}>Status</Text>
-
-            </View>
-            {dataList.map((sales, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{sales.customer_name}</Text>
-                <Text style={styles.tableCol}>{sales.date}</Text>
-                <Text style={styles.tableCol}>{sales.fruit_name}</Text>
-                <Text style={styles.tableCol}>{sales.paid}</Text>
-                <Text style={styles.tableCol}>{sales.due}</Text>
-                <Text style={styles.tableCol}>{sales.status}</Text>
-
-              </View>
-            ))}
-          </View>
-        </View>
-      </Page>
-    </Document>
+    <Page size="A4" style={styles.page}>
+        <InvoiceTitle  />
+        <Address/>
+        <UserAddress/>
+        <TableHead/>
+        <TableBody/>
+        <TableTotal/>
+    </Page>
+</Document>
   );
 };
 
