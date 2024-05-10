@@ -24,7 +24,7 @@ const Features = () => {
               <div className="row align-items-center">
                   <div className="col-md-3">
                     <div className="py-6 px-4 text-white text-center card1">
-                      <h3 className="mb-3">Get Started With Your Free Trial</h3>
+                      <h3 className="mb-3">Healthy Life With Fresh Products</h3>
                       <p >Libero nunc facilisis auctor diam suspendisse pharetra nisi. Mauris ornare imperdiet.
                       </p>
                       <a href="#" className="btn btn-light mb-0">Get Started Today</a>

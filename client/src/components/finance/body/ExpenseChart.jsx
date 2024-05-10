@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react'
-import * as echarts from 'echarts'
+import React, { useEffect, useState } from 'react';
+import * as echarts from 'echarts';
 
 const WebTrafficChart = () => {
-
     // State variable to store aggregated expense data
     const [categoryExpenses, setCategoryExpenses] = useState({});
 
@@ -31,25 +30,26 @@ const WebTrafficChart = () => {
         value: amount,
     }));
 
-    //chart
-    useEffect(()=> {
+    // Define an array of colors for the categories
+    const colors = ['#606c38', '#283618', '#dda15e', '#bc6c25'];
 
+    // Chart
+    useEffect(() => {
         echarts.init(document.querySelector('#expenseChart')).setOption({
             tooltip: {
-               trigger: 'item',
+                trigger: 'item',
             },
             legend: {
-                orient: 'vertical', // Set orientation to vertical
-                right: -4, // Adjust right distance
-                top: 'center', // Align to center vertically
-                
+                orient: 'vertical',
+                right: -4,
+                top: 'center',
             },
             series: [
                 {
                     name: 'Access From',
                     type: 'pie',
                     radius: ['37%', '65%'],
-                    avoidLabelOverlap : false,
+                    avoidLabelOverlap: false,
                     label: {
                         show: true,
                         position: 'center',
@@ -61,25 +61,24 @@ const WebTrafficChart = () => {
                             fontWeight: 'bold',
                         },
                     },
-
                     labelLine: {
                         show: false,
                     },
-                    data: chartData,                   
-               
+                    data: chartData,
+                    // Set colors for each category
+                    color: colors,
                 },
             ],
         });
-        
     }, [chartData]);
 
-  return (
-    <div
-        id='expenseChart'
-        style={{  width: '400px', height: '290px', minHeight: '290px', marginTop: "-55px", left: "-40px", marginBottom: "-20px"}}
-        className='echart'> 
-    </div>
-  );
+    return (
+        <div
+            id='expenseChart'
+            style={{ width: '400px', height: '290px', minHeight: '290px', marginTop: "-55px", left: "-40px", marginBottom: "-20px" }}
+            className='echart'>
+        </div>
+    );
 }
 
-export default WebTrafficChart
+export default WebTrafficChart;

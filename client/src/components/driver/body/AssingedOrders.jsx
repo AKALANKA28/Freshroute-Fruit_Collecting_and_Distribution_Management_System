@@ -36,11 +36,11 @@ const AssingedOrders = () => {
 
   return (
     <div className="card">
-      <div className="card-body">
+      <div className="card-body" >
         <h5 className="card-title">Assigned Orders</h5>
         <div className="activity text-dark">
           <div>
-            <table className="table table-bordeless datatable mb-0">
+            <table className="table table-bordeless datatable mb-0" style={{marginTop:"-3px"}}>
               <thead className="table-light">
                 <tr>
                   <th className="col" d>

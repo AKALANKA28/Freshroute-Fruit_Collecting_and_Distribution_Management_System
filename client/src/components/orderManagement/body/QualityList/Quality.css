@@ -1,13 +1,4 @@
 
-@media(max-width: 1199px){
-    #main{
-        padding: 0px;
-    }
-}
-
-.body .recent-sales{
-    font-size: 14px;
-}
 
 .body .recent-sales .table thead{
     background: #f6f6fe !important;
@@ -186,4 +177,14 @@
 }
 .tab-height:hover {
     border-bottom: 0;
+}
+.tab-container {
+    padding: 0!important;
+    border-bottom: 1px solid rgba(1, 41, 112, 0.15)!important;
+}
+.scrollable-content-y {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
 }

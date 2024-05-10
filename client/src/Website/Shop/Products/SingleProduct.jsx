@@ -81,33 +81,7 @@ const SingleProduct = () => {
   return (
     <div>
       <Navbar2 />
-      {/* <div className="product-header">
-        <nav className="nav">
-          <div className="nav-logo">
-            <a href="/home">FreshRoute.</a>
-          </div>
-          <ul className="nav-menu">
-            <li className="nav-list">
-              <a href="/home">Home</a>
-            </li>
-            <li className="nav-list">
-              <a href="/about">About</a>
-            </li>
-            <li className="nav-list">
-              <a href="/shop">Shop</a>
-            </li>
-            <li className="nav-list">
-              <a href="/contact">Contact</a>
-            </li>
-            <li className="nav-login">
-              <Link to="/Login">
-                <span>Login</span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div> */}
-
+     
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
@@ -141,7 +115,7 @@ const SingleProduct = () => {
                     <h3 className="product-heading">Grade</h3>
                     {/* <Grades setGrade = {setGrade} gradeData={productState?.grade}/> */}
                     <div className="d-flex flex-wrap gap-15 grade">
-                      <span className="badge border border-1 text-dark p-3 button-select">
+                      <span className="badge border border-1 p-3 button-select" style={{backgroundColor:"black", color:"white"}}>
                         A
                       </span>
                       <span className="badge border border-1 text-dark p-3">
@@ -169,8 +143,13 @@ const SingleProduct = () => {
                         id=""
                         onChange={(e) => setQuantity(e.target.value)}
                         value={quantity}
+
+                        placeholder="Enter quantity" // Add placeholder attribute here
+
                       />
                     </div>
+
+                    
                     </>
                    }
                     <div className={alreadyAdded? "ms-0" : "ms-5" + "d-flex align-items-center gap-2"}>
@@ -181,7 +160,7 @@ const SingleProduct = () => {
                       >
                         {alreadyAdded?"Go To Cart" : "Add to Cart"}
                       </button>
-                      <button className="product-button buy" type="submit">
+                      <button className="product-button buy" type="submit" style={{backgroundColor:"#000000"}}>
                         Buy Now
                       </button>
                     </div>

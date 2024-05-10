@@ -163,8 +163,8 @@ const Checkout = () => {
                     </Link>
                   </li>
 
-                  <li className="breadcrumb-item total-price">Information</li>
-                  <li className="breadcrumb-item total-price">Shipping</li>
+                  <li className="breadcrumb-item total-price text-dark">Information & Shipping</li>
+                  {/* <li className="breadcrumb-item total-price">Shipping</li> */}
                   <li className="breadcrumb-item total-price">Payment</li>
                 </ol>
               </nav>
@@ -194,7 +194,7 @@ const Checkout = () => {
                     value={formik.values.country}
                   >
                     <option value="" selected disabled>
-                      Select Suburb
+                      Select Province
                     </option>
                     <option value="Western">Western</option>
                     <option value="Western">Western</option>
@@ -230,7 +230,7 @@ const Checkout = () => {
                 <div className="w-100">
                   <input
                     type="text"
-                    placeholder="Warehouse, Store, etc"
+                    placeholder="Landmark (Optional)"
                     className="form-control"
                     name="other"
                     onChange={formik.handleChange("other")}
@@ -256,7 +256,7 @@ const Checkout = () => {
                     {formik.touched.city && formik.errors.city}
                   </div>
                 </div>
-                <div className="flex-grow-1">
+                {/* <div className="flex-grow-1">
                   <select
                     name="state"
                     id=""
@@ -275,7 +275,7 @@ const Checkout = () => {
                   <div className="error">
                     {formik.touched.state && formik.errors.state}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex-grow-1">
                   <input
@@ -355,19 +355,19 @@ const Checkout = () => {
               </div>
               <div className="border-bottom py-4">
                 <div className="d-flex justify-content-between align-items-center">
-                  <p className="total">Subtotal:</p>
+                  <p className="total text-dark fw-bold">Subtotal:</p>
                   <p className="total-price">
                     Rs. {totalAmount ? totalAmount : "0"}.00
                   </p>
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
-                  <p className="mb-0 total">Tax</p>
+                  <p className="mb-0 total text-dark fw-bold">Tax:</p>
                   <p className="mb-0 total-price">2%</p>
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center border-bottom py-4 ">
-                <h4 className="total">Total</h4>
-                <h4 className="total-price ">
+                <h4 className="total text-dark fw-bold fs-5">Total:</h4>
+                <h4 className="total-price text-dark fw-bold fs-5">
                   Rs. {totalAmount ? totalAmount * 0.02 + totalAmount : "0"}.00
                 </h4>
               </div>
@@ -375,7 +375,7 @@ const Checkout = () => {
           </div>
         </div>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -38,23 +38,25 @@ const Card = ({ data }) => {
         data.map((item, index) => (
           <div className="col-3" style={{ width: "23.7%" }} key={index}>
             <div className="product-card position-relative">
-              <div className="wishlist-icon position-absolute">
+              {/* <div className="wishlist-icon position-absolute">
                 <Link to={"/shop/" + item?._id}>
                   <i className="bi bi-heart"></i>
                 </Link>
-              </div>
+              </div> */}
               <div>
-                <div className="product-img">
+              <div className="product-img d-flex justify-content-center align-items-center">
                   <img
                     src={item?.images}
                     alt=""
                     className="img-fluid d-block"
+                    style={{ width: "100%", height: "100%" }} 
                     onClick={() => navigate("/shop/" + item?._id)}
+
                   />
                 </div>
               </div>
 
-              <div className="product-details">
+              <div className="product-details p-3">
                 <h5 className="product-title mt-3">{item?.title}</h5>
                 <h6 className="category">{item?.category}</h6>
                 <p className="stock">
@@ -64,7 +66,7 @@ const Card = ({ data }) => {
                   Rs {item?.price}
                   <span> / per kilo</span>
                 </p>
-                <div className={alreadyAdded ? "ms-0" : "ms-5" + "d-flex align-items-center gap-2 mb-2"}>
+                {/* <div className={alreadyAdded ? "ms-0" : "ms-5" + "d-flex align-items-center gap-2 mb-2"}>
                   <button
                     className="p-button"
                     type="submit"
@@ -77,7 +79,7 @@ const Card = ({ data }) => {
                   <button className="p-button buy" type="submit">
                     Buy Now
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

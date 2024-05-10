@@ -44,5 +44,18 @@ exports.calculateRevenue = async (req, res) => {
     }
 };
 
+
+// Delete all revenue records
+exports.deleteAllRevenue = async (req, res) => {
+    try {
+        await Revenue.deleteMany({});
+        res.status(200).json({ status: "All revenue records deleted" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: "Error deleting all revenue records", error: err.message });
+    }
+};
+
+
 // Call the function whenever needed
 // calculateRevenue();
