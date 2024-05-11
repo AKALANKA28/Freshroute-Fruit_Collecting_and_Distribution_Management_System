@@ -54,11 +54,12 @@ var orderSchema = new mongoose.Schema({
                 ref:"Product",
                 required: true,
             },
-            // grade: {
-            //     type: mongoose.Schema.Types.ObjectId,
-            //     ref:"Color",
-            //     grade: true,
-            // },
+            grade: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref:"Grade",
+                grade: true,
+                default:"A"
+            },
             quantity: {
                 type: Number,
                 required: true

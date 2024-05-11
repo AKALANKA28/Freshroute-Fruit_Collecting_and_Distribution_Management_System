@@ -196,14 +196,13 @@ const Checkout = () => {
                     <option value="" selected disabled>
                       Select Province
                     </option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
+                    <option value="Western">Central</option>
+                    <option value="Western">Eastern</option>
+                    <option value="Western">North Central</option>
+                    <option value="Western">Nothern</option>
+                    <option value="Western">North Western</option>
+                    <option value="Western">Sabaragamuwa</option>
+                    <option value="Western">Uva</option>
                     <option value="Western">Western</option>
                     <option value="Western">Western</option>
                   </select>

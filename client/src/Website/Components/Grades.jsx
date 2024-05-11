@@ -1,22 +1,28 @@
-// import React from 'react'
+import React from "react";
 
-// const Grades = () => {
-//   return (
-//     <div>
-//       <ul>
-//       <colors className="ps-0">
-//         {
-//             gradeData && gradeData?.map((item,index) => {
-//                 return (
-//                     <li onClick={() => setGrade(item?._id)} style={{fruitGrade: item?. title}} key={index}> </li>
-//                 )
-//             })
-//         }
-//       </colors>
-//       </ul>
-     
-//     </div>
-//   )
-// }
+const Grades = ({ gradeData, setGrade }) => {
+  console.log("gradeData in Grades component:", gradeData); // Logging gradeData here
 
-// export default Grades
+  return (
+    <>
+      <ul className="grade ps-0 gap-5">
+        {gradeData &&
+          gradeData.map((grade) => {
+            console.log(grade.title); // Logging grade title to check each title
+
+            return (
+              <li
+                onClick={() => setGrade(grade?._id)}
+                key={grade?._id}
+                style={{ fruitGrade: `${grade?.title}` }}
+              >
+                {grade.title} {/* Accessing the grade title here */}
+              </li>
+            );
+          })}
+      </ul>
+    </>
+  );
+};
+
+export default Grades;

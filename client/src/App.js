@@ -88,6 +88,7 @@ import DriverDetails from "./components/transportDashboard/DriverDetails";
 import Approvals from "./components/finance/body/Approvals/Approvals";
 import ApprovalPage from "./components/finance/ApprovalPage";
 import PaymentsPage from "./components/finance/PaymentsPage";
+import AddProduct from "./components/finance/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -638,6 +639,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <DriverDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/addproduct",
+    element: (
+      <div>
+        <AddProduct />
       </div>
     ),
   },
