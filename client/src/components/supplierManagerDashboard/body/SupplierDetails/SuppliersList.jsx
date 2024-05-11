@@ -169,10 +169,6 @@ function SuppliersList() {
   };
 
 
-  const [showReportModal, setShowReportModal] = useState(false);
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
-
   return (
     <div id="main col-8">
       <br/><br/>
