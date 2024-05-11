@@ -188,7 +188,7 @@ const JoinWithUs = () => {
         throw new Error("City coordinates not found");
       }
     } catch (error) {
-      console.error("Error fetching city coordinates:", error);
+      toast.error("Error fetching city coordinates:", error);
     }
   };
 
