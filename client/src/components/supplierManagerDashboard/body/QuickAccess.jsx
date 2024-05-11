@@ -22,9 +22,6 @@ const QuickAccess = () => {
           <i class="fas fa-shopping-basket"></i> Manage Supply Requests </button>
         </a>
 
-        <div className="activity">
-          
-      </div>
        
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -96,7 +96,6 @@ function PredictionsList() {
         await axios.delete(`/Prediction/delete/${selectedPrediction._id}`);
         await axios.delete(`/pendingSupply/deleteByPredictionID/${selectedPrediction._id}`);
         getFetchData();
-        window.location.reload();
         toast.success("Successfully Deleted");
         handleCloseDeclineModal();
       } catch (err) {
@@ -215,11 +214,18 @@ const getStatusClassName = (status) => {
             </div>
             <ul class="table-top-head" style={{ float: "right" }}>
               <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                </div>
+              <BlobProvider
+                  document={<PredictionReport dataList={dataList}/>}
+                  fileName="PredictionReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container">
@@ -316,7 +322,7 @@ const getStatusClassName = (status) => {
                     <td>{prediction.quality}</td>
                     <td>{prediction.quantity} kg</td>
                     <td>Rs. {prediction.price}</td>
-                    <td>Rs. {prediction.price * prediction.quantity}</td>
+                    <td>Rs. {parseFloat((prediction.price * prediction.quantity).toFixed(2))}</td>
                     <td>{prediction.dateCanBeGiven}</td>
                     <td>
                       <div

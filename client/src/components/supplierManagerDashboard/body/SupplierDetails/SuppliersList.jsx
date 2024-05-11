@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -171,12 +171,19 @@ function SuppliersList() {
               </div>
             </div>
             <ul className="table-top-head" style={{ float: "right" }}>
-              <li>
-                <div className="button-container" title="Generate Report as PDF">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                </div>
+            <li>
+                <BlobProvider
+                  document={<SupplierReport dataList={dataList}/>}
+                  fileName="SupplierReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container" title="Generate Report as Excel">
@@ -204,21 +211,7 @@ function SuppliersList() {
                 </div>
               </li>
             </ul>
-            <Modal show={showReportModal} onHide={handleCloseReportModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>Supplier Details Report</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <PDFViewer width="100%" height="500px">
-                  <SupplierReport dataList={dataList} />
-                </PDFViewer>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseReportModal}>
-                  Close
-                </Button>
-              </Modal.Footer>
-            </Modal>
+
           </div>
 
           <Modal show={addModalOpen} onHide={handleAddModalClose}>

@@ -53,42 +53,43 @@ const styles = StyleSheet.create({
   },
   table: {
     width: "100%",
-    borderWidth: 1,
+    borderBottom: 0,
+    borderRight: 0,
+    borderLeft: 1,
   },
   tableRow: {
     flexDirection: "row",
-    backgroundColor: "#F0F0F0",
   },
   tableColHeader: {
-    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 10,
-    fontWeight: "bold", // Add bold font weight
-    color: "#333333",
+    fontWeight: "bold",
     width: "16.666%",
     textAlign: "center",
+    backgroundColor : '#DEDEDE'
   },
   tableCol: {
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 8,
-    color: "#333333",
     width: "16.666%",
     textAlign: "center",
   },
+  tbody2:{ flex:2, borderRightWidth:1, },
   logo: {
     width: 100,
     height: 100,
-  },
-  line: {
-    borderBottom: "1px solid #333333",
-    marginBottom: 10,
   },
 });
 
@@ -110,7 +111,7 @@ const PredictionReport = ({ dataList }) => {
             </View>
             <Text style={styles.reportDateTime}>{reportDateTime}</Text>
           </View>
-          <Text style={styles.heading}>Freshroute - Supplier Details</Text>
+          <Text style={styles.heading}>Freshroute - Supply Prediction Details</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
@@ -122,12 +123,12 @@ const PredictionReport = ({ dataList }) => {
             </View>
             {dataList.map((prediction, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{prediction.fruit}</Text>
-                <Text style={styles.tableCol}>{prediction.subCategory}</Text>
-                <Text style={styles.tableCol}>{prediction.quality}</Text>
-                <Text style={styles.tableCol}>{prediction.quantity}</Text>
-                <Text style={styles.tableCol}>{prediction.price}</Text>
-                <Text style={styles.tableCol}>{prediction.dateCanBeGiven}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{prediction.fruit}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{prediction.subCategory}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{prediction.quality}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{prediction.quantity}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{prediction.price}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{prediction.dateCanBeGiven}</Text>
               </View>
             ))}
           </View>

@@ -52,45 +52,43 @@ const styles = StyleSheet.create({
   },
   table: {
     width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
+    borderBottom: 0,
+    borderRight: 0,
+    borderLeft: 1,
   },
   tableRow: {
     flexDirection: "row",
-    backgroundColor: "#F0F0F0",
   },
   tableColHeader: {
-    borderStyle: "solid",
-    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 10,
     fontWeight: "bold",
-    color: "#333333",
     width: "14.285%",
     textAlign: "center",
+    backgroundColor : '#DEDEDE'
   },
   tableCol: {
-    borderStyle: "solid",
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 8,
-    color: "#333333",
     width: "14.285%",
     textAlign: "center",
   },
+  tbody2:{ flex:2, borderRightWidth:1, },
   logo: {
     width: 100,
     height: 100,
-  },
-  line: {
-    borderBottom: "1px solid #333333",
-    marginBottom: 10,
   },
 });
 
@@ -126,13 +124,13 @@ const SupplierReport = ({ dataList }) => {
             </View>
             {dataList.map((supplier, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{supplier.NIC}</Text>
-                <Text style={styles.tableCol}>{supplier.name}</Text>
-                <Text style={styles.tableCol}>{supplier.username}</Text>
-                <Text style={styles.tableCol}>{supplier.email}</Text>
-                <Text style={styles.tableCol}>{supplier.mobile}</Text>
-                <Text style={styles.tableCol}>{supplier.city}</Text>
-                <Text style={styles.tableCol}>{supplier.lane}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.NIC}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.name}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.username}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.email}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.mobile}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.city}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.lane}</Text>
               </View>
             ))}
           </View>
