@@ -60,7 +60,7 @@ const Card = () => {
                 </div>
                 <div className="ps-5">
                   <h6 className='card-price'>
-                    Rs. 15026
+                    Rs. {totalEarnings}
                   </h6>
                 </div>
               </div>

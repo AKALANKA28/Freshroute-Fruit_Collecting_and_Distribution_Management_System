@@ -92,7 +92,7 @@ const getTotalEarnings = async (req, res) => {
   try {
     const totalEarnings = await Prediction.aggregate([
       {
-        $match: { status: 'approved' }
+        $match: { status: 'Approved' }
       },
       {
         $group: {
