@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -214,11 +214,18 @@ const getStatusClassName = (status) => {
             </div>
             <ul class="table-top-head" style={{ float: "right" }}>
               <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                </div>
+              <BlobProvider
+                  document={<PredictionReport dataList={dataList}/>}
+                  fileName="PredictionReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container">
