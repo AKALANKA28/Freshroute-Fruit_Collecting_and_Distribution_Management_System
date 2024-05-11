@@ -63,6 +63,8 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
     const decimalCount = newValue.split('.').length - 1;
     if (decimalCount > 1) {
       newValue = newValue.substring(0, newValue.lastIndexOf('.'));
+    } else if (decimalCount === 1 && newValue.split('.')[1].length > 2) {
+      newValue = newValue.slice(0, -1);
     }setFormData((prev) => ({
       ...prev,
       [name]: newValue
@@ -70,14 +72,14 @@ const PredictionForm = ({ handleSubmit, initialData }) => {
   }
 
     if (name === "fruit") {
-      fetchSubCategories(value);
+      fetchSubCategories(newValue);
     }
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: newValue,
     }));
     // Validate input on change
-    validateInput(name, value);
+    validateInput(name, newValue);
   };
 
   const validateInput = (name, value) => {

@@ -316,7 +316,7 @@ const getStatusClassName = (status) => {
                     <td>{prediction.quality}</td>
                     <td>{prediction.quantity} kg</td>
                     <td>Rs. {prediction.price}</td>
-                    <td>Rs. {prediction.price * prediction.quantity}</td>
+                    <td>Rs. {parseFloat((prediction.price * prediction.quantity).toFixed(2))}</td>
                     <td>{prediction.dateCanBeGiven}</td>
                     <td>
                       <div
