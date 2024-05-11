@@ -110,7 +110,7 @@ const PredictionReport = ({ dataList }) => {
             </View>
             <Text style={styles.reportDateTime}>{reportDateTime}</Text>
           </View>
-          <Text style={styles.heading}>Freshroute - Supplier Details</Text>
+          <Text style={styles.heading}>Freshroute - Supply Prediction Details</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
