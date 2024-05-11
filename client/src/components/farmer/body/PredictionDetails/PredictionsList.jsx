@@ -96,7 +96,6 @@ function PredictionsList() {
         await axios.delete(`/Prediction/delete/${selectedPrediction._id}`);
         await axios.delete(`/pendingSupply/deleteByPredictionID/${selectedPrediction._id}`);
         getFetchData();
-        window.location.reload();
         toast.success("Successfully Deleted");
         handleCloseDeclineModal();
       } catch (err) {
