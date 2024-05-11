@@ -649,7 +649,7 @@ header .search-form input:hover{
   .logo{
       width: 280px
   }
-};
+}
   
 
 .sidebar .hr{
@@ -692,9 +692,9 @@ header .search-form input:hover{
   align-items: center;
   font-size: 16px;
   font-weight: 500;
-  color: #ffff;
   transition: 0.3s;
-  background: var(--primaryColor);
+  color: var(--textColor);
+  background: #ffffff;
   padding: 10px 15px;
   border-radius: 4px;
 
@@ -710,7 +710,7 @@ header .search-form input:hover{
 .sidebar-nav .nav-link i{
   font-size: 20px;
   margin-right: 10px;
-  color:var(--bgColor);
+  color:var(--textColor);
 }
 
 
@@ -729,6 +729,12 @@ header .search-form input:hover{
   color: #ffffff;
   background:var(--primaryColor);
   
+}
+
+.nav-active{
+  color: #ffffff!important;
+  background:var(--primaryColor)!important;
+
 }
 
 
@@ -786,7 +792,7 @@ header .search-form input:hover{
   transition: all 0.4s;
   white-space: nowrap;
   opacity: 1;
-  
+
 }
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active{
