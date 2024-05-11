@@ -9,5 +9,6 @@ router.put("/update/:id", PredictionController.updatePrediction);
 router.put("/accept/:id", PredictionController.acceptPrediction);
 router.put("/decline/:id", PredictionController.declinePrediction);
 router.get("/totalCount", PredictionController.getTotalPredictionsCount);
+router.get("/totalEarnings", PredictionController.getTotalEarnings);
 
 module.exports = router;

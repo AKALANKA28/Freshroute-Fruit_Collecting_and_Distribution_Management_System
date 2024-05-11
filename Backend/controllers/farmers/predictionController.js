@@ -88,6 +88,26 @@ const getTotalPredictionsCount = async (req, res) => {
   }
 };
 
+const getTotalEarnings = async (req, res) => {
+  try {
+    const totalEarnings = await Prediction.aggregate([
+      {
+        $match: { status: 'approved' }
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: { $multiply: [{ $toDouble: "$quantity" }, { $toDouble: { $toDecimal: "$price" } }] } }
+        }
+      }
+    ]);
+
+    res.status(200).json({ totalEarnings: totalEarnings.length ? totalEarnings[0].total : 0 });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addPrediction,
   getAllPredictions,
@@ -96,5 +116,6 @@ module.exports = {
   updatePrediction,
   acceptPrediction,
   declinePrediction,
-  getTotalPredictionsCount
+  getTotalPredictionsCount,
+  getTotalEarnings,
 };
