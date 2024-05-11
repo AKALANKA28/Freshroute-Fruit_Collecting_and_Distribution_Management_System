@@ -12,17 +12,31 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SpinnerModal from '../../../spinner/SpinnerModal';
 import './farmers.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function SuppliersList() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFarmer, setSelectedFarmer] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]);
   const [declineModalShow, setDeclineModalShow] = useState(false); 
+
+  useEffect(() => {
+    // Fetch data
+    getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
+
 
   useEffect(() => {
     getFetchData();
@@ -155,12 +169,12 @@ function SuppliersList() {
   };
 
 
-  const [showReportModal, setShowReportModal] = useState(false);
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
-
   return (
     <div id="main col-8">
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -293,7 +307,7 @@ function SuppliersList() {
           </div>
         </div>
       </div>
-
+      )}
       <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
          <Modal.Header closeButton>
            <Modal.Title>Delete Farmer</Modal.Title>

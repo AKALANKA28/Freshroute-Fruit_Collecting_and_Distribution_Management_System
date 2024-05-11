@@ -12,11 +12,13 @@ import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SpinnerModal from '../../../spinner/SpinnerModal';
 import './predictions.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function PredictionsList() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -24,6 +26,17 @@ function PredictionsList() {
   const [filteredDataList, setFilteredDataList] = useState([]); 
   const [searchAttribute, setSearchAttribute] = useState('fruit'); // Initialize with 'fruit'
   const [declineModalShow, setDeclineModalShow] = useState(false); 
+
+  useEffect(() => {
+    // Fetch data
+    getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     getFetchData();
@@ -203,6 +216,10 @@ const getStatusClassName = (status) => {
 
   return (
     <div  id="main col-8">
+       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -363,7 +380,7 @@ const getStatusClassName = (status) => {
           </div>
         </div>
       </div>
-
+      )}
       <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
          <Modal.Header closeButton>
            <Modal.Title>Delete Prediction</Modal.Title>

@@ -3,11 +3,24 @@ import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SpinnerModal from '../../../spinner/SpinnerModal';
 
 function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
+  const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [declineModalShow, setDeclineModalShow] = useState(false);
+
+  useEffect(() => {
+    // Fetch data
+    fetchSupplyRequests();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     fetchSupplyRequests();
@@ -74,6 +87,10 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
 
   return (
     <div className="table-container">
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <table className="table datatable">
         <thead className="table-light">
           <tr>
@@ -123,7 +140,7 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
 
 
       </table>
-
+      )}
       <ToastContainer
         position="top-right"
         autoClose={5000}
