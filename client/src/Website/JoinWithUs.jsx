@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
@@ -8,6 +8,8 @@ import cityCoordinates from "../components/supplierManagerDashboard/body/Supplie
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import fruits from "../Website/assets/fruits2.jpg";
+import L from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 import "./website.css";
 import Container from './Components/Container';
@@ -43,6 +45,38 @@ const JoinWithUs = () => {
     fieldArea: '',
     landDeedUrl: '',
   });
+
+  const [map, setMap] = useState(null);
+  const [marker, setMarker] = useState(null);
+
+  useEffect(() => {
+    if (map && formData.latitude && formData.longitude) {
+      const cityCoords = [formData.latitude, formData.longitude];
+      map.setView(cityCoords, 10);
+      if (marker) {
+        marker.setLatLng(cityCoords);
+      } else {
+        setMarker(L.marker(cityCoords).addTo(map));
+      }
+    }
+  }, [formData.latitude, formData.longitude]);
+
+  const redIcon = new L.Icon({
+    iconUrl: 'https://cdn.leafletjs.com/leaflet/v1.9.3/images/marker-icon-2x-red.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
+
+  useEffect(() => {
+    const map = L.map("map").setView([6.9271, 79.8612], 10);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+    setMap(map);
+    return () => {
+      map.remove();
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -417,7 +451,7 @@ const JoinWithUs = () => {
               </div>
                   
               <div>
-                <iframe 
+                {/* <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d990.3161028665752!2d80.02407676963402!3d6.858879999571241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNsKwNTEnMzIuMCJOIDgwwrAwMScyOS4wIkU!5e0!3m2!1sen!2slk!4v1712777684232!5m2!1sen!2slk" 
                   width="600"
                   height="450"
@@ -426,8 +460,20 @@ const JoinWithUs = () => {
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
                   title="map">
-                </iframe>
+                </iframe> */}
 
+                <div id="map" style={{ width: '600px', height: '750px' }}>
+                <MapContainer center={[formData.latitude, formData.longitude]} zoom={8} scrollWheelZoom={false} style={{ width: '600px', height: '450px' }}>
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <Marker icon={redIcon} position={[formData.latitude, formData.longitude]}>
+                    <Popup>
+                      {formData.city}
+                    </Popup>
+                  </Marker>
+                </MapContainer>
+                </div>
               </div>
                   
             </div>
