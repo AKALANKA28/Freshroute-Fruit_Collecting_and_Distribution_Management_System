@@ -37,13 +37,13 @@ const Sidebar = () => {
             <ul id='supplier-details-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
               <li>
                 <a href='SupplierRequests'>
-                  <i className='bi bi-journal-plus'></i>
+                  <i className='bi bi-journal-plus' style={{ marginRight: "-30px" }}></i>
                   <span>Supplier Requests</span>
                 </a>
               </li>
               <li>
                 <a href='SupplierDetails'>
-                  <i className='bi bi-people'></i>
+                  <i className='bi bi-people' style={{ marginRight: "-30px" }}></i>
                   <span>Suppliers</span>
                 </a>
               </li>
@@ -60,19 +60,19 @@ const Sidebar = () => {
             <ul id='supply-requests-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
               <li>
                 <a href='SupplyRequests'>
-                  <i className='bi bi-list-check'></i>
+                  <i className='bi bi-list-check' style={{ marginRight: "-30px" }}></i>
                   <span>Manage Requests</span>
                 </a>
               </li>
               <li>
                 <a href='ApprovedSupplies'>
-                  <i className='bi bi-check-circle'></i>
+                  <i className='bi bi-check-circle' style={{ marginRight: "-30px" }}></i>
                   <span>Accepted Requests</span>
                 </a>
               </li>
               <li>
                 <a href='DeclinedSupplies'>
-                  <i className='bi bi-x-circle'></i>
+                  <i className='bi bi-x-circle' style={{ marginRight: "-30px" }}></i>
                   <span>Declined Requests</span>
                 </a>
               </li>
