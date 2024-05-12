@@ -52,7 +52,7 @@ const Sidebar = () => {
 
           <li className='nav-item'>
             <a className='nav-link collapsed' data-bs-target='#supply-requests-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-truck' onClick={handleToggleSideBar}></i>
+              <i className='bi bi-basket2-fill' onClick={handleToggleSideBar}></i>
               <span>Supply Requests</span>
               <i className='bi bi-chevron-down ms-auto'></i>
             </a>
