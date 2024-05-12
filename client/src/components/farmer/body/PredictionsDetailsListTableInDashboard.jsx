@@ -45,7 +45,7 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
                             <td>Rs. {prediction.price}</td>
                             <td>{prediction.dateCanBeGiven}</td>
                             <td>
-                                <div style={{ backgroundColor: getStatusColor(prediction.status), width: '70px', height: '20px', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black' }}>
+                                <div style={{ backgroundColor: getStatusColor(prediction.status), width: '75px', height: '20px', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black' }}>
                                     {prediction.status}
                                 </div>
                             </td>
