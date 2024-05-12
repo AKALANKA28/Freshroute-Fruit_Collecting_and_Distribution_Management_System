@@ -17,6 +17,7 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
                         <th className="col" style={{ width: '15%' }}>Quantity</th>
                         <th className="col" style={{ width: '15%' }}>Price of one</th>
                         <th className="col" style={{ width: '15%' }}>Date Can Be Given</th>
+                        <th className="col" style={{ width: '15%' }}>Status</th>
                     </tr>
                 </thead>
 
@@ -30,6 +31,7 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
                             <td>{prediction.quantity}</td>
                             <td>{prediction.price}</td>
                             <td>{prediction.dateCanBeGiven}</td>
+                            <td>{prediction.status}</td>
                         </tr>
                     ))}
                 </tbody>
