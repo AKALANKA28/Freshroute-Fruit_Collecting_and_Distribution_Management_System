@@ -5,10 +5,11 @@ const PromotionForm = ({ handleSubmit, initialData }) => {
     farmer_name: "",
     nic: "",
     location: "",
-    application_no: ""
+    application_no: "",
+    required_resouce: ""
   });
 
-  //farmer_name, nic, location, application_no
+  //farmer_name, nic, location, application_no, required_resouce
 
   useEffect(() => {
     if (initialData) {
@@ -90,6 +91,24 @@ const PromotionForm = ({ handleSubmit, initialData }) => {
           onChange={handleChange}
           required
         />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="required_resouce" className="form-label">
+        Required Resouce
+        </label>
+        <select
+            className="form-select"
+            name="required_resouce"
+            onChange={handleChange}
+            value={formData.required_resouce}
+            required
+          >
+            <option value="">Select resource</option>
+            <option value="Seeds">Seeds</option>
+            <option value="Land">Land</option>
+            <option value="Fertilizer">Fertilizer</option>
+          </select>
+        
       </div>
       <button type="submit" className="btn btn-primary">
         Submit

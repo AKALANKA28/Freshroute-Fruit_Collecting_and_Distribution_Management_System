@@ -1,0 +1,156 @@
+
+/*----------------------- Body ---------------------*/
+
+/* # Filter Dropdown */
+
+.body .filter{
+    position: absolute;
+    right: 0px;
+    top: 15px;
+}
+
+.body .filter .icon{
+    color: #aab7cf;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.body .filter .icon-hover,
+.body .filter .icon:focus {
+    color: #4154f1;
+}
+
+.body .filter .dropdown-header{
+    padding: 8px 15px;
+}
+
+.body .filter .dropdown-header h6{
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #aab7cf;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.body .filter .dropdown-item{
+    padding: 8px 15px;
+}
+
+
+/*----------------------- Market ---------------------*/
+
+ .body .activity{
+    font-size: 14px;
+}
+
+.rbody .activity .activity-item .activite-label {
+    color: #888888;
+    position: relative;
+    flex-shrink: 0;
+    flex-grow: 0;
+    min-width: 64px;
+}
+
+.body .activity .activity-item .activity-label::before {
+    content: '';
+    position: absolute;
+    right: -11px;
+    width: 4px;
+    top: 0;
+    bottom: 0;
+    background-color: #eceefe;
+}
+
+.body .activity .activity-item .activity-badge{
+    margin-top: 3px;
+    z-index: 1;
+    font-size: 11px;
+    line-height: 0;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 3px solid #ffffff;
+    flex-grow: 0;
+}
+
+.body .activity .activity-item .activity-content{
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+.body .activity .activity-item:first-child .activity-label::before{
+    top: 5px;
+}
+
+.body .activity .activity-item:last-child .activity-content{
+    padding-bottom: 0;
+} 
+/*----------------------- Back to Top ---------------------*/
+
+.back-to-top {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    right: 15px;
+    bottom: 15px;
+    z-index: 9999;
+    background: #4154f1;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    transition: all 0.4s;
+}
+
+.back-to-top i {
+    font-size: 24px;
+    color: #ffffff;
+    line-height: 0;
+}
+
+.back-to-top:hover {
+    background: #6776f4;
+    color: #ffffff;
+}
+
+.back-to-top.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* Styles for the row containing c1, c2, and c3 */
+/* .row {
+    display: flex;
+    justify-content: left; 
+    align-items: left; 
+    margin-bottom: 20px; 
+    gap: 20px;
+    width: 100%;
+} */
+
+/* Common styles for c1, c2, and c3 */
+.c1, .c2, .c3 {
+    padding: 15px; /* Add padding for better spacing */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    flex: 1; /* Allow each card to take equal width */
+    max-width: 30%; /* Limit width of each card */
+    min-width: 30%;
+    min-width: 300px; /* Minimum width for each card */
+}
+
+/* Styles specific to each class */
+/* .c1 {
+    background-color: #e9f7fd; /* Light blue background 
+}
+
+.c2 {
+    background-color: #fff3e0; /* Light orange background 
+}
+
+.c3 {
+    background-color: #e0f7e9; /* Light green background 
+} */

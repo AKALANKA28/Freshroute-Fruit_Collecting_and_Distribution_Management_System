@@ -2,9 +2,9 @@
 const Promotion = require("../../models/r_and_p/Promotion");
 
 const addPromotion = async (req, res) => {
-  const { farmer_name, nic, location, application_no } = req.body;
+  const { farmer_name, nic, location, application_no, required_resouce } = req.body;
   try {
-    const newPromotion = await Promotion.create({ farmer_name, nic, location, application_no });
+    const newPromotion = await Promotion.create({ farmer_name, nic, location, application_no, required_resouce });
     res.json("New Promotion Added");
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -42,9 +42,9 @@ const deletePromotion = async (req, res) => {
 
 const updatePromotion = async (req, res) => {
   const id = req.params.id;
-  const { farmer_name, nic, location, application_no } = req.body;
+  const { farmer_name, nic, location, application_no, required_resouce } = req.body;
   try {
-    await Promotion.findByIdAndUpdate(id, { farmer_name, nic, location, application_no });
+    await Promotion.findByIdAndUpdate(id, { farmer_name, nic, location, application_no, required_resouce });
     res.status(200).json({ message: "Promotion Updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });

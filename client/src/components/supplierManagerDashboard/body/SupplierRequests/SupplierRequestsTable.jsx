@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import SpinnerModal from '../../../spinner/SpinnerModal';
 
 function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
+  const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [declineModalShow, setDeclineModalShow] = useState(false);
+
+  useEffect(() => {
+    // Fetch data
+    fetchSupplierRequests();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     fetchSupplierRequests();
@@ -87,6 +100,10 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
 
   return (
     <div className="table-container">
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <table className="table datatable">
         <thead className="table-light">
           <tr>
@@ -142,7 +159,7 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
           )}
         </tbody>
       </table>
-
+      )}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Approve Request</Modal.Title>

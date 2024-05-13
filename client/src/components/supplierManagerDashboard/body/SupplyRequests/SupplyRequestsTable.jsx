@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SpinnerModal from '../../../spinner/SpinnerModal';
 
 function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
+  const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [declineModalShow, setDeclineModalShow] = useState(false);
+
+  useEffect(() => {
+    // Fetch data
+    fetchSupplyRequests();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     fetchSupplyRequests();
@@ -28,10 +43,10 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
       await axios.delete(`/pendingSupply/delete/${selectedRequest._id}`); // Delete the request from pendingSupplies
       fetchSupplyRequests();
       handleCloseModal();
-      alert("Supply Request Added");
+      toast.success("Supply Request Added");
       window.location.reload();
     } catch (error) {
-      console.error("Error accepting request:", error);
+      toast.error("Error accepting request:", error);
     }
   };
 
@@ -43,7 +58,7 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
       await axios.delete(`/pendingSupply/delete/${selectedRequest._id}`); // Delete the request from pendingSupplies
       fetchSupplyRequests();
       handleCloseDeclineModal();
-      alert("Supply Request Declined");
+      toast.success("Supply Request Declined");
       window.location.reload();
     } catch (error) {
       console.error("Error declining request:", error);
@@ -72,6 +87,10 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
 
   return (
     <div className="table-container">
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <table className="table datatable">
         <thead className="table-light">
           <tr>
@@ -98,7 +117,7 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
         <td>{request.quality}</td>
         <td>{request.quantity} kg</td>
         <td>Rs. {request.price}</td>
-        <td>Rs. {request.price * request.quantity}</td>
+        <td>Rs. {parseFloat((request.price * request.quantity).toFixed(2))}</td>
         <td>{request.dateCanBeGiven}</td>
         <td>
           <Button
@@ -121,6 +140,19 @@ function SupplyRequestsTable({ supplyRequests, setSupplyRequests }) {
 
 
       </table>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

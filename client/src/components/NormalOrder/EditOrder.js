@@ -3,6 +3,7 @@ import axios from "axios";
 import Sidebar from '../buyerManager/sidebar/Sidebar';
 import Header from '../buyerManager/header/header';
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EditOrder(props) {
 
@@ -15,6 +16,7 @@ export default function EditOrder(props) {
     const [quantity, setQuantity] = React.useState("");
     const [quality, setQuality] = React.useState("");
     const [date, setDate] = React.useState("");
+    const navigate = useNavigate();
   
     // Fetch order data based on id when component mounts
     React.useEffect(() => {
@@ -50,6 +52,8 @@ export default function EditOrder(props) {
       axios.put(`http://localhost:8070/request/update/${id}`, updateOrder)
         .then(() => {
           alert("Order Record Updated");
+          navigate("/BMDashboard");
+          window.location.reload();
         })
         .catch((err) => {
           console.error("Error updating order:", err);
@@ -97,9 +101,9 @@ export default function EditOrder(props) {
             value={fruit}
           >
             <option selected>Open this select menu</option>
-            <option value="1">Banana</option>
-            <option value="2">Papaya</option>
-            <option value="3">Apple</option>
+            <option value="Banana">Banana</option>
+            <option value="Mango">Mango</option>
+            <option value="Pineapple">Pineapple</option>
           </select>
         </div>
 
@@ -112,9 +116,9 @@ export default function EditOrder(props) {
             value={category}
           >
             <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="One">One</option>
+            <option value="Two">Two</option>
+            <option value="Three">Three</option>
           </select>
         </div>
 
@@ -138,9 +142,9 @@ export default function EditOrder(props) {
             value={quality}
           >
             <option selected>Open this select menu</option>
-            <option value="1">A</option>
-            <option value="2">B</option>
-            <option value="3">C</option>
+            <option value="One">One</option>
+            <option value="Two">Two</option>
+            <option value="Three">Three</option>
           </select>
         </div>
 

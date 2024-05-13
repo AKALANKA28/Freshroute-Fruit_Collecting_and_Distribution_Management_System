@@ -10,7 +10,7 @@ import SalesForm from "./SalesForm";
 import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 // import Pagination from "../../components/Pagination";
 import ReportModal from "../../components/PDFReport";
 import * as XLSX from "xlsx";
@@ -35,10 +35,12 @@ function Sales() {
   const location = useLocation();
   const getUserId = location.pathname.split("/")[3];
   // console.log(getUserId)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState(null); // State to hold form data
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [pageSize, setPageSize] = useState(5); // Number of items per page
+  const [pageSize, setPageSize] = useState(4); // Number of items per page
 
   // Calculate total number of pages based on 5 rows per page
   const totalPages = Math.ceil(filteredDataList.length / pageSize);
@@ -112,7 +114,6 @@ function Sales() {
     try {
       const response = await axios.get("/user/allorders");
       setDataList(response.data);
-
     } catch (err) {
       alert(err.message);
     }
@@ -149,29 +150,29 @@ function Sales() {
     // getFetchData();
   };
 
-  const handleAddModalOpen = () => {
-    setAddModalOpen(true);
+  const handleModalOpen = (data) => {
+    setFormData(data); // Set form data when editing
+    setModalOpen(true);
   };
 
-  const handleAddModalClose = () => {
-    setAddModalOpen(false);
+  const handleModalClose = () => {
+    setFormData(null); // Reset form data
+    setModalOpen(false);
   };
 
-  const handleEditModalOpen = (sales) => {
-    setSelectedSales(sales);
-    setEditModalOpen(true);
-  };
-
-  const handleEditModalClose = () => {
-    setEditModalOpen(false);
-  };
-
-  const handleAddSubmit = async (formData) => {
+  const handleSubmit = async (formData) => {
     try {
-      await axios.post("/user/order", formData);
-      alert("Sales Added");
-      handleAddModalClose();
-      getFetchData();
+      if (formData._id) {
+        // If _id exists, it's an edit operation
+        await axios.patch(`/user/order/update/${formData._id}`, formData);
+        alert("Sales Updated");
+      } else {
+        // Otherwise, it's an add operation
+        await axios.post("/user/order", formData);
+        alert("Sales Added");
+      }
+      handleModalClose(); // Close the modal after successful submission
+      getFetchData(); // Fetch updated data
     } catch (err) {
       alert(err.message);
     }
@@ -180,18 +181,7 @@ function Sales() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/user/order/delete/${id}`);
-      alert("Successfully Deleted");
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleEditSubmit = async (formData) => {
-    try {
-      await axios.patch(`/user/order/update/${formData._id}`, formData);
-      alert("Sales Updated");
-      handleEditModalClose();
+      toast.success("Successfully Deleted"); // Correct placement of toast function
       getFetchData();
     } catch (err) {
       alert(err.message);
@@ -202,7 +192,6 @@ function Sales() {
     console.log("Selected product:", productId);
     // Handle the selected product here
   };
-
 
   return (
     <div className="main">
@@ -216,7 +205,7 @@ function Sales() {
               </div>
             </div>
             {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-           
+
             <ul class="table-top-head">
               <li>
                 <BlobProvider
@@ -253,43 +242,25 @@ function Sales() {
               <button
                 type="button"
                 className="btn btn-added"
-                onClick={handleAddModalOpen}
+                onClick={() => setModalOpen(true)}
               >
                 <i className="bi bi-plus-circle"></i> Add Sales
               </button>
             </div>
           </div>
-          <Modal
-            show={addModalOpen}
-            onHide={handleAddModalClose}
-            className="p-0 m-0"
-          >
+          {/* Modal for adding and editing sales */}
+          <Modal show={modalOpen} onHide={handleModalClose} size="lg">
             <Modal.Header closeButton>
-              <Modal.Title>Add Sales</Modal.Title>
+              <Modal.Title>{formData ? "Edit Sales" : "Add Sales"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SalesForm handleSubmit={handleAddSubmit} />
-            </Modal.Body>
-          </Modal>
-
-          <Modal show={editModalOpen} onHide={handleEditModalClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Sales</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <SalesForm
-                handleSubmit={handleEditSubmit}
-                initialData={selectedSales}
-              />
+              <SalesForm handleSubmit={handleSubmit} initialData={formData} />
             </Modal.Body>
           </Modal>
           {dataList.length > 0 && (
             <div className="table-container">
               <SearchBar onSearch={handleSearch} />
-              <div>
-      <h1>Select Product</h1>
-      <ProductDropdown onSelect={handleProductSelect} className="text-dark"/>
-    </div>
+             
               {/* ---------------table--------------- */}
               <table className="table table-bordeless datatable">
                 <thead className="table-light">
@@ -353,7 +324,7 @@ function Sales() {
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(sales)}
+                            onClick={() => handleModalOpen(sales)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>

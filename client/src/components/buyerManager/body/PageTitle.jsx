@@ -9,10 +9,8 @@ function PageTitle  ({page})  {
             <ol className="breadcumb">
                 <li className="breadcumb-item">
                     <a href='/'>
-                        <i className="bi bi-house-door"></i>
                     </a>
                 </li>
-                <li className='breadcumb-item active'>{page}</li>
             </ol>
         </nav>
     </div>

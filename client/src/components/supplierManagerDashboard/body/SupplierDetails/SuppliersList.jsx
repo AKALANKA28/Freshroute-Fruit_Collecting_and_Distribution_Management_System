@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -12,17 +12,31 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SpinnerModal from '../../../spinner/SpinnerModal';
 import './farmers.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function SuppliersList() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedFarmer, setSelectedFarmer] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]);
   const [declineModalShow, setDeclineModalShow] = useState(false); 
+
+  useEffect(() => {
+    // Fetch data
+    getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
+
 
   useEffect(() => {
     getFetchData();
@@ -155,12 +169,12 @@ function SuppliersList() {
   };
 
 
-  const [showReportModal, setShowReportModal] = useState(false);
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
-
   return (
     <div id="main col-8">
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -171,12 +185,19 @@ function SuppliersList() {
               </div>
             </div>
             <ul className="table-top-head" style={{ float: "right" }}>
-              <li>
-                <div className="button-container" title="Generate Report as PDF">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                </div>
+            <li>
+                <BlobProvider
+                  document={<SupplierReport dataList={dataList}/>}
+                  fileName="SupplierReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container" title="Generate Report as Excel">
@@ -204,21 +225,7 @@ function SuppliersList() {
                 </div>
               </li>
             </ul>
-            <Modal show={showReportModal} onHide={handleCloseReportModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>Supplier Details Report</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <PDFViewer width="100%" height="500px">
-                  <SupplierReport dataList={dataList} />
-                </PDFViewer>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseReportModal}>
-                  Close
-                </Button>
-              </Modal.Footer>
-            </Modal>
+
           </div>
 
           <Modal show={addModalOpen} onHide={handleAddModalClose}>
@@ -300,7 +307,7 @@ function SuppliersList() {
           </div>
         </div>
       </div>
-
+      )}
       <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
          <Modal.Header closeButton>
            <Modal.Title>Delete Farmer</Modal.Title>
