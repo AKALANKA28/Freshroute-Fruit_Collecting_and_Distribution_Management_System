@@ -146,7 +146,7 @@ const SuppliersList = () => {
                             </ul>
                             <Modal show={showReportModal} onHide={handleCloseReportModal}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Completed Order Details</Modal.Title>
+                                <Modal.Title>Supplier Details</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <PDFViewer width="100%" height="500px">
@@ -169,13 +169,18 @@ const SuppliersList = () => {
                                      filterColumns={
                                          [
                                             {
+                                                name: "Supplier Name",
+                                                tag: "supplierName",
+                                                type: "text"
+                                            },
+                                            {
                                                 name: "Fruit Type",
                                                 tag: "fruit",
                                                 type: "text"
                                             },
                                             {
                                                 name: "Fruit Category",
-                                                tag: "category",
+                                                tag: "subCategory",
                                                 type: "text"
                                             },
                                             {
@@ -184,18 +189,23 @@ const SuppliersList = () => {
                                                 type: "text"
                                             },
                                             {
-                                                name: "Placed Date",
-                                                tag: "placedDate",
+                                                name: "Total Quantity (kg)",
+                                                tag: "quantity",
+                                                type: "text"
+                                            },
+                                            {
+                                                name: "Price for 1kg",
+                                                tag: "price",
+                                                type: "text"
+                                            },
+                                            {
+                                                name: "Date Can Be Given",
+                                                tag: "dateCanBeGiven",
                                                 type: "date"
                                             },
                                             {
-                                                name: "Due Date",
-                                                tag: "dueDate",
-                                                type: "date"
-                                            },
-                                            {
-                                                name: "Order Processor",
-                                                tag: "opName",
+                                                name: "Contact No",
+                                                tag: "contact",
                                                 type: "text"
                                             }
                                          ]
