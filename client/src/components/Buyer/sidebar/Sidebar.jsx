@@ -26,16 +26,17 @@ const Sidebar = () => {
           <li className="nav-item">
             <a className="nav-link" href="/BuyerDashboard">
               <i className="bi bi-grid"></i>
-              <span>Dashboard</span>
+              <span>Dashboard</span> 
             </a>
           </li>
-
-            <li className='nav-item'>
+          <li className='nav-item'>
                 <a className='nav-link' href='/'>
                     <i className='bi bi-grid'></i>
                     <span>Previous Orders</span>
                 </a>
             </li>
+
+           
 
             <div className="mt-16 ">
             <li className='nav-item'>

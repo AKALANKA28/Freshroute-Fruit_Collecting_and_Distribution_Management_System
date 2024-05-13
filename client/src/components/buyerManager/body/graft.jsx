@@ -116,7 +116,7 @@ export default class NormalOrder extends Component {
     return (
       <div id="main">
 
-        <div className='container'>
+        <div className='container' >
 
         <div id='barChartContainer' style={{ marginBottom: '5%' }}>
             Friut and Selling Quantity

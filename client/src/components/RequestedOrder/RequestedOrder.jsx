@@ -20,6 +20,7 @@ function RequestedOrder() {
         });
     }
 
+
     const onDelete = (id) => {
         const isConfirmed = window.confirm('Are you sure you want to delete this Order?');
 
@@ -33,16 +34,28 @@ function RequestedOrder() {
                 });
         }
     }
-
     const confirmOrder = (id) => {
         const isConfirmed = window.confirm('Are you sure you want to confirm this order?');
         
         if (isConfirmed) {
-            alert('Order confirmed successfully!');
-            navigate("/NormalOrder");
-            window.location.reload();
+            axios.post("http://localhost:8070/normalOrder/add", { requestId: id })
+                .then(() => {
+                    axios.delete(`http://localhost:8070/request/delete/${id}`)
+                        .then(() => {
+                            alert('Order confirmed successfully!');
+                            navigate("NormalOrder"); // Navigate to the Normal Order page
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         }
     }
+    
+    
     
     
 

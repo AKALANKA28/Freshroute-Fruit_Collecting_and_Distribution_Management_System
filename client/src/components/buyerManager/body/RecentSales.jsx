@@ -24,7 +24,7 @@ const RecentSales = () => {
     }, [])
 
   return (
-    <div className='card recent-sales overflow-auto'>
+    <div className='card recent-sales overflow-auto'  >
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
