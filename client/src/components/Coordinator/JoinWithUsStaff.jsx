@@ -201,25 +201,27 @@ const JoinWithUsStaff = () => {
   return (
     <div>
       <Navbar/>
-      <div className='hero' style={{height:800}}>
-        <div>
-          <img src={fruits} className='background' alt="Hero Background"></img>
-        </div>
-        <div className="container">
-          <div className="col-lg-12">
-            <div className="hero-text">
-              <br/>
-              <p className='text1 '>Join With Us</p>
-              <p className='text2 fs-3'>Let's spread the freshness together!</p>
+      <div className='hero'>
+              <div>
+                <img src={fruits} className='background' style={{top:"-180px"}}></img>
+              </div>
+              <div className="container" >
+                <div className="col-lg-12">
+                    <div className="hero-text">
+                      <p className='text1 '>Join With Us
+</p>
+                      <p className='text2 fs-3'>Let's spread the freshness together!</p>
+                    </div>
+                    
+                    <div className="hero-dot-play">
+                      <ul className="hero-dots">
+                          
+                      </ul>
+                     
+                    </div>
+                </div>
+              </div>   
             </div>
-            <div className="hero-dot-play">
-              <ul className="hero-dots">
-                  
-              </ul>
-            </div>
-          </div>
-        </div>   
-      </div>
       
       <Container class1="contact-wrapper py-5 home-wrapper-2">
         <div className="row"> 
