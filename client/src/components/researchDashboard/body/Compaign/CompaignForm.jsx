@@ -56,6 +56,7 @@ const CompaignForm = ({ handleSubmit, initialData }) => {
             onChange={handleChange}
             value={formData.date}
             required
+            min={new Date().toISOString().split("T")[0]} 
           />
         </div>
         <div className="mb-3">

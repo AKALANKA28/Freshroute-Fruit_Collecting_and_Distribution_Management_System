@@ -17,10 +17,19 @@ function Promotion() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedPromotion, setSelectedPromotion] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList);
+  }, [dataList]);
+
 
   const getFetchData = async () => {
     try {
@@ -29,6 +38,14 @@ function Promotion() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((promotion) => {
+      const fullName = `${promotion.application_no} ${promotion.required_resouce}`;
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
   };
 
   const handleRefreshClick = () => {
@@ -56,11 +73,22 @@ function Promotion() {
     setEditModalOpen(false);
   };
 
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Promotion/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal();
     } catch (err) {
       alert(err.message);
     }
@@ -177,8 +205,25 @@ function Promotion() {
             </Modal.Body>
           </Modal>
 
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <div className="table-container">
-            <SearchBar />
+            <SearchBar onSearch={handleSearch}/>
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
@@ -186,17 +231,19 @@ function Promotion() {
                   <th scope="col">NIC</th>
                   <th scope="col">Location</th>
                   <th scope="col">Application No</th>
+                  <th scope="col">Required Resouce</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {dataList.length ? (
-                  dataList.map((promotion) => (
+                {filteredDataList.length ? (
+                  filteredDataList.map((promotion) => (
                     <tr key={promotion._id}>
                       <td>{promotion.farmer_name}</td>
                       <td>{promotion.nic}</td>
                       <td>{promotion.location}</td>
                       <td>{promotion.application_no}</td>
+                      <td>{promotion.required_resouce}</td>
                       <td className="action">
                         <div className="buttons">
                           <button

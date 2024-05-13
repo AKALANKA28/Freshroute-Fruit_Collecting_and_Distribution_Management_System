@@ -23,6 +23,11 @@ const PromotionSchema = mongoose.Schema({
         required: true
     },
 
+    required_resouce: {
+        type: String,
+        required: true
+    },
+
     
    
 })
