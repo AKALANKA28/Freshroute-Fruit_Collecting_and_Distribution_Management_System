@@ -1,48 +1,112 @@
-import React, { useState } from 'react'
-import CardFilter from './CardFilter';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import './main.css'
 
-const Card = ({card}) => {
+axios.defaults.baseURL = "http://localhost:8070/";
 
-    const [filter, setFilter] = useState('Today');
-    const handleFilterChange = filter => {
-        setFilter(filter)
-    };
-    
+const Card = () => {
+  const [totalFarmers, setTotalFarmers] = useState(0);
+  const [totalPendingSupplies, setTotalPendingSupplies] = useState(0);
+  const [totalApprovedSupplies, setTotalApprovedSupplies] = useState(0);
+  const [totalDeclinedSupplies, setTotalDeclinedSupplies] = useState(0);
+
+  useEffect(() => {
+    axios.get("/Farmer/totalCount")
+      .then(response => {
+        setTotalFarmers(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total farmer count:", error);
+      });
+
+    axios.get("/pendingSupply/totalPendingSupplies")
+      .then(response => {
+        setTotalPendingSupplies(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total approved price:", error);
+      });
+
+      axios.get("/acceptedSupply/totalApprovedSupplies")
+      .then(response => {
+        setTotalApprovedSupplies(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total approved price:", error);
+      });  
+      
+      axios.get("/declinedSupply/totalDeclinedSupplies")
+      .then(response => {
+        setTotalDeclinedSupplies(response.data.count);
+      })
+      .catch(error => {
+        console.error("Error fetching total approved price:", error);
+      }); 
+
+  }, []);
+
   return (
-   <div className="col-xxl-4 col-md-6">
-    <div className="card info-card sales-card">
-        <CardFilter filterChange={handleFilterChange} />
-        <div className="card-body">
+    <div className="row">
+      <div className="col-xxl-4 col-6">
+        <div className="card info-card sales-card">
+          <div className="card-body">
             <h5 className="card-title">
-                {card.name}<span> | {filter} </span>
+              Total Suppliers
             </h5>
-
             <div className="d-flex align-items-center">
-                <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i className= {card.icon}></i>
-                </div>
-                <div className="ps-3">
-                    <h6>
-                        {card.name === 'Revenue'
-                          ? '$' + card.amount.toLocalString('en-US')
-                          : card.amount.toLocalString('en-US')}
-                    </h6>
-                    <span className= {`${card.percentage > 0 ? 'text-success' : 'text-danger' } small pt-1 fw-bold`}>
-                        {card.percentage > 0 
-                        ? card.percentage * 100 
-                        : -card.percentage * 100} %
-                    </span>
-                    <span className="text-muted small pt-2 ps-1">
-                        {card.percentage > 0 ? 'increase' : 'decrease'}
-                    </span>
-                </div>
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i className="fa fa-users"></i>
+              </div>
+              <div className="ps-5">
+                <h6 className='card-price'>
+                  {totalFarmers} <span className="status-label">Suppliers</span>
+                </h6>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div className="col-xxl-8 col-6">
+        <div className="card info-card sales-card">
+          <div className="card-body">
+            <h5 className="card-title">
+              Details of Supply Requests
+            </h5>
+            <div className="d-flex align-items-center">
+              
+            <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+            <i className="fas fa-clipboard-list pending"></i>
+              </div>
+              <div className="">
+                <h6 className='card-price supply-status'>
+                <a href='/SupplyRequests' className="link">{totalPendingSupplies} <span className="status-label">Pending</span></a>
+                </h6>
+              </div>
+
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i className="fas fa-check-circle"></i>
+              </div>
+              <div className="">
+                <h6 className='card-price supply-status'>
+                <a href='/ApprovedSupplies' className="link">{totalApprovedSupplies} <span className="status-label">Approved</span></a>
+                </h6>
+              </div>
+
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center ">
+              <i className="fas fa-times-circle declined"></i>
+              </div>
+              <div className="">
+                <h6 className='card-price supply-status'>
+                <a href='/DeclinedSupplies' className="link">{totalDeclinedSupplies} <span className="status-label">Declined</span></a>
+                </h6>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-   </div>
+  );
+};
 
-
-  )
-}
-
-export default Card
+export default Card;

@@ -10,15 +10,24 @@ const FarmerSchema = new mongoose.Schema({
     },
     name : {
         type : String,
+        required: true,
     },
     email : {
         type : String,
+        required: true,
     },
     mobile : {
         type : String,
     },
     city : {
         type : String,
+        required: true,
+    },
+    latitude: {
+        type: String,
+    }, 
+    longitude: {
+        type: String,
     },
     lane: {
         type: String,

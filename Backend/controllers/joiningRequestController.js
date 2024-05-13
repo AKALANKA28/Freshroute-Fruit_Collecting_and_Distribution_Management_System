@@ -1,10 +1,29 @@
 const JoiningRequest = require("../models/joiningRequests");
 const PendingSupplier = require("../models/farmers/pendingSuppliers");
+const cityCoordinates = require("./farmers/cityCoordinates.json")
 
 const addJoiningRequest = async (req, res) => {
   const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl } = req.body;
   try {
-    const newJoiningRequest = await JoiningRequest.create({ name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl });
+    let latitude = "";
+    let longitude = "";
+    const cityInfo = cityCoordinates.find((c) => c.city.toLowerCase() === city.toLowerCase());
+    if (cityInfo) {
+      latitude = cityInfo.latitude;
+      longitude = cityInfo.longitude;
+    }
+    const newJoiningRequest = await JoiningRequest.create({ 
+      name, 
+      email, 
+      mobile, 
+      city, 
+      latitude, 
+      longitude, 
+      NIC, 
+      landAddress, 
+      fieldArea, 
+      landDeedUrl 
+    });
     
     // Check if there is already a pending supplier associated with the joining request
     const existingPendingSupplier = await PendingSupplier.findOne({ joinRequestId: newJoiningRequest._id });
@@ -21,7 +40,6 @@ const addJoiningRequest = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 const getAllJoiningRequests = async (req, res) => {
   try {
@@ -54,9 +72,9 @@ const deleteJoiningRequest = async (req, res) => {
 
 const updateJoiningRequest = async (req, res) => {
   const id = req.params.id;
-  const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeed, status } = req.body;
+  const { name, email, mobile, city, latitude, longitude, NIC, landAddress, fieldArea, landDeed, status } = req.body;
   try {
-    await JoiningRequest.findByIdAndUpdate(id, { name, email, mobile, city, NIC, landAddress, fieldArea, landDeed, status });
+    await JoiningRequest.findByIdAndUpdate(id, { name, email, mobile, city, latitude, longitude, NIC, landAddress, fieldArea, landDeed, status });
     res.status(200).json({ message: "Request updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });

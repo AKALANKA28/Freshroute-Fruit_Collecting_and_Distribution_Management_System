@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import navList from './navItem';
 import { Modal, Button } from 'react-bootstrap';
-import PredictionForm from '../body/PredictionDetails/PredictionForm'
+import PredictionForm from '../body/PredictionDetails/PredictionForm';
+import logo from '../../../assests/logo.png'
+import { FaChevronRight } from "react-icons/fa";
 
+axios.defaults.baseURL = "http://localhost:8070/";
 
 const Sidebar = () => {
+
+  const handleToggleSideBar = () => {
+    document.body.classList.toggle('toggle-sidebar');
+  }
 
     const [addModalOpen, setAddModalOpen] = useState(false);
 
@@ -19,10 +25,22 @@ const Sidebar = () => {
   
     const handleSubmit = async (formData) => {
       try {
-        await axios.post("/Prediction/add", formData);
+        // Add supply prediction to the Prediction collection
+        const response = await axios.post("/Prediction/add", formData);
+        const predictionId = response.data._id;
+    
+        // Create payload to add supply prediction to the pendingSupplies collection
+        const pendingSupplyData = {
+          ...formData,
+          predictionID: predictionId
+        };
+    
+        // Add supply prediction to the pendingSupplies collection
+        await axios.post("/pendingSupply/add", pendingSupplyData);
+    
         alert("Prediction Added");
-        handleAddModalClose();
         window.location.reload();
+        handleAddModalClose();
       } catch (err) {
         alert(err.message);
       }
@@ -31,6 +49,12 @@ const Sidebar = () => {
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
+        <a href='/' className='logo d-flex align-items-center'>
+           <img src={logo} alt='logo image'/>
+           <span className=''>FreshRoute</span>
+        </a>
+        <hr className='hr'></hr>        
+        <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
 
         <ul className="sidebar-nav" id='sidebar-nav'>
 
@@ -43,7 +67,7 @@ const Sidebar = () => {
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' data-bs-target='#components-nav' data-bs-toggle='collapse' href='PredictionDetails'>
-                    <i className='bi bi-menu-button-wide'></i>
+                <i className='bi bi-menu-button-wide' onClick={handleToggleSideBar}></i>
                     <span>Supply Predictions</span>
                     <i className='bi bi-chevron-down ms-auto'></i>
                 </a>
@@ -52,61 +76,33 @@ const Sidebar = () => {
 
                     <li>
                         <a onClick={handleAddModalOpen}>
-                            <i className='bi bi-circle'>
-                                <span>Add Supply Prediction</span>
-                            </i>
+                            <i className='bi bi-plus-circle'></i>
+                            <span>Add Supply Prediction</span>
                         </a>
                     </li>
                     <li>
                         <a href='PredictionDetails'>
-                            <i className='bi bi-circle'>
-                                <span>Previous Predictions</span>
-                            </i>
+                            <i className='bi bi-list-ul'></i>
+                            <span>Previous Predictions</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
+            <hr></hr>
+            <div className="mt-16 ">
             <li className='nav-item'>
-                <a className='nav-link collapsed' data-bs-target='#tables-nav' data-bs-toggle='collapse' href='#'>
-                    <i className='bi bi-layout-text-window-reverse'></i>
-                    <span>Documents</span>
-                    <i className='bi bi-chevron-down ms-auto'></i>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
                 </a>
-
-                <ul id='tables-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-                    
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>General Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#'>
-                            <i className='bi bi-circle'>
-                                <span>Data Tables</span>
-                            </i>
-                        </a>
-                    </li>
-                   
-
-                </ul>
+            </li> <li className='nav-item'>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Logout</span>
+                </a>
             </li>
-
-            <li className='nav-heading'>Pages</li>
-            <div className='navList'>
-                {navList.map(nav => (
-                    <li className='nav-item' key={nav._id}>
-                    <a className='nav-link collapsed' href ={'/login'}>
-                        <i className={nav.icon}></i>
-                        <span>{nav.name}</span>
-                    </a>
-                </li>
-                ))}
             </div>
-            
 
         </ul>
 

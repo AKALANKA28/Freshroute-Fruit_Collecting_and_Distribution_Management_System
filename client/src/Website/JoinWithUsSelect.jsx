@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar2 from './Navbar/Navbar2'
 import Footer from './Footer/Footer';
-import icon1 from './assets/delivery-truck.png';
-import icon2 from './assets/fresh.png';
+import icon1 from './assets/farmerIcon.png';
+import icon2 from './assets/employeeIcon.png';
 
 const JoinWithUsSelect = () => {
   return (

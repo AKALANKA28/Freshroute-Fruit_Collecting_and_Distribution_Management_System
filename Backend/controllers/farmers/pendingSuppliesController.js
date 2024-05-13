@@ -60,11 +60,21 @@ const deletePendingSupplyByPredictionID = async (req, res) => {
   }
 };
 
+const getTotalPendingSuppliesCount = async (req, res) => {
+  try {
+    const count = await PendingSupply.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   addPendingSupply,
   getAllPendingSupplies,
   getOnePendingSupply,
   deletePendingSupply,
   updatePendingSupply,
-  deletePendingSupplyByPredictionID
+  deletePendingSupplyByPredictionID,
+  getTotalPendingSuppliesCount
 };

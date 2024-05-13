@@ -1,31 +1,22 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
+import axios from "axios";
 import Card from  './Card'
+
+axios.defaults.baseURL = "http://localhost:8070/";
 
 const Cards = () => {
 
-    const [cards, setCards] = useState([])
+return (
 
-    const fetchData = () => {
-        fetch("")
-         .then(res => res.json())
-         .then(data => {
-            setCards(data);
-
-         })
-         .catch(e => console.log(e.message))
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-
-  return (
-    <div>
-      {cards && cards.length > 0 && 
-        cards.map(card => <Card key={card._id} card={card} />)}
-    </div>
-  )
+ 
+   <div className='col-12'>   
+      <div className="row">
+      {
+              <Card/>
+        }    
+      </div>       
+  </div>
+)
 }
 
 export default Cards

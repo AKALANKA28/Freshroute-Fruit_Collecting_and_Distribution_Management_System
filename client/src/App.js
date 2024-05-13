@@ -15,6 +15,7 @@ import AdminLogin from "./components/LoginRegister/AdminLogin";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
+import PDashboard from "./components/rpromotionDashboard/PDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
 import QualityList from "./components/orderManagement/body/QualityList/QualityList";
@@ -58,11 +59,15 @@ import EditOrder from "./components/NormalOrder/EditOrder";
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
 import ResourcePage from "./components/researchDashboard/ResourcePage";
+import RevenuePage from "./components/rpromotionDashboard/RevenuePage";
+import VolumePage from "./components/rpromotionDashboard/VolumePage";
+import PricePage from "./components/rpromotionDashboard/PricePage";
+import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 
-//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-//import NormalOrder from "./components/NormalOrder/NormalOrder";
-//import EditOrder from "./components/NormalOrder/EditOrder";
+// import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+// import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+// import NormalOrder from "./components/NormalOrder/NormalOrder";
+// import EditOrder from "./components/NormalOrder/EditOrder";
 
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
@@ -257,7 +262,7 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
+  
   {
     path: "/RPDashboard",
     element: (
@@ -500,6 +505,31 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/RevenuePage",
+    element: (
+      <div>
+        <RevenuePage />
+      </div>
+    ),
+  },
+  {
+    path: "/VolumePage",
+    element: (
+      <div>
+        <VolumePage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PricePage",
+    element: (
+      <div>
+        <PricePage />
+      </div>
+    ),
+  },
 
   {
     path: "/CompaignPage",
@@ -518,7 +548,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
+  {
+    path: "/AccResourcePage",
+    element: (
+      <div>
+        <AccResourcePage />
+      </div>
+    ),
+  },
   {
     path: "/TransportFee",
     element: (

@@ -1,12 +1,13 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import './farmers.css';
+import logo from '../../../../assests/logo.png';
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     backgroundColor: "#FFFFFF",
-    padding: 20,
+    padding: 10,
   },
   header: {
     flexDirection: "row",
@@ -15,9 +16,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginBottom: 10,
   },
+  headerTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   headerText: {
     fontSize: 20,
     color: "green",
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  reportDateTime: {
+    fontSize: 10,
+    color: "#333333",
+    textAlign: "right",
   },
   footer: {
     position: "absolute",
@@ -40,50 +52,66 @@ const styles = StyleSheet.create({
   },
   table: {
     width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
+    borderBottom: 0,
+    borderRight: 0,
+    borderLeft: 1,
   },
   tableRow: {
     flexDirection: "row",
-    backgroundColor: "#F0F0F0",
   },
   tableColHeader: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    padding: 10,
-    fontSize: 12,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 10,
     fontWeight: "bold",
-    color: "#333333",
-    width: "33.33%",
+    width: "14.285%",
     textAlign: "center",
+    backgroundColor : '#DEDEDE'
   },
   tableCol: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    padding: 10,
-    fontSize: 10,
-    color: "#333333",
-    width: "33.33%",
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 8,
+    width: "14.285%",
     textAlign: "center",
   },
+  tbody2:{ flex:2, borderRightWidth:1, },
   logo: {
     width: 100,
     height: 100,
   },
-  line: {
-    borderBottom: "1px solid #333333",
-    marginBottom: 10,
-  },
 });
 
+const Footer = () => (
+  <Text style={styles.footer}>© 2024 Freshroute.lk copyright all right reserved.</Text>
+);
+
 const SupplierReport = ({ dataList }) => {
+  const reportDateTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo'});
+
   return (
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
-        
-          <Text style={styles.heading}>Supplier Details</Text>
-          <Text style={styles.headerText}>FreshRoute<br/></Text>
+          <View style={styles.header}>
+            <View style={styles.headerTextContainer}>
+              <Image src={logo} style={styles.logo} />
+              <Text style={styles.headerText}>FreshRoute</Text>
+            </View>
+            <Text style={styles.reportDateTime}>{reportDateTime}</Text>
+          </View>
+          <Text style={styles.heading}>Freshroute - Supplier Details</Text>
+          
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>NIC</Text>
@@ -96,17 +124,18 @@ const SupplierReport = ({ dataList }) => {
             </View>
             {dataList.map((supplier, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{supplier.NIC}</Text>
-                <Text style={styles.tableCol}>{supplier.name}</Text>
-                <Text style={styles.tableCol}>{supplier.username}</Text>
-                <Text style={styles.tableCol}>{supplier.email}</Text>
-                <Text style={styles.tableCol}>{supplier.mobile}</Text>
-                <Text style={styles.tableCol}>{supplier.city}</Text>
-                <Text style={styles.tableCol}>{supplier.lane}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.NIC}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.name}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.username}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.email}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.mobile}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.city}</Text>
+                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.lane}</Text>
               </View>
             ))}
           </View>
         </View>
+        <Footer />
       </Page>
     </Document>
   );

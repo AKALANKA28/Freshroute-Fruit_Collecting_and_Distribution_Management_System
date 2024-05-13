@@ -31,7 +31,7 @@ export default class RecentSalesTable extends Component {
     
   render() {
     return (
-      <div>
+      <div style={{textAlign: 'right'}}>
          <table className='table table-hover'>
             <thead>
                 <tr>
