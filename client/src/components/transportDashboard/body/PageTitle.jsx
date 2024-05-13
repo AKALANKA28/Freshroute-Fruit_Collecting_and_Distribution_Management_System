@@ -5,7 +5,7 @@ function PageTitle  ()  {
   return (
     <div className='pagetitle'>
         <h1>Hello, Aashani</h1>
-        <p>Today is wednesday, 24 April 2024</p>
+        <p>Today is wednesday, 09 May 2024</p>
     </div>
   )
 }

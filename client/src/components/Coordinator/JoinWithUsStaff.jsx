@@ -117,6 +117,10 @@ const JoinWithUsStaff = () => {
     if (name === "nic") {
       validateNic(value);
     }
+    if (name === "nic" && !/^[0-9Vv]*[Vv]?[0-9Vv]*$/.test(value)) {
+      return; 
+  }
+  
     
     if (name === "email") {
       const emailError = validateEmail(value);
@@ -135,7 +139,8 @@ const JoinWithUsStaff = () => {
   };
 
   const validateNic = (nic) => {
-    const nicRegex = /^(1|2)\d{8}[vV]?$|^(1|2)\d{11}$/;
+    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/ && /[^0-9Vv]/;
+
     
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
@@ -252,29 +257,7 @@ const JoinWithUsStaff = () => {
                   required
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="jobrole" className="form-label">
-                  Job role
-                </label>
-                <select
-                  className="form-select"
-                  name="jobrole"
-                  onChange={handleChange}
-                  value={formData.jobrole}
-                  required
-                >
-                  <option value="">Select Job Role</option>
-                  {dataList.length ? (
-                    dataList.map((emp, index) => (
-                      <option key={index} value={emp.jobrole}>
-                        {emp.jobrole}
-                      </option>
-                    ))
-                  ) : (
-                    <option value="">No Job Roles</option>
-                  )}
-                </select>
-              </div>
+              
               <div className="mb-3">
                 <label htmlFor="nic" className="form-label">
                   NIC
@@ -323,6 +306,29 @@ const JoinWithUsStaff = () => {
           <div className="col-md-6">
             <h3 className="contact-title mb-5 mt-5">Account Information</h3>
             <form>
+            <div className="mb-3">
+                <label htmlFor="jobrole" className="form-label">
+                  Job role
+                </label>
+                <select
+                  className="form-select"
+                  name="jobrole"
+                  onChange={handleChange}
+                  value={formData.jobrole}
+                  required
+                >
+                  <option value="">Select Job Role</option>
+                  {dataList.length ? (
+                    dataList.map((emp, index) => (
+                      <option key={index} value={emp.jobrole}>
+                        {emp.jobrole}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No Job Roles</option>
+                  )}
+                </select>
+              </div>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email Address

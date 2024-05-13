@@ -111,10 +111,23 @@ const updateEmployee = async (req, res) => {
   }
 };
 
+const getEmployeeCount = async (req, res) => {
+  try {
+    const employees = await Employee.find();
+    res.json({ count: employees.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
 module.exports = {
   addEmployee,
   getAllEmployees,
   getOneEmployee,
   deleteEmployee,
   updateEmployee,
+  getEmployeeCount,
+  
 };

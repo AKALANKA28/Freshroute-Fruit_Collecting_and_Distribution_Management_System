@@ -4,8 +4,7 @@ const requestschema = new mongoose.Schema({
 
     rname : {
         type : String,
-        required: true,
-        
+        required: true,  
     },
 
     fruit: {

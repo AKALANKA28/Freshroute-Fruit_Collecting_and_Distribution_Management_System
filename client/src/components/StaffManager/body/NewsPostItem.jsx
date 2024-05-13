@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-const NewsPostItem = ({ item}) => {
-  return (
-    <div className='post-item clearfix'>
-      <img src={item.img} alt='' />
-      <h4>
-        <a href='#'>{item.title}</a>
-      </h4>
-      <p>{item.subtitle}...</p>
-    </div>
-  )
-}
+const NewsPostItem = ({ item }) => {
+    return (
+        <div className='post-item clearfix'>
+            <img src={item.img} alt={item.title} />
+            <h4>
+                <a href={`/news/${item.id}`}>{item.title}</a>
+            </h4>
+            <p>{item.subtitle}</p>
+        </div>
+    );
+};
 
-export default NewsPostItem
+export default NewsPostItem;

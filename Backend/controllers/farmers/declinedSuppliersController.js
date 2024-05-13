@@ -1,9 +1,9 @@
 const DeclinedSupplier = require("../../models/farmers/declinedSuppliers");
 
 const addDeclinedSupplier = async (req, res) => {
-  const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId } = req.body;
+  const { name, email, mobile, city, latitude, longitude, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId } = req.body;
   try {
-    const newDeclinedSupplier = await DeclinedSupplier.create({ name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId });
+    const newDeclinedSupplier = await DeclinedSupplier.create({ name, email, mobile, city, latitude, longitude, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId });
     res.json("New Supplier Added");
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -50,9 +50,9 @@ const deleteDeclinedSupplier = async (req, res) => {
 
 const updateDeclinedSupplier = async (req, res) => {
   const id = req.params.id;
-  const { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId } = req.body;
+  const { name, email, mobile, city, latitude, longitude, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId } = req.body;
   try {
-    await DeclinedSupplier.findByIdAndUpdate(id, { name, email, mobile, city, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId });
+    await DeclinedSupplier.findByIdAndUpdate(id, { name, email, mobile, city, latitude, longitude, NIC, landAddress, fieldArea, landDeedUrl, joinRequestId });
     res.status(200).json({ message: "Supplier updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -18,6 +18,12 @@ const DeclinedSupplierSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      latitude: {
+        type: String,
+      },
+      longitude: {
+        type: String,
+      },
       NIC: {
         type: String,
         required: true,
