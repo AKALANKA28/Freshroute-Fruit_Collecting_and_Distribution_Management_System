@@ -44,6 +44,7 @@ const declinedSupplierRouter = require("./routes/farmers/declinedSuppliersRoutes
 const PromotionRouter = require("./routes/r_and_p/PromotionRoute.js");
 const CompaignRouter = require("./routes/r_and_p/CompaignRoute.js");
 const ResourceRouter = require("./routes/r_and_p/ResourceRoute.js");
+//const AccResourceRouter = require("./routes/r_and_p/AccResourceRoute.js");
 
 const itemRouter = require("./routes/buyers/Bmanager");
 const EmployeeRouter = require("./routes/StaffManager/EmployeeRoute.js");
@@ -95,6 +96,7 @@ app.use("/coverings", coveringsRouter);
 app.use("/Promotion", PromotionRouter);
 app.use("/Compaign", CompaignRouter);
 app.use("/Resource", ResourceRouter);
+//app.use("/AccResource", AccResourceRouter);
 
 //Heshan
 app.use("/Farmer", farmerRouter);

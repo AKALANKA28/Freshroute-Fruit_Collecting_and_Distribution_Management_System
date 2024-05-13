@@ -1,4 +1,4 @@
-// ./client/src/components/Coordinator/Salary.jsx
+// ./client\src\components\researchDashboard\PromotionPage.jsx
 import React from 'react';
 import Header from './header/header';
 import Sidebar from './sidebar/Sidebar';
