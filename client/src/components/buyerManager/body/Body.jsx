@@ -35,7 +35,7 @@ const Body = () => {
             <div className="col-lg-4">
               <RecentActivity />
               <div className="text-lg-end"> 
-                <BudgetReport />
+                {/* <BudgetReport /> */}
               </div>
             </div>
           </div>
