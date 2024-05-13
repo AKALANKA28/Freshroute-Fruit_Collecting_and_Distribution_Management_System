@@ -1,20 +1,11 @@
 import React from 'react'
 
 
-function PageTitle  ({page})  {
+function PageTitle  ()  {
   return (
     <div className='pagetitle'>
-        <h1>{page}</h1>
-        <nav>
-            <ol className="breadcumb">
-                <li className="breadcumb-item">
-                    <a href='/'>
-                        <i className="bi bi-house-door"></i>
-                    </a>
-                </li>
-                <li className='breadcumb-item active'>{page}</li>
-            </ol>
-        </nav>
+        <h1>Hello, Aashani</h1>
+        <p>Today is wednesday, 09 May 2024</p>
     </div>
   )
 }

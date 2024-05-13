@@ -8,11 +8,14 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import SalaryForm from "./SalaryForm";
 import SalaryReport from "./SalaryReport";
+import SpinnerModal from '../../../spinner/SpinnerModal';
+import { ToastContainer, toast } from 'react-toastify';
 import "./Salary.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Salary() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -22,7 +25,14 @@ function Salary() {
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -84,7 +94,7 @@ function Salary() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Salary/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted !");
       getFetchData();
       handleCloseDeleteModal();
     } catch (err) {
@@ -95,7 +105,7 @@ function Salary() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Salary/add", formData);
-      alert("Salary Added");
+      toast.success("Salary Added !");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -106,7 +116,8 @@ function Salary() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Salary/update/${formData._id}`, formData);
-      alert("Salary Updated");
+      toast.success("Salary Updated !");
+      
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -120,7 +131,11 @@ function Salary() {
   const handleShowReportModal = () => setShowReportModal(true);
 
   return (
-    <div className="main">
+    <div id='main' className='main'>
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -219,12 +234,13 @@ function Salary() {
 
           <div className="table-container">
             <SearchBar onSearch={handleSearch} />
+            <br/>
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
                   <th scope="col">Job Role</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Salary(Rs)</th>
+                  <th scope="col">Salary</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -234,8 +250,9 @@ function Salary() {
                     <tr key={salary._id}>
                       <td>{salary.jobrole}</td>
                       <td>{salary.date}</td>
-                      <td>{salary.salary}</td>
-                      <td className="action">
+                      <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
+                      
+                      <td className="actionSize">
                         <div className="buttons">
                           <button
                             className="btn btn-edit"
@@ -263,6 +280,19 @@ function Salary() {
           </div>
         </div>
       </div>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

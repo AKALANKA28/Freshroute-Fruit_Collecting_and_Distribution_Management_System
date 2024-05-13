@@ -4,8 +4,7 @@ const requestschema = new mongoose.Schema({
 
     rname : {
         type : String,
-        required: true,
-        
+        required: true,  
     },
 
     fruit: {
@@ -26,12 +25,7 @@ const requestschema = new mongoose.Schema({
     quality: {
         type: String,
         required: true,
-    },
-
-    date: {
-        type: String,
-        required: true,
-    },
+    }
 
    
 });

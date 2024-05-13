@@ -35,6 +35,7 @@ const PendingSupplySchema = new mongoose.Schema({
         type : String,
         required: true
     },
+    supplierName: String,
 });
 
 const PendingSupply = mongoose.model("PendingSupply", PendingSupplySchema);

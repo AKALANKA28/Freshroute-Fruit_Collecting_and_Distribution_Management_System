@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 
 const expenseSchema = mongoose.Schema({
     date: {
-        type: Date,
+        type: String,
         required: true,
+        default: Date.now
+
         // validate: {
         //     validator: function(value) {
         //         // Check if date is not in the future

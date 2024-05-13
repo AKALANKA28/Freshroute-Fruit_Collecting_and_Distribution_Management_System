@@ -12,6 +12,8 @@ exports.addVehicle = async (req, res) => {
       nic,
       email,
       phone,
+      Bank,
+      Branch,
       account_no,
       price,
     } = req.body;
@@ -25,6 +27,8 @@ exports.addVehicle = async (req, res) => {
       nic,
       email,
       phone,
+      Bank,
+      Branch,
       account_no,
       price,
     });
@@ -84,6 +88,8 @@ exports.updateVehicle = async (req, res) => {
       nic,
       email,
       phone,
+      Bank,
+      Branch,
       account_no,
       price,
     } = req.body;
@@ -97,6 +103,8 @@ exports.updateVehicle = async (req, res) => {
       nic,
       email,
       phone,
+      Bank,
+      Branch,
       account_no,
       price,
     };

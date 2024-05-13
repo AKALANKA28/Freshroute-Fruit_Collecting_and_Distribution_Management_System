@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ApprovedSuppliesTable = ({ approvedSupplies }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -16,12 +18,13 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
       // Update the prediction status to "Declined"
       await axios.put(`/Prediction/decline/${selectedRequest.predictionID}`);
 
+      
       fetchApprovedSupplies();
+      toast.success("Supply Request Declined");
       handleCloseDeclineModal();
-      alert("Supply Request Declined");
       window.location.reload();
     } catch (error) {
-      console.error("Error declining request:", error);
+      toast.error("Error declining request:", error);
     }
   };
 
@@ -77,7 +80,7 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
                     <td>{request.quality}</td>
                     <td>{request.quantity} kg</td>
                     <td>Rs. {request.price}</td>
-                    <td>Rs. {request.price * request.quantity}</td>
+                    <td>Rs. {parseFloat((request.price * request.quantity).toFixed(2))}</td>
                     <td>{request.dateCanBeGiven}</td>
                     <td>
                       <Button
@@ -94,6 +97,19 @@ const ApprovedSuppliesTable = ({ approvedSupplies }) => {
           </div>
         </div>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
          <Modal.Header closeButton>

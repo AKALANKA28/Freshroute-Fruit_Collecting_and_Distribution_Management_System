@@ -1,79 +1,220 @@
-import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import React, { Fragment } from "react";
+import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import logo from "../../../../assests/logo.png"; // Import your logo image
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  heading: {
-    fontSize: 24,
-    marginBottom: 10,
-    textAlign: "center",
-    color: "#333333",
-  },
-  table: {
-    width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderColor: "#AAAAAA",
-    borderRadius: 5,
-    overflow: "hidden",
-  },
-  tableRow: {
-    flexDirection: "row",
-    backgroundColor: "#F0F0F0",
-    borderBottomWidth: 1,
-    borderBottomColor: "#AAAAAA",
-  },
-  tableColHeader: {
-    padding: 8,
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#333333",
-    textAlign: "center",
-  },
-  tableCol: {
-    padding: 8,
-    fontSize: 10,
-    color: "#333333",
-    textAlign: "center",
-  },
+
+
+
+
+
+const SalesReport = ({ dataList }) => {
+
+
+  const reciept_data = {
+    "id": "642be0b4bbe5d71a5341dfb1",
+    "invoice_no": "20200669",
+    "name": "Akalanka Dias",
+    "date": "09-05-2024",
+    "items": [
+      {
+        "id": 1,
+        "date": "08/05/2024",
+        "category": "Employee",
+        "price": 20000.00,
+        "description": "Employee Cost",
+      },
+      {
+        "id": 2,
+        "date": "08/05/2024	",
+        "category": "Transport",
+        "price": 50000.00,
+        "description": "Fuel Cost",
+      },
+      {
+        "id": 3,
+        "date": "08/05/2024",
+        "category": "Promotion",
+        "price":30000.00,
+        "description": "Promotion Cost",
+      },
+      {
+        "id": 4,
+        "date": "08/05/2024",
+        "category": "Research",
+        "price": 10000.00,
+        "description": "Reasearch Cost",
+      },
+      {
+        "id": 5,
+        "date": "08/05/2024",
+        "category": "Transport",
+        "price": 25000.00,
+        "description": "Transport Cost",
+      },
+      {
+        "id": 5,
+        "date": "08/05/2024",
+        "category": "Research	",
+        "price": 30000.00,
+        "description": "Expenses",
+      }
+    ]
+  };
+  
+  const styles = StyleSheet.create({
+    page: {fontSize: 11,paddingTop: 20,paddingLeft: 40,paddingRight: 40,lineHeight: 1.5,flexDirection: 'column' },
+
+    spaceBetween : {flex : 1,flexDirection: 'row',alignItems:'center',justifyContent:'space-between',color: "#3E3E3E" },
+
+    titleContainer: {flexDirection: 'row',marginTop: 24},
+    
+    logo: { width: 90 },
+
+    reportTitle: {  fontWeight: '800' , fontSize: 16,  textAlign: 'center', },
+
+    addressTitle : {fontSize: 11,fontStyle: 'bold'}, 
+    
+    invoice : {fontWeight: '800',fontSize: 20, textDecoration: "underline"},
+    
+    invoiceNumber : {fontSize: 11,fontWeight: 'bold'}, 
+    
+    address : { fontWeight: 400, fontSize: 13},
+    
+    theader : {marginTop : 20,fontSize : 10,fontStyle: 'bold',paddingTop: 4 ,paddingLeft: 7 ,flex:1,height:20,backgroundColor : '#DEDEDE',borderColor : 'whitesmoke',borderRightWidth:1,borderBottomWidth:1},
+
+    theader2 : { flex:2, borderRightWidth:0, borderBottomWidth:1},
+
+    tbody:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1, borderColor : 'whitesmoke', borderRightWidth:1, borderBottomWidth:1},
+
+    total:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1.5, borderColor : 'whitesmoke', borderBottomWidth:1},
+
+    tbody2:{ flex:2, borderRightWidth:1, }
+    
 });
 
-const CompaignReport = ({ dataList }) => {
+
+const InvoiceTitle = () => (
+  <View style={styles.titleContainer}>
+    <View style={styles.spaceBetween}>
+      <Image style={styles.logo} src={logo} />
+      <Text style={styles.reportTitle}>FreshRoute Distributors</Text>
+    </View>
+  </View>
+);
+
+
+const Address = () => (
+  <View style={styles.titleContainer}>
+    <View style={styles.spaceBetween}>
+      <View>
+        <Text style={styles.invoice}>Expense Report</Text>
+        {/* <Text style={styles.invoiceNumber}>Invoice number: {reciept_data.invoice_no} </Text> */}
+      </View>
+      {/* <View>
+        <Text style={styles.addressTitle}>7, Ademola Odede, </Text>
+        <Text style={styles.addressTitle}>Ikeja,</Text>
+        <Text style={styles.addressTitle}>Lagos, Nigeria.</Text>
+      </View> */}
+    </View>
+  </View>
+);
+const UserAddress = () => {
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.heading}>Sales Report</Text>
-          <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>Campaign Title</Text>
-              <Text style={styles.tableColHeader}>Date</Text>
-              <Text style={styles.tableColHeader}>Objective</Text>
-              <Text style={styles.tableColHeader}>Target Audience</Text>
-              <Text style={styles.tableColHeader}>Budget</Text>
-            </View>
-            {dataList.map((campaign, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCol}>{campaign.compaign_title}</Text>
-                <Text style={styles.tableCol}>{campaign.date}</Text>
-                <Text style={styles.tableCol}>{campaign.objective}</Text>
-                <Text style={styles.tableCol}>{campaign.target_aud}</Text>
-                <Text style={styles.tableCol}>{campaign.budget}</Text>
-              </View>
-            ))}
-          </View>
+    <View style={styles.titleContainer}>
+      <View style={styles.spaceBetween}>
+        <View style={{maxWidth : 200}}>
+          <Text style={styles.addressTitle}>Finance Manger: </Text>
+          <Text style={styles.address}>
+              {reciept_data.name}
+          </Text>
         </View>
-      </Page>
-    </Document>
+        <Text style={styles.addressTitle}>{reciept_data.date}</Text>
+      </View>
+    </View>
   );
 };
 
-export default CompaignReport;
+const TableHead = () => {
+  return (
+    <View style={{ width:'100%', flexDirection :'row', marginTop:10}}>
+      <View style={[styles.theader, styles.theader2]}>
+        <Text>Date</Text>   
+      </View>
+      <View style={styles.theader}>
+        <Text>Category</Text>   
+      </View>
+      <View style={styles.theader}>
+        <Text>Amount</Text>   
+      </View>
+      <View style={styles.theader}>
+        <Text>Description</Text>   
+      </View>
+    </View>
+  );
+};
+
+const TableBody = () => {
+  return (
+    reciept_data.items.map((receipt) => (
+      <Fragment key={receipt.id}>
+        <View style={{ width:'100%', flexDirection :'row'}}>
+          <View style={[styles.tbody, styles.tbody2]}>
+            <Text>{receipt.date}</Text>   
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receipt.category}</Text>   
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receipt.description}</Text>   
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receipt.price}</Text>   
+          </View>
+          
+        </View>
+      </Fragment>
+    ))
+  );
+};
+
+const TableTotal = () => {
+  return (
+    <View style={{ width:'100%', flexDirection :'row'}}>
+      <View style={styles.total}>
+        <Text></Text>   
+      </View>
+      <View style={styles.total}>
+        <Text> </Text>   
+      </View>
+      <View style={styles.tbody}>
+        <Text>Total</Text>   
+      </View>
+      <View style={styles.tbody}>
+        <Text>
+        {reciept_data.items.reduce((sum, item) => sum + (item.price), 0)}
+
+          {/* {reciept_data.items.reduce((sum, item) => sum + (item.price * item.qty), 0)} */}
+        </Text>  
+      </View>
+    </View>
+  );
+};
+
+
+
+
+  return (
+    <Document>
+    <Page size="A4" style={styles.page}>
+        <InvoiceTitle  />
+        <Address/>
+        <UserAddress/>
+        <TableHead/>
+        <TableBody/>
+        <TableTotal/>
+    </Page>
+</Document>
+  );
+};
+
+export default SalesReport;

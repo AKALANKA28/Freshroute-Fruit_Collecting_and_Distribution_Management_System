@@ -6,6 +6,7 @@ import icon1 from '../../assets/delivery-truck.png'
 import icon2 from '../../assets/fresh.png'
 import icon3 from '../../assets/verified.png'
 import icon4 from '../../assets/support.png'
+import icon5 from '../../assets/easy-to-use.png'
 
 
 const Features = () => {
@@ -23,7 +24,7 @@ const Features = () => {
               <div className="row align-items-center">
                   <div className="col-md-3">
                     <div className="py-6 px-4 text-white text-center card1">
-                      <h3 className="mb-3">Get Started With Your Free Trial</h3>
+                      <h3 className="mb-3">Healthy Life With Fresh Products</h3>
                       <p >Libero nunc facilisis auctor diam suspendisse pharetra nisi. Mauris ornare imperdiet.
                       </p>
                       <a href="#" className="btn btn-light mb-0">Get Started Today</a>
@@ -41,7 +42,7 @@ const Features = () => {
                     <div className="text-center card d-flex align-items-center">
                     <img src={icon2} alt="icon2"/>
                       <h3>Freshness</h3>
-                      <p >Promise that all products will be delivered fresh and in optimal condition, meeting high standards of quality and taste.
+                      <p >We guarantee fresh, quality products, meeting high taste standards.
                       </p>
                     </div>
                   </div>  
@@ -52,9 +53,9 @@ const Features = () => {
               <div className="row align-items-center">
               <div className="col-md-3 px-lg-4">
                     <div className="text-center card d-flex align-items-center">
-                    <img src={icon3} alt="Spa Icon"/>
+                    <img src={icon5} alt="Spa Icon"/>
                       <h3>Easy Product Browsing</h3>
-                      <p >Customers can easily browse through a variety of fruits available for purchase.
+                      <p >Customers can effortlessly explore a diverse range of available fruits.
                       </p>
                     </div>
                   </div>
@@ -62,8 +63,7 @@ const Features = () => {
                     <div className="text-center card d-flex align-items-center">
                     <img src={icon3} alt="icon3"/>
                       <h3>Secure Checkout Process</h3>
-                      <p >Our Secure and Convenient Checkout Process prioritizes the safety and convenience of our customers, with multiple secure payment options.
-                      </p>
+                      <p >Our checkout process ensures safety and convenience with secure payment options.</p>
                     </div>
                   </div>
                   <div className="col-md-3 px-lg-4">

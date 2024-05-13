@@ -3,6 +3,7 @@ import CardFilter from './CardFilter'
 import RecentActivityItem from './RecentActivityItem'
 
 
+
 const RecentActivity = () => {
 
     const [items, setItems] = useState([])
@@ -12,33 +13,17 @@ const RecentActivity = () => {
     };
 
 
-    const fetchData = () => {
-        fetch("")
-         .then(res => res.json())
-         .then(data => {
-            setItems(data);
-         })
-         .catch(e => console.log(e.message))
-    };
 
-    useEffect(() => {
-        fetchData();
-    }, [])
- 
   return (
     <div className='card'>
       <CardFilter filterChange={handleFilterChange} />
-      <div className="card-body">
+      <div className="card-body" style={{ minHeight: '292px', maxHeight:'288px', overflowY: 'auto' }}>
         <h5 className="card-title">
-          Recent Activity<span>| {filter}</span>
+          Recent Sales<span>| {filter}</span>
         </h5>
 
-        <div className="activity">
-          {items &&
-          items.lenght > 0 &&
-          items.map(item => (
-            <RecentActivityItem key={item._id} item={item}/>
-            ))}
+        <div className="activity ">
+            <RecentActivityItem item={items}/>
       </div>
        
       </div>

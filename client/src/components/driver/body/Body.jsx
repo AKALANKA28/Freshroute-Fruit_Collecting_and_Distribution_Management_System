@@ -10,6 +10,7 @@ import BudgetReport from './BudgetReport'
 import News from './Transactions'
 import BackToTop from './BackToTop'
 import Map from '../Components/map/Map'
+import AssingedOrders from './AssingedOrders'
 
 const Body = () => {
 
@@ -32,9 +33,7 @@ const Body = () => {
                     
                 </div>
             </div>
-            {/* <div className="col-lg-4 bg-white">
-              <RecentActivity />
-            </div> */}
+           
         </div>
         <BackToTop />
    </section>

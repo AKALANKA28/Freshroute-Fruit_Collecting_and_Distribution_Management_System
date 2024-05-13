@@ -91,9 +91,11 @@ const getSalaryByJobRole = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getAllEmployees,
   getOneEmployee,
   updateCalculateSalary,
   getSalaryByJobRole,
+  
 };

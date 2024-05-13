@@ -1,48 +1,56 @@
-import React from 'react'
-import './main.css'
+import React, { useState, useEffect } from 'react';
+import './main.css';
 
-import Cards from './Cards'
-import Reports from './Reports'
-import RecentSales from './RecentSales'
-import TopSellings from './TopSellings'
-import RecentActivity from './RecentActivity'
-import BudgetReport from './BudgetReport'
-import WebTraffic from './WebTraffic'
-import News from './News'
-import BackToTop from './BackToTop'
+import Cards from './Cards';
+import Reports from './Reports';
+
+import RecentActivity from './RecentActivity';
+import BudgetReport from './BudgetReport';
+
+import News from './News';
+import BackToTop from './BackToTop';
+import SpinnerModal from '../../spinner/SpinnerModal'; // Assuming you have a SpinnerModal component
 
 const Body = () => {
+  const [loading, setLoading] = useState(true);
 
+  // Simulate loading
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the timeout as needed
 
-   
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
-    <div> 
-   <section className="body" id='body'>
-        <div className="row">
+    <div>
+      {loading ? (
+        <SpinnerModal show={true} /> // Show SpinnerModal while loading
+      ) : (
+        <section className="body" id="body">
+          <div className="row">
             <div className="col-lg-8">
-                <div className="row">
-                    <Cards />
-                    <div className="col-12">
-                        <Reports />
-                    </div>
-                    <div className="col-12">
-                    <News />
-                    </div>
-                    
+              <div className="row">
+                <Cards />
+                <div className="col-12">
+                  <Reports />
                 </div>
+                <div className="col-12">
+                  <News />
+                </div>
+              </div>
             </div>
             <div className="col-lg-4">
               <RecentActivity />
               <BudgetReport />
-             
-              
             </div>
-        </div>
-        <BackToTop />
-   </section>
+          </div>
+          <BackToTop />
+        </section>
+      )}
+    </div>
+  );
+};
 
-   </div>
-  )
-}
-
-export default Body
+export default Body;

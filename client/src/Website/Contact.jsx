@@ -1,5 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar/Navbar'
+import Navbar2 from './Navbar/Navbar2'
+
 import Footer from './Footer/Footer'
 
 import "./website.css"
@@ -14,7 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createQuery } from '../features/contact/contactSlice';
 
-
+import image1 from "./assets/contactpage2.jpg"
 const contactSchema = yup.object({
   name: yup.string().required("Username is Required"),
   email: yup.string().nullable().email("Email Should be Valid").required("Email is Required"),
@@ -44,7 +46,9 @@ const Contact = () => {
 
   return (
           <div>
-            <div className="product-header">
+            <Navbar/>
+            {/* <Navbar2/> */}
+            {/* <div className="product-header">
             <nav className='nav'>
               <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>
                 <ul className='nav-menu'>
@@ -59,8 +63,27 @@ const Contact = () => {
                   </li>
                 </ul> 
             </nav>
-            </div>  
-      
+            </div>   */}
+            <div className='hero'>
+              <div>
+                <img src={image1} className='background' style={{top:"-180px"}}></img>
+              </div>
+              <div className="container" >
+                <div className="col-lg-12">
+                    <div className="hero-text">
+                      <p className='text1 '>Contact</p>
+                      <p className='text2 fs-3'>Reach out. We're here to help</p>
+                    </div>
+                    
+                    <div className="hero-dot-play">
+                      <ul className="hero-dots">
+                          
+                      </ul>
+                     
+                    </div>
+                </div>
+              </div>   
+            </div>
             <Container class1="contact-wrapper py-5 home-wrapper-2">
             <div className="row"> 
               <div className="col-12 mt-5 ">
@@ -126,7 +149,7 @@ const Contact = () => {
                         
                       </div>
                       <div>
-                        <button className="button mb-2">Submit</button>
+                        <button className="button mb-2 mt-5 justify-content-end">Submit</button>
                       </div>
                     </form>
                   </div>

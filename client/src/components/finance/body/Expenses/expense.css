@@ -19,21 +19,6 @@
     padding: 10px 0 0 0;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px;
-    white-space: normal; /* Enable text wrapping */
-    word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
-    padding: 8px;
-
-}
-
-.table th, .table td {
-    padding: 8px;
-    /* border: 1px solid #ddd; */
-    width: 100px;
-  }
 
 .page-header {
     display: flex;
@@ -208,4 +193,23 @@
 
 .search-form i{
     color: #012970;
+}
+
+
+/* Custom CSS for active tab */
+.active-tab {
+    background-color: #007bff; /* Active color */
+    color: #fff; /* Text color */
+
+}
+
+/* Custom CSS for inactive tab */
+.nav-link {
+    background-color: #f8f9fa; /* Inactive color */
+    color: #000; /* Text color */
+}
+
+/* Custom CSS for tab height */
+.tab-height {
+    height: 40px; /* Adjust height as needed */
 }

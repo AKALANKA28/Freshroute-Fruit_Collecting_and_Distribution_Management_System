@@ -23,7 +23,7 @@
 
 
 .section-text h2{
-    background-image: url('../../assets/image1.jpg'); /* Replace 'img/special_offer_text_bg.jpg' with the path to your background image */
+    background-image: url('../../assets/winemaking.jpg'); /* Replace 'img/special_offer_text_bg.jpg' with the path to your background image */
     background-size: cover; /* Adjust background size as needed */
     background-position: center; /* Adjust background position as needed */
     -webkit-background-clip: text; /* Apply background image to text */

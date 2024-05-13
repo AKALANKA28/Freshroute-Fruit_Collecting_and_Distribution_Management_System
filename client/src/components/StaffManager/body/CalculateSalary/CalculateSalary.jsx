@@ -8,10 +8,12 @@ import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import CalculateSalaryForm from "./CalculateSalaryForm";
 import CalculateSalaryReport from "./CalculateSalaryReport";
+import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./CalculateSalary.css";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function CalculateSalary() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -19,7 +21,14 @@ function CalculateSalary() {
   const [filteredDataList, setFilteredDataList] = useState([]);
 
   useEffect(() => {
+    // Fetch data
     getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -92,6 +101,21 @@ function CalculateSalary() {
     }
   };
 
+  const handlePay = async (calculateSalary) => {
+    try {
+      const { _id } = calculateSalary;
+      await axios.put(`/CalculateSalary/update/${_id}`, { allowance: null, netsalary: null });
+      alert("Salary Paid");
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+  
+  
+
+  
+
   const [showReportModal, setShowReportModal] = useState(false);
 
   const handleCloseReportModal = () => setShowReportModal(false);
@@ -99,7 +123,11 @@ function CalculateSalary() {
 
   return (
     
-    <div className="main">
+    <div id='main' className='main'>
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
     <div className="card recent-sales overflow-auto">
      
           <div className="card-body">
@@ -108,8 +136,8 @@ function CalculateSalary() {
               <div class="add-item d-flex">
 
               <div class="card-title">
-                  Employee Details
-                  <h6>Manage employee details</h6>
+                  Employee Salary Details
+                  <h6>Manage employee salary details</h6>
                 </div>
               </div>
 
@@ -121,7 +149,7 @@ function CalculateSalary() {
                       </a>
                       <Modal show={showReportModal} onHide={handleCloseReportModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Employee Details Report</Modal.Title>
+            <Modal.Title>Employee Salary Details Report</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <PDFViewer width="100%" height="500px" >
@@ -179,6 +207,7 @@ function CalculateSalary() {
                 <th scope="col">Allowance</th>
                 <th scope="col">Net Salary</th>
                 <th>Calculator</th>
+                <th>Pay Salary</th>
               </tr>
             </thead>
             <tbody>
@@ -194,12 +223,22 @@ function CalculateSalary() {
                     <td>{employee.allowance}</td>
                     <td>{employee.netsalary}</td>
                     <td>
-                      <div className="buttons">
+                      <div className="justify-content-center buttons">
                         <button
                           className="btn btn-edit"
                           onClick={() =>handleEditModalOpen(employee)}
                         >
                           <i className="bi bi-calculator"></i>
+                        </button>
+                        </div>
+                        </td>
+                        <td>
+                          <div>
+                        <button
+                          className="btn btn-success"
+                          onClick={() =>handlePay(employee)}
+                        >
+                          <i className="bi bi-paypal">Pay</i>
                         </button>
                       </div>
                     </td>
@@ -207,7 +246,7 @@ function CalculateSalary() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="9">No Data</td>
+                  <td colSpan="10">No Data</td>
                 </tr>
               )}
             </tbody>
@@ -215,6 +254,7 @@ function CalculateSalary() {
         </div>
       </div>
       </div>
+      )}
       </div>
     
   );

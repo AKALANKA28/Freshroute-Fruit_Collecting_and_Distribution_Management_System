@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from "../../components/SearchBar";
 import Excel from "../../../../assests/img/icons/excel.png";
@@ -11,9 +11,17 @@ import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
 import { ToastContainer } from "react-toastify";
-import Pagination from "../../components/Pagination";
-import ReportModal from "../../components/ReportModal";
-
+// import Pagination from "../../components/Pagination";
+import ReportModal from "../../components/PDFReport";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import {
+  getOrders,
+  getSingleOrderData,
+} from "../../../../features/orders/orderSlice";
+import ProductDropdown from "./ProductDropdown";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -23,46 +31,23 @@ function Sales() {
   const [selectedSales, setSelectedSales] = useState(null);
   const [filter, setFilter] = useState("Today");
   const [filteredDataList, setFilteredDataList] = useState([]);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const getUserId = location.pathname.split("/")[3];
+  // console.log(getUserId)
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6); // Number of items per page
 
-  useEffect(() => {
-    getFetchData();
-  }, []);
+  const [pageSize, setPageSize] = useState(5); // Number of items per page
 
-  useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
-  }, [dataList]);
-
-  const getFetchData = async () => {
-    try {
-      const response = await axios.get("/sales/");
-      setDataList(response.data);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  // Search functionality
-  const handleSearch = (query) => {
-    const filteredList = dataList.filter((sales) => {
-      const fullName = `${sales.customer_name} ${sales.date} ${sales.fruit_name} ${sales.amount} ${sales.paid} ${sales.due} ${sales.status}`;
-      return fullName.toLowerCase().includes(query.toLowerCase());
-    });
-    setFilteredDataList(filteredList);
-    setCurrentPage(1); // Reset current page to 1 when a new search is performed
-  };
-
-  //Pagination
-
-  // Calculate total number of pages
+  // Calculate total number of pages based on 5 rows per page
   const totalPages = Math.ceil(filteredDataList.length / pageSize);
 
   // Calculate the start and end index of items for the current page
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, filteredDataList.length);
 
-  // Get the current page of items to display
+  // Get the current page of items to display (5 rows)
   const currentPageItems = filteredDataList.slice(startIndex, endIndex);
 
   // Function to handle next page
@@ -79,45 +64,89 @@ function Sales() {
     }
   };
 
-  // Function to handle page navigation
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const getTokenFromLocalStorage = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      Accept: "application/json",
+    },
   };
 
-  // Function to handle page size change
-  const handlePageSizeChange = (size) => {
-    setPageSize(size);
-    setCurrentPage(1); // Reset current page to 1 when page size changes
-  };
+  useEffect(() => {
+    dispatch(getOrders(config));
+  }, [dispatch]);
 
-  // Render pagination component
-  const renderPagination = () => {
-    // Generate an array of page numbers from 1 to totalPages
-    const pages = [...Array(totalPages).keys()].map((i) => i + 1);
-    return (
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        {pages.map((page) => (
-          <button key={page} onClick={() => handlePageChange(page)}>
-            {page}
-          </button>
-        ))}
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div>
-    );
-  };
-  //Pagination End
+  const orderState = useSelector((state) => state.orders.orders);
+  console.log(orderState);
 
-  const handleRefreshClick = () => {
+  // const handleStatus = (status) => {
+  //   switch (status) {
+  //     case "Paid":
+  //       return "success";
+  //       break;
+  //     case "Pending":
+  //       return "warning";
+  //       break;
+  //     case "Rejected":
+  //       return "danger";
+  //       break;
+  //     default:
+  //       return "success";
+  //   }
+  // };
+
+  useEffect(() => {
     getFetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
+
+  const getFetchData = async () => {
+    try {
+      const response = await axios.get("/user/allorders");
+      setDataList(response.data);
+
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const generateExcelFile = () => {
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(dataList);
+
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Suppliers Report");
+
+    // Generate the Excel file
+    writeFile(wb, "suppliers_report.xlsx");
   };
 
   const handleButtonClick = () => {
-    getFetchData();
+    // getFetchData();
+    generateExcelFile();
+  };
+
+  // Search functionality
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((sales) => {
+      const fullName = `${sales.customer_name} ${sales.date} ${sales.fruit_name} ${sales.amount} ${sales.paid} ${sales.due} ${sales.status}`;
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
+    setCurrentPage(1); // Reset current page to 1 when a new search is performed
+  };
+
+  const handleRefreshClick = () => {
+    // getFetchData();
   };
 
   const handleAddModalOpen = () => {
@@ -139,7 +168,7 @@ function Sales() {
 
   const handleAddSubmit = async (formData) => {
     try {
-      await axios.post("/sales/add", formData);
+      await axios.post("/user/order", formData);
       alert("Sales Added");
       handleAddModalClose();
       getFetchData();
@@ -150,7 +179,7 @@ function Sales() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/sales/delete/${id}`);
+      await axios.delete(`/user/order/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
@@ -160,7 +189,7 @@ function Sales() {
 
   const handleEditSubmit = async (formData) => {
     try {
-      await axios.patch(`/sales/update/${formData._id}`, formData);
+      await axios.patch(`/user/order/update/${formData._id}`, formData);
       alert("Sales Updated");
       handleEditModalClose();
       getFetchData();
@@ -169,10 +198,11 @@ function Sales() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
+  const handleProductSelect = (productId) => {
+    console.log("Selected product:", productId);
+    // Handle the selected product here
+  };
 
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
 
   return (
     <div className="main">
@@ -186,20 +216,21 @@ function Sales() {
               </div>
             </div>
             {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-
+           
             <ul class="table-top-head">
               <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-
-                  <ReportModal
-                    show={showReportModal}
-                    handleClose={handleCloseReportModal}
-                    dataList={dataList}
-                  />
-                </div>
+                <BlobProvider
+                  document={<SalesReport />}
+                  fileName="SalesReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
 
               <li>
@@ -252,55 +283,128 @@ function Sales() {
               />
             </Modal.Body>
           </Modal>
-
-          <div className="table-container">
-            <SearchBar onSearch={handleSearch} />
-
-            {/* ---------------table--------------- */}
-            <table className="table table-bordeless datatable">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col">Customer</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Fruit</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Paid (Rs)</th>
-                  <th scope="col">Due (Rs)</th>
-                  <th scope="col">Status</th>
-                  <th className="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentPageItems.map((sales) => (
-                  <tr key={sales._id}>
-                    <td>{sales.customer_name}</td>
-                    <td>{sales.date}</td>
-                    <td>{sales.fruit_name}</td>
-                    <td>Rs. {sales.amount.toFixed(2)}</td>
-                    <td>Rs. {sales.paid.toFixed(2)}</td>
-                    <td>Rs. {sales.due.toFixed(2)}</td>
-                    <td>{sales.status}</td>
-                    <td>
-                      <div className="buttons">
-                        <button
-                          className="btn btn-edit"
-                          onClick={() => handleEditModalOpen(sales)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn btn-delete"
-                          onClick={() => handleDelete(sales._id)}
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
-                      </div>
-                    </td>
+          {dataList.length > 0 && (
+            <div className="table-container">
+              <SearchBar onSearch={handleSearch} />
+              <div>
+      <h1>Select Product</h1>
+      <ProductDropdown onSelect={handleProductSelect} className="text-dark"/>
+    </div>
+              {/* ---------------table--------------- */}
+              <table className="table table-bordeless datatable">
+                <thead className="table-light">
+                  <tr>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Fruit</th>
+                    <th scope="col">Price (Rs)</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Tax Rate</th>
+                    <th scope="col">Total (Rs)</th>
+                    <th className="col">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {currentPageItems.map((sales) => (
+                    <tr key={sales._id}>
+                      <td>{sales?.user?.name}</td>
+                      <td>{new Date(sales.createdAt).toLocaleDateString()}</td>
+                      <td>
+                        <ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id} className="border-bottom">
+                              {item.product.title}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td>
+                        <ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id} className="border-bottom">
+                              Rs. {item.price.toFixed(2)}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td>
+                        <ul>
+                          {sales.orderItems.map((item) => (
+                            <li key={item._id} className="border-bottom">
+                              {item.quantity} kg
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td>2%</td>
+                      <td>
+                        Rs.{" "}
+                        {(
+                          (sales?.totalPrice * 2) / 100 +
+                          sales?.totalPrice
+                        ).toFixed(2)}
+                      </td>
+                      {/* <td>
+        <span className={`badge bg-${handleStatus(sales.orderStatus)}`}>
+          {sales.orderStatus}
+        </span>
+      </td> */}
+                      <td>
+                        <div className="buttons">
+                          <button
+                            className="btn btn-edit"
+                            onClick={() => handleEditModalOpen(sales)}
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button
+                            className="btn btn-delete"
+                            onClick={() => handleDelete(sales._id)}
+                          >
+                            <i className="bi bi-trash3-fill"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {/* Render pagination component */}
+              <div className="pagination align-items-center  justify-content-end">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className="me-4"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <i class="bi bi-chevron-left"></i>{" "}
+                </button>
+                <span
+                  className="text-dark"
+                  style={{ fontSize: "18px", fontWeight: "500" }}
+                >
+                  <span className="me-4">{currentPage}</span>
+                  <span>{totalPages}</span>
+                </span>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className="ms-4"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <i class="bi bi-chevron-right"></i>{" "}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <ToastContainer
@@ -317,13 +421,13 @@ function Sales() {
         // transition: Bounce
       />
       {/* Render pagination */}
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
         handlePageChange={handlePageChange}
-      />{" "}
+      />{" "} */}
     </div>
   );
 }
