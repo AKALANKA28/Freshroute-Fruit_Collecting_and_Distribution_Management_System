@@ -24,7 +24,7 @@ const Body = () => {
                 <div className="row">
                     <TopCards />
                     <div className="col-12">
-                        <Reports />
+                        {/* <Reports /> */}
                     </div>
                     {/* <div className="col-12">
                      <RecentSales />
@@ -35,10 +35,10 @@ const Body = () => {
                 </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
+              {/* <RecentActivity /> */}
               
               <WebTraffic />
-              <News />
+              {/* <News /> */}
             </div>
         </div>
         <BackToTop />

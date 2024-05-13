@@ -13,7 +13,7 @@ const Currency = () => {
     };
 
     const fetchData = () => {
-        fetch("") // Add your API URL here
+        fetch("") 
             .then((res) => res.json())
             .then((data) => {
                 setItems(data);

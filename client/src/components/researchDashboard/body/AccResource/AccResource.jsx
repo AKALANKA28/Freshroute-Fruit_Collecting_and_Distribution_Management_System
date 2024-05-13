@@ -7,8 +7,9 @@ import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import ResourceAccessForm from "./ResourceAccessForm";
-//import CompaignReport from "./CompaignReport";
+import AccResourceReport from "./AccResourceReport";
 import "./AccResource.css";
+//import "./AccResourceForm.css";
 
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -18,10 +19,17 @@ function AccResource() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedCompaign, setSelectedCompaign] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
 
   useEffect(() => {
     getFetchData();
   }, []);
+  useEffect(() => {
+    setFilteredDataList(dataList);
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,6 +38,13 @@ function AccResource() {
     } catch (err) {
       alert(err.message);
     }
+  };
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((AccResource) => {
+      const fullName = `${AccResource.location} ${AccResource.resourceType}`;
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
   };
 
   const handleRefreshClick = () => {
@@ -56,12 +71,22 @@ function AccResource() {
   const handleEditModalClose = () => {
     setEditModalOpen(false);
   };
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/AccResource/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal();
     } catch (err) {
       alert(err.message);
     }
@@ -122,7 +147,7 @@ function AccResource() {
           </Modal.Header>
           <Modal.Body>
             <PDFViewer width="100%" height="500px">
-              <CompaignReport dataList={dataList} />
+              <AccResourceReport dataList={dataList} />
             </PDFViewer>
           </Modal.Body>
           <Modal.Footer>
@@ -163,7 +188,7 @@ function AccResource() {
               <Modal.Title>Apply</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CompaignForm handleSubmit={handleAddSubmit} />
+              <ResourceAccessForm handleSubmit={handleAddSubmit} />
             </Modal.Body>
           </Modal>
 
@@ -172,12 +197,30 @@ function AccResource() {
               <Modal.Title>Edit Aplication</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CompaignForm
+              <ResourceAccessForm
                 handleSubmit={handleEditSubmit}
                 initialData={selectedCompaign}
               />
             </Modal.Body>
           </Modal>
+
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+      
 
 
       
@@ -192,8 +235,12 @@ function AccResource() {
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col" >Contact No</th>
+              <th scope="col" >Location</th>
+              <th scope="col" >Farm Size</th>
               <th scope="col" >Fruit Type</th>
               <th scope="col" >Production Capacity</th>
+              <th scope="col" >Resource Type</th>
+              <th scope="col" >Details of Requirement</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -204,8 +251,12 @@ function AccResource() {
                   <td>{accresource.name}</td>
                   <td>{accresource.email}</td>
                   <td>{accresource.contactNumber}</td>
+                  <td>{accresource.location}</td>
+                  <td>{accresource.farmSize}</td>
                   <td>{accresource.fruitType}</td>
                   <td>{accresource.productionCapacity}</td>
+                  <td>{accresource.resourceType}</td>
+                  <td>{accresource.detailReq}</td>
                   
                   <td>
                     <div className="buttons">

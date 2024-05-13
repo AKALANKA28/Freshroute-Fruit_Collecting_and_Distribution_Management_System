@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from './header/header';
 import Sidebar from './sidebar/Sidebar';
-import AccResourceForm from './body/AccResource/ResourceAccessForm'; 
+import AccResource from './body/AccResource/AccResource'; 
 import Footer from './footer/Footer';
 
 const AccResourcePage = () => {
@@ -10,7 +10,7 @@ const AccResourcePage = () => {
     <div>
       <Header />
       <Sidebar />
-      <AccResourceForm />
+      <AccResource />
       <Footer />
     </div>
   );

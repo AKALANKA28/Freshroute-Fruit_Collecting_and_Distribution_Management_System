@@ -42,10 +42,10 @@ const PBody = () => {
               <Currency />
               </div>
 
-            <div className="col-lg-15 r1">
+            <div className="col-lg-6 r1">
             <PriceCname/>
             </div>
-            <div className="col-lg-15 r1">
+            <div className="col-lg-6 r1">
             <PriLiCname/>
             </div>
         </div>

@@ -14,7 +14,7 @@ const WebTrafficChart = () => {
             },
             series: [
                 {
-                    name: 'Access From',
+                    name: 'Campaign Performance',
                     type: 'pie',
                     radius: ['40%', '70%'],
                     avoidLabelOverlap : false,
@@ -35,24 +35,24 @@ const WebTrafficChart = () => {
                     },
                     data: [
                         {
-                            value: 1048,   // only this from backend
-                            name: 'Search Engine', //from backend
+                            value: 70,   // only this from backend
+                            name: 'Market Expansion', //from backend
                         },
                         {
-                            value: 735,
-                            name: 'Direct',
+                            value: 65,
+                            name: 'Grow Together',
                         },
                         {
-                            value: 484,
-                            name: 'Email',
+                            value: 60,
+                            name: 'Fruit Fest',
                         },
                         {
-                            value: 300,
-                            name: 'Union Ads',
+                            value: 60,
+                            name: 'Fruit Harvest Haven',
                         },
                         {
-                            value: 700,
-                            name: 'Video Ads',
+                            value: 55,
+                            name: 'FreshConnect',
                         },
                     ],
                
