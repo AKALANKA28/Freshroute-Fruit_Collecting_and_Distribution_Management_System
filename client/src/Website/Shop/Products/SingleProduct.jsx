@@ -6,74 +6,74 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "../../Components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleProduct } from "../../../features/products/productSlice";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { addToCart, getCart } from "../../../features/user/userSlice";
 import axios from "axios";
 import Navbar2 from "../../Navbar/Navbar2";
+import Grades from "../../Components/Grades";
 // import Grades from "../../Components/Grades";
 
 const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
-  // const [grade, setGrade] = useState(1);
+  const [grade, setGrade] = useState(null);
   const [productData, setProductData] = useState(null);
 
-  const [alreadyAdded, setAlreadyAdded] = useState(false)
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
   // console.log(quantity);
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
   // console.log(getProductId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productState = useSelector( (state) => state?.product?.singleproduct);
-  const cartState = useSelector((state) => state?.auth?.cartProducts )
+  const productState = useSelector((state) => state?.product?.singleproduct);
+  const cartState = useSelector((state) => state?.auth?.cartProducts);
 
   useEffect(() => {
     dispatch(getSingleProduct(getProductId));
-    dispatch(getCart())
+    dispatch(getCart());
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("/FruitType/");
-      // Assuming the response data is an array of product objects
-      // Find the product with the matching ID and set it to the state
-      const product = response.data.find(product => product.id === getProductId);
-      setProductData(product);
-    } catch (err) {
-      console.error("Error fetching product data:", err);
-    }
-  };
-
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get("/FruitType/");
+  //     // Assuming the response data is an array of product objects
+  //     // Find the product with the matching ID and set it to the state
+  //     const product = response.data.find(
+  //       (product) => product.id === getProductId
+  //     );
+  //     setProductData(product);
+  //   } catch (err) {
+  //     console.error("Error fetching product data:", err);
+  //   }
+  // };
 
   useEffect(() => {
     // Check if cartState is defined and not null before accessing its length
-  if (cartState) {
-    for (let index = 0; index < cartState.length; index++) {
-      if (getProductId === cartState[index]?.productId?._id) {
-        setAlreadyAdded(true);
+    if (cartState) {
+      for (let index = 0; index < cartState.length; index++) {
+        if (getProductId === cartState[index]?.productId?._id) {
+          setAlreadyAdded(true);
+        }
       }
     }
-  }
-}, [cartState]); // Add cartState to the dependency array of useEffect
+  }, [cartState]); // Add cartState to the dependency array of useEffect
 
-  // const uploadCart = () => {
-    // if(grade == null) {
-    //   toast.error("Please Choose a Grade")
-    //   return false
-    // } else {
-      // dispatch(
-      // addToCart({productId: productState?._id, quantity, price: productState?.price}))
-    // navigate('./cart')
-  // }
-
-  // };
-  // console.log(uploadCart);
-
+  console.log(productState);
 
   const uploadCart = () => {
-    dispatch(
-      addToCart({productId: productState?._id, quantity, price: productState?.price})
-    )
+    if (grade === null) {
+      toast.error("Please choose color");
+      return;
+    } else {
+      dispatch(
+        addToCart({
+          productId: productState?._id,
+          quantity,
+          price: productState?.price,
+          grade: grade,
+        })
+      );
+    }
     // navigate('../cart')
   };
   // console.log(uploadCart);
@@ -81,7 +81,7 @@ const SingleProduct = () => {
   return (
     <div>
       <Navbar2 />
-     
+
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
@@ -106,61 +106,69 @@ const SingleProduct = () => {
                   <div className="d-flex flex-column gap-2 pb-4">
                     <h3 className="product-heading">Description</h3>
                     <p className="product-description">
-                    {productState?.description}
+                      {productState?.description}
                     </p>
                   </div>
-                  {
-                    alreadyAdded === false && <>
-                    <div className="d-flex flex-column gap-2 pb-4">
-                    <h3 className="product-heading">Grade</h3>
-                    {/* <Grades setGrade = {setGrade} gradeData={productState?.grade}/> */}
-                    <div className="d-flex flex-wrap gap-15 grade">
-                      <span className="badge border border-1 p-3 button-select" style={{backgroundColor:"black", color:"white"}}>
-                        A
-                      </span>
-                      <span className="badge border border-1 text-dark p-3">
-                        B
-                      </span>
-                      <span className="badge border border-1 text-dark p-3">
-                        C
-                      </span>
-                    </div>
-                  </div>
+                  {alreadyAdded === false && (
+                    <>
+                      <div className="d-flex flex-column gap-2 pb-4">
+                        <h3 className="product-heading">Grade</h3>
+                        <div className="d-flex flex-wrap gap-15 grade">
+                          <span
+                            className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
+                          >
+                            <Grades
+                              setGrade={setGrade}
+                              gradeData={productState && productState.grade} // Pass the whole gradeData array
+                            />
+                          </span>
+                        </div>
+                      </div>
                     </>
-                  }
+                  )}
+
                   <div className=" d-flex align-items-center gap-3 pb-4">
-                   {
-                    alreadyAdded === false && <>
-                     {/* <h3 className='product-heading'>Quantity</h3> */}
-                     <div className="">
-                      <input
-                        type="number"
-                        name=""
-                        min={1}
-                        max={100}
-                        className="form-control"
-                        style={{ width: "70px", height: "40px" }}
-                        id=""
-                        onChange={(e) => setQuantity(e.target.value)}
-                        value={quantity}
-
-                        placeholder="Enter quantity" // Add placeholder attribute here
-
-                      />
-                    </div>
-
-                    
-                    </>
-                   }
-                    <div className={alreadyAdded? "ms-0" : "ms-5" + "d-flex align-items-center gap-2"}>
+                    {alreadyAdded === false && (
+                      <>
+                        {/* <h3 className='product-heading'>Quantity</h3> */}
+                        <div className="">
+                          <input
+                            type="number"
+                            name=""
+                            min={1}
+                            max={100}
+                            className="form-control"
+                            style={{ width: "70px", height: "40px" }}
+                            id=""
+                            onChange={(e) => setQuantity(e.target.value)}
+                            value={quantity}
+                            placeholder="Enter quantity" // Add placeholder attribute here
+                          />
+                        </div>
+                      </>
+                    )}
+                    <div
+                      className={
+                        alreadyAdded
+                          ? "ms-0"
+                          : "ms-5" + "d-flex align-items-center gap-2"
+                      }
+                    >
                       <button
                         className="product-button me-4"
                         type="submit"
-                        onClick={() => { alreadyAdded? navigate('../cart') : uploadCart()}}
+                        onClick={() => {
+                          alreadyAdded ? navigate("../cart") : uploadCart();
+                        }}
                       >
-                        {alreadyAdded?"Go To Cart" : "Add to Cart"}
+                        {alreadyAdded ? "Go To Cart" : "Add to Cart"}
                       </button>
-                      <button className="product-button buy" type="submit" style={{backgroundColor:"#000000"}}>
+                      <button
+                        className="product-button buy"
+                        type="submit"
+                        style={{ backgroundColor: "#000000" }}
+                      >
                         Buy Now
                       </button>
                     </div>
