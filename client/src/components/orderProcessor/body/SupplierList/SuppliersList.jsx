@@ -191,12 +191,12 @@ const SuppliersList = () => {
                                             {
                                                 name: "Total Quantity (kg)",
                                                 tag: "quantity",
-                                                type: "text"
+                                                type: "number"
                                             },
                                             {
                                                 name: "Price for 1kg",
                                                 tag: "price",
-                                                type: "text"
+                                                type: "number"
                                             },
                                             {
                                                 name: "Date Can Be Given",
