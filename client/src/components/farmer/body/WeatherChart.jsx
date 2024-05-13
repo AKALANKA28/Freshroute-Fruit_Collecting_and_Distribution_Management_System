@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ElfSightWeatherWidget from './ElfSightWeatherWidget';
 
-const BudgetChart = () => {
+const WeatherChart = () => {
   useEffect(() => {
   }, []);
 
@@ -12,4 +12,4 @@ const BudgetChart = () => {
   );
 };
 
-export default BudgetChart;
+export default WeatherChart;

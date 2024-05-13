@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const PredictionsDetailsListTableInDashboard = ({ items }) => {
     
-    const displayedItems = items.slice(0, 4);
+    const displayedItems = items.slice(0, 10);
 
     return (
         <div>
@@ -35,7 +35,7 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
                 </tbody>
             </table>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Link to="/PredictionDetails" className="btn btn-primary btn-sm">View More</Link>
+                <Link to="/PredictionDetails" className="btn btn-primary btn-sm">View All</Link>
             </div>
         </div>
     );

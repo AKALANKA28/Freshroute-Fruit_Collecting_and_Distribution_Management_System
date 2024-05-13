@@ -50,10 +50,50 @@ const updateAcceptedSupply = async (req, res) => {
   }
 };
 
+const getTotalApprovedPrice = async (req, res) => {
+  try {
+    const pipeline = [
+      {
+        $project: {
+          totalApprovedPrice: { $multiply: ["$quantity", "$price"] }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalApprovedPrice: { $sum: "$totalApprovedPrice" }
+        }
+      }
+    ];
+
+    const result = await AcceptedSupply.aggregate(pipeline);
+
+    if (result.length > 0) {
+      res.status(200).json({ totalApprovedPrice: result[0].totalApprovedPrice });
+    } else {
+      res.status(200).json({ totalApprovedPrice: 0 });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const getTotalApprovedSuppliesCount = async (req, res) => {
+  try {
+    const count = await AcceptedSupply.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 module.exports = {
   addAcceptedSupply,
   getAllAcceptedSupplies,
   getOneAcceptedSupply,
   deleteAcceptedSupply,
   updateAcceptedSupply,
+  getTotalApprovedPrice,
+  getTotalApprovedSuppliesCount
 };

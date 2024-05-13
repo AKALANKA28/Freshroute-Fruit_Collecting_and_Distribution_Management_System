@@ -10,7 +10,6 @@ import CompaignForm from "./CompaignForm";
 import CompaignReport from "./CompaignReport";
 import "./Compaign.css";
 
-
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Compaign() {
@@ -18,10 +17,17 @@ function Compaign() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedCompaign, setSelectedCompaign] = useState(null);
+  const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     getFetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList);
+  }, [dataList]);
 
   const getFetchData = async () => {
     try {
@@ -30,6 +36,14 @@ function Compaign() {
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  const handleSearch = (query) => {
+    const filteredList = dataList.filter((compaign) => {
+      const fullName = `${compaign.compaign_title} ${compaign.target_aud} ${compaign.date}`;
+      return fullName.toLowerCase().includes(query.toLowerCase());
+    });
+    setFilteredDataList(filteredList);
   };
 
   const handleRefreshClick = () => {
@@ -57,11 +71,22 @@ function Compaign() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
+const handleDelete = async (id) => {
     try {
       await axios.delete(`/Compaign/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal();
     } catch (err) {
       alert(err.message);
     }
@@ -94,22 +119,17 @@ function Compaign() {
   const handleCloseReportModal = () => setShowReportModal(false);
   const handleShowReportModal = () => setShowReportModal(true);
 
-
-  return (
+return (
     <div className="main">
-    <div className="card recent-sales overflow-auto">
-     
-          <div className="card-body">
-          
-            <div class="page-header">
-              <div class="add-item d-flex">
-
+      <div className="card recent-sales overflow-auto">
+        <div className="card-body">
+          <div class="page-header">
+            <div class="add-item d-flex">
               <div class="card-title">
-                  Active Campaigns
-                  <h6>Manage Campaign details</h6>
-                </div>
+                Active Campaigns
+                <h6>Manage Campaign details</h6>
               </div>
-
+              </div>
               <ul class="table-top-head">
               <li>
                   <div className="button-container">
@@ -179,12 +199,27 @@ function Compaign() {
             </Modal.Body>
           </Modal>
 
-
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
       
 
        
 <div className="table-container">
-      <SearchBar/>
+      <SearchBar onSearch={handleSearch}/>
         <table className="table table-borderless datatable">
 
           <thead className="table-light">
@@ -198,16 +233,16 @@ function Compaign() {
             </tr>
           </thead>
           <tbody>
-            {dataList.length ? (
-              dataList.map((compaign) => (
+            {filteredDataList.length ? (
+              filteredDataList.map((compaign) => (
                 <tr key={compaign._id}>
                   <td>{compaign.compaign_title}</td>
                   <td>{compaign.date}</td>
                   <td>{compaign.objective}</td>
                   <td>{compaign.target_aud}</td>
                   <td>{compaign.budjet}</td>
+                  <td className="action">
                   
-                  <td>
                     <div className="buttons">
                       <button
                         className="btn btn-edit"
@@ -222,7 +257,8 @@ function Compaign() {
                        <i className="bi bi-trash-fill"></i>
                       </button>
                       </div>
-                  </td>
+                      </td>
+                  
                 </tr>
               ))
             ) : (

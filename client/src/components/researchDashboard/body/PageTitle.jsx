@@ -4,7 +4,7 @@ import React from 'react'
 function PageTitle  ({page})  {
   return (
     <div className='pagetitle'>
-        <h1>{page}</h1>
+        <h1>Promotion</h1>
         <nav>
             <ol className="breadcumb">
                 <li className="breadcumb-item">
