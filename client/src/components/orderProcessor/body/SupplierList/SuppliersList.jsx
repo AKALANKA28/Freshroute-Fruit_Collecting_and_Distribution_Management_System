@@ -169,11 +169,6 @@ const SuppliersList = () => {
                                      filterColumns={
                                          [
                                             {
-                                                name: "Supplier Name",
-                                                tag: "supplierName",
-                                                type: "text"
-                                            },
-                                            {
                                                 name: "Fruit Type",
                                                 tag: "fruit",
                                                 type: "text"
@@ -202,11 +197,6 @@ const SuppliersList = () => {
                                                 name: "Date Can Be Given",
                                                 tag: "dateCanBeGiven",
                                                 type: "date"
-                                            },
-                                            {
-                                                name: "Contact No",
-                                                tag: "contact",
-                                                type: "text"
                                             }
                                          ]
                                      }
