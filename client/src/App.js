@@ -64,10 +64,10 @@ import VolumePage from "./components/rpromotionDashboard/VolumePage";
 import PricePage from "./components/rpromotionDashboard/PricePage";
 import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 
-//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-//import NormalOrder from "./components/NormalOrder/NormalOrder";
-//import EditOrder from "./components/NormalOrder/EditOrder";
+// import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+// import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+// import NormalOrder from "./components/NormalOrder/NormalOrder";
+// import EditOrder from "./components/NormalOrder/EditOrder";
 
 import PredictionDetails from "./components/farmer/PredictionDetails";
 

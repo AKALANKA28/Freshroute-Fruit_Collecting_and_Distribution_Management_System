@@ -18,16 +18,25 @@ const requestschema = new mongoose.Schema({
     },
 
     quantity: {
-        type: String,
+        type: String ,
         required: true,
     },
 
     quality: {
         type: String,
         required: true,
-    }
+    },
 
-   
+    date: {
+        type: String, // order placed date
+        required: true,
+    },
+    
+    datetobe: {
+        type: String, //  date to be delivered
+        required: true,
+    },
+
 });
 
 module.exports = mongoose.model("Request", requestschema);

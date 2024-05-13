@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Header from './header/header'
+ import Header from './header/header'
 import Sidebar from './sidebar/Sidebar'
 import Main from './body/Main'
 import Footer from './footer/Footer'
@@ -10,7 +10,7 @@ import Footer from './footer/Footer'
 const BMDashboard = () => {
   return (
     <div>
-      <Header />
+       <Header /> 
       <Sidebar />
       <Main />
       <Footer />
