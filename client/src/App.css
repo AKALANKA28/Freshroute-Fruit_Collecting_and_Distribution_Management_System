@@ -142,6 +142,15 @@ td{
   /* text-align: center; */
 }
 
+Link{
+  text-decoration: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+
 /*----------------------------------------------------
 #overrride some default bootsstrap styling
 -----------------------------------------------------*/

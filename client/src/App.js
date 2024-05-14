@@ -94,6 +94,7 @@ import Approvals from "./components/finance/body/Approvals/Approvals";
 import ApprovalPage from "./components/finance/ApprovalPage";
 import PaymentsPage from "./components/finance/PaymentsPage";
 import AddProduct from "./components/finance/AddProduct";
+import DasboardAccess from "./components/DasboardAccess";
 
 const router = createBrowserRouter([
   {
@@ -685,6 +686,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <AddProduct />
+      </div>
+    ),
+  },
+
+  {
+    path: "/dAccess",
+    element: (
+      <div>
+        <DasboardAccess />
       </div>
     ),
   },
