@@ -5,6 +5,19 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
     
     const displayedItems = items.slice(0, 10);
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'Approved':
+                return '#60f775';
+            case 'Declined':
+                return '#f25b50';
+            case 'pending':
+                return '#e6e663';
+            default:
+                return '';
+        }
+    };
+
     return (
         <div>
             <table className='table table-hover'>
@@ -13,10 +26,11 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
                         <th scope='col' style={{ width: '5%' }}>#</th>
                         <th className="col" style={{ width: '15%' }}>Fruit</th>
                         <th className="col" style={{ width: '15%' }}>Sub Category</th>
-                        <th className="col" style={{ width: '15%' }}>Quality</th>
+                        <th className="col" style={{ width: '10%' }}>Quality</th>
                         <th className="col" style={{ width: '15%' }}>Quantity</th>
-                        <th className="col" style={{ width: '15%' }}>Price of one</th>
+                        <th className="col" style={{ width: '15%' }}>Price of 1kg</th>
                         <th className="col" style={{ width: '15%' }}>Date Can Be Given</th>
+                        <th className="col" style={{ width: '15%' }}>Status</th>
                     </tr>
                 </thead>
 
@@ -27,9 +41,14 @@ const PredictionsDetailsListTableInDashboard = ({ items }) => {
                             <td>{prediction.fruit}</td>
                             <td>{prediction.subCategory}</td>
                             <td>{prediction.quality}</td>
-                            <td>{prediction.quantity}</td>
-                            <td>{prediction.price}</td>
+                            <td>{prediction.quantity} kg</td>
+                            <td>Rs. {prediction.price}</td>
                             <td>{prediction.dateCanBeGiven}</td>
+                            <td>
+                                <div style={{ backgroundColor: getStatusColor(prediction.status), width: '75px', height: '20px', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black' }}>
+                                    {prediction.status}
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

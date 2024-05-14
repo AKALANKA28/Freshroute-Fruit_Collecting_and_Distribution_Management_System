@@ -22,7 +22,7 @@ export default class NormalOrder extends Component {
     }
 
     retriveRequest(){
-        axios.get("http://localhost:8070/requests").then((res) =>{
+        axios.get("http://localhost:8070/requests/normal").then((res) =>{
             
             if(res.data.success){
                 this.setState({
@@ -51,7 +51,7 @@ export default class NormalOrder extends Component {
     handleSearchArea = (e) => {
         const searchKey = e.currentTarget.value;
     
-        axios.get('http://localhost:8070/requests').then((res) => {
+        axios.get('http://localhost:8070/requests/normal').then((res) => {
           if (res.data.success) {
             this.filterData(res.data.existingRequest, searchKey);
           }

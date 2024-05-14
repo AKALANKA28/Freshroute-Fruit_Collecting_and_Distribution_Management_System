@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import storage from "../../../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from "../../../../firebase"; // Import Firebase storage
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"; // Import Firebase storage functions
 
-axios.defaults.baseURL = "http://localhost:8070/";
+axios.defaults.baseURL = "http://localhost:8070/"; // Set default base URL for Axios requests
 
 const EmployeeForm = ({ handleSubmit, initialData }) => {
-  const [img, setImg] = useState(undefined);
-  const [imgPerc, setImgPerc] = useState(0);
-  const [file, setFile] = useState(undefined);
-  const [filePerc, setFilePerc] = useState(0);
-  const [dataList, setDataList] = useState([]);
-  const [nicError, setNicError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  // State variables using React Hooks
+  const [img, setImg] = useState(undefined); // State for image file
+  const [imgPerc, setImgPerc] = useState(0); // State for image upload progress percentage
+  const [file, setFile] = useState(undefined); // State for file
+  const [filePerc, setFilePerc] = useState(0); // State for file upload progress percentage
+  const [dataList, setDataList] = useState([]); // State for data list from server
+  const [nicError, setNicError] = useState(""); // State for NIC validation error
+  const [passwordError, setPasswordError] = useState(""); // State for password validation error
+  const [emailError, setEmailError] = useState(""); // State for email validation error
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
+  // Function to toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-
-
+  // Fetch data from server when component mounts
   useEffect(() => {
     getFetchData();
   }, []);
 
+  // Function to fetch data from server
   const getFetchData = async () => {
     try {
       const response = await axios.get("/Salary/");
@@ -35,6 +37,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     }
   };
 
+  // State for form data
   const [formData, setFormData] = useState({
     name: "",
     jobrole: "",
@@ -50,14 +53,17 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     fileUrl: "",
   });
 
+  // Upload image when 'img' state changes
   useEffect(() => {
     img && uploadFile(img, "imageUrl");
   }, [img]);
 
+  // Upload file when 'file' state changes
   useEffect(() => {
     file && uploadFile(file, "fileUrl");
   }, [file]);
 
+  // Function to upload file to Firebase storage
   const uploadFile = (file, fileType) => {
     const fileName = new Date().getTime() + file.name;
     const folder = fileType === "imageUrl" ? "images/profilePics/" : "files/qualifications/";
@@ -77,7 +83,6 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('DownloadURL - ', downloadURL);
           setFormData((prev) => ({
             ...prev,
             [fileType]: downloadURL
@@ -87,6 +92,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     );
   };
 
+  // Update form data when initial data changes
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
@@ -94,64 +100,64 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
   }, [initialData]);
 
   // Function to validate password
-const validatePassword = (password) => {
-  if (password.length < 8) {
-    return "Password must be at least 8 characters long.";
-  } else if (!/\d/.test(password) || !/[a-zA-Z]/.test(password) || !/[A-Z]/.test(password)) {
-    return "Password must contain at least one uppercase letter, one lowercase letter, and one number.";
-  } else {
-    return ""; // No error
-  }
-};
+  const validatePassword = (password) => {
+    if (password.length < 8) {
+      return "Password must be at least 8 characters long.";
+    } else if (!/\d/.test(password) || !/[a-zA-Z]/.test(password) || !/[A-Z]/.test(password)) {
+      return "Password must contain at least one uppercase letter, one lowercase letter, and one number.";
+    } else {
+      return ""; // No error
+    }
+  };
 
+  // Function to validate email
+  const validateEmail = (email) => {
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+      return "Invalid email address. Please enter a valid email.";
+    } else {
+      return ""; // No error
+    }
+  };
 
-// Function to validate email
-const validateEmail = (email) => {
-  if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
-    return "Invalid email address. Please enter a valid email.";
-  } else {
-    return ""; // No error
-  }
-};
+  // Function to handle form input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
+    if (name === "name" && /\d/.test(value)) {
+      return;
+    }
+    if (name === "bankname" && /\d/.test(value)) {
+      return;
+    }
+    if (name === "nic") {
+      validateNic(value);
+    }
+    if (name === "nic" && /[^0-9Vv]/.test(value)) {
+      return;
+    }
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
+    // Email validation
+    if (name === "email") {
+      const emailError = validateEmail(value);
+      setEmailError(emailError);
+    }
 
-  if (name === "name" && /\d/.test(value)) {
-    return;
-  }
-  if (name === "bankname" && /\d/.test(value)) {
-    return;
-  }
-  if (name === "nic") {
-    validateNic(value);
-  }
-  
-  // Email validation
-  if (name === "email") {
-    const emailError = validateEmail(value);
-    setEmailError(emailError);
-  }
+    // Password validation
+    if (name === "password") {
+      const passwordError = validatePassword(value);
+      setPasswordError(passwordError);
+    }
 
-  // Password validation
-  if (name === "password") {
-    const passwordError = validatePassword(value);
-    setPasswordError(passwordError);
-  }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-  setFormData((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
-
-
-  
-
+  // Function to validate NIC
   const validateNic = (nic) => {
-    const nicRegex = /^(1|2)\d{8}[vV]?$|^(1|2)\d{11}$/;
-    
+    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/;
+
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
     } else {
@@ -159,10 +165,11 @@ const handleChange = (e) => {
     }
   };
 
+  // Function to handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const currentDate = getCurrentDate();
-  const formDataWithDate = { ...formData, joineddate: currentDate };
+    const formDataWithDate = { ...formData, joineddate: currentDate };
 
     if (nicError === "") {
       handleSubmit(formDataWithDate);
@@ -170,6 +177,8 @@ const handleChange = (e) => {
       alert("Please correct the NIC error before submitting.");
     }
   };
+
+  // Function to get current date in YYYY-MM-DD format
   const getCurrentDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -178,6 +187,7 @@ const handleChange = (e) => {
     return `${year}-${month}-${day}`;
   };
 
+  // Set initial joined date on component mount
   useEffect(() => {
     const getCurrentDate = () => {
       const now = new Date();
@@ -280,51 +290,44 @@ const handleChange = (e) => {
         <div className="col-md-6">
           {/* Right section of the form */}
           <div className="mb-3">
-  <label htmlFor="email" className="form-label">
-    Email Address
-  </label>
-  <input
-    type="email"
-    className="form-control"
-    name="email"
-    placeholder="Email Address"
-    onChange={handleChange}
-    value={formData.email}
-    required
-  />
-  {emailError && <p className="text-danger">{emailError}</p>}
-</div>
-
-           <div className="mb-3">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
-        <div className="input-group">
-          <input
-            type={showPassword ? "text" : "password"}
-            className="form-control"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          
-          <button
-            className="btn btn-outline-secondary"
-            type="button"
-            onClick={toggleShowPassword}
-          >
-            {showPassword ? "Hide" : "Show"}
-          </button>
-          
-        </div>
-        {passwordError && <p className="text-danger">{passwordError}</p>}
-      </div>
-  
-
-
-
+            <label htmlFor="email" className="form-label">
+              Email Address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+              value={formData.email}
+              required
+            />
+            {emailError && <p className="text-danger">{emailError}</p>}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={toggleShowPassword}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+            {passwordError && <p className="text-danger">{passwordError}</p>}
+          </div>
           <div className="mb-3">
             <label htmlFor="accno" className="form-label">
               Account Number
@@ -365,7 +368,6 @@ const handleChange = (e) => {
               onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
-          
         </div>
       </div>
       <div className="d-flex justify-content-center">

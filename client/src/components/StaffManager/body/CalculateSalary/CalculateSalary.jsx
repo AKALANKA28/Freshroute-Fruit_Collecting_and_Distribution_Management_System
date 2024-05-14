@@ -12,6 +12,7 @@ import CalculateSalaryForm from "./CalculateSalaryForm";
 import CalculateSalaryReport from "./CalculateSalaryReport";
 import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./CalculateSalary.css";
+import { ToastContainer, toast } from 'react-toastify';
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function CalculateSalary() {
@@ -110,7 +111,7 @@ function CalculateSalary() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/CalculateSalary/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted");
       getFetchData();
     } catch (err) {
       alert(err.message);
@@ -122,7 +123,7 @@ function CalculateSalary() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/CalculateSalary/update/${formData._id}`, formData);
-      alert("Salary Calculated");
+      toast.success("Salary Calculated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -130,7 +131,7 @@ function CalculateSalary() {
     }
   };
 
- 
+
   
 
   
@@ -258,6 +259,18 @@ function CalculateSalary() {
       </div>
       </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       </div>
     
   );

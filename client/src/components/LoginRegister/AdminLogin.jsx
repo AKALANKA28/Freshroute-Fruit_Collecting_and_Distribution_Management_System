@@ -14,7 +14,7 @@ import { login } from "../../features/admin/adminSlice";
 
 
 const AdminLogin = () => {
-  const authState = useSelector((state) => state.auth);
+  // const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,18 +35,56 @@ const AdminLogin = () => {
     },
   });
 
+
+  // const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
+  // useEffect(() => {
+  //   if(user){
+  //     navigate("/tDashboard")
+  //   }else{
+  //     navigate("/")
+  //   }
+  // },[navigate, isSuccess])
+
   const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
   useEffect(() => {
-    if(user) {
-      if(user.second_role === "supplier_manager"){
-        navigate("/finance")
-      } else if (user.second_role === "coordinator" || user.second_role === "transport_manager" || user.second_role === "staff_manager" || user.second_role === "buyer_manager" || user.second_role === "order_manager" || user.second_role === "rp_manager") {
-        navigate("/sales")
-      } else {
-        navigate("/") // Handle default case here
-      }
+  if (user){
+    if(user.second_role === "finance_manager"){
+      navigate("/finance")
     }
-  }, [user, navigate, isSuccess]);
+    else if(user.second_role === "supplier_manager"){
+      navigate("/SMDashboard")
+    } else if (user.second_role === "coordinator") {
+      navigate("/sales")
+    } else if (user.second_role === "transport_manager") {
+      navigate("/sales")
+    }else if (user.second_role === "staff_manager") {
+      navigate("/sales")
+    }else if (user.second_role === "buyer_manager") {
+      navigate("/sales")
+    }else if (user.second_role === "order_manager") {
+      navigate("/sales")
+    }else if (user.second_role === "rp_manager") {
+      navigate("/sales")
+    } else{
+      navigate("/finance")
+    }
+  }
+       
+
+  },[navigate, isSuccess])
+
+  // const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
+  // useEffect(() => {
+  //   if(user) {
+  //     if(user.second_role === "supplier_manager"){
+  //       navigate("/finance")
+  //     } else if (user.second_role === "coordinator" || user.second_role === "transport_manager" || user.second_role === "staff_manager" || user.second_role === "buyer_manager" || user.second_role === "order_manager" || user.second_role === "rp_manager") {
+  //       navigate("/sales")
+  //     } else {
+  //       navigate("/") // Handle default case here
+  //     }
+  //   }
+  // }, [user, navigate, isSuccess]);
   
   // useEffect(() => {
   //   if(user.second_role == "supplier_manager"){
@@ -71,17 +109,7 @@ const AdminLogin = () => {
   // },[navigate, isSuccess])
   
 
-  // const authState = useSelector((state) => state);
 
-  // const { user, isError, isSuccess, isLoading, message } = authState;
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     navigate("/shop");
-  //   } else {
-  //     navigate("");
-  //   }
-  // }, [user, isError, isSuccess, isLoading]);
 
   return (
     <>

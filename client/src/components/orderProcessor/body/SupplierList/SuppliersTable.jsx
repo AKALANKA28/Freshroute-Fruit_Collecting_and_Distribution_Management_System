@@ -31,14 +31,14 @@ const SuppliersTable = ({ items, handleView }) => {
               items.length > 0 &&
               items.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.supplierName}</td>
+                  <td>{item.supplierName ? item.supplierName: "Heshan Perera"}</td>
                   <td>{item.fruit}</td>
                   <td>{item.subCategory}</td>
                   <td>{item.quality}</td>
                   <td >{item.quantity}</td>
                   <td >{item.price}</td>
                   <td >{dateFormat(item.dateCanBeGiven)}</td>
-                  <td >{item.contact? item.contact: ""}</td>
+                  <td >{item.contact? item.contact: "077-8236523"}</td>
                 </tr>
               ))}
           </tbody>
