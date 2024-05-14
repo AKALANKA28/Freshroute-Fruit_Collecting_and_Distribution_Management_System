@@ -320,7 +320,7 @@ function SuppliersList() {
              Cancel
            </Button>
            <Button variant="danger" onClick={handleDelete}>
-             Decline
+             Delete
            </Button>
          </Modal.Footer>
        </Modal>
