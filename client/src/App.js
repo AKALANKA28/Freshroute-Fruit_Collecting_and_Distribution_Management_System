@@ -39,6 +39,7 @@ import FDashboard from "./components/farmer/FDashboard";
 import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
 import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
+import SupplierLocations from "./components/supplierManagerDashboard/SupplierLocations";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import ProcessDetails from "./components/transportDashboard/ProcessDetails";
@@ -94,6 +95,8 @@ import Approvals from "./components/finance/body/Approvals/Approvals";
 import ApprovalPage from "./components/finance/ApprovalPage";
 import PaymentsPage from "./components/finance/PaymentsPage";
 import BuyerEdit from "./components/Buyer/Body/BuyerEdit"
+import AddProduct from "./components/finance/AddProduct";
+import DasboardAccess from "./components/DasboardAccess";
 
 const router = createBrowserRouter([
   {
@@ -426,6 +429,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/SupplierLocations",
+    element: (
+      <div>
+        <SupplierLocations />
+      </div>
+    ),
+  },
+
+  {
     path: "/Coordinator",
     element: (
       <div>
@@ -684,6 +696,24 @@ const router = createBrowserRouter([
     element: (
       <div>
         <DriverDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/addproduct",
+    element: (
+      <div>
+        <AddProduct />
+      </div>
+    ),
+  },
+
+  {
+    path: "/dAccess",
+    element: (
+      <div>
+        <DasboardAccess />
       </div>
     ),
   },

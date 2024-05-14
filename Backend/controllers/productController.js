@@ -6,18 +6,27 @@ const { cloudinaryUploadImg, cloudinaryDeleteImg } = require("../utils/cloudinar
 const fs = require("fs");
 
 
-exports.createProduct = asyncHandler(async( req, res) => {
-    try{
-        if(req.body.title){
-            req.body.slug = slugify(req.body.title);
-        }
-        const newProduct = await Product.create(req.body);
-        res.json(newProduct);
+exports.createProduct = asyncHandler(async (req, res) => {
+  try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
     }
-    catch(error){
-        throw new Error(error);
-    }
+
+    // Ensure req.body.grade is an array and has at least one element
+    const gradeIds = Array.isArray(req.body.grade) ? req.body.grade.map(({ _id }) => _id) : [];
+
+    const newProduct = await Product.create({
+      ...req.body,
+      grade: req.body.grade, // Pass the entire grade objects
+    });
+    
+
+    res.json(newProduct);
+  } catch (error) {
+    throw new Error(error);
+  }
 });
+
 
 exports.getAllProducts = asyncHandler(async (req, res) => {
     try {

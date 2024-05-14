@@ -18,7 +18,7 @@ const Card = () => {
 
     axios.get("/Prediction/totalEarnings")
       .then(response => {
-        setTotalEarnings(response.data.totalEarnings);
+        setTotalEarnings(response.data.totalEarnings.toFixed(2));
       })
       .catch(error => {
         console.error("Error fetching total earnings:", error);

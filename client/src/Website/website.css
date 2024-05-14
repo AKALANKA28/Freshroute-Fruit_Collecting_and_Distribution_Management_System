@@ -194,7 +194,7 @@
   height: 16px;
   background-image: url(./assets/ripped-paper-white-up.png);
   position: absolute;
-  top: -16px;
+  top: -24px;
   left: 0;
   /* z-index: 10; */
   transform: rotate(180deg);

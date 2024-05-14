@@ -48,7 +48,7 @@ exports.loginController = asyncHandler(async (req, res) => {
       _id: findUser?._id,
       name: findUser?.name,
       email: findUser?.email,
-      mobile: findUser?.mobile,
+      // mobile: findUser?.mobile,
       token: generateToken(findUser?._id),
     });
   } else {
@@ -79,7 +79,7 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
       _id: findAdmin?._id,
       name: findAdmin?.firstname,
       email: findAdmin?.email,
-      mobile: findAdmin?.mobile,
+      // mobile: findAdmin?.mobile,
       token: generateToken(findAdmin?._id),
     });
   } else {
@@ -350,15 +350,16 @@ exports.saveAddress = asyncHandler(async (req, res, next) => {
 
 // user cart
 exports.userCart = asyncHandler(async (req, res) => {
-  const { productId, quantity, price } = req.body;
+  const { productId, grade, quantity, price } = req.body;
   const { _id } = req.user;
-  console.log(req.user);
+  // console.log(req.user);
   validateMongoDbId(_id);
   try {
 
     let newCart = await new Cart({
       userId:_id,
       productId,
+      grade,
       quantity,
       price,
     }).save();
@@ -373,7 +374,10 @@ exports.getUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   validateMongoDbId(_id);
   try {
-    const cart = await Cart.find({ userId: _id }).populate( "productId");
+    const cart = await Cart.find({ userId: _id })
+    .populate( "productId")
+    .populate( "grade");
+
     // const cart = await Cart.findOne().populate("productId");
 
     res.json(cart);
@@ -412,12 +416,12 @@ exports.emptyCart = asyncHandler(async (req, res) => {
 
 exports.updateProductQuantityFromCart = asyncHandler(async (req, res) => { 
   const { _id } = req.user;
-  const {cartItemId, newQuantity} = req.params;
-  console.log(cartItemId);
+  const {cartItemId, quantity} = req.params;
+  // console.log(cartItemId);
   validateMongoDbId(_id);
   try {
     const cartItem = await Cart.findOne({userId:_id, _id: cartItemId })
-    cartItemId.quantity = newQuantity
+    cartItemId.quantity = quantity
     cartItem.save();
     res.json(cartItem);
   } catch (error) {
@@ -461,7 +465,7 @@ exports.getMyOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({ user: _id })
       .populate("user")
       .populate("orderItems.product")
-      // .populate("orderItems.grade");
+      .populate("orderItems.grade");
     res.json(orders);
   } catch (error) {
     throw new Error(error);
@@ -476,7 +480,7 @@ exports.getAllOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({})
       .populate("user")
       .populate("orderItems.product")
-      // .populate("orderItems.color");
+      .populate("orderItems.grade");
     res.json(orders);
   } catch (error) {
     throw new Error(error);
@@ -488,7 +492,7 @@ exports.getSingleOrder = asyncHandler(async (req, res) => {
       const { id } = req.params;
       validateMongoDbId(id)
       try {
-          const userOrders = await Order.findOne({_id: id}).populate('orderItems.product').populate('orderItems.color').populate('user').exec()
+          const userOrders = await Order.findOne({_id: id}).populate('orderItems.product').populate('orderItems.grade').populate('user').exec()
           res.json(userOrders)
       } catch (error) {
           throw new Error(error)
@@ -519,7 +523,7 @@ exports.deleteOrder = async (req, res) => {
     await Order.findByIdAndDelete(orderId); // Use orderId to find and delete the order
     res.status(200).json({ status: "Order deleted successfully" }); // Send success response
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({ status: "Error deleting order", error: err.message }); // Send error response
   }
 };
