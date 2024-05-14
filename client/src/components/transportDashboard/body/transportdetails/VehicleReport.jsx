@@ -2,53 +2,72 @@ import React, { Fragment } from "react";
 import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import logo from "../../../../assests/logo.png"; // Import your logo image
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  heading: {
-    fontSize: 24,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  table: {
-    display: "table",
-    width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: { 
-    flexDirection: "row",
-    backgroundColor: "#FFF",
-  },
-  tableColHeader: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 12,
-  },
-  tableCol: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 10,
-  },
-});
+// const styles = StyleSheet.create({
+//   page: {
+//     flexDirection: "row",
+//     backgroundColor: "#FFFFFF",
+//   },
+  
+//   section: {
+//     margin: 10,
+//     padding: 10,
+//     flexGrow: 1,
+//   },
+//   footer: {
+//     position: "absolute",
+//     bottom: 30, // Adjust this value as needed to position the footer
+//     left: 0,
+//     right: 0,
+//     textAlign: "center",
+//     fontSize: 10,
+//     color: "#666666",
+//   },
+//   heading: {
+//     fontSize: 24,
+//     marginBottom: 10,
+//     textAlign: "center",
+//   },
+//   table: {
+//     display: "table",
+//     width: "100%",
+//     borderStyle: "solid",
+//     borderWidth: 1,
+//     borderRightWidth: 0,
+//     borderBottomWidth: 0,
+//   },
+//   tableRow: { 
+//     flexDirection: "row",
+//     backgroundColor: "#FFF",
+//   },
+//   tableColHeader: {
+//     borderStyle: "solid",
+//     borderBottomWidth: 1,
+//     borderRightWidth: 1,
+//     padding: 5,
+//     flex: 1,
+//     fontSize: 12,
+//   },
+//   tableCol: {
+//     borderBottomWidth: 1,
+//     borderRightWidth: 1,
+//     paddingLeft: 0,
+//     paddingRight: 0,
+//     paddingTop: 8,
+//     paddingBottom: 8,
+//     fontSize: 8,
+//     width: "16.666%",
+//     textAlign: "center",
+//   },
+// });
+
+
 
 const VehicleReport = ({ dataList }) => {
-
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   const styles = StyleSheet.create({
     page: {fontSize: 11,paddingTop: 20,paddingLeft: 40,paddingRight: 40,lineHeight: 1.5,flexDirection: 'column' },
@@ -74,12 +93,26 @@ const VehicleReport = ({ dataList }) => {
     theader2 : { flex:2, borderRightWidth:0, borderBottomWidth:1},
 
     tbody:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1, borderColor : 'whitesmoke', borderRightWidth:1, borderBottomWidth:1},
+    
+    footer: { position: "absolute", bottom: 50,left: 0,right: 0,textAlign: "center", fontSize: 10, color: "#666666"},
 
+  
     // total:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1.5, borderColor : 'whitesmoke', borderBottomWidth:1},
 
     tbody2:{ flex:2, borderRightWidth:1, }
     
 });
+
+const Footer = () => (
+  <View style={styles.footer}>
+
+    <Text>..................</Text>
+    <Text>{"\n"}signature</Text>
+    <Text>{"\n"}© 2024 Freshroute.lk copyright all right reserved.</Text>
+
+
+  </View>
+);
 
 
 const InvoiceTitle = () => (
@@ -118,7 +151,7 @@ const UserAddress = () => {
               Aashani Samarakoon
           </Text>
         </View>
-        {/* <Text style={styles.addressTitle}>{reciept_data.date}</Text> */}
+        <Text style={styles.addressTitle}>Date: {currentDate}</Text>
       </View>
     </View>
   );
@@ -128,24 +161,24 @@ const TableHead = () => {
   return (
     <View style={{ width:'100%', flexDirection :'row', marginTop:10}}>
       <View style={[styles.theader, styles.theader2]}>
-        <Text>Vehicle Number</Text>   
+        <Text>Vehicle</Text>   
       </View>
-      <View style={styles.theader}>
+       <View style={styles.theader}>
         <Text>Type</Text>   
+      </View> 
+       <View style={styles.theader}>
+        <Text>Condi</Text>   
       </View>
       <View style={styles.theader}>
-        <Text>Conditions</Text>   
-      </View>
+        <Text>Capa</Text>   
+      </View> 
       <View style={styles.theader}>
-        <Text>Capacity</Text>   
+        <Text>Owner</Text>   
       </View>
-      <View style={styles.theader}>
-        <Text>Owner Nam</Text>   
-      </View>
-      <View style={styles.theader}>
+      {/* <View style={styles.theader}>
         <Text>Email</Text>   
-      </View>
-      <View style={styles.theader}>
+      </View> */}
+      <View style={[styles.theader,styles.theader2]}>
         <Text>Phone</Text>   
       </View>
       <View style={styles.theader}>
@@ -155,7 +188,7 @@ const TableHead = () => {
         <Text>Branch</Text>   
       </View>
       <View style={styles.theader}>
-        <Text>Account Number</Text>   
+        <Text>Account</Text>   
       </View>
     </View>
   );
@@ -171,20 +204,20 @@ const TableBody = () => {
           </View>
           <View style={styles.tbody}>
             <Text>{vehicle.type}</Text>   
-          </View>
-          <View style={styles.tbody}>
+          </View> 
+           <View style={styles.tbody}>
             <Text>{vehicle.conditions}</Text>   
           </View>
           <View style={styles.tbody}>
             <Text>{vehicle.capacity}</Text>   
-          </View>
+          </View> 
           <View style={styles.tbody}>
             <Text>{vehicle.owner_name}</Text>   
           </View>
-          <View style={styles.tbody}>
+          {/* <View style={styles.tbody}>
             <Text>{vehicle.email}</Text>   
-          </View>
-          <View style={styles.tbody}>
+          </View> */}
+          <View style={[styles.tbody, styles.tbody2]}>
             <Text>{vehicle.phone}</Text>   
           </View>
           <View style={styles.tbody}>
@@ -226,6 +259,7 @@ const TableBody = () => {
 //   );
 // };
 
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -234,6 +268,8 @@ const TableBody = () => {
         <UserAddress/>
         <TableHead/>
         <TableBody/>
+        <Footer/>
+      
         {/* <TableTotal/> */}
     </Page>
       {/* <Page size="A4" style={styles.page}>
@@ -246,6 +282,8 @@ const TableBody = () => {
               <Text style={styles.tableColHeader}>Objective</Text>
               <Text style={styles.tableColHeader}>Target audience</Text>
               <Text style={styles.tableColHeader}>Budjet</Text>
+
+              
             
             </View>
             {dataList.map((expense, index) => (

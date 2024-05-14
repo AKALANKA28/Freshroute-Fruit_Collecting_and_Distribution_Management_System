@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
@@ -145,6 +145,20 @@ function Vehicle() {
             </div>
             <ul class="table-top-head">
             <li>
+                      <BlobProvider
+                        document={<VehicleReport dataList={dataList} />}
+                        fileName="Vehicle_Report.pdf"
+                      >
+                        {({ url, blob }) => (
+                          <div className="button-container">
+                            <a href={url} target="_blank">
+                              <img src={Pdf} alt="Pdf Icon" className="icon" />
+                            </a>
+                          </div>
+                        )}
+                      </BlobProvider>
+                    </li>
+            {/* <li>
                   <div className="button-container">
                       <a onClick={handleShowReportModal}>
                           <img src={Pdf} alt="Pdf Icon"  className="icon"  />
@@ -155,6 +169,7 @@ function Vehicle() {
           </Modal.Header>
           <Modal.Body>
             <PDFViewer width="100%" height="500px">
+
               <VehicleReport dataList={dataList} />
             </PDFViewer>
           </Modal.Body>
@@ -165,7 +180,7 @@ function Vehicle() {
           </Modal.Footer>
         </Modal>
       </div>
-      </li>
+      </li> */}
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
