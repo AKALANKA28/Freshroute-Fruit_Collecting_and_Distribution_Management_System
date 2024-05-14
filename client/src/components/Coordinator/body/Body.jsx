@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './main.css';
 
-import Cards from './Cards';
-import Reports from './Reports';
 
 import RecentActivity from './RecentActivity';
 import BudgetReport from './BudgetReport';
 import RecentAdedQuality from './RecentAdedQuality'
-import News from './News';
+
 import BackToTop from './BackToTop';
 import SpinnerModal from '../../spinner/SpinnerModal'; 
 import TopCards from '../../Coordinator/body/TopCards';
