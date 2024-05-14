@@ -11,6 +11,11 @@ import {
 import logo from "../../../../assests/logo.png"; // Import your logo image
 
 const SalesReport = ({ dataList }) => {
+
+  const total = dataList.reduce((sum, sales) => {
+    return sum + sales.totalPrice;
+  }, 0);
+  
   const reciept_data = {
     id: "642be0b4bbe5d71a5341dfb1",
     invoice_no: "20200669",
@@ -251,9 +256,8 @@ const SalesReport = ({ dataList }) => {
         </View>
         <View style={styles.tbody}>
           <Text>
-            {reciept_data.items.reduce((sum, item) => sum + item.price, 0)}
+          <Text>{total.toFixed(2)}</Text>
 
-            {/* {reciept_data.items.reduce((sum, item) => sum + (item.price * item.qty), 0)} */}
           </Text>
         </View>
       </View>
