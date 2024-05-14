@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import SpinnerModal from '../../../spinner/SpinnerModal';
+import { ToastContainer, toast } from 'react-toastify';
 
 function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
   const [loading, setLoading] = useState(true);
@@ -56,10 +57,10 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
       });
       fetchSupplierRequests();
       handleCloseModal();
-      alert("Supplier Request Added");
+      toast.success("Supplier Request Added");
       window.location.reload();
     } catch (error) {
-      console.error("Error accepting request:", error);
+      toast.error("Error accepting request:", error);
     }
   };
 
@@ -71,10 +72,10 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
       await axios.delete(`/pendingSupplier/delete/${selectedRequest._id}`);
       fetchSupplierRequests();
       handleCloseDeclineModal();
-      alert("Supplier Request Declined");
+      toast.success("Supplier Request Declined");
       window.location.reload();
     } catch (error) {
-      console.error("Error declining request:", error);
+      toast.error("Error declining request:", error);
     }
   };
 
@@ -160,6 +161,20 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
         </tbody>
       </table>
       )}
+
+<ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Approve Request</Modal.Title>

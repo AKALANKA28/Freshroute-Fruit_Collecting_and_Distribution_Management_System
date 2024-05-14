@@ -114,7 +114,7 @@ export default function BuyerEdit(props) {
         <br></br>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Customer</label>
-          <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Enter Customer Name"
+          <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Enter Customer Name" 
           onKeyPress={(e) => {
             const pattern = /[a-zA-Z\s]/; // Regular expression to match letters and spaces
             if (!pattern.test(e.key)) {
@@ -130,7 +130,7 @@ export default function BuyerEdit(props) {
 
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Fruit</label>
-          <select className="form-select" aria-label="Default select example"
+          <select className="form-select" aria-label="Default select example" disabled
            value={fruit}
             onChange={(e)=>{
               setFruit(e.target.value)
@@ -148,22 +148,13 @@ export default function BuyerEdit(props) {
 
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Sub Category</label>
-          <select className="form-select" aria-label="Default select example"
-            onChange={(e)=>{
-              setCategory(e.target.value)
-            }}
-            value={category}
-          >
-            <option selected>Open this select menu</option>
-            <option value="Kolikuttu">Kolikuttu</option>
-            <option value="Ambul">Ambul</option>
-            <option value="Seeni">Seeni</option> 
-            <option value="Vilad">Vilad</option>
-            <option value="Alphonso">Alphonso</option>
-            <option value="Mauritius">Mauritius</option> 
-            <option value="Mandarin">Mandarin</option>
-            <option value="Sweet">Sweet</option> 
-          </select>
+           <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Enter Customer Name"
+           value={category}
+           onChange={(e)=>{
+             setCategory(e.target.value)
+           }} 
+           disabled
+           />
         </div>
 
         <div className="mb-3">
@@ -179,7 +170,7 @@ export default function BuyerEdit(props) {
 
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Quality</label>
-          <select className="form-select" aria-label="Default select example"
+          <select className="form-select" aria-label="Default select example" disabled
             onChange={(e)=>{
               setQuality(e.target.value)
             }}

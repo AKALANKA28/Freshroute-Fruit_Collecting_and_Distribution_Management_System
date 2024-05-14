@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import FruitTypeForm from "./FruitTypeForm";
 import FruitTypeReport from "./FruitTypeReport";
+import { ToastContainer, toast } from 'react-toastify';
 
 import "./FruitType.css";
 import SpinnerModal from '../../../spinner/SpinnerModal';
@@ -100,7 +101,7 @@ function FruitType() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/FruitType/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted!");
       getFetchData();
       handleCloseDeleteModal();
     } catch (err) {
@@ -111,7 +112,7 @@ function FruitType() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/FruitType/add", { ...formData, imageUrl: formData.imageUrl });
-      alert("Fruit Type Added");
+      toast.success("Fruit Type Added!");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -122,7 +123,7 @@ function FruitType() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/FruitType/update/${formData._id}`, { ...formData, imageUrl: formData.imageUrl });
-      alert("Fruit Type Updated");
+      toast.success("Fruit Type Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -300,6 +301,18 @@ function FruitType() {
           </div>
         </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
     </div>
   );
 }

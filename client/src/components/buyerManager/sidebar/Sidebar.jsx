@@ -22,7 +22,7 @@ const Sidebar = () => {
                 </div>
                 <ul className="sidebar-nav" id="sidebar-nav">
                     <li className="nav-item">
-                        <a className="nav-link dashboard-button" href="/BuyerDashboard">
+                        <a className="nav-link dashboard-button" href="/BMDashboard">
                             <i className="bi bi-grid"></i>
                             <span>Dashboard</span>
                         </a>
