@@ -36,7 +36,7 @@ const addEmployee = async (req, res) => {
       accno,
       bankname,
       fileUrl,
-      joineddate: currentDate,
+      joineddate,
       salary: 0,
       allowance: 0,
       epfe: 0,
