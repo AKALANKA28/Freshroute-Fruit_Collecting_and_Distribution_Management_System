@@ -127,7 +127,7 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
           EPF - Employee Contribution
         </label>
         <select
-          className="form-select"
+          className="form-control"
           name="epfe"
           value={formData.epfe}
           onChange={handleChange}
@@ -145,7 +145,7 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
           EPF - Employer Contribution
         </label>
         <select
-          className="form-select"
+          className="form-control"
           name="epfr"
           value={formData.epfr}
           onChange={handleChange}
@@ -163,7 +163,7 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
           ETF - Employer Contribution
         </label>
         <select
-          className="form-select"
+          className="form-control"
           name="etf"
           value={formData.etf}
           onChange={handleChange}

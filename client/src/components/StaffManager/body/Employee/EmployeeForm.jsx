@@ -238,7 +238,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
               Job role
             </label>
             <select
-              className="form-select"
+              className="form-control"
               name="jobrole"
               onChange={handleChange}
               value={formData.jobrole}

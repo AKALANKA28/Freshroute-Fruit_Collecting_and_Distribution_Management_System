@@ -133,7 +133,7 @@ const TopCards = () => {
 
                                 <div className="d-flex align-items-center">
                                     <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i className="bi bi-people"></i>
+                                        <i className="bi bi-truck"></i>
                                     </div>
                                     <div className="ps-3">
                                         <h6 className='card-price'>

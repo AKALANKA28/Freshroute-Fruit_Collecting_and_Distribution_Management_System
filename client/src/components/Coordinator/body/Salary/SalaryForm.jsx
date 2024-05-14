@@ -15,6 +15,11 @@ const SalaryForm = ({ handleSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "jobrole" && /[^\p{L}\s]/u.test(value)) {
+      return; 
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value
@@ -69,7 +74,7 @@ const SalaryForm = ({ handleSubmit, initialData }) => {
           placeholder="Date"
           value={formData.date}
           onChange={handleChange}
-          required
+          disabled
         />
       </div>
       <div className="mb-3">

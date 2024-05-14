@@ -108,10 +108,10 @@ const JoinWithUsStaff = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "name" && /\d/.test(value)) {
+    if (name === "name" && /[^\p{L}\s]/u.test(value)) {
       return;
     }
-    if (name === "bankname" && /\d/.test(value)) {
+    if (name === "bankname"&& /[^\p{L}\s]/u.test(value)) {
       return;
     }
     if (name === "nic") {
@@ -313,7 +313,7 @@ const JoinWithUsStaff = () => {
                   Job role
                 </label>
                 <select
-                  className="form-select"
+                  className="form-control"
                   name="jobrole"
                   onChange={handleChange}
                   value={formData.jobrole}

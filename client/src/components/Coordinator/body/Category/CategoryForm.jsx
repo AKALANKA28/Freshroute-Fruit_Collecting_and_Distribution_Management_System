@@ -117,7 +117,7 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
             Fruit
           </label>
           <select
-            className="form-select"
+            className="form-control"
             name="fruit"
             onChange={handleChange}
             value={formData.fruit}
@@ -154,7 +154,7 @@ const CategoryForm = ({ handleSubmit, initialData }) => {
             Quality
           </label>
           <select
-            className="form-select"
+            className="form-control"
             name="quality"
             onChange={handleChange}
             value={formData.quality}

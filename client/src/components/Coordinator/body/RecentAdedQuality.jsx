@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import CardFilter from './CardFilter';
 
-const TopSellings = () => {
+const RecentAddedQuality = () => {
     const [items, setItems] = useState([]);
     const [filter, setFilter] = useState('Today');
 
@@ -73,4 +73,4 @@ const TopSellings = () => {
     );
 }
 
-export default TopSellings;
+export default RecentAddedQuality;

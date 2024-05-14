@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import CalculateSalaryForm from "./CalculateSalaryForm";
@@ -58,8 +60,35 @@ function CalculateSalary() {
     getFetchData();
   };
 
+
+  const generateExcelFile = () => {
+    
+    const rearrangedDataList = dataList.map(salary => ({
+      Name: salary.name,
+      Job_Role: salary.jobrole,
+      Basic_Salary: salary.salary,
+      Allowance: salary.allowance,
+      Employee_Contribution: salary.epfe,
+      Employer_Contribution: salary.epfr,
+      ETF: salary.etf,
+      Net_Salary: salary.netsalary,
+      
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Salary Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "salary_report.xlsx");
+  };
+
   const handleButtonClick = () => {
     getFetchData();
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
@@ -102,17 +131,7 @@ function CalculateSalary() {
     }
   };
 
-  const handlePay = async (calculateSalary) => {
-    try {
-      const { _id } = calculateSalary;
-      await axios.put(`/CalculateSalary/update/${_id}`, { allowance: null, netsalary: null });
-      toast.success("Salary Paid");
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-  
+
   
 
   
@@ -144,27 +163,19 @@ function CalculateSalary() {
 
               <ul class="table-top-head">
               <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+              <BlobProvider
+                  document={<CalculateSalaryReport dataList={dataList}/>}
+                  fileName="Salary.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
                       </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Employee Salary Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px" >
-              <CalculateSalaryReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
+                    </div>
+                  )}
+                </BlobProvider>
+              </li>
                 <li>
                   <div className="button-container">
                       <a href="#" onClick={handleButtonClick}>
@@ -208,7 +219,7 @@ function CalculateSalary() {
                 <th scope="col">Allowance</th>
                 <th scope="col">Net Salary</th>
                 <th>Calculator</th>
-                <th>Pay Salary</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -220,9 +231,10 @@ function CalculateSalary() {
                     <td>{employee.nic}</td>
                     <td>{employee.accno}</td>
                     <td>{employee.bankname}</td>
-                    <td>{employee.salary}</td>
-                    <td>{employee.allowance}</td>
-                    <td>{employee.netsalary}</td>
+                    <td >{employee.salary ? `Rs.${employee.salary.toFixed(2)}` : ''}</td>
+                    <td >{employee.allowance ? `Rs.${employee.allowance.toFixed(2)}` : ''}</td>
+                    <td >{employee.netsalary ? `Rs.${employee.netsalary.toFixed(2)}` : ''}</td>
+                    
                     <td>
                       <div className="justify-content-center buttons">
                         <button
@@ -233,16 +245,7 @@ function CalculateSalary() {
                         </button>
                         </div>
                         </td>
-                        <td>
-                          <div>
-                        <button
-                          className="btn btn-success"
-                          onClick={() =>handlePay(employee)}
-                        >
-                          <i className="bi bi-paypal">Pay</i>
-                        </button>
-                      </div>
-                    </td>
+                       
                   </tr>
                 ))
               ) : (
