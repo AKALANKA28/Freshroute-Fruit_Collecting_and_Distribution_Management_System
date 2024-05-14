@@ -151,10 +151,15 @@ const EmployeeReport = ({ dataList }) => {
  
  // Function to format currency
  const formatCurrency = (amount) => {
-   if (amount == null) {
-     return ""; // or any default value you prefer
-   }
-   return `RS:${amount.toFixed(2)}`;
- };
+  if (amount == null || amount == 0 ) {
+    return ""; // or any default value you prefer
+  }
+  return `Rs:${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+};
+
+
+
+
+ 
 
 export default EmployeeReport;

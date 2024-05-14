@@ -139,9 +139,8 @@ const JoinWithUsStaff = () => {
   };
 
   const validateNic = (nic) => {
-    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/ && /[^0-9Vv]/;
+    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/;
 
-    
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
     } else {

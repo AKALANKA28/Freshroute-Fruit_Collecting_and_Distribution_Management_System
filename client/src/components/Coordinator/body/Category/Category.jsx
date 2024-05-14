@@ -410,7 +410,7 @@ function Category() {
                     <td>{category.category}</td>
                     <td>{category.quality}</td>
                     <td className="description2">{category.qualityDesc}</td>
-                    <td>{typeof category.price === 'number' ? `Rs.${category.price.toFixed(2)}` : ''}</td>
+                    <td>{category.price ? `Rs.${category.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
 
 
                     <td className="action">

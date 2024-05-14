@@ -65,7 +65,8 @@ const SalaryTable = () => {
                     {salary.jobrole}
                         
                     </td>
-                    <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
+                    
+                    <td>{salary.salary ? `Rs.${salary.salary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
                     
                 </tr>
               ))
