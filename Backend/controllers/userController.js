@@ -48,7 +48,7 @@ exports.loginController = asyncHandler(async (req, res) => {
       _id: findUser?._id,
       name: findUser?.name,
       email: findUser?.email,
-      mobile: findUser?.mobile,
+      // mobile: findUser?.mobile,
       token: generateToken(findUser?._id),
     });
   } else {
@@ -79,7 +79,7 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
       _id: findAdmin?._id,
       name: findAdmin?.firstname,
       email: findAdmin?.email,
-      mobile: findAdmin?.mobile,
+      // mobile: findAdmin?.mobile,
       token: generateToken(findAdmin?._id),
     });
   } else {
@@ -352,7 +352,7 @@ exports.saveAddress = asyncHandler(async (req, res, next) => {
 exports.userCart = asyncHandler(async (req, res) => {
   const { productId, grade, quantity, price } = req.body;
   const { _id } = req.user;
-  console.log(req.user);
+  // console.log(req.user);
   validateMongoDbId(_id);
   try {
 
@@ -417,7 +417,7 @@ exports.emptyCart = asyncHandler(async (req, res) => {
 exports.updateProductQuantityFromCart = asyncHandler(async (req, res) => { 
   const { _id } = req.user;
   const {cartItemId, quantity} = req.params;
-  console.log(cartItemId);
+  // console.log(cartItemId);
   validateMongoDbId(_id);
   try {
     const cartItem = await Cart.findOne({userId:_id, _id: cartItemId })
@@ -523,7 +523,7 @@ exports.deleteOrder = async (req, res) => {
     await Order.findByIdAndDelete(orderId); // Use orderId to find and delete the order
     res.status(200).json({ status: "Order deleted successfully" }); // Send success response
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({ status: "Error deleting order", error: err.message }); // Send error response
   }
 };
