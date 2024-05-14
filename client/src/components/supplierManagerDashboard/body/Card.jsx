@@ -72,12 +72,12 @@ const Card = () => {
             <h5 className="card-title">
               Details of Supply Requests
             </h5>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center row">
               
             <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
             <i className="fas fa-clipboard-list pending"></i>
               </div>
-              <div className="">
+              <div className="col">
                 <h6 className='card-price supply-status'>
                 <a href='/SupplyRequests' className="link">{totalPendingSupplies} <span className="status-label">Pending</span></a>
                 </h6>
@@ -86,7 +86,7 @@ const Card = () => {
               <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
               <i className="fas fa-check-circle"></i>
               </div>
-              <div className="">
+              <div className="col">
                 <h6 className='card-price supply-status'>
                 <a href='/ApprovedSupplies' className="link">{totalApprovedSupplies} <span className="status-label">Approved</span></a>
                 </h6>
@@ -95,7 +95,7 @@ const Card = () => {
               <div className="card-icon rounded-circle d-flex align-items-center justify-content-center ">
               <i className="fas fa-times-circle declined"></i>
               </div>
-              <div className="">
+              <div className="col">
                 <h6 className='card-price supply-status'>
                 <a href='/DeclinedSupplies' className="link">{totalDeclinedSupplies} <span className="status-label">Declined</span></a>
                 </h6>
