@@ -13,7 +13,7 @@ function RequestedOrder() {
     }, []);
 
     const retrieveRequests = () => {
-        axios.get("http://localhost:8070/requests").then((res) => {
+        axios.get("http://localhost:8070/requests/all").then((res) => {
             if(res.data.success){
                 setRequests(res.data.existingRequest);
             }
@@ -34,26 +34,44 @@ function RequestedOrder() {
                 });
         }
     }
+    // const confirmOrder = (id) => {
+    //     const isConfirmed = window.confirm('Are you sure you want to confirm this order?');
+        
+    //     if (isConfirmed) {
+    //         axios.post("http://localhost:8070/normalOrder/add", { requestId: id })
+    //             .then(() => {
+    //                 axios.delete(`http://localhost:8070/request/delete/${id}`)
+    //                     .then(() => {
+    //                         alert('Order confirmed successfully!');
+    //                         navigate("NormalOrder"); // Navigate to the Normal Order page
+    //                     })
+    //                     .catch((err) => {
+    //                         console.error(err);
+    //                     });
+    //             })
+    //             .catch((err) => {
+    //                 console.error(err);
+    //             });
+    //     }
+    // }
+
     const confirmOrder = (id) => {
         const isConfirmed = window.confirm('Are you sure you want to confirm this order?');
         
         if (isConfirmed) {
-            axios.post("http://localhost:8070/normalOrder/add", { requestId: id })
+            axios.put(`http://localhost:8070/requestor/update/${id}`)
                 .then(() => {
-                    axios.delete(`http://localhost:8070/request/delete/${id}`)
-                        .then(() => {
-                            alert('Order confirmed successfully!');
-                            navigate("NormalOrder"); // Navigate to the Normal Order page
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
+                    alert('Order confirmed successfully!');
+                    window.location.href = "http://localhost:3000/NormalOrder";  // Navigate to the Normal Order page
                 })
                 .catch((err) => {
                     console.error(err);
                 });
         }
     }
+    
+
+    
     
     
     

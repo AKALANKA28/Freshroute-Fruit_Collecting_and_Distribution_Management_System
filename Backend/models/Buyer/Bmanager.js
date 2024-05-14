@@ -26,6 +26,11 @@ const requestschema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    
+    orderStatus: {
+        type: String,
+        default: "REQUEST", // Set the default value here
+    },
 
     date: {
         type: String, // order placed date
@@ -35,9 +40,8 @@ const requestschema = new mongoose.Schema({
     datetobe: {
         type: String, //  date to be delivered
         required: true,
-    },
+    }, 
 
 });
 
 module.exports = mongoose.model("Request", requestschema);
-

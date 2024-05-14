@@ -93,6 +93,7 @@ import DriverDetails from "./components/transportDashboard/DriverDetails";
 import Approvals from "./components/finance/body/Approvals/Approvals";
 import ApprovalPage from "./components/finance/ApprovalPage";
 import PaymentsPage from "./components/finance/PaymentsPage";
+import BuyerEdit from "./components/Buyer/Body/BuyerEdit"
 
 const router = createBrowserRouter([
   {
@@ -657,6 +658,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ExpensePage />
+      </div>
+    ),
+  },
+  {
+    path: "/BuyerEdit/:id",
+    element: (
+      <div>
+        <BuyerEdit />
       </div>
     ),
   },
