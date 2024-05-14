@@ -65,15 +65,15 @@ function Employee() {
 
   const generateExcelFile = () => {
     
-    const rearrangedDataList = dataList.map(category => ({
+    const rearrangedDataList = dataList.map(employee => ({
       
-      Date: category.name,
-      Joined_Date: category.joineddate,
-      Job_Role: category.jobrole,
-      NIC: category.nic,
-      Email: category.email,
-      Accno: category.accno,
-      Bank_Name: category.bankname,
+      Date: employee.name,
+      Joined_Date: employee.joineddate,
+      Job_Role: employee.jobrole,
+      NIC: employee.nic,
+      Email: employee.email,
+      Accno: employee.accno,
+      Bank_Name: employee.bankname,
       
     }));
   

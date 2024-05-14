@@ -60,18 +60,17 @@ function CalculateSalary() {
     getFetchData();
   };
 
-
   const generateExcelFile = () => {
     
     const rearrangedDataList = dataList.map(salary => ({
       Name: salary.name,
       Job_Role: salary.jobrole,
-      Basic_Salary: salary.salary,
+      Salary: salary.salary,
+      Date: salary.date,
       Allowance: salary.allowance,
       Employee_Contribution: salary.epfe,
       Employer_Contribution: salary.epfr,
       ETF: salary.etf,
-      Net_Salary: salary.netsalary,
       
     }));
   
@@ -131,16 +130,8 @@ function CalculateSalary() {
     }
   };
 
-
   
-
   
-
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
-
   return (
     
     <div id='main' className='main'>
@@ -165,7 +156,7 @@ function CalculateSalary() {
               <li>
               <BlobProvider
                   document={<CalculateSalaryReport dataList={dataList}/>}
-                  fileName="Salary.pdf"
+                  fileName="SalaryReport.pdf"
                 >
                   {({ url, blob }) => (
                     <div className="button-container">
@@ -176,6 +167,7 @@ function CalculateSalary() {
                   )}
                 </BlobProvider>
               </li>
+              
                 <li>
                   <div className="button-container">
                       <a href="#" onClick={handleButtonClick}>
@@ -231,9 +223,10 @@ function CalculateSalary() {
                     <td>{employee.nic}</td>
                     <td>{employee.accno}</td>
                     <td>{employee.bankname}</td>
-                    <td >{employee.salary ? `Rs.${employee.salary.toFixed(2)}` : ''}</td>
-                    <td >{employee.allowance ? `Rs.${employee.allowance.toFixed(2)}` : ''}</td>
-                    <td >{employee.netsalary ? `Rs.${employee.netsalary.toFixed(2)}` : ''}</td>
+                    <td>{employee.salary ? `Rs.${employee.salary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
+                    <td>{employee.allowance ? `Rs.${employee.allowance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
+                    <td>{employee.netsalary ? `Rs.${employee.netsalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
+
                     
                     <td>
                       <div className="justify-content-center buttons">
@@ -245,7 +238,7 @@ function CalculateSalary() {
                         </button>
                         </div>
                         </td>
-                       
+                        
                   </tr>
                 ))
               ) : (
