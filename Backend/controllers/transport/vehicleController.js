@@ -16,6 +16,7 @@ exports.addVehicle = async (req, res) => {
       Branch,
       account_no,
       price,
+      paid,
     } = req.body;
 
     const newVehicle = new Vehicle({
@@ -31,6 +32,7 @@ exports.addVehicle = async (req, res) => {
       Branch,
       account_no,
       price,
+      paid,
     });
 
     await newVehicle.save();
@@ -92,6 +94,7 @@ exports.updateVehicle = async (req, res) => {
       Branch,
       account_no,
       price,
+      paid,
     } = req.body;
 
     const updateVehicle = {
@@ -107,6 +110,7 @@ exports.updateVehicle = async (req, res) => {
       Branch,
       account_no,
       price,
+      paid,
     };
 
     const updatedVehicle = await Vehicle.findByIdAndUpdate(
