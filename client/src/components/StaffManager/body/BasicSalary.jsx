@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import CardFilter from './CardFilter'
-import RecentSalesTable from './RecentSalesTable'
+import SalaryTable from './SalaryTable'
 
 const RecentSales = () => {
 
@@ -28,9 +28,9 @@ const RecentSales = () => {
       <CardFilter filterChange={handleFilterChange} />
       <div className="card-body">
         <h5 className="card-title">
-          Updated Salary Components<span>| {filter}</span>
+          Basic Salary <span>| {filter}</span>
         </h5>
-        <RecentSalesTable items={items} />
+        <SalaryTable items={items} />
       </div>
     </div>
   )
