@@ -13,7 +13,7 @@ import Navbar2 from "../../Navbar/Navbar2";
 import Grades from "../../Components/Grades";
 // import Grades from "../../Components/Grades";
 
-const SingleProduct = () => {
+const SingleProduct = ({ setG, gradeData }) => {
   const [quantity, setQuantity] = useState(1);
   const [grade, setGrade] = useState(null);
   const [productData, setProductData] = useState(null);
@@ -78,6 +78,12 @@ const SingleProduct = () => {
   };
   // console.log(uploadCart);
 
+  const [clicked, setClicked] = useState(false);
+
+  const handleClick = () => {
+    setG(gradeData); // Set the grade when clicked
+    setClicked(true); // Set clicked state to true
+  };
   return (
     <div>
       <Navbar2 />
@@ -113,12 +119,16 @@ const SingleProduct = () => {
                     <>
                       <div className="d-flex flex-column gap-2 pb-4">
                         <h3 className="product-heading">Grade</h3>
-                        <div className="d-flex flex-wrap gap-15 grade">
+                        <div className="d-flex flex-wrap gap-15 grade ">
                           {/* First span */}
-                          <span
-                            className="badge border border-1 p-3 button-select"
-                            style={{ backgroundColor: "black", color: "white" }}
+                          <div
+                            className={`badge border border-1 p-3 button-select text-center ${
+                              clicked ? "active" : ""
+                            }`}
+                            onClick={handleClick}
+                            style={{ cursor: "pointer" }}
                           >
+                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -129,13 +139,17 @@ const SingleProduct = () => {
                                 )
                               } // Pass the first third of the gradeData array
                             />
-                          </span>
+                          </div>
 
                           {/* Second span */}
-                          <span
-                            className="badge border border-1 p-3 button-select"
-                            style={{ backgroundColor: "black", color: "white" }}
+                          <div
+                            className={`badge border border-1 p-3 button-select text-center ${
+                              clicked ? "active" : ""
+                            }`}
+                            onClick={handleClick}
+                            style={{ cursor: "pointer" }}
                           >
+                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -146,13 +160,17 @@ const SingleProduct = () => {
                                 )
                               } // Pass the second third of the gradeData array
                             />
-                          </span>
+                          </div>
 
                           {/* Third span */}
-                          <span
-                            className="badge border border-1 p-3 button-select"
-                            style={{ backgroundColor: "black", color: "white" }}
+                          <div
+                            className={`badge border border-1 p-3 button-select text-center ${
+                              clicked ? "active" : ""
+                            }`}
+                            onClick={handleClick}
+                            style={{ cursor: "pointer" }}
                           >
+                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -162,7 +180,8 @@ const SingleProduct = () => {
                                 )
                               } // Pass the last third of the gradeData array
                             />
-                          </span>
+                          </div>
+                          <div className="text-center">Stock: 1000 KG</div>
                         </div>
                       </div>
                     </>

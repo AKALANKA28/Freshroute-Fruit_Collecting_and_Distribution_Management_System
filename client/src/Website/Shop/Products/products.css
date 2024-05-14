@@ -153,13 +153,17 @@
   margin-bottom: 0;
 }
 
-.grade span{
+.grade .button-select{
   font-size: 14px;
-  font-weight: 600;  
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  background-color: black;
+  padding-bottom: -20rem;
+  cursor: pointer;
 
 }
 
-.grade span:hover{
+.grade .button-select:hover{
   color: white;
   background-color: var(--hoverColor);
 }
@@ -210,3 +214,20 @@
   min-width: 1.8rem;
   margin-right: 3px;
 }
+
+/* .button-select{
+  background-color: var(--hoverColor);
+  color: white;
+  cursor: pointer;
+} */
+
+.button-select:hover {
+  background-color: lightgray; /* Change to your desired hover color */
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

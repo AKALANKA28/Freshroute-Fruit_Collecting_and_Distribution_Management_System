@@ -5,7 +5,7 @@ const Grades = ({ gradeData, setGrade }) => {
 
   return (
     <>
-      <ul className="grade ps-0 gap-5">
+      <ul className="grade p-0 mb-0 gap-5">
         {gradeData &&
           gradeData.map((grade) => {
             console.log(grade.title); // Logging grade title to check each title
