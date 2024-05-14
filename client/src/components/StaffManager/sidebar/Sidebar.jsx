@@ -74,41 +74,22 @@ const Sidebar = () => {
             </a>
           </li>
 
+
           <li className="nav-item">
-            <a
-              className="nav-link collapsed"
-              data-bs-target="#components-nav"
-              data-bs-toggle="collapse"
-              href="#"
-            >
-              <i class="bi bi-card-heading"></i>
-              <span>Message & Notice</span>
-              <i className="bi bi-chevron-down ms-auto"></i>
+            <a className="nav-link collapsed" href="/Notice">
+              <i class="bi bi-bell"></i>
+              <span>Notices</span>
             </a>
-
-            <ul
-              id="components-nav"
-              className="nav-content collapse"
-              data-bs-parent="#sidebar-nav"
-            >
-
-              <li>
-                <a href="/Notice">
-                  <i className="bi bi-circle">
-                    <span>Notices</span>
-                  </i>
-                </a>
-              </li>
-              <li>
-                <a href="/Message">
-                  <i className="bi bi-circle">
-                    <span>Messages</span>
-                  </i>
-                </a>
-              </li>
-              
-            </ul>
           </li>
+
+          <li className="nav-item">
+            <a className="nav-link collapsed" href="/Message">
+              <i class="bi bi-chat-left-text"></i>
+              <span>Messages</span>
+            </a>
+          </li>
+
+          
 
 
          

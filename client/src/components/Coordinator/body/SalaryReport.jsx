@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import CardFilter from './CardFilter';
 import SalaryChart from './SalaryChart';
 
-const WebTraffic = () => {
+const SalaryReport = () => {
 
     const [filter, setFilter] = useState('Today');
     const handleFilterChange = filter => {
@@ -25,4 +25,4 @@ const WebTraffic = () => {
   )
 }
 
-export default WebTraffic
+export default SalaryReport
