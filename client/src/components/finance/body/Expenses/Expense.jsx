@@ -200,7 +200,7 @@ function Expense() {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentPageItems.map((expense) => (
+                    {currentPageItems.reverse().map((expense) => (
                         <tr key={expense._id}>
                           <td>{new Date(expense.date).toLocaleDateString()}</td>
                           <td>{expense.category}</td>

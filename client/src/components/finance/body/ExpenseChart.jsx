@@ -31,7 +31,7 @@ const WebTrafficChart = () => {
     }));
 
     // Define an array of colors for the categories
-    const colors = ['#606c38', '#283618', '#dda15e', '#bc6c25'];
+    const colors = ['#606c38', '#283618', '#fefae0', '#dda15e', '#bc6c25'];
 
     // Chart
     useEffect(() => {

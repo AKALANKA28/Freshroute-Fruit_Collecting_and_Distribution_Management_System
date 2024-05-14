@@ -18,7 +18,7 @@ const expenseSchema = mongoose.Schema({
     category: {
         type: String,
         required: true,
-        // enum: ['Transport', 'Employee', 'Research', 'Promotion', 'Other']
+        enum: ['Transport', 'Employee', 'Research', 'Promotion', 'Payments']
       
     },
 
@@ -30,7 +30,6 @@ const expenseSchema = mongoose.Schema({
 
     description: {
         type: String,
-        required: true,
         minlength: [5, 'Description must be at least 5 characters long'] 
     }
 });
