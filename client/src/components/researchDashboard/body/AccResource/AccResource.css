@@ -1,16 +1,4 @@
-#main{
-    margin-top: 95px;
-    padding: 20px 30px;
-    transition: all 0.3s;
-  }
-  
-  
-  @media(max-width: 1199px){
-    #main{
-        padding: 0px;
-    }
-  }
-  
+
   .body .recent-sales{
     font-size: 14px;
   }
@@ -196,47 +184,8 @@
     color: #000000;
   }
   
-  /*-------------------------------- Searchbar ------------------------------------*/
-  
-  .search-bar{
-    min-width: 360px;
-    padding: 0 20px;
-  }
-  
-  .search-form{
-    width: 30%;
-  
-  }
-  
-  .search-form input{
-    border: 0;
-    font-size: 14px;
-    color: #012970;
-    border: 1px solid rgba(1, 41, 112, 0.2);
-    border-radius: 15px;
-    padding: 7px 40px 7px 20px;
-    width: 100%;
-    transition: 0.3s;
-  
-  }
-  
-  .search-form input:focus,
-  .search-form input:hover{
-    outline: none;
-    box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
-    border: 1px solid rgba(1, 41, 112, 0.3);
-  }
-  
-  .search-form button{
-    border: 0;
-    padding: 0;
-    margin-left: -30px;
-    background: none;
-  }
-  
-  .search-form i{
-    color: #012970;
-  }
+
+ 
 
   /*--------------------------------Form------------------*/
 
@@ -363,7 +312,7 @@ h2 {
   bottom: 780px;
 }
 button {
-  background-color: #28a745;
+  /* background-color: #28a745; */
   color: white;
   padding: 10px 20px;
   border-radius: 4px;
@@ -373,5 +322,5 @@ button {
 }
 
 button:hover {
-  background-color: #218838;
+  /* background-color: #218838; */
 }
