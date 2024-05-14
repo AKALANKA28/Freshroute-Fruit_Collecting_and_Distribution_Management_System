@@ -111,7 +111,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         } else {
             const exeRecord = {
                 supplierId: supplier.supplierId,
-                supplierName: supplier.supplierName? supplier.supplierName: "No Name",
+                supplierName: supplier.supplierName? supplier.supplierName: "Heshan Perera",
                 quantity: fillingQty,
                 price: supplier.price,
                 time: new Date()
@@ -251,7 +251,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                             <option value="">Select Supplier</option>
                             { supplierList && supplierList.map((sp, index) => (
                                 <option key={index} value={sp._id}>
-                                    Supplier: {sp.supplierName? sp.supplierName: "No Name"} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
+                                    Supplier: {sp.supplierName? sp.supplierName: "Heshar Perera"} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
                                 </option>
                             ))}
                         </select>

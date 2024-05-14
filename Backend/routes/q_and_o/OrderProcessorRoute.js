@@ -8,7 +8,7 @@ router.post("/supplierList", orderProcessController.getSupplierList);
 // Retrieve All supplier
 router.get("/allSuppliers", orderProcessController.getAllSuppliers);
 //Filtered Supplier List
-router.get("/allSuppliers", orderProcessController.getAllSuppliersByFilter);
+router.post("/allSuppliers", orderProcessController.getAllSuppliersByFilter);
 router.post("/updateSupplierDetails", orderProcessController.updateSuppliers);
 
 router.get("/pendingOrderList", orderProcessController.getAssignedOrderList);

@@ -25,7 +25,7 @@ const Body = () => {
             </div>
             <div className="col-lg-4">
               <QuickAccess />
-              <WeatherReport />
+              {/*<WeatherReport />*/}
               <OderDetail />
             </div>
         </div>
