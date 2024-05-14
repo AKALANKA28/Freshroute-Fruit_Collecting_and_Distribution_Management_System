@@ -132,6 +132,9 @@ ul{
   color: red !important;
   font-size: 12px !important;
   text-transform: capitalize;
+  margin-top: -20px;
+  margin-bottom: 14px;
+
 }
 
 td{
