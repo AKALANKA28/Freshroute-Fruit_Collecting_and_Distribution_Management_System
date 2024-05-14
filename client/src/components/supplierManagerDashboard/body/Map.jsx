@@ -25,12 +25,17 @@ const Map = () => {
   return (
     <div className='card'>
       <div className="card-body">
-        <h5 className="card-title">
-          Supplier Locations
-        </h5>
+      <div className="d-flex justify-content-between align-items-center">
+          <h5 className="card-title mb-0">
+            Supplier Locations
+          </h5>
+          <a href='/SupplierLocations'>
+            <i className='bi bi-arrows-fullscreen'></i>
+          </a>
+        </div>
         <div>
-      <SupplierLocationMap suppliers={suppliers} />
-    </div>
+          <SupplierLocationMap suppliers={suppliers} />
+        </div>
       </div>
     </div>
   )
