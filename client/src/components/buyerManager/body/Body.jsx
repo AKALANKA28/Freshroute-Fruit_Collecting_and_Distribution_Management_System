@@ -33,7 +33,7 @@ const Body = () => {
               </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
+              {/* <RecentActivity /> */}
               <div className="text-lg-end"> 
                 {/* <BudgetReport /> */}
               </div>
