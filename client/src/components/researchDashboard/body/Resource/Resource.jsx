@@ -18,6 +18,9 @@ function Resource() {
   const [dataList, setDataList] = useState([]);
   const [selectedResource, setSelectedResource] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
 
   useEffect(() => {
     getFetchData();
@@ -38,8 +41,8 @@ function Resource() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
+    const filteredList = dataList.filter((resource) => {
+      const fullName = `${resource.resource_type}`; // Customize this according to your data structure
       return fullName.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
@@ -72,11 +75,23 @@ function Resource() {
     setEditModalOpen(false);
   };
 
+  const handleShowDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Resource/delete/${id}`);
       alert("Successfully Deleted");
       getFetchData();
+      handleCloseDeleteModal();
     } catch (err) {
       alert(err.message);
     }
@@ -192,6 +207,24 @@ function Resource() {
               />
             </Modal.Body>
           </Modal>
+
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this record?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(deleteId)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+      
 
           <div className="table-container">
           <SearchBar onSearch={handleSearch} />

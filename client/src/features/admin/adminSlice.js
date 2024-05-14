@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const base_url = "http://localhost:8070/";
 
@@ -19,19 +20,19 @@ export const login = createAsyncThunk(
   "auth/adminlogin",
   async (userData, thunkApi) => {
     try {
-        const response = await axios.post(`${base_url}user/admin-login`, userData)
-        if(response.data){
-            localStorage.setItem("user", JSON.stringify(response.data))
-        }
-        return response.data
+      const response = await axios.post(
+        `${base_url}user/admin-login`,
+        userData
+      );
+      if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+      return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
     }
   }
 );
-
-
-
 
 const adminSlice = createSlice({
   name: "auth",
@@ -53,8 +54,7 @@ const adminSlice = createSlice({
         state.isSuccess = false;
         state.user = null;
         state.message = action.error.message;
-      })
-     
+      });
   },
 });
 

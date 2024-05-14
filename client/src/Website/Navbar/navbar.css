@@ -21,7 +21,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 42px;
+    font-size: 42px; 
     font-weight: 800;
     z-index: 10;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import moment from "moment"; // Import moment.js for date manipulation
 import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from "../../components/SearchBar";
@@ -10,7 +11,7 @@ import SalesForm from "./SalesForm";
 import SalesReport from "./SalesReport";
 import "../Expenses/expense.css";
 import CardFilter from "../CardFilter";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 // import Pagination from "../../components/Pagination";
 import ReportModal from "../../components/PDFReport";
 import * as XLSX from "xlsx";
@@ -21,6 +22,8 @@ import {
   getOrders,
   getSingleOrderData,
 } from "../../../../features/orders/orderSlice";
+import ProductDropdown from "./ProductDropdown";
+import Pagination from "../../components/Pagination";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -34,10 +37,12 @@ function Sales() {
   const location = useLocation();
   const getUserId = location.pathname.split("/")[3];
   // console.log(getUserId)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState(null); // State to hold form data
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [pageSize, setPageSize] = useState(5); // Number of items per page
+  const [pageSize, setPageSize] = useState(4); // Number of items per page
 
   // Calculate total number of pages based on 5 rows per page
   const totalPages = Math.ceil(filteredDataList.length / pageSize);
@@ -83,25 +88,8 @@ function Sales() {
   const orderState = useSelector((state) => state.orders.orders);
   console.log(orderState);
 
-  // const handleStatus = (status) => {
-  //   switch (status) {
-  //     case "Paid":
-  //       return "success";
-  //       break;
-  //     case "Pending":
-  //       return "warning";
-  //       break;
-  //     case "Rejected":
-  //       return "danger";
-  //       break;
-  //     default:
-  //       return "success";
-  //   }
-  // };
 
-  useEffect(() => {
-    getFetchData();
-  }, []);
+  
 
   useEffect(() => {
     setFilteredDataList(dataList); // Initialize filteredDataList with dataList
@@ -110,11 +98,52 @@ function Sales() {
   const getFetchData = async () => {
     try {
       const response = await axios.get("/user/allorders");
-      setDataList(response.data);
+      const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setDataList(sortedData);
+      filterData(sortedData, filter); // Filter data after fetching
 
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  useEffect(() => {
+    filterData(dataList, filter); // Re-filter data when filter state changes
+  }, [dataList, filter]);
+
+
+  const filterData = (data, selectedFilter) => {
+    const currentDate = moment(); // Get current date
+    let filteredList = [];
+    
+    switch (selectedFilter) {
+      case "Today":
+        filteredList = data.filter(item => moment(item.createdAt).isSame(currentDate, 'day'));
+        break;
+      case "This Week":
+        const startOfWeek = currentDate.clone().startOf('week');
+        const endOfWeek = currentDate.clone().endOf('week');
+        filteredList = data.filter(item => moment(item.createdAt).isBetween(startOfWeek, endOfWeek, null, '[]'));
+        break;
+      case "This Month":
+        filteredList = data.filter(item => moment(item.createdAt).isSame(currentDate, 'month'));
+        break;
+      case "This Year":
+        filteredList = data.filter(item => moment(item.createdAt).isSame(currentDate, 'year'));
+        break;
+      default:
+        filteredList = data;
+    }
+
+    setFilteredDataList(filteredList);
+  };
+
+  const handleFilterChange = (selectedFilter) => {
+    setFilter(selectedFilter);
   };
 
   const generateExcelFile = () => {
@@ -148,29 +177,29 @@ function Sales() {
     // getFetchData();
   };
 
-  const handleAddModalOpen = () => {
-    setAddModalOpen(true);
+  const handleModalOpen = (data) => {
+    setFormData(data); // Set form data when editing
+    setModalOpen(true);
   };
 
-  const handleAddModalClose = () => {
-    setAddModalOpen(false);
+  const handleModalClose = () => {
+    setFormData(null); // Reset form data
+    setModalOpen(false);
   };
 
-  const handleEditModalOpen = (sales) => {
-    setSelectedSales(sales);
-    setEditModalOpen(true);
-  };
-
-  const handleEditModalClose = () => {
-    setEditModalOpen(false);
-  };
-
-  const handleAddSubmit = async (formData) => {
+  const handleSubmit = async (formData) => {
     try {
-      await axios.post("/sales/add", formData);
-      alert("Sales Added");
-      handleAddModalClose();
-      getFetchData();
+      if (formData._id) {
+        // If _id exists, it's an edit operation
+        await axios.patch(`/user/order/update/${formData._id}`, formData);
+        alert("Sales Updated");
+      } else {
+        // Otherwise, it's an add operation
+        await axios.post("/user/order", formData);
+        alert("Sales Added");
+      }
+      handleModalClose(); // Close the modal after successful submission
+      getFetchData(); // Fetch updated data
     } catch (err) {
       alert(err.message);
     }
@@ -179,26 +208,19 @@ function Sales() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/user/order/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted"); // Correct placement of toast function
       getFetchData();
     } catch (err) {
       alert(err.message);
     }
   };
 
-  const handleEditSubmit = async (formData) => {
-    try {
-      await axios.patch(`/user/order/update/${formData._id}`, formData);
-      alert("Sales Updated");
-      handleEditModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
+  const handleProductSelect = (productId) => {
+    console.log("Selected product:", productId);
+    // Handle the selected product here
   };
 
-
-
+  
 
   return (
     <div className="main">
@@ -215,10 +237,8 @@ function Sales() {
 
             <ul class="table-top-head">
               <li>
-                <BlobProvider
-                  document={<SalesReport />}
-                  fileName="SalesReport.pdf"
-                >
+              <BlobProvider document={<SalesReport dataList={filteredDataList} />} fileName="SalesReport.pdf" >
+
                   {({ url, blob }) => (
                     <div className="button-container">
                       <a href={url} target="_blank">
@@ -246,42 +266,30 @@ function Sales() {
             </ul>
 
             <div class="page-btn">
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-added"
-                onClick={handleAddModalOpen}
+                onClick={() => setModalOpen(true)}
               >
                 <i className="bi bi-plus-circle"></i> Add Sales
-              </button>
+              </button> */}
             </div>
           </div>
-          <Modal
-            show={addModalOpen}
-            onHide={handleAddModalClose}
-            className="p-0 m-0"
-          >
+          {/* Modal for adding and editing sales */}
+          <Modal show={modalOpen} onHide={handleModalClose} size="lg">
             <Modal.Header closeButton>
-              <Modal.Title>Add Sales</Modal.Title>
+              <Modal.Title>{formData ? "Edit Sales" : "Add Sales"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SalesForm handleSubmit={handleAddSubmit} />
+              <SalesForm handleSubmit={handleSubmit} initialData={formData} />
             </Modal.Body>
           </Modal>
+          <CardFilter filterChange={handleFilterChange} />
 
-          <Modal show={editModalOpen} onHide={handleEditModalClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Sales</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <SalesForm
-                handleSubmit={handleEditSubmit}
-                initialData={selectedSales}
-              />
-            </Modal.Body>
-          </Modal>
           {dataList.length > 0 && (
             <div className="table-container">
               <SearchBar onSearch={handleSearch} />
+
 
               {/* ---------------table--------------- */}
               <table className="table table-bordeless datatable">
@@ -344,9 +352,10 @@ function Sales() {
       </td> */}
                       <td>
                         <div className="buttons">
-                          <button
+                          <button disabled
                             className="btn btn-edit"
-                            onClick={() => handleEditModalOpen(sales)}
+                            onClick={() => handleModalOpen(sales)}
+                            style={{background:"rgb(255 187 0 / 50%)", color:"white" , border:"rgb(255 187 0 / 50%)"}}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
@@ -363,39 +372,12 @@ function Sales() {
                 </tbody>
               </table>
               {/* Render pagination component */}
-              <div className="pagination align-items-center  justify-content-end">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
-                  className="me-4"
-                  style={{
-                    backgroundColor: "#ffffff",
-                    border: "none",
-                    padding: "0px 10px",
-                  }}
-                >
-                  <i class="bi bi-chevron-left"></i>{" "}
-                </button>
-                <span
-                  className="text-dark"
-                  style={{ fontSize: "18px", fontWeight: "500" }}
-                >
-                  <span className="me-4">{currentPage}</span>
-                  <span>{totalPages}</span>
-                </span>
-                <button
-                  onClick={handleNextPage}
-                  disabled={currentPage === totalPages}
-                  className="ms-4"
-                  style={{
-                    backgroundColor: "#ffffff",
-                    border: "none",
-                    padding: "0px 10px",
-                  }}
-                >
-                  <i class="bi bi-chevron-right"></i>{" "}
-                </button>
-              </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
             </div>
           )}
         </div>

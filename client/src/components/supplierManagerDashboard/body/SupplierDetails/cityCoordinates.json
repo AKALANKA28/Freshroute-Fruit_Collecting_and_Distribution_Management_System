@@ -1,0 +1,442 @@
+[
+    {
+      "city": "Colombo",
+      "latitude": "6.9271",
+      "longitude": "79.8612"
+    },
+    {
+      "city": "Kandy",
+      "latitude": "7.2906",
+      "longitude": "80.6337"
+    },
+    {
+      "city": "Galle",
+      "latitude": "6.0535",
+      "longitude": "80.2209"
+    },
+    {
+      "city": "Malabe",
+      "latitude": "6.906079",
+      "longitude": "79.969628"
+    },
+    {
+      "city": "Jaffna",
+      "latitude": "9.6615",
+      "longitude": "80.0255"
+    },
+    {
+      "city": "Negombo",
+      "latitude": "7.2095",
+      "longitude": "79.8358"
+    },
+    {
+      "city": "Anuradhapura",
+      "latitude": "8.3100",
+      "longitude": "80.4108"
+    },
+    {
+      "city": "Polonnaruwa",
+      "latitude": "7.9403",
+      "longitude": "81.0188"
+    },
+    {
+      "city": "Matara",
+      "latitude": "5.9482",
+      "longitude": "80.5353"
+    },
+    {
+      "city": "Batticaloa",
+      "latitude": "7.7164",
+      "longitude": "81.6927"
+    },
+    {
+      "city": "Trincomalee",
+      "latitude": "8.5872",
+      "longitude": "81.2152"
+    },
+    {
+      "city": "Kalmunai",
+      "latitude": "7.4167",
+      "longitude": "81.8167"
+    },
+    {
+      "city": "Gampola",
+      "latitude": "7.1585",
+      "longitude": "80.5935"
+    },
+    {
+      "city": "Chilaw",
+      "latitude": "7.5746",
+      "longitude": "79.8041"
+    },
+    {
+      "city": "Ambalangoda",
+      "latitude": "6.2376",
+      "longitude": "80.0417"
+    },
+    {
+      "city": "Kalutara",
+      "latitude": "6.5854",
+      "longitude": "79.9607"
+    },
+    {
+      "city": "Mannar",
+      "latitude": "8.9769",
+      "longitude": "79.9024"
+    },
+    {
+      "city": "Vavuniya",
+      "latitude": "8.7500",
+      "longitude": "80.5000"
+    },
+    {
+      "city": "Badulla",
+      "latitude": "6.9894",
+      "longitude": "81.0560"
+    },
+    {
+      "city": "Haputale",
+      "latitude": "6.7670",
+      "longitude": "80.9595"
+    },
+    {
+      "city": "Monaragala",
+      "latitude": "6.8664",
+      "longitude": "81.1990"
+    },
+    {
+      "city": "Weligama",
+      "latitude": "5.9667",
+      "longitude": "80.4167"
+    },
+    {
+      "city": "Puttalam",
+      "latitude": "8.0333",
+      "longitude": "79.8167"
+    },
+    {
+      "city": "Kegalle",
+      "latitude": "7.2516",
+      "longitude": "80.3464"
+    },
+    {
+      "city": "Ratnapura",
+      "latitude": "6.6931",
+      "longitude": "80.3865"
+    },
+    {
+      "city": "Hambantota",
+      "latitude": "6.1249",
+      "longitude": "81.1180"
+    },
+    {
+      "city": "Wattala",
+      "latitude": "7.6123",
+      "longitude": "79.8955"
+    },
+    {
+      "city": "Peliyagoda",
+      "latitude": "6.9604",
+      "longitude": "79.8803"
+    },
+    {
+      "city": "Kuliyapitiya",
+      "latitude": "7.4712",
+      "longitude": "80.0448"
+    },
+    {
+      "city": "Horana",
+      "latitude": "6.7162",
+      "longitude": "80.0642"
+    },
+    {
+      "city": "Beruwala",
+      "latitude": "6.4781",
+      "longitude": "79.9825"
+    },
+    {
+      "city": "Ragama",
+      "latitude": "7.0333",
+      "longitude": "79.9500"
+    },
+    {
+      "city": "Kandana",
+      "latitude": "7.0461",
+      "longitude": "79.8927"
+    },
+    {
+      "city": "Ja-Ela",
+      "latitude": "7.0859",
+      "longitude": "79.8816"
+    },
+    {
+      "city": "Maharagama",
+      "latitude": "6.8474",
+      "longitude": "79.9289"
+    },
+    {
+      "city": "Kelaniya",
+      "latitude": "6.9608",
+      "longitude": "79.9073"
+    },
+    {
+      "city": "Homagama",
+      "latitude": "6.8419",
+      "longitude": "80.0030"
+    },
+    {
+      "city": "Pannipitiya",
+      "latitude": "6.8533",
+      "longitude": "79.9981"
+    },
+    {
+      "city": "Katunayaka",
+      "latitude": "7.1724",
+      "longitude": "79.8811"
+    },
+    {
+      "city": "Pita Kotte",
+      "latitude": "6.9011",
+      "longitude": "79.9193"
+    },
+    {
+      "city": "Weligatta",
+      "latitude": "6.1833",
+      "longitude": "80.8667"
+    },
+    {
+      "city": "Dambulla",
+      "latitude": "7.8604",
+      "longitude": "80.6510"
+    },
+    {
+      "city": "Kurunegala",
+      "latitude": "7.4860",
+      "longitude": "80.3643"
+    },
+    {
+      "city": "Nuwara Eliya",
+      "latitude": "6.9721",
+      "longitude": "80.7828"
+    },
+    {
+      "city": "Gampaha",
+      "latitude": "7.0873",
+      "longitude": "79.9936"
+    },
+    {
+      "city": "Panadura",
+      "latitude": "6.7101",
+      "longitude": "79.9074"
+    },
+    {
+      "city": "Bentota",
+      "latitude": "6.4200",
+      "longitude": "79.9985"
+    },
+    {
+      "city": "Seeduwa",
+      "latitude": "7.1494",
+      "longitude": "79.8917"
+    },
+    {
+      "city": "Ambalantota",
+      "latitude": "6.1243",
+      "longitude": "81.1247"
+    },
+    {
+      "city": "Matale",
+      "latitude": "7.4667",
+      "longitude": "80.6167"
+    },
+    {
+      "city": "Valvedditturai",
+      "latitude": "9.8100",
+      "longitude": "80.1862"
+    },
+    {
+      "city": "Ampara",
+      "latitude": "7.2964",
+      "longitude": "81.6606"
+    },
+    {
+      "city": "Mahawatte",
+      "latitude": "7.4715",
+      "longitude": "80.3544"
+    },
+    {
+      "city": "Mahawatta",
+      "latitude": "7.4626",
+      "longitude": "80.3544"
+    },
+    {
+      "city": "Balangoda",
+      "latitude": "6.7333",
+      "longitude": "80.6997"
+    },
+    {
+      "city": "Akkaraipattu",
+      "latitude": "7.2262",
+      "longitude": "81.8631"
+    },
+    {
+      "city": "Dharga Town",
+      "latitude": "6.7723",
+      "longitude": "79.8900"
+    },
+    {
+      "city": "Kattankudy",
+      "latitude": "7.7149",
+      "longitude": "81.7109"
+    },
+    {
+      "city": "Point Pedro",
+      "latitude": "9.8167",
+      "longitude": "80.2333"
+    },
+    {
+      "city": "Hatton",
+      "latitude": "6.9013",
+      "longitude": "80.5958"
+    },
+    {
+      "city": "Polgahawela",
+      "latitude": "7.3395",
+      "longitude": "80.2144"
+    },
+    {
+      "city": "Bandarawela",
+      "latitude": "6.8324",
+      "longitude": "80.9974"
+    },
+    {
+      "city": "Mullaitivu",
+      "latitude": "9.2670",
+      "longitude": "80.7832"
+    },
+    {
+      "city": "Hingurakgoda",
+      "latitude": "8.1667",
+      "longitude": "80.8000"
+    },
+    {
+      "city": "Ginigathhena",
+      "latitude": "7.0586",
+      "longitude": "80.5210"
+    },
+    {
+      "city": "Nawalapitiya",
+      "latitude": "7.0544",
+      "longitude": "80.5306"
+    },
+    {
+      "city": "Tangalle",
+      "latitude": "6.0223",
+      "longitude": "80.7880"
+    },
+    {
+      "city": "Kataragama",
+      "latitude": "6.4332",
+      "longitude": "81.3412"
+    },
+    {
+      "city": "Narammala",
+      "latitude": "7.5474",
+      "longitude": "80.2591"
+    },
+    {
+      "city": "Padukka",
+      "latitude": "6.7873",
+      "longitude": "80.1253"
+    },
+    {
+      "city": "Koswatte",
+      "latitude": "6.8914",
+      "longitude": "79.9178"
+    },
+    {
+      "city": "Maharagama North",
+      "latitude": "6.8550",
+      "longitude": "79.9731"
+    },
+    {
+      "city": "Mawanella",
+      "latitude": "7.2515",
+      "longitude": "80.4649"
+    },
+    {
+      "city": "Nattandiya",
+      "latitude": "7.3360",
+      "longitude": "79.8963"
+    },
+    {
+      "city": "Ingiriya",
+      "latitude": "6.6438",
+      "longitude": "80.1150"
+    },
+    {
+      "city": "Elpitiya",
+      "latitude": "6.2943",
+      "longitude": "80.1429"
+    },
+    {
+      "city": "Hendala",
+      "latitude": "6.9911",
+      "longitude": "79.8845"
+    },
+    {
+      "city": "Dankotuwa",
+      "latitude": "7.3357",
+      "longitude": "79.8894"
+    },
+    {
+      "city": "Neluwa",
+      "latitude": "6.2923",
+      "longitude": "80.4042"
+    },
+    {
+      "city": "Ambalangoda North",
+      "latitude": "6.2320",
+      "longitude": "80.0496"
+    },
+    {
+      "city": "Weeraketiya",
+      "latitude": "6.1858",
+      "longitude": "80.7873"
+    },
+    {
+      "city": "Udugampola",
+      "latitude": "7.2170",
+      "longitude": "80.0831"
+    },
+    {
+      "city": "Hambantota North",
+      "latitude": "6.1246",
+      "longitude": "81.1180"
+    },
+    {
+      "city": "Dehiwala-Mount Lavinia",
+      "latitude": "6.8533",
+      "longitude": "79.8828"
+    },
+    {
+      "city": "Wattala",
+      "latitude": "7.6119",
+      "longitude": "79.8956"
+    },
+    {
+      "city": "Kottawa",
+      "latitude": "6.8381",
+      "longitude": "80.0181"
+    },
+    {
+      "city": "Meegoda",
+      "latitude": "6.8531",
+      "longitude": "80.0202"
+    },
+    {
+      "city": "Godagama",
+      "latitude": "6.8234",
+      "longitude": "79.9952"
+    }
+  ]

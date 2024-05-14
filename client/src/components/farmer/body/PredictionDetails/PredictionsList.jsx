@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -10,17 +10,33 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import PredictionForm from "./PredictionForm";
 import PredictionReport from "./PredictionReport";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SpinnerModal from '../../../spinner/SpinnerModal';
 import './predictions.css';
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function PredictionsList() {
+  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [selectedPrediction, setSelectedPrediction] = useState(null);
   const [filteredDataList, setFilteredDataList] = useState([]); 
   const [searchAttribute, setSearchAttribute] = useState('fruit'); // Initialize with 'fruit'
+  const [declineModalShow, setDeclineModalShow] = useState(false); 
+
+  useEffect(() => {
+    // Fetch data
+    getFetchData();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     getFetchData();
@@ -87,18 +103,27 @@ function PredictionsList() {
     setEditModalOpen(false);
   };
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this prediction?");
-    if (confirmDelete) {
-      try {
-        await axios.delete(`/Prediction/delete/${id}`);
-        await axios.delete(`/pendingSupply/deleteByPredictionID/${id}`);
-        alert("Successfully Deleted");
+  const handleDelete = async () => {
+    if (!selectedPrediction) return;
+    try {
+        await axios.delete(`/Prediction/delete/${selectedPrediction._id}`);
+        await axios.delete(`/pendingSupply/deleteByPredictionID/${selectedPrediction._id}`);
         getFetchData();
+        toast.success("Successfully Deleted");
+        handleCloseDeclineModal();
       } catch (err) {
         alert(err.message);
       }
-    }
+  };
+
+  const handleShowDeclineModal = (prediction) => {
+    setSelectedPrediction(prediction);
+    setDeclineModalShow(true);
+  };
+          
+  const handleCloseDeclineModal = () => {
+    setSelectedPrediction(null);
+    setDeclineModalShow(false);
   };
 
   const handleAddSubmit = async (formData) => {
@@ -116,23 +141,22 @@ function PredictionsList() {
       // Add supply prediction to the pendingSupplies collection
       await axios.post("/pendingSupply/add", pendingSupplyData);
   
-      alert("Prediction Added");
-      window.location.reload();
       handleAddModalClose();
       getFetchData();
+      toast.success("Supply Prediction Added");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Prediction/update/${formData._id}`, formData);
-      alert("Prediction Updated");
       handleEditModalClose();
       getFetchData();
+      toast.success("Prediction Updated");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -192,6 +216,10 @@ const getStatusClassName = (status) => {
 
   return (
     <div  id="main col-8">
+       <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <div className="card recent-sales overflow-auto">
         <div className="card-body">
           <div className="page-header">
@@ -203,11 +231,18 @@ const getStatusClassName = (status) => {
             </div>
             <ul class="table-top-head" style={{ float: "right" }}>
               <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                </div>
+              <BlobProvider
+                  document={<PredictionReport dataList={dataList}/>}
+                  fileName="PredictionReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container">
@@ -282,6 +317,7 @@ const getStatusClassName = (status) => {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
+                  <th scope="col">#</th>
                   <th scope="col">Fruit</th>
                   <th scope="col">Sub Category</th>
                   <th scope="col">Quality</th>
@@ -295,14 +331,15 @@ const getStatusClassName = (status) => {
               </thead>
               <tbody>
               {filteredDataList.length ? (
-                filteredDataList.map((prediction) => (
+                filteredDataList.map((prediction, index) => (
                   <tr key={prediction._id}>
+                    <td>{index + 1}</td>
                     <td>{prediction.fruit}</td>
                     <td>{prediction.subCategory}</td>
                     <td>{prediction.quality}</td>
                     <td>{prediction.quantity} kg</td>
                     <td>Rs. {prediction.price}</td>
-                    <td>Rs. {prediction.price * prediction.quantity}</td>
+                    <td>Rs. {parseFloat((prediction.price * prediction.quantity).toFixed(2))}</td>
                     <td>{prediction.dateCanBeGiven}</td>
                     <td>
                       <div
@@ -312,19 +349,22 @@ const getStatusClassName = (status) => {
                       </div>
                     </td>
                     <td className="action">
-                      <div className="buttons">
+                    <div className="buttons">
+                        
                         <button
-                          className="btn btn-edit"
+                          className={`btn btn-edit ${["Approved", "Declined"].includes(prediction.status) ? "invisible" : ""}`}
                           onClick={() => handleEditModalOpen(prediction)}
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
+                        
                         <button
                           className="btn btn-delete"
-                          onClick={() => handleDelete(prediction._id)}
+                          onClick={() => handleShowDeclineModal(prediction)}
                         >
                           <i className="bi bi-trash-fill"></i>
                         </button>
+                        
                       </div>
                     </td>
                   </tr>
@@ -340,6 +380,37 @@ const getStatusClassName = (status) => {
           </div>
         </div>
       </div>
+      )}
+      <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
+         <Modal.Header closeButton>
+           <Modal.Title>Delete Prediction</Modal.Title>
+         </Modal.Header>
+         <Modal.Body>
+           Are you sure you want to Delete the supply prediction?
+         </Modal.Body>
+         <Modal.Footer>
+           <Button variant="" onClick={handleCloseDeclineModal}>
+             Cancel
+           </Button>
+           <Button variant="danger" onClick={handleDelete}>
+             Delete
+           </Button>
+         </Modal.Footer>
+       </Modal>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
     </div>
   );
 }

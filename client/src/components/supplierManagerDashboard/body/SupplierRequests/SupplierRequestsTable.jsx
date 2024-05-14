@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import SpinnerModal from '../../../spinner/SpinnerModal';
+import { ToastContainer, toast } from 'react-toastify';
 
 function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
+  const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [declineModalShow, setDeclineModalShow] = useState(false);
+
+  useEffect(() => {
+    // Fetch data
+    fetchSupplierRequests();
+    // Simulate loading for 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // Clear timeout on component unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     fetchSupplierRequests();
@@ -33,6 +47,8 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
         email: selectedRequest.email,
         mobile: selectedRequest.mobile,
         city: selectedRequest.city,
+        latitude: selectedRequest.latitude,
+        longitude: selectedRequest.longitude,
         lane: "",
         landAddress: selectedRequest.landAddress,
         fieldArea: selectedRequest.fieldArea,
@@ -41,10 +57,10 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
       });
       fetchSupplierRequests();
       handleCloseModal();
-      alert("Supplier Request Added");
+      toast.success("Supplier Request Added");
       window.location.reload();
     } catch (error) {
-      console.error("Error accepting request:", error);
+      toast.error("Error accepting request:", error);
     }
   };
 
@@ -56,10 +72,10 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
       await axios.delete(`/pendingSupplier/delete/${selectedRequest._id}`);
       fetchSupplierRequests();
       handleCloseDeclineModal();
-      alert("Supplier Request Declined");
+      toast.success("Supplier Request Declined");
       window.location.reload();
     } catch (error) {
-      console.error("Error declining request:", error);
+      toast.error("Error declining request:", error);
     }
   };
 
@@ -85,6 +101,10 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
 
   return (
     <div className="table-container">
+      <br/><br/>
+      {loading ? ( // Display spinner while loading is true
+        <SpinnerModal show={loading} />
+      ) : (
       <table className="table datatable">
         <thead className="table-light">
           <tr>
@@ -140,6 +160,20 @@ function SupplierRequestsTable({ supplierRequests, setSupplierRequests }) {
           )}
         </tbody>
       </table>
+      )}
+
+<ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

@@ -77,25 +77,25 @@ const Checkout = () => {
     const stripe = await loadStripe(
       "pk_test_51P85tiKciT9oiVpgZ0v6tWCBKxPZKw7UOl9hOeK44Ce25o4wkz4gIPtvcMvWGfYfbSINuAgMYAO3dn5w41GZsVli00WkqVK56w"
     );
-
+  
     const body = {
       products: cartState,
     };
     const headers = {
       "Content-Type": "application/json",
     };
-
+  
     const getToken = localStorage.getItem("customer")
       ? JSON.parse(localStorage.getItem("customer"))
       : null;
-
+  
     const config = {
       headers: {
         Authorization: `Bearer ${getToken?.token}`,
         Accept: "application/json",
       },
     };
-
+  
     const response = await fetch(
       "http://localhost:8070/user/create-checkout-session",
       {
@@ -106,43 +106,42 @@ const Checkout = () => {
         },
         body: JSON.stringify(body),
       }
-
-      
     );
-
+  
     const session = await response.json();
-
+  
     const result = stripe.redirectToCheckout({
       sessionId: session.id,
     });
-
+  
     if (result.error) {
       console.log(result.error);
     } else {
       // Clear the cart after successful payment
       clearCartAfterPayment();
+  
+      // Dispatch the createAnOrder thunk with the order details
+      dispatch(
+        createAnOrder({
+          user: authState.user._id,
+          shippingInfo: {
+            address: formik.values.address,
+            city: formik.values.city,
+            state: formik.values.state,
+            apartment: formik.values.other,
+            pincode: formik.values.pincode,
+          },
+          orderItems: cartProductState.map((item) => ({
+            product: item.product,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          totalPrice: totalAmount,
+        })
+      );
     }
-
-    // Dispatch the createAnOrder thunk with the order details
-  dispatch(
-    createAnOrder({
-      user: authState.user._id,
-      shippingInfo: {
-        address: formik.values.address,
-        city: formik.values.city,
-        state: formik.values.state,
-        apartment: formik.values.other,
-        pincode: formik.values.pincode,
-      },
-      orderItems: cartProductState.map((item) => ({
-        product: item.product,
-        quantity: item.quantity,
-        price: item.price,
-      })),
-      totalPrice: totalAmount,
-    })
-  );
   };
+  
   return (
     <div>
       <Navbar2 />
@@ -196,14 +195,13 @@ const Checkout = () => {
                     <option value="" selected disabled>
                       Select Province
                     </option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
-                    <option value="Western">Western</option>
+                    <option value="Western">Central</option>
+                    <option value="Western">Eastern</option>
+                    <option value="Western">North Central</option>
+                    <option value="Western">Nothern</option>
+                    <option value="Western">North Western</option>
+                    <option value="Western">Sabaragamuwa</option>
+                    <option value="Western">Uva</option>
                     <option value="Western">Western</option>
                     <option value="Western">Western</option>
                   </select>
@@ -302,6 +300,8 @@ const Checkout = () => {
                       onClick={makePayment}
                       type="submit"
                       className="product-button"
+                      disabled={!formik.isValid} // Disable the button if form is not valid
+
                     >
                       Place Order
                     </button>

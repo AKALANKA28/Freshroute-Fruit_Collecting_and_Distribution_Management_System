@@ -1,30 +1,94 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
-import { Button, Modal } from "react-bootstrap";
-import SearchBar from "./SearchBar";
+import { BlobProvider } from "@react-pdf/renderer";
+import SearchBar from "../../components/SearchBar";
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
-import ExpenseForm from "./ExpenseForm";
 import ExpenseReport from "./ExpenseReport";
 import "../Expenses/expense.css";
-import CardFilter from "../CardFilter";
 import { ToastContainer, toast } from "react-toastify";
+import Pagination from "../../components/Pagination";
+import ExpenseModal from "./ExpenseModal";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Expense() {
-  const [addModalOpen, setAddModalOpen] = useState(false);
-  const [editModalOpen, setEditModalOpen] = useState(false);
   const [dataList, setDataList] = useState([]);
-  const [selectedExpense, setSelectedExpense] = useState(null);
   const [filter, setFilter] = useState("Today");
   const [filteredDataList, setFilteredDataList] = useState([]);
+  // Define state variables
+  const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState(null); // State to hold form data for editing
 
   const [currentPage, setCurrentPage] = useState(1);
-
   const [pageSize, setPageSize] = useState(6); // Number of items per page
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
+  }, [dataList]);
+
+  const getFetchData = async () => {
+    try {
+      const response = await axios.get("/expense/");
+      setDataList(response.data);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleRefreshClick = () => {
+    getFetchData();
+  };
+
+  const handleButtonClick = () => {
+    getFetchData();
+  };
+
+  // Function to open the modal for adding or editing
+  const handleModalOpen = (formData = null) => {
+    setFormData(formData); // Set initial form data if editing
+    setModalOpen(true);
+  };
+
+  // Function to close the modal
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setFormData(null); // Reset form data
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (formData) => {
+    try {
+      if (formData._id) {
+        // If _id exists in formData, it's an edit operation
+        await axios.patch(`/expense/update/${formData._id}`, formData);
+        toast.success("Expense Updated");
+      } else {
+        // Otherwise, it's an add operation
+        await axios.post("/expense/add", formData);
+        toast.success("Expense Added");
+      }
+      handleModalClose(); // Close the modal after successful submission
+      getFetchData(); // Fetch updated data
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/expense/delete/${id}`);
+      toast.success("Successfully Deleted"); // Correct placement of toast function
+      getFetchData();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   //Pagination
 
@@ -52,36 +116,6 @@ function Expense() {
     }
   };
 
-  // Function to handle page navigation
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Function to handle page size change
-  const handlePageSizeChange = (size) => {
-    setPageSize(size);
-    setCurrentPage(1); // Reset current page to 1 when page size changes
-  };
-
-
-
-  useEffect(() => {
-    getFetchData();
-  }, []);
-
-  useEffect(() => {
-    setFilteredDataList(dataList); // Initialize filteredDataList with dataList
-  }, [dataList]);
-
-  const getFetchData = async () => {
-    try {
-      const response = await axios.get("/expense/");
-      setDataList(response.data);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
   // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((expense) => {
@@ -91,234 +125,141 @@ function Expense() {
     setFilteredDataList(filteredList);
   };
 
-  const handleRefreshClick = () => {
-    getFetchData();
-  };
-
-  const handleButtonClick = () => {
-    getFetchData();
-  };
-
-  const handleAddModalOpen = () => {
-    setAddModalOpen(true);
-  };
-
-  const handleAddModalClose = () => {
-    setAddModalOpen(false);
-  };
-
-  const handleEditModalOpen = (expense) => {
-    setSelectedExpense(expense);
-    setEditModalOpen(true);
-  };
-
-  const handleEditModalClose = () => {
-    setEditModalOpen(false);
-  };
-
-  const handleAddSubmit = async (formData) => {
-    try {
-      await axios.post("/expense/add", formData);
-      toast.success("Expense Added");
-      handleAddModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/expense/delete/${id}`);
-      toast.success("Successfully Deleted"); // Correct placement of toast function
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleEditSubmit = async (formData) => {
-    try {
-      await axios.patch(`/expense/update/${formData._id}`, formData);
-      alert("Expense Updated");
-      handleEditModalClose();
-      getFetchData();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
-
   return (
-    <>
-      <div className="card recent-sales overflow-auto">
-        <div className="card-body table-body">
-          <div class="page-header">
-            {/* Your other components and UI elements */}
-            <div class="add-item d-flex">
-              <div class="card-title">
-                Expense Details<span>| {filter}</span>
-                <h6>Manage your expense</h6>
+    <div className="main">
+      <div className="body" id="body">
+        <div className="row">
+          <>
+            <div className="card recent-sales overflow-auto">
+              <div className="card-body table-body">
+                <div className="page-header">
+                  {/* Your other components and UI elements */}
+                  <div className="add-item d-flex">
+                    <div className="card-title">
+                      Expense Details<span>| {filter}</span>
+                      <h6>Manage your expense</h6>
+                    </div>
+                  </div>
+                  {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
+                  <ul className="table-top-head">
+                    <li>
+                      <BlobProvider
+                        document={<ExpenseReport dataList={dataList} />}
+                        fileName="ExpenseReport.pdf"
+                      >
+                        {({ url, blob }) => (
+                          <div className="button-container">
+                            <a href={url} target="_blank">
+                              <img src={Pdf} alt="Pdf Icon" className="icon" />
+                            </a>
+                          </div>
+                        )}
+                      </BlobProvider>
+                    </li>
+
+                    <li>
+                      <div className="button-container">
+                        <a href="#" onClick={handleButtonClick}>
+                          <img src={Excel} alt="Excel Icon" className="icon" />
+                        </a>
+                      </div>
+                    </li>
+                    <li>
+                      <div className="button-container">
+                        <a href="#" onClick={handleRefreshClick}>
+                          <img
+                            src={Refresh}
+                            alt="Refresh Icon"
+                            className="icon"
+                          />
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                  <div className="page-btn">
+                    <button
+                      type="button"
+                      className="btn btn-added"
+                      onClick={handleModalOpen}
+                    >
+                      <i className="bi bi-plus-circle"></i> Add Expense
+                    </button>
+                  </div>
+                </div>
+                <div className="table-container" style={{minHeight:"20rem"}}>
+                  <SearchBar onSearch={handleSearch} />
+                  {/* ---------------table--------------- */}
+                  <table className="table table-bordeless datatable" >
+                    <thead className="table-light">
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentPageItems.map((expense) => (
+                        <tr key={expense._id}>
+                          <td>{new Date(expense.date).toLocaleDateString()}</td>
+                          <td>{expense.category}</td>
+                          <td>Rs. {expense.amount.toFixed(2)}</td>
+                          <td>{expense.description}</td>
+                          <td>
+                            <div className="buttons">
+                              <button
+                                className="btn btn-edit"
+                                onClick={() => handleModalOpen(expense)}
+                              >
+                                <i className="bi bi-pencil-square"></i>
+                              </button>
+                              <button
+                                className="btn btn-delete"
+                                onClick={() => handleDelete(expense._id)}
+                              >
+                                <i className="bi bi-trash3-fill"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {/* Render pagination component */}
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  handleNextPage={handleNextPage}
+                  handlePreviousPage={handlePreviousPage}
+                />
               </div>
             </div>
-            {/*---------------- pdf,excel report generating icon and refresh -------------------*/}
-            <ul class="table-top-head">
-              <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Active campaigns Report</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <PDFViewer width="100%" height="500px">
-                        <ExpenseReport dataList={dataList} />
-                      </PDFViewer>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        variant="secondary"
-                        onClick={handleCloseReportModal}
-                      >
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </div>
-              </li>
-              <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleButtonClick}>
-                    <img src={Excel} alt="Excel Icon" className="icon" />
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className="button-container">
-                  <a href="#" onClick={handleRefreshClick}>
-                    <img src={Refresh} alt="Refresh Icon" className="icon" />
-                  </a>
-                </div>
-              </li>
-            </ul>
-            <div class="page-btn">
-              <button
-                type="button"
-                className="btn btn-added"
-                onClick={handleAddModalOpen}
-              >
-                <i className="bi bi-plus-circle"></i> Add Expense
-              </button>
-            </div>
-          </div>
-          <Modal show={addModalOpen} onHide={handleAddModalClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Add Expense</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <ExpenseForm handleSubmit={handleAddSubmit} />
-            </Modal.Body>
-          </Modal>
-          <Modal show={editModalOpen} onHide={handleEditModalClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Expense</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <ExpenseForm
-                handleSubmit={handleEditSubmit}
-                initialData={selectedExpense}
-              />
-            </Modal.Body>
-          </Modal>
-          <div className="table-container">
-            <SearchBar onSearch={handleSearch} />
-            {/* ---------------table--------------- */}
-            <table className="table table-bordeless datatable">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Action</th>
 
-                </tr>
-              </thead>
-              <tbody>
-                {currentPageItems.map((expense) => (
-                  <tr key={expense._id}>
-                    <td>{new Date(expense.date).toLocaleDateString()}</td>
-                    <td>{expense.category}</td>
-                    <td>Rs. {expense.amount.toFixed(2)}</td>
-                    <td>{expense.description}</td>
-                    <td>
-                      <div className="buttons">
-                        <button
-                          className="btn btn-edit"
-                          onClick={() => handleEditModalOpen(expense)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn btn-delete"
-                          onClick={() => handleDelete(expense._id)}
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* Render pagination component */}
-            <div className="pagination align-items-center  justify-content-end">
-              <button
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1}
-                className="me-4"
-                style={{ backgroundColor: "#ffffff", border: "none", padding:"0px 10px" }}
-
-              >
-                <i class="bi bi-chevron-left"></i>{" "}
-              </button>
-              <span className="text-dark" style={{fontSize:"18px", fontWeight:"500"}}>
-                <span className="me-4">{currentPage}</span><span>{totalPages}</span>
-              </span>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-                className="ms-4"
-                style={{ backgroundColor: "#ffffff", border: "none", padding:"0px 10px" }}
-
-              >
-                <i class="bi bi-chevron-right"></i>{" "}
-              </button>
-            </div>
-          </div>
+            {/* Render ExpenseModal component */}
+            <ExpenseModal
+              modalOpen={modalOpen}
+              handleModalClose={handleModalClose}
+              handleSubmit={handleSubmit}
+              formData={formData}
+            />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        // transition: Bounce
-      />
-      <ToastContainer />
-    </>
+    </div>
   );
 }
 

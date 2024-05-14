@@ -100,14 +100,14 @@ const Cart = () => {
                     <div className="cart-col-1 d-flex align-items-center gap-5">
                       <div className="w-25">
                         <img
-                          src={item?.productId.images}
+                          src={item?.productId?.images}
                           alt=""
                           className="img-fluid"
                         />
                       </div>
                       <div className="w-75">
                         <p>{item?.productId.title}</p>
-                        <p>Grade: A</p>
+                        <p>Grade: {item?.grade?.title}</p>
                         {/* <li style={{fruitGrade: item?.grade.title}}></li> */}
                       </div>
                     </div>

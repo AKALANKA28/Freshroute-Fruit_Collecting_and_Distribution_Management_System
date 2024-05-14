@@ -15,6 +15,7 @@ import AdminLogin from "./components/LoginRegister/AdminLogin";
 import TDashboard from "./components/transportDashboard/TDashboard";
 import BMDashboard from "./components/buyerManager/BMDashboard";
 import RPDashboard from "./components/researchDashboard/RPDashboard";
+import PDashboard from "./components/rpromotionDashboard/PDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import OrderManagerHomePage from "./components/orderManagement/OrderManagerHomePage";
 import QualityList from "./components/orderManagement/body/QualityList/QualityList";
@@ -38,6 +39,7 @@ import FDashboard from "./components/farmer/FDashboard";
 import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
 import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
+import SupplierLocations from "./components/supplierManagerDashboard/SupplierLocations";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import ProcessDetails from "./components/transportDashboard/ProcessDetails";
@@ -58,11 +60,15 @@ import EditOrder from "./components/NormalOrder/EditOrder";
 import PromotionPage from "./components/researchDashboard/PromotionPage";
 import CompaignPage from "./components/researchDashboard/CompaignPage";
 import ResourcePage from "./components/researchDashboard/ResourcePage";
+import RevenuePage from "./components/rpromotionDashboard/RevenuePage";
+import VolumePage from "./components/rpromotionDashboard/VolumePage";
+import PricePage from "./components/rpromotionDashboard/PricePage";
+import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 
-//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-//import NormalOrder from "./components/NormalOrder/NormalOrder";
-//import EditOrder from "./components/NormalOrder/EditOrder";
+// import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+// import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+// import NormalOrder from "./components/NormalOrder/NormalOrder";
+// import EditOrder from "./components/NormalOrder/EditOrder";
 
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
@@ -88,6 +94,9 @@ import DriverDetails from "./components/transportDashboard/DriverDetails";
 import Approvals from "./components/finance/body/Approvals/Approvals";
 import ApprovalPage from "./components/finance/ApprovalPage";
 import PaymentsPage from "./components/finance/PaymentsPage";
+import BuyerEdit from "./components/Buyer/Body/BuyerEdit"
+import AddProduct from "./components/finance/AddProduct";
+import DasboardAccess from "./components/DasboardAccess";
 
 const router = createBrowserRouter([
   {
@@ -256,7 +265,7 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
+  
   {
     path: "/RPDashboard",
     element: (
@@ -420,6 +429,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/SupplierLocations",
+    element: (
+      <div>
+        <SupplierLocations />
+      </div>
+    ),
+  },
+
+  {
     path: "/Coordinator",
     element: (
       <div>
@@ -499,6 +517,31 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/RevenuePage",
+    element: (
+      <div>
+        <RevenuePage />
+      </div>
+    ),
+  },
+  {
+    path: "/VolumePage",
+    element: (
+      <div>
+        <VolumePage />
+      </div>
+    ),
+  },
+
+  {
+    path: "/PricePage",
+    element: (
+      <div>
+        <PricePage />
+      </div>
+    ),
+  },
 
   {
     path: "/CompaignPage",
@@ -517,7 +560,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-
+  {
+    path: "/AccResourcePage",
+    element: (
+      <div>
+        <AccResourcePage />
+      </div>
+    ),
+  },
   {
     path: "/TransportFee",
     element: (
@@ -623,6 +673,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/BuyerEdit/:id",
+    element: (
+      <div>
+        <BuyerEdit />
+      </div>
+    ),
+  },
 
   {
     path: "/ScheduleDetails",
@@ -638,6 +696,24 @@ const router = createBrowserRouter([
     element: (
       <div>
         <DriverDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/addproduct",
+    element: (
+      <div>
+        <AddProduct />
+      </div>
+    ),
+  },
+
+  {
+    path: "/dAccess",
+    element: (
+      <div>
+        <DasboardAccess />
       </div>
     ),
   },

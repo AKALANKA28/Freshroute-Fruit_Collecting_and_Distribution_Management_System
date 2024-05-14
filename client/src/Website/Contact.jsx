@@ -18,10 +18,10 @@ import { createQuery } from '../features/contact/contactSlice';
 
 import image1 from "./assets/contactpage2.jpg"
 const contactSchema = yup.object({
-  name: yup.string().required("Username is Required"),
-  email: yup.string().nullable().email("Email Should be Valid").required("Email is Required"),
-  mobile: yup.string().required("mobile is required"),
-  message: yup.string().required("message is required"),
+  name: yup.string().required("Name is Required"),
+  email: yup.string().trim().email("Email Should be Valid").required("Email is Required"),
+  mobile: yup.string().trim().matches(/^[0-9]{10}$/, 'Mobile number must be 10 digits').required("Mobile is required"),
+  message: yup.string().trim().max(500, "Message must be at most 500 characters").required("Message is required"),
 });
 
 const Contact = () => {
@@ -46,7 +46,8 @@ const Contact = () => {
 
   return (
           <div>
-            <Navbar2/>
+            <Navbar/>
+            {/* <Navbar2/> */}
             {/* <div className="product-header">
             <nav className='nav'>
               <div className='nav-logo'><a href='/home'>FreshRoute.</a></div>

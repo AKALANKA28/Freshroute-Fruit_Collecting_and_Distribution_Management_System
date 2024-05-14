@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 
+function PageTitle({ page }) {
+  const today = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = today.toLocaleDateString('en-US', options);
 
-function PageTitle  ({page})  {
   return (
     <div className='pagetitle'>
-        <h1>{page}</h1>
-        <nav>
-            <ol className="breadcumb">
-            </ol>
-        </nav>
+      <h1>Hello, Kumara</h1>
+      <p>Today is {formattedDate}</p>
     </div>
-  )
+  );
 }
 
-export default PageTitle
+export default PageTitle;

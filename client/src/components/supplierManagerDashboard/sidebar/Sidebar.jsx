@@ -1,13 +1,23 @@
-
 import React from 'react';
 import '../../../App.css';
-import navList from './navItem';
+import logo from '../../../assests/logo.png'
+import { FaChevronRight } from "react-icons/fa";
 
 const Sidebar = () => {
+
+  const handleToggleSideBar = () => {
+    document.body.classList.toggle('toggle-sidebar');
+  }
+
   return (
     <div>
       <aside id='sidebar' className='sidebar'>
-
+        <a href='/' className='logo d-flex align-items-center'>
+           <img src={logo} alt='logo image'/>
+           <span className=''>FreshRoute</span>
+        </a>
+        <hr className='hr'></hr>        
+        <FaChevronRight className='toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar} />
         <ul className="sidebar-nav" id='sidebar-nav'>
 
           <li className='nav-item'>
@@ -19,105 +29,78 @@ const Sidebar = () => {
 
           <li className='nav-item'>
             <a className='nav-link collapsed' data-bs-target='#supplier-details-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-menu-button-wide'></i>
+              <i className='bi bi-person-lines-fill' onClick={handleToggleSideBar}></i>
               <span>Supplier Details</span>
               <i className='bi bi-chevron-down ms-auto'></i>
             </a>
 
             <ul id='supplier-details-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-
-            <li>
+              <li>
                 <a href='SupplierRequests'>
-                  <i className='bi bi-circle'>
-                    <span>Supplier Requests</span>
-                  </i>
+                  <i className='bi bi-journal-plus' style={{ marginRight: "-30px" }}></i>
+                  <span>Supplier Requests</span>
                 </a>
               </li>
-
               <li>
                 <a href='SupplierDetails'>
-                  <i className='bi bi-circle'>
-                    <span>Suppliers</span>
-                  </i>
+                  <i className='bi bi-people' style={{ marginRight: "-30px" }}></i>
+                  <span>Suppliers</span>
                 </a>
               </li>
-              
             </ul>
           </li>
 
           <li className='nav-item'>
             <a className='nav-link collapsed' data-bs-target='#supply-requests-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-menu-button-wide'></i>
+              <i className='bi bi-basket2-fill' onClick={handleToggleSideBar}></i>
               <span>Supply Requests</span>
               <i className='bi bi-chevron-down ms-auto'></i>
             </a>
 
             <ul id='supply-requests-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-
               <li>
                 <a href='SupplyRequests'>
-                  <i className='bi bi-circle'>
-                    <span>Manage Supply Requests</span>
-                  </i>
+                  <i className='bi bi-list-check' style={{ marginRight: "-30px" }}></i>
+                  <span>Manage Requests</span>
                 </a>
               </li>
               <li>
                 <a href='ApprovedSupplies'>
-                  <i className='bi bi-circle'>
-                    <span>Accepted Requests</span>
-                  </i>
+                  <i className='bi bi-check-circle' style={{ marginRight: "-30px" }}></i>
+                  <span>Accepted Requests</span>
                 </a>
               </li>
               <li>
                 <a href='DeclinedSupplies'>
-                  <i className='bi bi-circle'>
-                    <span>Declined Requests</span>
-                  </i>
+                  <i className='bi bi-x-circle' style={{ marginRight: "-30px" }}></i>
+                  <span>Declined Requests</span>
                 </a>
               </li>
             </ul>
           </li>
 
           <li className='nav-item'>
-            <a className='nav-link collapsed' data-bs-target='#documents-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-layout-text-window-reverse'></i>
-              <span>Documents</span>
-              <i className='bi bi-chevron-down ms-auto'></i>
+            <a className='nav-link collapsed' href='SupplierLocations'>
+              <i className='bi bi-geo-alt'></i>
+              <span>Supplier Locations</span>
             </a>
-
-            <ul id='documents-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
-
-              <li>
-                <a href='#'>
-                  <i className='bi bi-circle'>
-                    <span>General Tables</span>
-                  </i>
-                </a>
-              </li>
-              <li>
-                <a href='#'>
-                  <i className='bi bi-circle'>
-                    <span>Data Tables</span>
-                  </i>
-                </a>
-              </li>
-
-
-            </ul>
           </li>
 
-          <li className='nav-heading'>Pages</li>
-          <div className='navList'>
-            {navList.map(nav => (
-              <li className='nav-item' key={nav._id}>
-                <a className='nav-link collapsed' href={'/login'}>
-                  <i className={nav.icon}></i>
-                  <span>{nav.name}</span>
+          <hr></hr>
+          
+          <div className="mt-16 ">
+            <li className='nav-item'>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
                 </a>
-              </li>
-            ))}
-          </div>
-
+            </li> <li className='nav-item'>
+                <a className='nav-link collapsed' href='/'>
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+            </div>
 
         </ul>
       </aside>
