@@ -223,6 +223,11 @@ function CalculateSalary() {
                     <td>{employee.salary}</td>
                     <td>{employee.allowance}</td>
                     <td>{employee.netsalary}</td>
+                    <td>{employee.salary ? `Rs.${employee.salary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
+                    <td>{employee.allowance ? `Rs.${employee.allowance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
+                    <td>{employee.netsalary ? `Rs.${employee.netsalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
+
+                    
                     <td>
                       <div className="justify-content-center buttons">
                         <button
