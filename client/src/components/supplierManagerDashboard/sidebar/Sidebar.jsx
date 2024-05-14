@@ -79,6 +79,13 @@ const Sidebar = () => {
             </ul>
           </li>
 
+          <li className='nav-item'>
+            <a className='nav-link collapsed' href='SupplierLocations'>
+              <i className='bi bi-geo-alt'></i>
+              <span>Supplier Locations</span>
+            </a>
+          </li>
+
           <hr></hr>
           
           <div className="mt-16 ">
