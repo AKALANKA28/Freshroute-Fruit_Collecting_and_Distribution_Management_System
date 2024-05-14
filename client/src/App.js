@@ -39,6 +39,7 @@ import FDashboard from "./components/farmer/FDashboard";
 import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
 import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
+import SupplierLocations from "./components/supplierManagerDashboard/SupplierLocations";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import ProcessDetails from "./components/transportDashboard/ProcessDetails";
@@ -422,6 +423,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <DeclinedSupplies />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplierLocations",
+    element: (
+      <div>
+        <SupplierLocations />
       </div>
     ),
   },

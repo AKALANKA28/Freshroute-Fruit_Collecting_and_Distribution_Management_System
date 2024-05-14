@@ -6,10 +6,12 @@ import Reports from './Reports';
 
 import RecentActivity from './RecentActivity';
 import BudgetReport from './BudgetReport';
-
+import RecentAdedQuality from './RecentAdedQuality'
 import News from './News';
 import BackToTop from './BackToTop';
-import SpinnerModal from '../../spinner/SpinnerModal'; // Assuming you have a SpinnerModal component
+import SpinnerModal from '../../spinner/SpinnerModal'; 
+import TopCards from '../../Coordinator/body/TopCards';
+import SalaryReport from './SalaryReport'
 
 const Body = () => {
   const [loading, setLoading] = useState(true);
@@ -32,17 +34,20 @@ const Body = () => {
           <div className="row">
             <div className="col-lg-8">
               <div className="row">
-                <Cards />
+              <TopCards/>
+             
                 <div className="col-12">
-                  <Reports />
+                  
                 </div>
                 <div className="col-12">
-                  <News />
+                  <RecentAdedQuality />
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
+            <RecentActivity />
+            <SalaryReport />
+              
               <BudgetReport />
             </div>
           </div>
