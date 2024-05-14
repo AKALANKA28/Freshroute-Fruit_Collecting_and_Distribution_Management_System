@@ -22,6 +22,7 @@ import {
   getSingleOrderData,
 } from "../../../../features/orders/orderSlice";
 import ProductDropdown from "./ProductDropdown";
+import Pagination from "../../components/Pagination";
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Sales() {
@@ -113,7 +114,8 @@ function Sales() {
   const getFetchData = async () => {
     try {
       const response = await axios.get("/user/allorders");
-      setDataList(response.data);
+      const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setDataList(sortedData);
     } catch (err) {
       alert(err.message);
     }
@@ -208,10 +210,8 @@ function Sales() {
 
             <ul class="table-top-head">
               <li>
-                <BlobProvider
-                  document={<SalesReport />}
-                  fileName="SalesReport.pdf"
-                >
+              <BlobProvider document={<SalesReport dataList={dataList} />} fileName="SalesReport.pdf" >
+
                   {({ url, blob }) => (
                     <div className="button-container">
                       <a href={url} target="_blank">
@@ -239,13 +239,13 @@ function Sales() {
             </ul>
 
             <div class="page-btn">
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-added"
                 onClick={() => setModalOpen(true)}
               >
                 <i className="bi bi-plus-circle"></i> Add Sales
-              </button>
+              </button> */}
             </div>
           </div>
           {/* Modal for adding and editing sales */}
@@ -260,7 +260,7 @@ function Sales() {
           {dataList.length > 0 && (
             <div className="table-container">
               <SearchBar onSearch={handleSearch} />
-             
+
               {/* ---------------table--------------- */}
               <table className="table table-bordeless datatable">
                 <thead className="table-light">
@@ -322,9 +322,10 @@ function Sales() {
       </td> */}
                       <td>
                         <div className="buttons">
-                          <button
+                          <button disabled
                             className="btn btn-edit"
                             onClick={() => handleModalOpen(sales)}
+                            style={{background:"rgb(255 187 0 / 50%)", color:"white" , border:"rgb(255 187 0 / 50%)"}}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
@@ -341,39 +342,12 @@ function Sales() {
                 </tbody>
               </table>
               {/* Render pagination component */}
-              <div className="pagination align-items-center  justify-content-end">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
-                  className="me-4"
-                  style={{
-                    backgroundColor: "#ffffff",
-                    border: "none",
-                    padding: "0px 10px",
-                  }}
-                >
-                  <i class="bi bi-chevron-left"></i>{" "}
-                </button>
-                <span
-                  className="text-dark"
-                  style={{ fontSize: "18px", fontWeight: "500" }}
-                >
-                  <span className="me-4">{currentPage}</span>
-                  <span>{totalPages}</span>
-                </span>
-                <button
-                  onClick={handleNextPage}
-                  disabled={currentPage === totalPages}
-                  className="ms-4"
-                  style={{
-                    backgroundColor: "#ffffff",
-                    border: "none",
-                    padding: "0px 10px",
-                  }}
-                >
-                  <i class="bi bi-chevron-right"></i>{" "}
-                </button>
-              </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
             </div>
           )}
         </div>

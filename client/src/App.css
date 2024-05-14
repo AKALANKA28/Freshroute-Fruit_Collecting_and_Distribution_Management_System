@@ -258,7 +258,7 @@ a{
   border-radius: 25px;
   color: white;
   border: solid #ffffff;
-  box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);
+  box-shadow: 8.0px 8px 16.0px hsl(0deg 0% 0% / 0.25);
 }
 
 
@@ -981,7 +981,7 @@ header .search-form input:hover{
 
 
 .pagination {
-  margin-top: 20px;
+  margin-top: -7px;
 }
 
 
@@ -1018,8 +1018,8 @@ header .search-form input:hover{
 
 
 .table-body{
-  min-height: 615px;
-  max-height: 615px;
+  min-height: 618px;
+  max-height: 618px;
 
 }
 
