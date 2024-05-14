@@ -18,6 +18,8 @@ var userSchema = new mongoose.Schema({
 
     mobile:{
       type:String,
+      unique:false
+
     },
 
     password:{
@@ -33,6 +35,12 @@ var userSchema = new mongoose.Schema({
       type: String,
       default: "user"
     },
+    
+    second_role:{
+      type: String,
+      default: "null"
+    },
+
     isBlocked:{
         type: Boolean,
         default: false

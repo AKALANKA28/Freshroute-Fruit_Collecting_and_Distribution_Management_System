@@ -1,174 +1,166 @@
-import React, { useEffect, useState } from 'react'
-import CardFilter from './CardFilter'
-
+import React, { useEffect, useState } from 'react';
+import CardFilter from './CardFilter';
+import axios from 'axios';
+axios.defaults.baseURL = "http://localhost:8070/";
 const TopCards = () => {
-    const [totalSalesAmount, setTotalSalesAmount] = useState(0);
-    const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
-
-
+    
+    const [fruitCount, setFruitCount] = useState(0);
+    const [categoryCount, setCategoryCount] = useState(0);
+    const [vehicleCount, setVehicleCount] = useState(0);
     const [filter, setFilter] = useState('Today');
+
     const handleFilterChange = filter => {
-        setFilter(filter)
+        setFilter(filter);
     };
 
-    const [sales, setSales] = useState([]);
-    const [expenses, setExpenses] = useState([]);
-    const [revenue, setRevenue] = useState([]);
+    
 
-    const fetchSales = () => {
-        fetch("http://localhost:8070/sales/")
+   
+    
+    // const fetchNetSalaryTotal = () => {
+    //     fetch("http://localhost:8070/employee/")
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             // Calculate total amount
+    //             const sum = data.reduce((total, employee) => total + employee.netsalary, 0);
+    //             setTotalNetSalary(sum);
+    //         })
+    //         .catch(error => console.error('Error fetching expenses data:', error));
+    // };
+
+    const fetchFruitCount = () => {
+        fetch("http://localhost:8070/fruittype/")
             .then(res => res.json())
             .then(data => {
-                // Calculate total amount
-                const sum = data.reduce((total, sale) => total + sale.amount, 0);
-                setTotalSalesAmount(sum);
+                
+                
+                const count = data.length;
+                setFruitCount(count);
             })
-            .catch(error => console.error('Error fetching sales data:', error));
+            .catch(error => console.error('Error fetching fruit data:', error));
     };
 
-    const fetchExpenses = () => {
-        fetch("http://localhost:8070/expense/")
+    const fetchCategoryCount = () => {
+        fetch("http://localhost:8070/category/")
             .then(res => res.json())
             .then(data => {
-                // Calculate total amount
-                const sum = data.reduce((total, expense) => total + expense.amount, 0);
-                setTotalExpenseAmount(sum);
+                // Filter categories where price is null
+                const filteredCategories = data.filter(category => category.price === null);
+                
+                // Get the count of filtered categories
+                const count = filteredCategories.length;
+                setCategoryCount(count);
             })
-            .catch(error => console.error('Error fetching expenses data:', error));
+            .catch(error => console.error('Error fetching category data:', error));
     };
+    
 
-    const fetchRevenue = () => {
-        fetch("http://localhost:8070/revenue/")
+    const fetchVehileCount = () => {
+        fetch("http://localhost:8070/transportfee/")
             .then(res => res.json())
             .then(data => {
-                setRevenue(data);
+                
+                
+                const count = data.length;
+                setVehicleCount(count);
             })
-            .catch(error => console.error('Error fetching revenue data:', error));
+            .catch(error => console.error('Error fetching category data:', error));
     };
+    
+
 
     useEffect(() => {
-        fetchSales();
-        fetchExpenses();
-        fetchRevenue();
-    }, []);
-    
-  return (
-    <div>
-      <div className="col-12">
-        <div className="row">
-        <div className="col-xxl-4  col-md-6">
-            <div className="card info-card sales-card">
-                <CardFilter filterChange={handleFilterChange} />
-                <div className="card-body">
-                    <h5 className="card-title">
-                        Income<span> | {filter} </span>
-                    </h5>
+        
+        fetchFruitCount();
+        fetchCategoryCount();
+        fetchVehileCount();
+  }, []);
 
-                    <div className="d-flex align-items-center">
-                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className= "bi bi-cart"></i>
+
+    return (
+        <div>
+            <div className="col-12">
+                <div className="row">
+                    {/* Salary count card */}
+                    <div className="col-xxl-4 col-md-6">
+                        <div className="card info-card sales-card">
+                        <a href="/FruitType" className="text-decoration-none">
+                            <CardFilter filterChange={handleFilterChange} />
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                    Total Fruit Types
+                                </h5>
+
+                                <div className="d-flex align-items-center">
+                                    <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i className= "bi bi-bucket"></i>
+                                    </div>
+                                    <div className="ps-3">
+                                        <h6 className='card-price'>
+                                             {fruitCount} Fruits
+                                        </h6>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
                         </div>
-                        <div className="ps-3">
-                        <h6 className='card-price'>
-                                Rs. {totalSalesAmount.toLocaleString('en-US')}
-                        </h6>
+                    </div>
 
-                            {/* <span className= {`${
-                                sales.percentage > 0 ? 'text-success' : 'text-danger' 
-                                } small pt-1 fw-bold`} */}
-                            <span className= 'text-danger small pt-1 fw-bold'> -2%   
-                                {/* {card.percentage > 0 
-                                ? card.percentage * 100 
-                                : -card.percentage * 100} 
-                                % */}
-                                                           
-                            </span>
-                            <span className="text-muted small pt-2 ps-1">
-                                decrease
-                                {/* {card.percentage > 0 ? 'increase' : 'decrease'} */}
-                            </span>
+                    {/* Expense card */}
+                    <div className="col-xxl-4 col-md-6">
+                        <div className="card info-card sales-card">
+                        <a href="/Category" className="text-decoration-none">
+                            <CardFilter filterChange={handleFilterChange} />
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                Categories to be priced 
+                                </h5>
+
+                                <div className="d-flex align-items-center">
+                                    <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i className="bi bi-bucket"></i>
+                                    </div>
+                                    <div className="ps-3">
+                                        <h6 className='card-price'>
+                                        {categoryCount} Fruits 
+                                        </h6>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Employee card */}
+                    <div className="col-xxl-4 col-md-6">
+                        <div className="card info-card sales-card">
+                        <a href="/TransportFee" className="text-decoration-none">
+                            <CardFilter filterChange={handleFilterChange} />
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                     Total Vehicles  
+                                </h5>
+
+                                <div className="d-flex align-items-center">
+                                    <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i className="bi bi-people"></i>
+                                    </div>
+                                    <div className="ps-3">
+                                        <h6 className='card-price'>
+                                        {vehicleCount} Vehicles
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
-
-        <div className="col-xxl-4 col-md-6">
-            <div className="card info-card sales-card">
-                <CardFilter filterChange={handleFilterChange} />
-                <div className="card-body">
-                    <h5 className="card-title">
-                    Expense<span> | {filter} </span>
-                    </h5>
-
-                    <div className="d-flex align-items-center">
-                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className= ""></i>
-                        </div>
-                        <div className="ps-3">
-                        <h6 className='card-price'>
-                                Rs. {totalExpenseAmount.toLocaleString('en-US')}
-                        </h6>
-                            {/* <span className= {`${
-                                sales.percentage > 0 ? 'text-success' : 'text-danger' 
-                                } small pt-1 fw-bold`} */}
-                            <span className= 'text-success small pt-1 fw-bold'> 5%   
-                                {/* {card.percentage > 0 
-                                ? card.percentage * 100 
-                                : -card.percentage * 100} 
-                                % */}
-                                                           
-                            </span>
-                            <span className="text-muted small pt-2 ps-1">
-                                increase
-                                {/* {card.percentage > 0 ? 'increase' : 'decrease'} */}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-
-        <div className="col-xxl-4 col-md-6">
-            <div className="card info-card sales-card">
-                <CardFilter filterChange={handleFilterChange} />
-                <div className="card-body">
-                    <h5 className="card-title">
-                        Revenue<span> | {filter} </span>
-                    </h5>
-
-                    <div className="d-flex align-items-center">
-                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className= ""></i>
-                        </div>
-                        <div className="ps-3">
-                            {/* <h6 className='card-price'>
-                                {card.name === 'Revenue' || 'Sales'
-                                ? 'Rs. ' + card.amount.toLocaleString('en-US')
-                                : card.amount.toLocaleString('en-US')}
-                            </h6> */}
-                            {/* <span className= {`${
-                                card.percentage > 0 ? 'text-success' : 'text-danger' 
-                                } small pt-1 fw-bold`}
-                            >
-                                {card.percentage > 0 
-                                ? card.percentage * 100 
-                                : -card.percentage * 100} 
-                                %
-                                
-                            </span> */}
-                            {/* <span className="text-muted small pt-2 ps-1">
-                                {card.percentage > 0 ? 'increase' : 'decrease'}
-                            </span> */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>   
         </div>
-      </div>
-    </div>
-  )
+    );
 }
 
-export default TopCards
+export default TopCards;

@@ -45,7 +45,11 @@ var cartSchema = new mongoose.Schema(
       price: {
         type: Number,
         required: true
-      }
+      },
+      grade: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Grade"
+    }
 
     },
     {

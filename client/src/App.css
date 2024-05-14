@@ -16,7 +16,7 @@
   scroll-behavior: smooth;
   --primaryColor: #a4cc3c; 
   --hoverColor: #76b81f;
-  --bgColor: #f6f6f6;
+  --bgColor: #ffffff;
   --textColor: #79797c;
   --inputColor: #f8f6f7;
   --colorYellow: #FEAA09;
@@ -132,6 +132,9 @@ ul{
   color: red !important;
   font-size: 12px !important;
   text-transform: capitalize;
+  margin-top: -20px;
+  margin-bottom: 14px;
+
 }
 
 td{

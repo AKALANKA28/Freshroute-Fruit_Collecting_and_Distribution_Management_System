@@ -1,0 +1,133 @@
+/* ResourceAccessForm.css */
+
+/* General styles */
+.form-container {
+    width: 100%;
+    max-width: 1200px; /* Increase the max-width to expand the form size */
+    height: 1250px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+/* Title styling */
+h2 {
+    text-align: center; /* Center the title */
+    font-size: 24px; /* Adjust the font size of the title */
+    font-weight: bold; /* Make the title bold */
+    color: #333; /* Set the color of the title */
+    margin-bottom: 20px; /* Add space below the title */
+}
+
+/* Form styles */
+.resource-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Create a two-column layout */
+    gap: 20px; /* Add space between the two columns */
+}
+
+
+/* Form section styles */
+.form-section {
+    margin-bottom: 20px;
+}
+.appInfor {
+    display: inline;
+    position: relative;
+    align-items: right;
+    right: 570px;
+}
+.farm {
+    display: inline;
+    position: relative;
+    align-items: right;
+    right: 570px;
+    align-items: bottom;
+    bottom: 20px;
+}
+
+.resRequest {
+    display: inline;
+    position: relative;
+    align-items: left;
+    left: 20px;
+    align-items: bottom;
+    bottom: 990px;
+}
+.detailsRes {
+    display: inline;
+    position: relative;
+    align-items: left;
+    left: 600px;
+    align-items: bottom;
+    bottom: 1060px;
+}
+
+.supportDoc{
+    display: inline;
+    position: relative;
+    align-items: left;
+    left: 20px;
+    align-items: bottom;
+    bottom: 820px;
+}
+
+.form-section h3 {
+    margin-bottom: 10px;
+    margin-top: 60px;
+    font-size: 18px; /* Set the font size for section headers */
+}
+
+
+.form-section label,
+.form-section input,
+.form-section textarea,
+.form-section select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+/* Adjust the styling of the textarea */
+.form-section textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Supporting Documents section styling */
+.form-section input[type="file"] {
+    display: block;
+    margin: 5px 0;
+}
+
+/* Declaration and Submit Button */
+.declaration-section {
+    margin-top: 20px;
+    grid-column: span 2; /* Span both columns */
+    text-align: center; /* Center the text and button */
+}
+.discript {
+    display: inline;
+    position: relative;
+    align-items: bottom;
+    bottom: 780px;
+}
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}

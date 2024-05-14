@@ -9,7 +9,7 @@ const ExpenseModal = ({
   formData,
 }) => {
   return (
-    <Modal show={modalOpen} onHide={handleModalClose}>
+    <Modal show={modalOpen} onHide={handleModalClose} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>{formData ? "Edit" : "Add"} Expense</Modal.Title>
       </Modal.Header>

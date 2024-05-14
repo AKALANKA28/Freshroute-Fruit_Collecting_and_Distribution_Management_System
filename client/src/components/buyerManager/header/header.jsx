@@ -6,7 +6,7 @@ import Nav from './nav/Nav'
 const header = () => {
   return (
     <div>
-      <header id='header' className='header fixed-top d-flex align-items-center'>
+      <header id='header' className='header fixed-top d-flex align-items-center' style={{marginTop:"3%"}}>
          <Logo />
          <Nav />
         </header>

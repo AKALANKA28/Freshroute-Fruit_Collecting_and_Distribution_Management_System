@@ -25,7 +25,7 @@ const BudgetChart = () => {
                         max: 95000,
                     },
                     {
-                        name: 'bla bla',
+                        name: 'Promotions',
                         max: 95000,
                     },
                     {
@@ -33,7 +33,7 @@ const BudgetChart = () => {
                         max: 95000,
                     },
                     {
-                        name: 'bla bla',
+                        name: 'Reports',
                         max: 95000,
                     },
                 ],

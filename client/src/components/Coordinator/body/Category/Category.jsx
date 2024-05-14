@@ -10,6 +10,8 @@ import CategoryForm from "./CategoryForm";
 import CategoryPriceForm from "./CategoryPriceForm";
 import CategoryReport from "./CategoryReport";
 import SpinnerModal from '../../../spinner/SpinnerModal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./Category.css";
 
 axios.defaults.baseURL = "http://localhost:8070/";
@@ -149,7 +151,7 @@ function Category() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Category/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted !");
       getFetchData();
       handleCloseDeleteModal(); // Close the modal after successful deletion
     } catch (err) {
@@ -160,7 +162,7 @@ function Category() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Category/add", { ...formData, imageUrl: formData.imageUrl });
-      alert("Category Added");
+      toast.success("Category Added !");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -171,7 +173,7 @@ function Category() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Category/update/${formData._id}`,  { ...formData, imageUrl: formData.imageUrl });
-      alert("Category Updated");
+      toast.success("Category Updated !");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -182,7 +184,7 @@ function Category() {
   const handlePriceSubmit = async (formData) => {
     try {
       await axios.put(`/Category/update/${formData._id}`, formData);
-      alert("Category Priced");
+      toast.success("Category Priced !");
       handlePriceModalClose();
       getFetchData();
     } catch (err) {
@@ -428,6 +430,18 @@ function Category() {
         </div>
       </div>
        )}
+       <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
