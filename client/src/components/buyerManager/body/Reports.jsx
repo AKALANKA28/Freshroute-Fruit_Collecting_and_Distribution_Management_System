@@ -9,7 +9,8 @@ const Reports = () => {
   return (
     <div>
       
-        <div style={{width:"1000px", height:"400px", marginLeft:"150px" }}>
+        <div>
+          <h3>Fruit Requested Quantity</h3>
         <Graft/>
         </div>
         </div>
