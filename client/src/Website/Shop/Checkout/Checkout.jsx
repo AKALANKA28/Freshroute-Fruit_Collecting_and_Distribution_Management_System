@@ -110,15 +110,15 @@ const Checkout = () => {
   
     const session = await response.json();
   
-    // const result = stripe.redirectToCheckout({
-    //   sessionId: session.id,
-    // });
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
   
-    // if (result.error) {
-    //   console.log(result.error);
-    // } else {
-    //   // Clear the cart after successful payment
-    //   clearCartAfterPayment();
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      // Clear the cart after successful payment
+      clearCartAfterPayment();
   
       // Dispatch the createAnOrder thunk with the order details
       dispatch(
@@ -139,7 +139,7 @@ const Checkout = () => {
           totalPrice: totalAmount,
         })
       );
-    // }
+    }
   };
   
   return (
@@ -300,6 +300,8 @@ const Checkout = () => {
                       onClick={makePayment}
                       type="submit"
                       className="product-button"
+                      disabled={!formik.isValid} // Disable the button if form is not valid
+
                     >
                       Place Order
                     </button>

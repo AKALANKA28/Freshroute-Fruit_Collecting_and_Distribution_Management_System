@@ -75,6 +75,8 @@ const SalesReport = ({ dataList }) => {
       paddingRight: 40,
       lineHeight: 1.5,
       flexDirection: "column",
+      border: "1 solid black", // Add border to the page
+
     },
 
     spaceBetween: {
