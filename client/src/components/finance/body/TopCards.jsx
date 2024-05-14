@@ -5,40 +5,85 @@ const TopCards = () => {
   const [totalSalesAmount, setTotalSalesAmount] = useState(0);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
   const [totalRevenueAmount, setTotalRevenueAmount] = useState(0);
-
   const [filter, setFilter] = useState("Today");
+
   const handleFilterChange = (filter) => {
     setFilter(filter);
   };
 
-  // const [sales, setSales] = useState([]);
-  // const [expenses, setExpenses] = useState([]);
-  // const [revenue, setRevenue] = useState([]);
-
-  const fetchSales = () => {
-    fetch("http://localhost:8070/sales/")
+  const fetchSales = (filter) => {
+    let url;
+    switch (filter) {
+      case "Today":
+        url = "http://localhost:8070/user/allorders?date=today";
+        break;
+      case "Week":
+        url = "http://localhost:8070/user/allorders?date=week";
+        break;
+      case "Month":
+        url = "http://localhost:8070/user/allorders?date=month";
+        break;
+      case "Year":
+        url = "http://localhost:8070/user/allorders?date=year";
+        break;
+      default:
+        url = "http://localhost:8070/user/allorders";
+    }
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        // Calculate total amount
-        const sum = data.reduce((total, sale) => total + sale.amount, 0);
+        const sum = data.reduce((total, sale) => total + sale.totalPrice, 0);
         setTotalSalesAmount(sum);
       })
       .catch((error) => console.error("Error fetching sales data:", error));
   };
 
-  const fetchExpenses = () => {
-    fetch("http://localhost:8070/expense/")
+  const fetchExpenses = (filter) => {
+    let url;
+    switch (filter) {
+      case "Today":
+        url = "http://localhost:8070/expense?date=today";
+        break;
+      case "Week":
+        url = "http://localhost:8070/expense?date=week";
+        break;
+      case "Month":
+        url = "http://localhost:8070/expense?date=month";
+        break;
+      case "Year":
+        url = "http://localhost:8070/expense?date=year";
+        break;
+      default:
+        url = "http://localhost:8070/expense";
+    }
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        // Calculate total amount
         const sum = data.reduce((total, expense) => total + expense.amount, 0);
         setTotalExpenseAmount(sum);
       })
       .catch((error) => console.error("Error fetching expenses data:", error));
   };
 
-  const fetchRevenue = () => {
-    fetch("http://localhost:8070/revenue/")
+  const fetchRevenue = (filter) => {
+    let url;
+    switch (filter) {
+      case "Today":
+        url = "http://localhost:8070/revenue?date=today";
+        break;
+      case "Week":
+        url = "http://localhost:8070/revenue?date=week";
+        break;
+      case "Month":
+        url = "http://localhost:8070/revenue?date=month";
+        break;
+      case "Year":
+        url = "http://localhost:8070/revenue?date=year";
+        break;
+      default:
+        url = "http://localhost:8070/revenue";
+    }
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setTotalRevenueAmount(data.totalRevenue || 0);
@@ -47,11 +92,11 @@ const TopCards = () => {
   };
 
   useEffect(() => {
-    fetchSales();
-    fetchExpenses();
-    fetchRevenue();
-  }, []);
-
+    fetchSales(filter);
+    fetchExpenses(filter);
+    fetchRevenue(filter);
+  }, [filter]);
+  
   return (
     <div>
       <div className="col-12">
