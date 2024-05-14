@@ -1,4 +1,4 @@
-const Sales = require('../../models/finance/sales.js');
+const ProductOrder = require('../../models/orderModel.js');
 const Expense = require('../../models/finance/expense.js');
 const Revenue = require('../../models/finance/revenue.js');
 
@@ -23,9 +23,15 @@ const Revenue = require('../../models/finance/revenue.js');
 exports.calculateRevenue = async (req, res) => {
     try {
 
-        const sales = await Sales.find({});
-        const totalSales = sales.reduce((acc, curr) => acc + curr.amount, 0);
+          // Fetch all product orders
+          const orders = await ProductOrder.find({});
 
+          // Filter paid orders
+          const paidOrders = orders.filter(order => order.orderStatus === 'Paid');
+  
+          // Calculate total sales
+          const totalSales = paidOrders.reduce((acc, curr) => acc + curr.totalPrice, 0);
+          
         const expenses = await Expense.find({});
         const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0);
 

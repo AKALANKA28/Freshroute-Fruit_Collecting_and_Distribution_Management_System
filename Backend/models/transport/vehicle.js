@@ -53,6 +53,12 @@ const vehicle = mongoose.Schema({
   price: {
     type: Number,
   },
+
+  amount: {
+    type: Number,
+    default: 50000
+  },
+
   paid: {
     type: Boolean,
     default: false, // Default value is false, indicating payment not made
