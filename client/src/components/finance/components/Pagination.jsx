@@ -17,14 +17,14 @@ function Pagination({ currentPage, totalPages, handleNextPage, handlePreviousPag
         padding: "0px 10px",
       }}
     >
-      <i class="bi bi-chevron-left"></i>{" "}
+      <i class="bi bi-chevron-left text-dark"></i>
     </button>
     <span
       className="text-dark"
       style={{ fontSize: "18px", fontWeight: "500" }}
     >
       <span className="me-4">{currentPage}</span>
-      <span>{totalPages}</span>
+      <span  style={{color:"#a4cc3c"}}>{totalPages}</span>
     </span>
     <button
       onClick={handleNextPage}
@@ -36,7 +36,7 @@ function Pagination({ currentPage, totalPages, handleNextPage, handlePreviousPag
         padding: "0px 10px",
       }}
     >
-      <i class="bi bi-chevron-right"></i>{" "}
+      <i class="bi bi-chevron-right text-dark"></i>
     </button>
   </div>
   );

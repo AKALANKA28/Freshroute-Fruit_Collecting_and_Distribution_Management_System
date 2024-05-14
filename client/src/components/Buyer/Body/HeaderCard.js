@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 export default function () {
     const [rname, setRname] = useState("");
     const [fruit, setFruit] = useState("");
-    const [category, setCategory] = useState("PID");
+    const [category, setCategory] = useState("");
     const [quantity, setQuantity] = useState("");
     const [quality, setQuality] = useState("");
     const [date, setDate] = useState("");
@@ -138,7 +138,7 @@ export default function () {
                                     <div className="mb-3">
                                         <label for="exampleInputPassword1" className="form-label">Customer</label>
                                         <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Enter Customer Name"
-                                            pattern="[A-Za-z\s]+" title="Please enter only letters and spaces"
+                                            pattern="[A-Za-z\s]+" title="Please enter only letters and spaces" required
                                             onKeyPress={(e) => {
                                                 const pattern = /[a-zA-Z\s]/; // Regular expression to match letters and spaces
                                                 if (!pattern.test(e.key)) {
@@ -160,6 +160,8 @@ export default function () {
                                             onChange={(e) => {
                                                 setFruit(e.target.value);
                                             }}
+                                            required
+
                                         >
                                             <option selected>Open this select menu</option>
                                             <option value="Banana">Banana</option>
@@ -176,6 +178,7 @@ export default function () {
                                             onChange={(e) => {
                                                 setCategory(e.target.value);
                                             }}
+                                            required
                                         >
                                             <option selected>Open this select menu</option>
                                             {subcategoryOptions.map(option => (
@@ -188,6 +191,7 @@ export default function () {
                                         <label for="exampleInputPassword1" className="form-label">Quantity (Kg) </label>
                                         <input type="number" className="form-control" id="exampleInputPassword1" placeholder="Enter Quantity"
                                             min={"1"}
+                                            max={"300"}
                                             onChange={(e) => {
                                                 setQuantity(e.target.value);
                                             }}
@@ -200,6 +204,7 @@ export default function () {
                                             onChange={(e) => {
                                                 setQuality(e.target.value)
                                             }}
+                                            required
                                         >
                                             <option selected>Open this select menu</option>
                                             <option value="A">A</option>

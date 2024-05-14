@@ -111,7 +111,7 @@ function OrderExecutionForm({show, onHide, formData}) {
         } else {
             const exeRecord = {
                 supplierId: supplier.supplierId,
-                supplierName: supplier.supplierName? supplier.supplierName: "No Name",
+                supplierName: supplier.supplierName? supplier.supplierName: "Heshan Perera",
                 quantity: fillingQty,
                 price: supplier.price,
                 time: new Date()
@@ -250,7 +250,7 @@ function OrderExecutionForm({show, onHide, formData}) {
                             <option value="">Select Supplier</option>
                             { supplierList && supplierList.map((sp, index) => (
                                 <option key={index} value={sp._id}>
-                                    Supplier: {sp.supplierName? sp.supplierName: "No Name"} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
+                                    Supplier: {sp.supplierName? sp.supplierName: "Heshan Perera"} &nbsp;&nbsp;&nbsp;  Quantity: {sp.quantity}  &nbsp;&nbsp;&nbsp;  Price: {sp.price}/=
                                 </option>
                             ))}
                         </select>
@@ -294,7 +294,9 @@ function OrderExecutionForm({show, onHide, formData}) {
                                     <td>{parseFloat(item.quantity) * parseFloat(item.price)}</td>
                                     <td>
                                         <div className="buttons">
-                                            <button className="btn-table delete" type="button" onClick={() =>handleDelete(item)}>
+                                            <button
+                                                className="btn btn-delete"
+                                                onClick={() => handleDelete(item)}>
                                                 <i className="bi bi-trash3-fill"></i>
                                             </button>
                                         </div>
