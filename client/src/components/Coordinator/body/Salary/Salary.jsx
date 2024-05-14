@@ -262,7 +262,7 @@ function Salary() {
                     <tr key={salary._id}>
                       <td>{salary.jobrole}</td>
                       <td>{salary.date}</td>
-                      <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
+                      <td>{salary.salary ? `Rs.${salary.salary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
                       
                       <td className="actionSize">
                         <div className="buttons">
