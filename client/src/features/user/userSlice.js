@@ -3,8 +3,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 // import { base_url, config } from "../../Utils/Config";
 
-
-
 // const base_url = "http://localhost:8070/";
 // localStorage.setItem("customer", JSON.stringify({
 //   _id: "123456789",
@@ -28,19 +26,17 @@ const config = {
 };
 
 const getCustomerFromLocalStorage = localStorage.getItem("customer")
-? JSON.parse(localStorage.getItem("customer"))
-: null;
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
 
 const initialState = {
   user: getCustomerFromLocalStorage,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: ""
-
-}
+  message: "",
+};
 console.log(getTokenFromLocalStorage);
-
 
 export const registerUser = createAsyncThunk(
   "user/register",
@@ -84,48 +80,64 @@ export const loginUser = createAsyncThunk(
 
 // console.log(getCustomerFromLocalStorage);
 
-export const addToCart = createAsyncThunk("user/cart/add", async(cartData, thunkAPI) =>{
-  try{
-      const response = await axios.post('http://localhost:8070/user/cart', cartData, config);
-      if(response.data){
-          return response.data;
+export const addToCart = createAsyncThunk(
+  "user/cart/add",
+  async (cartData, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8070/user/cart",
+        cartData,
+        config
+      );
+      if (response.data) {
+        return response.data;
       }
-  }catch(error){
-      return thunkAPI.rejectWithValue(error)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-})
+);
 
-export const getCart = createAsyncThunk("user/cart/get", async(thunkAPI) =>{
-  try{
-      const response = await axios.get("http://localhost:8070/user/get-cart/",config);
+export const getCart = createAsyncThunk("user/cart/get", async (thunkAPI) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:8070/user/get-cart/",
+      config
+    );
+    console.log(response);
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const removeProductFromCart = createAsyncThunk(
+  "user/cart/delete",
+  async (cartItemId, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8070/user/delete-product-from-cart/${cartItemId}`,
+        config
+      );
       console.log(response);
-      if(response.data){
-          return response.data;
+      if (response.data) {
+        return response.data;
       }
-  }catch(error){
-      return thunkAPI.rejectWithValue(error)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-})
-
-export const removeProductFromCart = createAsyncThunk("user/cart/delete", async(cartItemId, thunkAPI) =>{
-  try{
-      const response = await axios.delete(`http://localhost:8070/user/delete-product-from-cart/${cartItemId}`, config);
-      console.log(response);
-      if(response.data){
-          return response.data;
-      }
-  }catch(error){
-      return thunkAPI.rejectWithValue(error)
-  }
-})
-
+);
 
 export const updateProductFromCart = createAsyncThunk(
   "user/cart/update",
   async (cartDetail, thunkAPI) => {
     try {
       const response = await axios.put(
-        `http://localhost:8070/user/update-product-from-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,"",
+        `http://localhost:8070/user/update-product-from-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
+        "",
         config
       );
       if (response.data) {
@@ -155,8 +167,6 @@ export const createAnOrder = createAsyncThunk(
   }
 );
 
-
-
 export const userOrders = createAsyncThunk(
   "user/get-order",
   async (thunkAPI) => {
@@ -174,45 +184,40 @@ export const userOrders = createAsyncThunk(
   }
 );
 
-
-
 export const updateProfile = createAsyncThunk(
-    "user/update-profile",
-    async (data, thunkAPI) => {
-      try {
-        const response = await axios.put(
-          "http://localhost:8070/user/update",
-          data.value,
-          data.config2
-        );
-        if (response.data) {
-          return response.data;
-        }
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error);
+  "user/update-profile",
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:8070/user/update",
+        data.value,
+        data.config2
+      );
+      if (response.data) {
+        return response.data;
       }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
-  );
-  
+  }
+);
 
-  export const emptyCart = createAsyncThunk(
-    "user/emptyCart",
-    async (thunkAPI) => {
-      try {
-        const response = await axios.delete(
-          "http://localhost:8070/user/empty-cart",
-          config
-        );
-        if (response.data) {
-          return response.data;
-        }
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error);
+export const emptyCart = createAsyncThunk(
+  "user/emptyCart",
+  async (thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:8070/user/empty-cart",
+        config
+      );
+      if (response.data) {
+        return response.data;
       }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
-  );
-
-
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -265,8 +270,6 @@ export const authSlice = createSlice({
           toast.error(action.payload.response.data.message);
         }
       })
-
-
 
       .addCase(addToCart.pending, (state) => {
         state.isLoading = true;
@@ -370,24 +373,22 @@ export const authSlice = createSlice({
         }
       })
 
-
-
       .addCase(userOrders.pending, (state) => {
         state.isLoading = true;
-    })
-    .addCase(userOrders.fulfilled, (state, action) => {
+      })
+      .addCase(userOrders.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
         state.userOrder = action.payload;
-    })
-    .addCase(userOrders.rejected, (state, action) => {
+      })
+      .addCase(userOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         state.userOrder = [];
         state.message = action.error;
-    })
+      })
 
       .addCase(updateProfile.pending, (state) => {
         state.isLoading = true;
@@ -412,8 +413,6 @@ export const authSlice = createSlice({
         }
       })
 
-
-
       .addCase(emptyCart.pending, (state) => {
         state.isLoading = true;
       })
@@ -436,8 +435,7 @@ export const authSlice = createSlice({
         //   // toast.error(action.error);
         //   toast.error("Something Went Wrong");
         // }
-      })
-
+      });
   },
 });
 

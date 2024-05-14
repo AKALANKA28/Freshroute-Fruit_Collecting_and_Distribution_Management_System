@@ -12,7 +12,7 @@ import uploadReducer from "../features/admin/upload/uploadSlice"
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    auth: authReducer,
+    // admin: authReducer,
 
     product: productsReducer,
     contact: contactReducer,
