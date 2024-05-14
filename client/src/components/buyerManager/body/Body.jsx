@@ -16,17 +16,18 @@ const Body = () => {
     <div>
       <section className="body" id='body'>
         <div className="container-fluid">
+        <div className="main">
+          <Reports />
+        </div>
           <div className="row">
             <div className="col-lg-8">
               <div className="row">
                 <div className="col-12">
                   <Cards />
                 </div>
+                
                 <div className="col-12">
-                  <Reports />
-                </div>
-                <div className="col-12">
-                <div className="text-lg-end" style={{ marginTop: '150px' }}>
+                <div className="">
                   <RecentSales />
                   </div>
                 </div>
@@ -35,7 +36,7 @@ const Body = () => {
             <div className="col-lg-4">
               {/* <RecentActivity /> */}
               <div className="text-lg-end"> 
-                {/* <BudgetReport /> */}
+                <BudgetReport />
               </div>
             </div>
           </div>
