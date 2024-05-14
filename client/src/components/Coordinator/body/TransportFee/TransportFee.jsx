@@ -203,7 +203,7 @@ function TransportFee() {
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>
-                  <td >{transportfee.price ? `Rs.${transportfee.price.toFixed(2)}` : ''}</td>
+                  <td>{transportfee.price ? `Rs.${transportfee.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
 
                   <td className="actionSize" >
                     <div className="buttons">

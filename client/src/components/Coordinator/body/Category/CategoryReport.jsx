@@ -179,7 +179,7 @@ const formatCurrency = (amount) => {
   if (amount == null) {
     return ""; // or any default value you prefer
   }
-  return `RS:${amount.toFixed(2)}`;
+  return `Rs:${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 };
 
 export default CategoryReport;
