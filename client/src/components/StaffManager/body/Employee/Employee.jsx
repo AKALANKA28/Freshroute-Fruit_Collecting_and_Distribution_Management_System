@@ -10,6 +10,7 @@ import EmployeeForm from "./EmployeeForm";
 import EmployeeReport from "./EmployeeReport";
 import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./Employee.css";
+import { ToastContainer, toast } from 'react-toastify';
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Employee() {
@@ -93,7 +94,7 @@ function Employee() {
   const handleDeleteConfirmed = async () => {
     try {
       await axios.delete(`/Employee/delete/${employeeToDelete}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted");
       getFetchData();
       handleDeleteModalClose();
     } catch (err) {
@@ -104,7 +105,7 @@ function Employee() {
   const handleAddSubmit = async (formData) => {
     try {
       const response = await axios.post("/Employee/add", formData);
-      alert("Employee Added");
+      toast.success("Employee Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -115,7 +116,7 @@ function Employee() {
   const handleEditSubmit = async (formData) => {
     try {
       const response = await axios.put(`/Employee/update/${formData._id}`, formData);
-      alert("Employee Updated");
+     toast.success("Employee Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -335,6 +336,18 @@ function Employee() {
         </div>
       </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

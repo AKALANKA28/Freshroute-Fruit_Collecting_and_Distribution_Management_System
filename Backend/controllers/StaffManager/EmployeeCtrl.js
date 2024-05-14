@@ -21,7 +21,10 @@ const addEmployee = async (req, res) => {
     netsalary,
   } = req.body;
 
+  
+
   try {
+    
     const newEmployee = await Employee.create({
       imageUrl,
       name,
@@ -33,7 +36,7 @@ const addEmployee = async (req, res) => {
       accno,
       bankname,
       fileUrl,
-      joineddate,
+      joineddate: currentDate,
       salary: 0,
       allowance: 0,
       epfe: 0,
