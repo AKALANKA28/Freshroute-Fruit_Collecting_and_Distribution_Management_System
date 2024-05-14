@@ -223,7 +223,7 @@ function Vehicle() {
                   <th scope="col">Conditions</th>
                   <th scope="col">Payload</th>
                   <th scope="col">Owner Name</th>
-                  <th scope="col">NIC</th>
+                  {/* <th scope="col">NIC</th> */}
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Bank</th>
@@ -241,7 +241,7 @@ function Vehicle() {
                       <td>{vehicle.conditions}</td>
                       <td>{vehicle.capacity} lbs</td>
                       <td>{vehicle.owner_name}</td>
-                      <td>{vehicle.nic}</td>
+                      {/* <td>{vehicle.nic}</td> */}
                       <td>{vehicle.email}</td>
                       <td>{vehicle.phone}</td>
                       <td>{vehicle.Bank}</td>
