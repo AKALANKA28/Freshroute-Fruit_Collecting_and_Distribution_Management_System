@@ -53,12 +53,15 @@ const styles = StyleSheet.create({
 });
 
 const QualityReport = ({ dataList }) => {
+
+  const currentDate = new Date().toLocaleString();
   return (
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.section}>
           <Image src = {logo} style={styles.logo}/>
           <Text style={styles.heading}>FreshRoute - Quality Details Report</Text>
+          <Text style={{ textAlign: 'right', marginBottom: 10 }}>{currentDate}</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
