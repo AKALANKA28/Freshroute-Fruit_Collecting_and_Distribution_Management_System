@@ -6,7 +6,7 @@ import Reports from './Reports';
 
 import RecentActivity from './RecentActivity';
 import BudgetReport from './BudgetReport';
-
+import RecentAdedQuality from './RecentAdedQuality'
 import News from './News';
 import BackToTop from './BackToTop';
 import SpinnerModal from '../../spinner/SpinnerModal'; 
@@ -35,18 +35,19 @@ const Body = () => {
             <div className="col-lg-8">
               <div className="row">
               <TopCards/>
-              <SalaryReport />
+             
                 <div className="col-12">
                   
                 </div>
                 <div className="col-12">
-                  <News />
+                  <RecentAdedQuality />
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
-            
-              <RecentActivity />
+            <RecentActivity />
+            <SalaryReport />
+              
               <BudgetReport />
             </div>
           </div>
