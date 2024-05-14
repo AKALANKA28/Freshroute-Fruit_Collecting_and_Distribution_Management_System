@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
@@ -131,10 +131,7 @@ function FruitType() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
 
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
 
   const handleShowDeleteModal = (id) => {
     setDeleteId(id);
@@ -163,28 +160,20 @@ function FruitType() {
                 </div>
               </div>
               <ul class="table-top-head">
-                <li>
-                  <div className="button-container">
-                    <a onClick={handleShowReportModal}>
-                      <img src={Pdf} alt="Pdf Icon" className="icon" />
-                    </a>
-                    <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Salary Details Report</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <PDFViewer width="100%" height="500px">
-                          <FruitTypeReport dataList={dataList} />
-                        </PDFViewer>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseReportModal}>
-                          Close
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </div>
-                </li>
+              <li>
+              <BlobProvider
+                  document={<FruitTypeReport dataList={dataList}/>}
+                  fileName="FruitReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
+              </li>
                 <li>
                   <div className="button-container">
                     <a href="#" onClick={handleButtonClick}>

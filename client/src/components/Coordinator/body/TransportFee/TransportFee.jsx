@@ -1,10 +1,11 @@
-//D:\FreshRoute\MERN_Project\client\src\components\Coordinator\body\TransportFee\TransportFee.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import TransportFeeForm from "./TransportFeeForm";
@@ -56,6 +57,28 @@ function TransportFee() {
     setFilteredDataList(filteredList);
   };
 
+  const generateExcelFile = () => {
+    
+    const rearrangedDataList = dataList.map(category => ({
+      
+      Vehicle_no: category.vehicle_no,
+      Type: category.type,
+      Conditions: category.conditions,
+      Capacity: category.capacity,
+      Price: category.price,
+      
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Transport Fee Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "transport_fee_report.xlsx");
+  };
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -64,6 +87,7 @@ function TransportFee() {
 
   const handleButtonClick = () => {
     getFetchData();
+    generateExcelFile();
   };
 
 
@@ -91,10 +115,7 @@ function TransportFee() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
+  
 
 
   return (
@@ -114,27 +135,19 @@ function TransportFee() {
             </div>
             <ul class="table-top-head">
             <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
+              <BlobProvider
+                  document={<TransportFeeReport dataList={dataList}/>}
+                  fileName="TransportFeeReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
                       </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Transport Fee Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <TransportFeeReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      </li>
+                    </div>
+                  )}
+                </BlobProvider>
+              </li>
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
@@ -190,7 +203,7 @@ function TransportFee() {
                   <td>{transportfee.type}</td>
                   <td>{transportfee.conditions}</td>
                   <td>{transportfee.capacity}</td>
-                  <td >{transportfee.price ? `Rs.${transportfee.price.toFixed(2)}` : 'N/A'}</td>
+                  <td >{transportfee.price ? `Rs.${transportfee.price.toFixed(2)}` : ''}</td>
 
                   <td className="actionSize" >
                     <div className="buttons">

@@ -1,100 +1,182 @@
 import React from "react";
-import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
-
-// Import your logo image
-import logo from "../../../../assests/logo.png";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import './Employee.css';
+import logo from '../../../../assests/logo.png';
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
+    flexDirection: "column",
     backgroundColor: "#FFFFFF",
+    padding: 10,
+    
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginBottom: 10,
+  },
+  // headerText: {
+  //   fontSize: 20,
+  //   color: "green",
+  //   fontWeight: "bold",
+  // },
+
+  headerText: {
+    fontSize: 20,
+    color: "green",
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  headerTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  footer: {
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    fontSize: 10,
+    color: "#666666",
   },
   section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+    marginBottom: 20,
   },
   heading: {
     fontSize: 24,
     marginBottom: 10,
     textAlign: "center",
-  },
-  logoContainer: {
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  logo: {
-    width: 100, // Adjust width as needed
-    height: 100, // Adjust height as needed
+    color: "#333333",
+    textTransform: "uppercase",
   },
   table: {
-    display: "table",
     width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
+    borderBottom: 0,
+    borderRight: 0,
+    borderLeft: 1,
   },
-  tableRow: { 
+  tableRow: {
     flexDirection: "row",
-    backgroundColor: "#FFF",
   },
   tableColHeader: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
     borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 12,
+    borderBottomWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 10,
+    fontWeight: "bold",
+    width: "16.666%",
+    textAlign: "center",
+    backgroundColor : '#DEDEDE'
   },
   tableCol: {
-    borderStyle: "solid",
     borderBottomWidth: 1,
     borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 8,
+    width: "16.666%",
+    textAlign: "center",
+  },
+
+  tableColHeaderDescription: {
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
     fontSize: 10,
-    wordWrap: "break-word", // Add wordWrap property for content wrapping
+    fontWeight: "bold",
+    width: "60%", 
+    textAlign: "center",
+    backgroundColor: '#DEDEDE'
+  },
+  tableColDescription: {
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 8,
+    width: "60%", 
+    textAlign: "center",
+  },
+  tbody2:{ flex:2, borderRightWidth:1, },
+  logo: {
+    width: 100,
+    height: 100,
   },
 });
 
+const Footer = () => (
+  <Text style={styles.footer}>© 2024 Freshroute.lk copyright all right reserved.</Text>
+);
+
+
 const EmployeeReport = ({ dataList }) => {
+  const reportDateTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo'});
   return (
     <Document>
       <Page size="A3" style={styles.page}>
         <View style={styles.section}>
-          <View style={styles.logoContainer}>
-            <Image src={logo} style={styles.logo} />
+          <View style={styles.header}>
+            <View style={styles.headerTextContainer}>
+              <Image src={logo} style={styles.logo} />
+              <Text style={styles.headerText}>FreshRoute</Text>
+            </View>
+            <Text style={styles.reportDateTime}>{reportDateTime}</Text>
           </View>
-          <Text style={styles.heading}>Employee Details Report</Text>
+          <Text style={styles.heading}>Freshroute - Employee Details</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Name</Text>
+              <Text style={styles.tableColHeader}>Joined Date</Text>
               <Text style={styles.tableColHeader}>Job Role</Text>
               <Text style={styles.tableColHeader}>NIC</Text>
               <Text style={styles.tableColHeader}>Address</Text>
               <Text style={styles.tableColHeader}>Email Address</Text>
               <Text style={styles.tableColHeader}>Account Number</Text>
               <Text style={styles.tableColHeader}>Bank Name</Text>
-              <Text style={styles.tableColHeader}>Joined Date</Text>
+              
             </View>
             {dataList.map((employee, index) => (
               <View key={index} style={styles.tableRow}>
                 <Text style={styles.tableCol}>{employee.name}</Text>
+                <Text style={styles.tableCol}>{formatDate(employee.joineddate)}</Text>
                 <Text style={styles.tableCol}>{employee.jobrole}</Text>
                 <Text style={styles.tableCol}>{employee.nic}</Text>
                 <Text style={styles.tableCol}>{employee.address}</Text>
                 <Text style={styles.tableCol}>{employee.email}</Text>
                 <Text style={styles.tableCol}>{employee.accno}</Text>
                 <Text style={styles.tableCol}>{employee.bankname}</Text>
-                <Text style={styles.tableCol}>{employee.joineddate}</Text>
+                
               </View>
             ))}
+            </View>
           </View>
-        </View>
-      </Page>
-    </Document>
-  );
-};
+          <Footer />
+        </Page>
+      </Document>
+    );
+  };
+  
+  // Function to format date
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  };
+  
 
 export default EmployeeReport;

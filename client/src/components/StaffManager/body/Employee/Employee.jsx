@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
 import EmployeeForm from "./EmployeeForm";
@@ -60,8 +62,34 @@ function Employee() {
     getFetchData();
   };
 
+  const generateExcelFile = () => {
+    
+    const rearrangedDataList = dataList.map(category => ({
+      
+      Date: category.name,
+      Joined_Date: category.joineddate,
+      Job_Role: category.jobrole,
+      NIC: category.nic,
+      Email: category.email,
+      Accno: category.accno,
+      Bank_Name: category.bankname,
+      
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Employee Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "employee_report.xlsx");
+  };
+
   const handleButtonClick = () => {
     getFetchData();
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
@@ -123,10 +151,7 @@ function Employee() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
+  
 
   // Step 2: Get unique job roles from data
   const jobRoles = Array.from(new Set(dataList.map(employee => employee.jobrole)));
@@ -160,27 +185,19 @@ function Employee() {
             </div>
 
             <ul className="table-top-head">
-              <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Employee Details Report</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <PDFViewer width="100%" height="500px">
-                        <EmployeeReport dataList={dataList} />
-                      </PDFViewer>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleCloseReportModal}>
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </div>
+            <li>
+              <BlobProvider
+                  document={<EmployeeReport dataList={dataList}/>}
+                  fileName="CategoryReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container">

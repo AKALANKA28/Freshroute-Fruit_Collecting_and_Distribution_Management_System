@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import { BlobProvider, } from "@react-pdf/renderer";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -105,14 +106,21 @@ function Unregistered() {
               </div>
 
               <ul className="table-top-head">
-                <li>
-                  <div className="button-container">
-                    <a href="#">
-                      <img src={Pdf} alt="Pdf Icon" className="icon" />
-                    </a>
-                  </div>
-                </li>
-                <li>
+              <li>
+              <BlobProvider
+                  document={<UnregisteredReport dataList={dataList}/>}
+                  fileName="CategoryReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
+              </li>
+              <li>
                   <div className="button-container">
                     <a href="#" onClick={handleRefreshClick}>
                       <img src={Refresh} alt="Refresh Icon" className="icon" />
