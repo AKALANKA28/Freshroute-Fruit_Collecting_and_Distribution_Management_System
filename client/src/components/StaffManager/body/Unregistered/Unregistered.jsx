@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import { BlobProvider, } from "@react-pdf/renderer";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -9,6 +10,7 @@ import UnregisteredForm from "./UnregisteredForm";
 import UnregisteredReport from "./UnregisteredReport";
 import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./Unregistered.css";
+import { ToastContainer, toast } from 'react-toastify';
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Unregistered() {
@@ -67,7 +69,7 @@ function Unregistered() {
   const handleDeleteConfirmed = async () => {
     try {
       await axios.delete(`/Unregistered/delete/${unregisteredToDelete}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted");
       getFetchData();
       handleDeleteModalClose();
     } catch (err) {
@@ -81,7 +83,7 @@ function Unregistered() {
       await axios.post("/Employee/add", unregistered);
       // Delete the unregistered user
       await axios.delete(`/Unregistered/delete/${unregistered._id}`);
-      alert("Unregistered user confirmed and moved to Employee table.");
+      toast.success("Confirmed the employee registration");
       getFetchData(); // Refresh the data list
     } catch (err) {
       alert(err.message);
@@ -105,14 +107,21 @@ function Unregistered() {
               </div>
 
               <ul className="table-top-head">
-                <li>
-                  <div className="button-container">
-                    <a href="#">
-                      <img src={Pdf} alt="Pdf Icon" className="icon" />
-                    </a>
-                  </div>
-                </li>
-                <li>
+              <li>
+              <BlobProvider
+                  document={<UnregisteredReport dataList={dataList}/>}
+                  fileName="CategoryReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
+              </li>
+              <li>
                   <div className="button-container">
                     <a href="#" onClick={handleRefreshClick}>
                       <img src={Refresh} alt="Refresh Icon" className="icon" />
@@ -216,6 +225,18 @@ function Unregistered() {
           </div>
         </div>
       )}
+       <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

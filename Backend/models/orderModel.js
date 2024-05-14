@@ -26,11 +26,9 @@ var orderSchema = new mongoose.Schema({
         },
         state:{
             type: String,
-            required: true,
         },
         apartment:{
             type: String,
-            required: true,
         },
         pincode:{
             type: Number,
@@ -58,7 +56,6 @@ var orderSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref:"Grade",
                 grade: true,
-                default:"A"
             },
             quantity: {
                 type: Number,

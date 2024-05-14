@@ -60,10 +60,14 @@ const QualityTable = ({items, updateQualityList, editItem, isViewOnly}) => {
                                 <td>{item.storageCond}</td>
                                 {!isViewOnly && <td>
                                     <div className="buttons">
-                                        <button className="btn-table edit" onClick={() => handleEdit(item)}>
+                                        <button
+                                            className="btn btn-edit"
+                                            onClick={() => handleEdit(item)} >
                                             <i className="bi bi-pencil-square"></i>
                                         </button>
-                                        <button className="btn-table delete" onClick={() => onClickDelete(item._id)}>
+                                        <button
+                                            className="btn btn-delete"
+                                            onClick={() => onClickDelete(item._id)} >
                                             <i className="bi bi-trash3-fill"></i>
                                         </button>
                                     </div>

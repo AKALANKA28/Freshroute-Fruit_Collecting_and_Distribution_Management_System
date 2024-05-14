@@ -38,44 +38,25 @@ const SalaryChart = () => {
         chart.setOption({
             tooltip: {
                 trigger: 'item',
-                formatter: (params) => {
-                    let salary = params.value;
-                    if (typeof salary === 'string') {
-                        salary = parseFloat(salary.replace(/[^\d.-]/g, ''));
-                    }
-                    return `${params.name}: Rs.${salary.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
-                },
             },
-            graphic: [
-                {
-                    type: 'text',
-                    left: '47%', 
-                    top: 'middle',
-                    style: {
-                        text: 'Job Role',
-                        fontSize: 12,
-                        fontWeight: 'bold',
-                    },
-                },
-            ],
             legend: {
-                orient: 'vertical',
-                right: -4,
-                top: 'center',
+                top: '5%',
+                left: 'center',
             },
             series: [
                 {
                     name: 'Salary by Job Role',
                     type: 'pie',
-                    radius: ['32%', '75%'],
+                    radius: ['40%', '70%'],
                     avoidLabelOverlap: false,
                     label: {
                         show: false,
+                        position: 'center',
                     },
                     emphasis: {
                         label: {
                             show: true,
-                            fontSize: '20',
+                            fontSize: '18',
                             fontWeight: 'bold',
                         },
                     },
@@ -83,31 +64,22 @@ const SalaryChart = () => {
                         show: false,
                     },
                     data: chartData,
+                    // Use colors variable here
                     color: colors,
                 },
             ],
         });
-    
+
         // Dispose chart instance when component unmounts
         return () => {
             chart.dispose();
         };
     }, [chartData]);
-    
-    
-    
 
-
-
-
-return (
-    <div
-        id='salaryChart'
-        style={{ width: '100%', height: '100%', minHeight: '290px', marginTop: "-55px", left: "-50px", marginBottom: "-20px" }}
-        className='echart'>
-    </div>
-);
-
+    return (
+        <div id='salaryChart' style={{ minHeight: '480px' }} className='echart'>
+        </div>
+    );
 }
 
 export default SalaryChart;

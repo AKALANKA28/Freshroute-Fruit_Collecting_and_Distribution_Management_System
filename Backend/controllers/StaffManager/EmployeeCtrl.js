@@ -21,7 +21,10 @@ const addEmployee = async (req, res) => {
     netsalary,
   } = req.body;
 
+  
+
   try {
+    
     const newEmployee = await Employee.create({
       imageUrl,
       name,

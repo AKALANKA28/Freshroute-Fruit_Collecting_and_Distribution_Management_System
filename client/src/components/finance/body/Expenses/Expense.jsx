@@ -24,8 +24,6 @@ function Expense() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // Number of items per page
 
-  
-
   useEffect(() => {
     getFetchData();
   }, []);
@@ -92,7 +90,6 @@ function Expense() {
     }
   };
 
-
   //Pagination
 
   // Calculate total number of pages
@@ -119,8 +116,7 @@ function Expense() {
     }
   };
 
-
-    // Search functionality
+  // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((expense) => {
       const fullName = `${expense.customer_name} ${expense.date} ${expense.fruit_name} ${expense.amount} ${expense.paid} ${expense.due} ${expense.status}`;
@@ -128,7 +124,6 @@ function Expense() {
     });
     setFilteredDataList(filteredList);
   };
-
 
   return (
     <div className="main">
@@ -191,10 +186,10 @@ function Expense() {
                     </button>
                   </div>
                 </div>
-                <div className="table-container">
+                <div className="table-container" style={{minHeight:"20rem"}}>
                   <SearchBar onSearch={handleSearch} />
                   {/* ---------------table--------------- */}
-                  <table className="table table-bordeless datatable">
+                  <table className="table table-bordeless datatable" >
                     <thead className="table-light">
                       <tr>
                         <th scope="col">Date</th>
@@ -231,16 +226,17 @@ function Expense() {
                       ))}
                     </tbody>
                   </table>
-                  {/* Render pagination component */}
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    handleNextPage={handleNextPage}
-                    handlePreviousPage={handlePreviousPage}
-                  />
                 </div>
+                {/* Render pagination component */}
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  handleNextPage={handleNextPage}
+                  handlePreviousPage={handlePreviousPage}
+                />
               </div>
             </div>
+
             {/* Render ExpenseModal component */}
             <ExpenseModal
               modalOpen={modalOpen}
@@ -260,7 +256,7 @@ function Expense() {
               pauseOnHover
               theme="light"
             />
-          </>{" "}
+          </>
         </div>
       </div>
     </div>

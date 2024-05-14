@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
 
 const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -18,10 +19,10 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
       await axios.delete(`/Farmer/deleteFarmerByJoinRequestID/${selectedRequest.joinRequestId}`);
       fetchApprovedSupplies();
       handleCloseDeclineModal();
-      alert("Supplier Request Declined");
+      toast.success("Supplier Request Declined");
       window.location.reload();
     } catch (error) {
-      console.error("Error declining request:", error);
+      toast.error("Error declining request:", error);
     }
   };
 
@@ -99,6 +100,19 @@ const ApprovedSuppliersTable = ({ approvedSuppliers }) => {
           </div>
         </div>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Modal show={declineModalShow} onHide={handleCloseDeclineModal}>
          <Modal.Header closeButton>

@@ -15,18 +15,6 @@ const TopCards = () => {
 
     
 
-   
-    
-    // const fetchNetSalaryTotal = () => {
-    //     fetch("http://localhost:8070/employee/")
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             // Calculate total amount
-    //             const sum = data.reduce((total, employee) => total + employee.netsalary, 0);
-    //             setTotalNetSalary(sum);
-    //         })
-    //         .catch(error => console.error('Error fetching expenses data:', error));
-    // };
 
     const fetchFruitCount = () => {
         fetch("http://localhost:8070/fruittype/")
@@ -45,7 +33,7 @@ const TopCards = () => {
             .then(res => res.json())
             .then(data => {
                 // Filter categories where price is null
-                const filteredCategories = data.filter(category => category.price === null);
+                const filteredCategories = data.filter(category => category.qualityStatus === 0);
                 
                 // Get the count of filtered categories
                 const count = filteredCategories.length;
@@ -114,7 +102,7 @@ const TopCards = () => {
                             <CardFilter filterChange={handleFilterChange} />
                             <div className="card-body">
                                 <h5 className="card-title">
-                                Categories to be priced 
+                                Category Without Quliality 
                                 </h5>
 
                                 <div className="d-flex align-items-center">
@@ -145,7 +133,7 @@ const TopCards = () => {
 
                                 <div className="d-flex align-items-center">
                                     <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i className="bi bi-people"></i>
+                                        <i className="bi bi-truck"></i>
                                     </div>
                                     <div className="ps-3">
                                         <h6 className='card-price'>

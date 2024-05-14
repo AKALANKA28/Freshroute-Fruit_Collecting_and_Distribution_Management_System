@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from "axios";
 import "./style.css"
 import Swal from 'sweetalert2';
-
+import BuyerEdit from './BuyerEdit';
 
 
 export default class NormalOrder extends Component {
@@ -86,6 +86,17 @@ export default class NormalOrder extends Component {
         });
       };
 
+      orderColor = (orderStatus) => {
+        let color;
+
+        if(orderStatus==="REQUEST"){
+            color = "tomato"
+        }else{
+            color = "green"
+        }
+        return {color};
+      }
+
   render() {
     return (
       <div id="main">
@@ -120,6 +131,7 @@ export default class NormalOrder extends Component {
                     <th scope='col'>Quality</th>
                     <th scope='col'>Quantity</th>
                     <th scope='col'>Date</th>
+                    <th scope='col'>Status</th>
                     <th scope='col'>Action</th>
                     
                 </tr>
@@ -135,15 +147,28 @@ export default class NormalOrder extends Component {
                     <td>{requests.quantity}</td>
                     <td>{requests.quality}</td>
                     <td>{requests.datetobe}</td>
+                    <td style={this.orderColor(requests.orderStatus)}>{requests.orderStatus}</td>
                     <td>
-                        <a className='btn' href={`/buyer/edit/${requests._id}`} style={{backgroundColor: "white", width:"50px", height:"45px", borderRadius:"50%"}}>
-                        <i className='fas fa-pen' style={{color:"black"}}></i>
-                        </a>
-                        &nbsp;
-                        <a className='btn' href='# 1' onClick={() => this.onDelete(requests._id)} style={{backgroundColor: "white", width:"50px", height:"45px", borderRadius:"50%"}}>
-                            <i className='fas fa-trash-alt' style={{color:"red"}}></i>
-                        </a>
-                    </td>
+  {requests.orderStatus === "REQUEST" ? (
+    <a
+      className='btn'
+      href={`./BuyerEdit/${requests._id}`}
+      style={{ backgroundColor: "white", width: "50px", height: "45px", borderRadius: "50%" }}
+    >
+      <i className='fas fa-pen' style={{ color: "black" }}></i>
+    </a>
+  ) : null}
+  &nbsp;
+  <a
+    className='btn'
+    href='# 1'
+    onClick={() => this.onDelete(requests._id)}
+    style={{ backgroundColor: "white", width: "50px", height: "45px", borderRadius: "50%" }}
+  >
+    <i className='fas fa-trash-alt' style={{ color: "red" }}></i>
+  </a>
+</td>
+
                 </tr>
             ))}
     

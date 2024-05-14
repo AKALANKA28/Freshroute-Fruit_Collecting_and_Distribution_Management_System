@@ -181,7 +181,7 @@ const TableTotal = () => {
       </View>
       <View style={styles.tbody}>
         <Text>
-        {dataList((sum, item) => sum + (item.price), 0)}
+        {/* {dataList((sum, item) => sum + (item.price), 0)} */}
 
           {/* {reciept_data.items.reduce((sum, item) => sum + (item.price * item.qty), 0)} */}
         </Text>  

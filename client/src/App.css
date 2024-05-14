@@ -132,7 +132,7 @@ ul{
   color: red !important;
   font-size: 12px !important;
   text-transform: capitalize;
-  margin-top: -20px;
+  margin-top: 5px;
   margin-bottom: 14px;
 
 }
@@ -141,6 +141,15 @@ td{
   vertical-align: middle;
   /* text-align: center; */
 }
+
+Link{
+  text-decoration: none;
+}
+
+a{
+  text-decoration: none;
+}
+
 
 /*----------------------------------------------------
 #overrride some default bootsstrap styling
@@ -249,7 +258,7 @@ td{
   border-radius: 25px;
   color: white;
   border: solid #ffffff;
-  box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);
+  box-shadow: 8.0px 8px 16.0px hsl(0deg 0% 0% / 0.25);
 }
 
 
@@ -652,7 +661,7 @@ header .search-form input:hover{
   .logo{
       width: 280px
   }
-};
+}
   
 
 .sidebar .hr{
@@ -695,9 +704,9 @@ header .search-form input:hover{
   align-items: center;
   font-size: 16px;
   font-weight: 500;
-  color: #ffff;
   transition: 0.3s;
-  background: var(--primaryColor);
+  color: var(--textColor);
+  background: #ffffff;
   padding: 10px 15px;
   border-radius: 4px;
 
@@ -713,7 +722,7 @@ header .search-form input:hover{
 .sidebar-nav .nav-link i{
   font-size: 20px;
   margin-right: 10px;
-  color:var(--bgColor);
+  color:var(--textColor);
 }
 
 
@@ -732,6 +741,12 @@ header .search-form input:hover{
   color: #ffffff;
   background:var(--primaryColor);
   
+}
+
+.nav-active{
+  color: #ffffff!important;
+  background:var(--primaryColor)!important;
+
 }
 
 
@@ -789,7 +804,7 @@ header .search-form input:hover{
   transition: all 0.4s;
   white-space: nowrap;
   opacity: 1;
-  
+
 }
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active{
@@ -972,7 +987,7 @@ header .search-form input:hover{
 
 
 .pagination {
-  margin-top: 20px;
+  margin-top: -7px;
 }
 
 
@@ -1009,8 +1024,8 @@ header .search-form input:hover{
 
 
 .table-body{
-  min-height: 615px;
-  max-height: 615px;
+  min-height: 618px;
+  max-height: 618px;
 
 }
 

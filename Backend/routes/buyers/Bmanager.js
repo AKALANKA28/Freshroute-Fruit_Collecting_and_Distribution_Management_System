@@ -27,6 +27,27 @@ router.get("/requests", (req, res) => {
         });
 });
 
+router.get("/requests/all", (req, res) => {
+    Request.find({ orderStatus: "REQUEST" }).exec()
+        .then((requests) => {
+            res.status(200).json({ success: true, existingRequest: requests });
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
+
+router.get("/requests/normal", (req, res) => {
+    Request.find({ orderStatus: "normalOrder" }).exec()
+        .then((requests) => {
+            res.status(200).json({ success: true, existingRequest: requests });
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
+
+
 // Update request
 router.put("/request/update/:id", (req, res) => {
     Request.findByIdAndUpdate(req.params.id, { $set: req.body }).exec()
@@ -37,6 +58,34 @@ router.put("/request/update/:id", (req, res) => {
             res.status(400).json({ error: err });
         });
 });
+
+router.put("/requestor/update/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the request by id
+        const request = await Request.findById(id);
+
+        if (!request) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+
+        // Update orderStatus to "normalOrder"
+        request.orderStatus = 'normalOrder';
+
+        // Save the updated request
+        await request.save();
+
+        res.json({ message: 'Order status updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
+
+
 
 //delete
 

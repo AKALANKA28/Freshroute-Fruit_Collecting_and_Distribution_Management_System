@@ -76,13 +76,13 @@ const Sidebar = () => {
 
                     <li>
                         <a onClick={handleAddModalOpen}>
-                            <i className='bi bi-plus-circle'></i>
-                            <span>Add Supply Prediction</span>
+                            <i className='bi bi-plus-circle' style={{ marginRight: "-30px" }}></i>
+                            <span>Add Prediction</span>
                         </a>
                     </li>
                     <li>
                         <a href='PredictionDetails'>
-                            <i className='bi bi-list-ul'></i>
+                        <i className='bi bi-list-ul' style={{ marginRight: "-30px" }}></i>
                             <span>Previous Predictions</span>
                         </a>
                     </li>

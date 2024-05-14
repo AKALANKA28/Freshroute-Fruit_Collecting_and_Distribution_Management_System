@@ -1,12 +1,40 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import '../../../App.css'
 import logo from "../../../assests/logo.png";
 import {FaChevronRight} from "react-icons/fa";
+import {NavLink, useLocation} from "react-router-dom";
+import "../../orderProcessor/sidebar/Sidebar.css"
+
 
 const Sidebar = () => {
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [orderActive, setOrderActive] = useState(false);
+
+    useEffect(()=>{
+        setOrderActive(orderCollapsedActive());
+    },[currentPath])
 
     const handleToggleSideBar = () => {
         document.body.classList.toggle('toggle-sidebar');
+        setOrderActive(orderCollapsedActive())
+        if (!document.body.classList.contains('toggle-sidebar')) {
+            setIsCollapsed(true);
+        }
+    }
+    const handleToggleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
+        if (!document.body.classList.contains('toggle-sidebar')) {
+            document.body.classList.toggle('toggle-sidebar');
+            setIsCollapsed(false);
+        }
+    };
+
+    const orderCollapsedActive = ()=> {
+        return (!document.body.classList.contains('toggle-sidebar')
+            && (currentPath.endsWith('RequestedOrderList') ||
+                currentPath.endsWith('AssignedOrderList') || currentPath.endsWith('CompletedOrderList')))
     }
 
     return (
@@ -21,78 +49,89 @@ const Sidebar = () => {
 
                 {/* <i className='bi bi-chevron-right toggle-sidebar-btn d-flex align-items-center justify-content-center' onClick={handleToggleSideBar}></i> */}
 
-                <ul className="sidebar-nav" id='sidebar-nav'>
+                <ul className="sidebar-nav d-flex flex-column h-100" id='sidebar-nav'>
                     <li className='nav-item'>
-                        <a className='nav-link' href='/OMDashboard'>
+                        <NavLink to='/OMDashboard' className={({isActive}) => {
+                            return (isActive && currentPath.endsWith('/OMDashboard')) ? 'nav-link nav-active' : 'nav-link'
+                        }}>
                             <i className='bi bi-grid-1x2'></i>
-                            <span>Dashboard</span>
-                        </a>
+                            <span className={"nav-text"}>Dashboard</span>
+                        </NavLink>
                     </li>
 
                     <li className='nav-item'>
-                        <a className='nav-link ' href='/OMDashboard/QualityList'>
+                        <NavLink to='/OMDashboard/QualityList' className={({isActive}) => {
+                            return isActive ? 'nav-link nav-active' : 'nav-link'
+                        }}>
                             <i className="bi bi-sliders"></i>
-
                             <span>Quality Control</span>
-                        </a>
+                        </NavLink>
                     </li>
 
+
                     <li className='nav-item'>
-                        <a className='nav-link collapsed' data-bs-target='#forms-nav' data-bs-toggle='collapse'
-                           href='Orders'>
+                        <a className={`${orderActive ? 'nav-active' : ''} nav-link `} onClick={handleToggleCollapse}>
                             <i className="bi bi-box-seam"></i>
-                            <span>Orders</span>
-                            <i className='bi bi-chevron-down ms-auto'></i>
+                            <span className={"hide-collapsed"}>Orders</span>
+                            <i className={`${isCollapsed ? '' : 'rotate-icon'} bi bi-chevron-down`}></i>
                         </a>
 
-                        <ul id='forms-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
+                        <ul id='components-nav' className={`${isCollapsed ? ' hide-item' : 'collapsed-content'} `}>
 
-                            <li>
-                                <a href='/OMDashboard/RequestedOrderList'>
-                                    <i className='bi bi-circle'>
-                                        <span>Requested Orders</span>
-                                    </i>
-                                </a>
+                            <li className={'collapsed-item'}>
+                                <NavLink to={'/OMDashboard/RequestedOrderList'} className={({isActive}) => {
+                                    return isActive ? 'sub-nav nav-active' : 'sub-nav'
+                                }}>
+                                    <i className='bi bi-circle'></i>
+                                    <span>Requested Orders</span>
+
+                                </NavLink>
                             </li>
                             <li>
-                                <a href='/OMDashboard/AssignedOrderList'>
-                                    <i className='bi bi-circle'>
-                                        <span>Assigned Orders</span>
-                                    </i>
-                                </a>
+                                <NavLink to={'/OMDashboard/AssignedOrderList'} className={({isActive}) => {
+                                    return isActive ? 'sub-nav nav-active' : 'sub-nav'
+                                }}>
+                                    <i className='bi bi-circle'></i>
+                                    <span>Assigned Orders</span>
+                                </NavLink>
                             </li>
                             <li>
-                                <a href='/OMDashboard/CompletedOrderList'>
-                                    <i className='bi bi-circle'>
-                                        <span>Completed Orders</span>
-                                    </i>
-                                </a>
+                                <NavLink to={'/OMDashboard/CompletedOrderList'} className={({isActive}) => {
+                                    return isActive ? 'sub-nav nav-active' : 'sub-nav'
+                                }}>
+                                    <i className='bi bi-circle'></i>
+                                    <span>Completed Orders</span>
+                                </NavLink>
                             </li>
 
                         </ul>
-                    </li>
 
+                    </li>
                     <li className='nav-item'>
-                        <a className='nav-link ' href='/OMDashboard/SupplierList'>
+                        <NavLink to='/OMDashboard/SupplierList' className={({isActive}) => {
+                            return isActive ? 'nav-link nav-active' : 'nav-link'
+                        }}>
                             <i className="bi bi-people"></i>
-
-                            <span>Suppliers</span>
-                        </a>
+                            <span className={"nav-text"}>Suppliers</span>
+                        </NavLink>
                     </li>
-                    <div className="mt-16 ">
-                        <li className='nav-item'>
-                            <a className='nav-link collapsed' href='/'>
-                                <i class="bi bi-gear"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        <li className='nav-item'>
-                            <a className='nav-link collapsed' href='/'>
-                                <i class="bi bi-box-arrow-left"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </div>
+
+                    <li className={`${isCollapsed? '': 'mt-0-important'}  nav-item settings`}>
+                        <NavLink to='/' className={({isActive}) => {
+                            return isActive ? 'nav-link nav-active' : 'nav-link'
+                        }}>
+                            <i className="bi bi-gear"></i>
+                            <span className={"nav-text"}>Settings</span>
+                        </NavLink>
+                    </li>
+                    <li className='nav-item'>
+                        <NavLink to='/' className={({isActive}) => {
+                            return isActive ? 'nav-link nav-active' : 'nav-link'
+                        }}>
+                            <i className="bi bi-box-arrow-left"></i>
+                            <span className={"nav-text"}>Logout</span>
+                        </NavLink>
+                    </li>
 
                 </ul>
             </aside>
