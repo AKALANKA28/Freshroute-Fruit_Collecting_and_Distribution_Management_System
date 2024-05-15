@@ -6,6 +6,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import NoticeForm from "./NoticeForm";
 import SpinnerModal from '../../../spinner/SpinnerModal'
 import "./Notice.css";
+import { ToastContainer, toast } from 'react-toastify';
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Notice() {
@@ -88,7 +89,7 @@ function Notice() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Notice/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted !");
       getFetchData();
       handleDeleteModalClose(); // Close delete confirmation modal after successful deletion
     } catch (err) {
@@ -99,7 +100,7 @@ function Notice() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Notice/add", formData);
-      alert("Notice Created");
+      toast.success("Notice Created !");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -110,7 +111,7 @@ function Notice() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/Notice/update/${formData._id}`, formData);
-      alert("Notice Updated");
+      toast.success("Notice Updated !");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -237,6 +238,18 @@ function Notice() {
         </div>
       </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

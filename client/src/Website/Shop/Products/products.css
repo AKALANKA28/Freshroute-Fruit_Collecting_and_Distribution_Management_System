@@ -153,13 +153,17 @@
   margin-bottom: 0;
 }
 
-.grade span{
+.grade .button-select{
   font-size: 14px;
-  font-weight: 600;  
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  background-color: black;
+  padding-bottom: -20rem;
+  cursor: pointer;
 
 }
 
-.grade span:hover{
+.grade .button-select:hover{
   color: white;
   background-color: var(--hoverColor);
 }

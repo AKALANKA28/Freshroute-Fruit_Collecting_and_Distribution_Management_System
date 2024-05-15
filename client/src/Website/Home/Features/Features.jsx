@@ -35,7 +35,7 @@ const Features = () => {
         <div className="row text-center">
             <div className="col-12">
                 <h6 className='heading'>What We Offer</h6>
-                <p className='subheading'><span>consectetur</span> adipiscing elit Sed do</p>
+                <p className='subheading'><span>Paving the Way to</span> Freshness</p>
             </div>
             <div className="col-lg-12 card-column">
               <div className="row align-items-center">

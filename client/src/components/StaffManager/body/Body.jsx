@@ -3,8 +3,8 @@ import './main.css'
 
 import Cards from './Cards'
 import Reports from './Reports'
-import RecentSales from './RecentSales'
-import TopSellings from './TopSellings'
+import BasicSalary from './BasicSalary'
+
 import RecentActivity from './RecentActivity'
 import WebTraffic from './WebTraffic'
 import News from './News'
@@ -37,14 +37,13 @@ const Body = () => {
                 <div className="row gap-1">
                 <TopCards/>
                  {  /* <Cards />*/}
+                    
                     <div className="col-12">
-                        <Reports />
+                     <BasicSalary />
                     </div>
+                    
                     <div className="col-12">
-                     <RecentSales />
-                    </div>
-                    <div className="col-12">
-                     <TopSellings />
+                      { /* <Reports />*/}
                     </div>
                 </div>
             </div>

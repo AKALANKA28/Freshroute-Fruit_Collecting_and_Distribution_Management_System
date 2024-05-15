@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
 import Refresh from "../../../../assests/img/icons/refresh.png";
+import * as XLSX from "xlsx";
+import { writeFile } from "xlsx";
 import SalaryForm from "./SalaryForm";
 import SalaryReport from "./SalaryReport";
 import SpinnerModal from '../../../spinner/SpinnerModal';
@@ -60,8 +62,29 @@ function Salary() {
     getFetchData();
   };
 
+  const generateExcelFile = () => {
+    
+    const rearrangedDataList = dataList.map(salary => ({
+      Job_Role: salary.jobrole,
+      Date: salary.date,
+      Salary: salary.salary,
+      
+    }));
+  
+    // Define the worksheet
+    const ws = XLSX.utils.json_to_sheet(rearrangedDataList);
+    
+    // Define the workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Salary Report");
+    
+    // Generate the Excel file
+    writeFile(wb, "salary_report.xlsx");
+  };
+
   const handleButtonClick = () => {
     getFetchData();
+    generateExcelFile();
   };
 
   const handleAddModalOpen = () => {
@@ -125,10 +148,7 @@ function Salary() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
-
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
+  
 
   return (
     <div id='main' className='main'>
@@ -146,27 +166,19 @@ function Salary() {
               </div>
             </div>
             <ul className="table-top-head">
-              <li>
-                <div className="button-container">
-                  <a onClick={handleShowReportModal}>
-                    <img src={Pdf} alt="Pdf Icon" className="icon" />
-                  </a>
-                  <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Salary Details Report</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <PDFViewer width="100%" height="500px">
-                        <SalaryReport dataList={dataList} />
-                      </PDFViewer>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleCloseReportModal}>
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </div>
+            <li>
+              <BlobProvider
+                  document={<SalaryReport dataList={dataList}/>}
+                  fileName="SalaryReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
               </li>
               <li>
                 <div className="button-container">
@@ -250,7 +262,7 @@ function Salary() {
                     <tr key={salary._id}>
                       <td>{salary.jobrole}</td>
                       <td>{salary.date}</td>
-                      <td>{`Rs.${salary.salary.toFixed(2)}`}</td>
+                      <td>{salary.salary ? `Rs.${salary.salary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : ''}</td>
                       
                       <td className="actionSize">
                         <div className="buttons">

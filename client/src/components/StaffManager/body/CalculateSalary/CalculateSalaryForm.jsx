@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+// Set base URL for axios requests
 axios.defaults.baseURL = "http://localhost:8070/";
 
+// Define CalculateSalaryForm component
 const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
+  // State variable for form data
   const [formData, setFormData] = useState({
     name: "",
     jobrole: "",
@@ -15,17 +18,21 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
     etf: 3,
   });
 
+  // Fetch salary data when initial data is provided
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
-      fetchSalaryData(initialData.jobrole); // Fetch salary data when initial data is provided
+      fetchSalaryData(initialData.jobrole);
     }
   }, [initialData]);
 
+  // Function to fetch salary data
   const fetchSalaryData = async (jobrole) => {
     try {
       const response = await axios.get(`/api/salary/${jobrole}`); // Modify the endpoint URL as per your backend API
       const { salary } = response.data;
+      
+      
       setFormData((prevFormData) => ({
         ...prevFormData,
         salary: salary // Set the salary in the form state
@@ -35,19 +42,24 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
     }
   };
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value
     }));
   };
 
+  // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    
     handleSubmit(formData);
   };
 
+  // JSX
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-3">
@@ -115,7 +127,7 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
           EPF - Employee Contribution
         </label>
         <select
-          className="form-select"
+          className="form-control"
           name="epfe"
           value={formData.epfe}
           onChange={handleChange}
@@ -133,7 +145,7 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
           EPF - Employer Contribution
         </label>
         <select
-          className="form-select"
+          className="form-control"
           name="epfr"
           value={formData.epfr}
           onChange={handleChange}
@@ -151,7 +163,7 @@ const CalculateSalaryForm = ({ handleSubmit, initialData }) => {
           ETF - Employer Contribution
         </label>
         <select
-          className="form-select"
+          className="form-control"
           name="etf"
           value={formData.etf}
           onChange={handleChange}

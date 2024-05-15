@@ -26,10 +26,10 @@ const vehicle = mongoose.Schema({
     required: true,
   },
 
-  nic: {
-    type: String,
-    required: true,
-  },
+  // nic: {
+  //   type: String,
+  //   required: true,
+  // },
   email: {
     type: String,
     required: true,
