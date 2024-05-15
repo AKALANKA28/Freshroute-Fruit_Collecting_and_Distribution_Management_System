@@ -114,13 +114,53 @@ const SingleProduct = () => {
                       <div className="d-flex flex-column gap-2 pb-4">
                         <h3 className="product-heading">Grade</h3>
                         <div className="d-flex flex-wrap gap-15 grade">
+                          {/* First span */}
                           <span
                             className="badge border border-1 p-3 button-select"
                             style={{ backgroundColor: "black", color: "white" }}
                           >
                             <Grades
                               setGrade={setGrade}
-                              gradeData={productState && productState.grade} // Pass the whole gradeData array
+                              gradeData={
+                                productState &&
+                                productState.grade.slice(
+                                  0,
+                                  Math.ceil(productState.grade.length / 3)
+                                )
+                              } // Pass the first third of the gradeData array
+                            />
+                          </span>
+
+                          {/* Second span */}
+                          <span
+                            className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
+                          >
+                            <Grades
+                              setGrade={setGrade}
+                              gradeData={
+                                productState &&
+                                productState.grade.slice(
+                                  Math.ceil(productState.grade.length / 3),
+                                  Math.ceil((productState.grade.length * 2) / 3)
+                                )
+                              } // Pass the second third of the gradeData array
+                            />
+                          </span>
+
+                          {/* Third span */}
+                          <span
+                            className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
+                          >
+                            <Grades
+                              setGrade={setGrade}
+                              gradeData={
+                                productState &&
+                                productState.grade.slice(
+                                  Math.ceil((productState.grade.length * 2) / 3)
+                                )
+                              } // Pass the last third of the gradeData array
                             />
                           </span>
                         </div>

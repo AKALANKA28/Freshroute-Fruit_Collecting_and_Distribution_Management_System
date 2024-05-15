@@ -139,7 +139,6 @@ const ReportCharts = ({ filter }) => {
           x: new Date(item.date).getTime(),
           y: item.amount,
         }));
-
         // Fetch revenue data
         // const revenueReq = await fetch(
         //   `${base_url}revenue/?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
@@ -168,7 +167,6 @@ const ReportCharts = ({ filter }) => {
           { x: new Date("2024-05-08T10:32").getTime(), y: 15300 }, // Sum of previous amount (102000) + current amount (51000)
           { x: new Date("2024-05-08T11:08").getTime(), y: 30000 }, // No revenue data available for this timestamp
           { x: new Date("2024-05-08T13:07").getTime(), y: 49027 }, // No revenue data available for this timestamp
-
         ];
 
         // console.log('Start Date:', startDate);

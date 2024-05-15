@@ -147,12 +147,12 @@ const Register = () => {
                       onChange={formik.handleChange("name")}
                       onBlur={formik.handleBlur("name")}
                     />
-                    <div className="error">
+                    <div className="error" style={{marginTop:"-15px"}}>
                       {formik.touched.firstname && formik.errors.firstname}
                     </div>
                     <label htmlFor="username">Username</label>
                   </div>
-                      <div className="input-field">
+                      <div className="input-field" >
                         <input
                           type="text"
                           className="input"
@@ -163,7 +163,7 @@ const Register = () => {
                           onChange={formik.handleChange("mobile")}
                           onBlur={formik.handleBlur("mobile")}
                         />
-                        <div className="error">
+                        <div className="error" style={{marginTop:"-15px"}}>
                           {formik.touched.mobile && formik.errors.mobile}
                         </div>
                         <label htmlFor="mobile">Mobile</label>
@@ -198,7 +198,7 @@ const Register = () => {
                       onChange={formik.handleChange("password")}
                       onBlur={formik.handleBlur("password")}
                     />
-                    <div className="error">
+                    <div className="error" style={{marginTop:"-15px"}}>
                       {formik.touched.password && formik.errors.password}
                     </div>
                     <label htmlFor="pass">Password</label>

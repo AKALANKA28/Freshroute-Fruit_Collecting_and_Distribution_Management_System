@@ -36,42 +36,42 @@ const AdminLogin = () => {
   });
 
 
-  // const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
-  // useEffect(() => {
-  //   if(user){
-  //     navigate("/tDashboard")
-  //   }else{
-  //     navigate("/")
-  //   }
-  // },[navigate, isSuccess])
-
   const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
   useEffect(() => {
-  if (user){
-    if(user.second_role === "finance_manager"){
+    if(user){
+      navigate("/finance")
+    }else{
       navigate("/finance")
     }
-    else if(user.second_role === "supplier_manager"){
-      navigate("/SMDashboard")
-    } else if (user.second_role === "coordinator") {
-      navigate("/sales")
-    } else if (user.second_role === "transport_manager") {
-      navigate("/sales")
-    }else if (user.second_role === "staff_manager") {
-      navigate("/sales")
-    }else if (user.second_role === "buyer_manager") {
-      navigate("/sales")
-    }else if (user.second_role === "order_manager") {
-      navigate("/sales")
-    }else if (user.second_role === "rp_manager") {
-      navigate("/sales")
-    } else{
-      navigate("/finance")
-    }
-  }
+  },[navigate, isSuccess])
+
+  // const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
+  // useEffect(() => {
+  // if (user){
+  //   if(user.second_role === "finance_manager"){
+  //     navigate("/finance")
+  //   }
+  //   else if(user.second_role === "supplier_manager"){
+  //     navigate("/SMDashboard")
+  //   } else if (user.second_role === "coordinator") {
+  //     navigate("/sales")
+  //   } else if (user.second_role === "transport_manager") {
+  //     navigate("/sales")
+  //   }else if (user.second_role === "staff_manager") {
+  //     navigate("/sales")
+  //   }else if (user.second_role === "buyer_manager") {
+  //     navigate("/sales")
+  //   }else if (user.second_role === "order_manager") {
+  //     navigate("/sales")
+  //   }else if (user.second_role === "rp_manager") {
+  //     navigate("/sales")
+  //   } else{
+  //     navigate("/finance")
+  //   }
+  // }
        
 
-  },[navigate, isSuccess])
+  // },[navigate, isSuccess])
 
   // const { user, isError, isLoading, isSuccess, message } = useSelector((state) => state.auth)
   // useEffect(() => {
