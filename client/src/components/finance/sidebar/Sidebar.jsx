@@ -11,9 +11,14 @@ const Sidebar = () => {
     setActiveItem(item);
   };
 
-
   const handleToggleSideBar = () => {
     document.body.classList.toggle("toggle-sidebar");
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    // Redirect to the login page
+    window.location.href = "/admin"; // Assuming your login page path is '/login'
   };
 
   return (
@@ -98,7 +103,7 @@ const Sidebar = () => {
                         </ul> */}
           </li>
 
-          <li
+          {/* <li
             className={`nav-item ${activeItem === "reports" ? "active" : ""}`}
             onClick={() => handleItemClick("reports")}
           >
@@ -106,15 +111,16 @@ const Sidebar = () => {
               <i className="bi bi-archive"></i>
               <span>Approvals</span>
             </Link>
-          </li>
+          </li> */}
 
           <li
             className={`nav-item ${activeItem === "reports" ? "active" : ""}`}
             onClick={() => handleItemClick("reports")}
-          > <Link to="/payments_page" className="nav-link collapsed">
-<i class="bi bi-credit-card"></i>          <span>Payments</span>
-        </Link>
-       
+          >
+            {" "}
+            <Link to="/payments_page" className="nav-link collapsed">
+              <i class="bi bi-credit-card"></i> <span>Payments</span>
+            </Link>
           </li>
 
           <div className="mt-16 ">
@@ -133,10 +139,15 @@ const Sidebar = () => {
               className={`nav-item ${activeItem === "logout" ? "active" : ""}`}
               onClick={() => handleItemClick("logout")}
             >
-              <a className="nav-link collapsed" href="/">
+              {/* Use Link component to navigate to login page */}
+              <Link
+                to="/login"
+                className="nav-link collapsed"
+                onClick={handleLogout}
+              >
                 <i className="bi bi-box-arrow-left"></i>
                 <span>Logout</span>
-              </a>
+              </Link>
             </li>
           </div>
         </ul>

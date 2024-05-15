@@ -210,3 +210,15 @@
   min-width: 1.8rem;
   margin-right: 3px;
 }
+
+
+.button-select{
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+  font-size: 14px;
+  font-weight: 600;  
+}
+.button-select:hover{
+  background-color: var(--hoverColor);
+  color: #ffffff;
+}
