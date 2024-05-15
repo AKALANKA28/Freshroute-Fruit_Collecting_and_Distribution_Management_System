@@ -255,7 +255,7 @@ function SuppliersList() {
               <thead className="table-light">
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">NIC</th>
+                  {/* <th scope="col">NIC</th> */}
                   <th scope="col">Username</th>
                   <th scope="col">Name</th>
                   <th scope="col">Email</th>
@@ -270,7 +270,7 @@ function SuppliersList() {
                   filteredDataList.map((farmer, index) => (
                     <tr key={farmer._id}>
                       <td>{index + 1}</td>
-                      <td>{farmer.NIC}</td>
+                      {/* <td>{farmer.NIC}</td> */}
                       <td>{farmer.username}</td>
                       <td>{farmer.name}</td>
                       <td>{farmer.email}</td>
