@@ -112,20 +112,22 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
 
   // Function to validate email
   const validateEmail = (email) => {
-    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+    if (!/^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,7}$/.test(email)) {
       return "Invalid email address. Please enter a valid email.";
     } else {
       return ""; // No error
     }
   };
+  
 
   // Function to handle form input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "name" && /\d/.test(value)) {
-      return;
-    }
+    // Name validation
+  if (name === "name" && /[^a-zA-Z\s]/.test(value)) {
+    return;
+  }
     if (name === "bankname" && /\d/.test(value)) {
       return;
     }
@@ -135,6 +137,14 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
     if (name === "nic" && /[^0-9Vv]/.test(value)) {
       return;
     }
+    if (name === "email" && /[^a-zA-Z0-9\s@.]/.test(value)) {
+      return; 
+    }
+    // Address validation
+if (name === "address" && /[^a-zA-Z0-9\s/]/.test(value)) {
+  return;
+}
+
 
     // Email validation
     if (name === "email") {
@@ -156,7 +166,7 @@ const EmployeeForm = ({ handleSubmit, initialData }) => {
 
   // Function to validate NIC
   const validateNic = (nic) => {
-    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/;
+    const nicRegex = /^(([1][89]|[2][0])\d{10}|[3456789]\d{8}[Vv])$/;
 
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
