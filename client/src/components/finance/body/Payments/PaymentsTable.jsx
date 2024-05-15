@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import "../Expenses/expense.css"
 axios.defaults.baseURL = "http://localhost:8070/";
 
 const PaymentsTable = ({ items, updateQualityList, editItem }) => {
@@ -26,9 +26,11 @@ const PaymentsTable = ({ items, updateQualityList, editItem }) => {
       // Perform payment logic here, for demonstration purposes let's assume it's successful
       // Update the payment status in the backend
       // await axios.put(`/Vehicle/${vehicle._id}`, { paid: true });
-  
+      const currentDate = new Date(); // Get current date and time
+
       // Add expense
       const expenseData = {
+        date: currentDate.toISOString(), // Convert date to ISO string format
         category: "Payments",
         amount: vehicle.amount, // Assuming the amount is available in the vehicle object
         description: `Payment for ${vehicle.owner_name}`, // Customize the description as needed

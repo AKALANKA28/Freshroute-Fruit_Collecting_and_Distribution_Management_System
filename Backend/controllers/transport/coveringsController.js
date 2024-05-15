@@ -23,7 +23,7 @@ exports.addcoverings = async (req, res) => {
 // Retrieve all covering records
 exports.getAllcoverings = async (req, res) => {
     try {
-        const covering = await Coverings.find();
+        const covering = await coverings.find();
         res.json(covering);
     } catch (err) {
         console.log(err);
