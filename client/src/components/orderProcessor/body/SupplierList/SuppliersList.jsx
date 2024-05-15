@@ -146,7 +146,7 @@ const SuppliersList = () => {
                             </ul>
                             <Modal show={showReportModal} onHide={handleCloseReportModal}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Completed Order Details</Modal.Title>
+                                <Modal.Title>Supplier Details</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <PDFViewer width="100%" height="500px">
@@ -175,7 +175,7 @@ const SuppliersList = () => {
                                             },
                                             {
                                                 name: "Fruit Category",
-                                                tag: "category",
+                                                tag: "subCategory",
                                                 type: "text"
                                             },
                                             {
@@ -184,19 +184,19 @@ const SuppliersList = () => {
                                                 type: "text"
                                             },
                                             {
-                                                name: "Placed Date",
-                                                tag: "placedDate",
-                                                type: "date"
+                                                name: "Total Quantity (kg)",
+                                                tag: "quantity",
+                                                type: "number"
                                             },
                                             {
-                                                name: "Due Date",
-                                                tag: "dueDate",
-                                                type: "date"
+                                                name: "Price for 1kg",
+                                                tag: "price",
+                                                type: "number"
                                             },
                                             {
-                                                name: "Order Processor",
-                                                tag: "opName",
-                                                type: "text"
+                                                name: "Date Can Be Given",
+                                                tag: "dateCanBeGiven",
+                                                type: "date"
                                             }
                                          ]
                                      }

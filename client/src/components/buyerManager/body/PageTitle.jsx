@@ -1,22 +1,28 @@
-import React from 'react'
+import React from 'react';
 
+function PageTitle({ page }) {
+  // Get current date
+  const currentDate = new Date();
+  // Format date as "DayOfWeek, Day Month Year"
+  const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
-function PageTitle  ({page})  {
   return (
     <div className='pagetitle'>
-        <h1>{page}</h1>
+      <h1>Hello, Thusitha</h1>
+      <p>Today is {formattedDate}</p>
+
+      <h1>{page}</h1>
         <nav>
             <ol className="breadcumb">
                 <li className="breadcumb-item">
                     <a href='/'>
-                        <i className="bi bi-house-door"></i>
                     </a>
                 </li>
-                <li className='breadcumb-item active'>{page}</li>
             </ol>
         </nav>
     </div>
-  )
+  );
 }
 
-export default PageTitle
+export default PageTitle;

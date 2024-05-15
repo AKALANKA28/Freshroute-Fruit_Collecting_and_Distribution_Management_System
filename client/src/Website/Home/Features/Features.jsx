@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './features.css'
 
 
@@ -10,15 +10,32 @@ import icon5 from '../../assets/easy-to-use.png'
 
 
 const Features = () => {
+  const [scrollTriggered, setScrollTriggered] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setScrollTriggered(true);
+      } else {
+        setScrollTriggered(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
 <>
    
-    <div className='section feature-section'>
+<div className={`section feature-section ${scrollTriggered ? 'feature-transition' : ''}`}>
       <div className="container flex_center">
         <div className="row text-center">
             <div className="col-12">
                 <h6 className='heading'>What We Offer</h6>
-                <p className='subheading'><span>consectetur</span> adipiscing elit Sed do</p>
+                <p className='subheading'><span>Paving the Way to</span> Freshness</p>
             </div>
             <div className="col-lg-12 card-column">
               <div className="row align-items-center">

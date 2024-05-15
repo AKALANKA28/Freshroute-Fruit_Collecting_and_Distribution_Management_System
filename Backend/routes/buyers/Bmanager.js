@@ -1,150 +1,130 @@
-const express = require("express")
+const express = require("express");
 const Request = require("../../models/Buyer/Bmanager");
 
 const router = express.Router();
 
-//save request
+// Save request
+router.post("/request/save", (req, res) => {
+    let newRequest = new Request(req.body);
 
-router.post("/request/save", (req, res) =>{
-  let newRequest = new Request(req.body);
-
-  newRequest.save((err) =>{
-    if(err){
-      return res.status(400).json({
-        error:err
-      })
-    }
-    return res.status(200).json({
-      success:"Request Save Successfully"
-    })
-  })
-})
-
-//get details
-
-router.get("/requests", (req, res) =>{
-    Request.find().exec((err, requests) =>{
-      if(err){
-        return res.status(400).json({
-          error:err
+    newRequest.save()
+        .then(() => {
+            res.status(200).json({ success: "Request Saved Successfully" });
         })
-      }
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
 
-      return res.status(200).json({
-        success:true,
-        existingRequest:requests
-      })
-    })
-})
+// Get all requests
+router.get("/requests", (req, res) => {
+    Request.find().exec()
+        .then((requests) => {
+            res.status(200).json({ success: true, existingRequest: requests });
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
 
-//update
+router.get("/requests/all", (req, res) => {
+    Request.find({ orderStatus: "REQUEST" }).exec()
+        .then((requests) => {
+            res.status(200).json({ success: true, existingRequest: requests });
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
 
-router.put("/request/update/:id", (req, res) =>{
-    Request.findByIdAndUpdate(
-     req.params.id,
-     {
-       $set:req.body
-     },
-     (err, request) =>{
-       if(err){
-         return res.status(400).json({error:err})
-       }
- 
-       return res.status(200).json({
-         success:"update successfully"
-       })
-     }
-    )
- })
-
- //delete
-
-router.delete("/request/delete/:id", (req, res) =>{
-    Request.findByIdAndRemove(req.params.id).exec((err, deleteRequest) =>{
-      if(err) return res.status(400).json({
-        message:"Delete Unsuccessfull", err
-      })
-  
-      return res.json({
-        message:"Delete Susccessfull" , deleteRequest
-      })
-    })
-  })
-
-  //get a specific request
-
-router.get("/request/:id",(req, res) =>{
-    let requestId = req.params.id;
-  
-    Request.findById(requestId,(err, request) =>{
-      if(err){
-        return res.status(400).json({success:fails, err})
-      }
-  
-      return res.status(200).json({
-        success:true,
-        request
-      })
-    })
-  })
-  
-  module.exports = router 
+router.get("/requests/normal", (req, res) => {
+    Request.find({ orderStatus: "normalOrder" }).exec()
+        .then((requests) => {
+            res.status(200).json({ success: true, existingRequest: requests });
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
 
 
+// Update request
+router.put("/request/update/:id", (req, res) => {
+    Request.findByIdAndUpdate(req.params.id, { $set: req.body }).exec()
+        .then(() => {
+            res.status(200).json({ success: "Update Successful" });
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
 
+router.put("/requestor/update/:id", async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        // Find the request by id
+        const request = await Request.findById(id);
 
+        if (!request) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
 
+        // Update orderStatus to "normalOrder"
+        request.orderStatus = 'normalOrder';
 
+        // Save the updated request
+        await request.save();
 
-
-
-
-
+        res.json({ message: 'Order status updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 
 
 
-  
-// // const router = express.Router();
-// // const BuyerCtrl = require("../../controllers/Buyer/BuyerCtrl")
 
-// // const express=require("express");
+//delete
 
-// // router.post("/request/save", BuyerCtrl.newRequest);
-// // router.get("/requests", BuyerCtrl.Request.find);
-// // router.put("/request/update/:id", BuyerCtrl.Request.findByIdAndUpdate);
-// // router.delete("/request/delete/:id", BuyerCtrl.Request.findByIdAndRemove);
-// // router.get("/request/:id", BuyerCtrl.Request.findById);
-
-// // module.exports = router
-
-
-
-// // const router = express.Router();
-// // const BuyerCtrl = require("../../controllers/Buyer/BuyerCtrl")
-// // const { saveRequest, getRequests, updateRequest, deleteRequest,getRequestById } = require("../../controllers/Buyer/BuyerCtrl");
-
-// // const express=require("express");
-
-// // router.post("/request/save", saveRequest);
-// // router.get("/requests", getRequests);
-// // router.put("/request/update/:id", updateRequest);
-// // router.delete("/request/delete/:id", deleteRequest);
-// // router.get("/request/:id", getRequestById);
-
-// // module.exports = router
-
-// // const express = require("express");
-// // const { saveRequest, getRequests, updateRequest, deleteRequest, getRequestById } = require("../../controllers/Buyer/BuyerCtrl");
+router.delete("/request/delete/:id", (req, res) => {
+    Request.findOneAndDelete({ _id: req.params.id })
+        .then((deletedRequest) => {
+            if (!deletedRequest) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Request not found"
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: "Delete Successful",
+                deletedRequest: deletedRequest
+            });
+        })
+        .catch((err) => {
+            return res.status(400).json({
+                success: false,
+                message: "Delete Unsuccessful",
+                error: err
+            });
+        });
+});
 
 
-// // const router = express.Router();
+// Get a specific request by id
+router.get("/request/:id", (req, res) => {
+    Request.findById(req.params.id).exec()
+        .then((request) => {
+            res.status(200).json({ success: true, request });
+        })
+        .catch((err) => {
+            res.status(400).json({ success: false, error: err });
+        });
+});
 
-// // router.post("/request/save", saveRequest);
-// // router.get("/requests", getRequests);
-// // router.put("/request/update/:id",updateRequest);
-// // router.delete("/request/delete/:id",deleteRequest);
-// // router.get("/request/:id",getRequestById);
 
-// // module.exports = router;
+
+module.exports = router;

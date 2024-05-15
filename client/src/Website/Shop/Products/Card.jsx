@@ -60,11 +60,11 @@ const Card = ({ data }) => {
                 <h5 className="product-title mt-3">{item?.title}</h5>
                 <h6 className="category">{item?.category}</h6>
                 <p className="stock">
-                  Available Stock<span> 10000</span>
+                  {/* Available Stock<span> 10000</span> */}
                 </p>
                 <p className="price">
                   Rs {item?.price}
-                  <span> / per kilo</span>
+                  <span> / per kg ( A)</span>
                 </p>
                 {/* <div className={alreadyAdded ? "ms-0" : "ms-5" + "d-flex align-items-center gap-2 mb-2"}>
                   <button

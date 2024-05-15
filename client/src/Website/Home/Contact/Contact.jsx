@@ -24,7 +24,7 @@ const Contact = () => {
                   <button className='home-button bg-dark'>Contact Us</button>
                   </Link>
                   <a href="/JoinWithUsSelect" className="text-decoration-none">
-                  <button className='home-button'>Post Your Resume</button>
+                  <button className='home-button'>Join With US</button>
                   </a>
                 </div>
             </div>

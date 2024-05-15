@@ -37,13 +37,13 @@ const Sidebar = () => {
             <ul id='supplier-details-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
               <li>
                 <a href='SupplierRequests'>
-                  <i className='bi bi-journal-plus'></i>
+                  <i className='bi bi-journal-plus' style={{ marginRight: "-30px" }}></i>
                   <span>Supplier Requests</span>
                 </a>
               </li>
               <li>
                 <a href='SupplierDetails'>
-                  <i className='bi bi-people'></i>
+                  <i className='bi bi-people' style={{ marginRight: "-30px" }}></i>
                   <span>Suppliers</span>
                 </a>
               </li>
@@ -52,7 +52,7 @@ const Sidebar = () => {
 
           <li className='nav-item'>
             <a className='nav-link collapsed' data-bs-target='#supply-requests-nav' data-bs-toggle='collapse' href='#'>
-              <i className='bi bi-truck' onClick={handleToggleSideBar}></i>
+              <i className='bi bi-basket2-fill' onClick={handleToggleSideBar}></i>
               <span>Supply Requests</span>
               <i className='bi bi-chevron-down ms-auto'></i>
             </a>
@@ -60,23 +60,30 @@ const Sidebar = () => {
             <ul id='supply-requests-nav' className='nav-content collapse' data-bs-parent='#sidebar-nav'>
               <li>
                 <a href='SupplyRequests'>
-                  <i className='bi bi-list-check'></i>
+                  <i className='bi bi-list-check' style={{ marginRight: "-30px" }}></i>
                   <span>Manage Requests</span>
                 </a>
               </li>
               <li>
                 <a href='ApprovedSupplies'>
-                  <i className='bi bi-check-circle'></i>
+                  <i className='bi bi-check-circle' style={{ marginRight: "-30px" }}></i>
                   <span>Accepted Requests</span>
                 </a>
               </li>
               <li>
                 <a href='DeclinedSupplies'>
-                  <i className='bi bi-x-circle'></i>
+                  <i className='bi bi-x-circle' style={{ marginRight: "-30px" }}></i>
                   <span>Declined Requests</span>
                 </a>
               </li>
             </ul>
+          </li>
+
+          <li className='nav-item'>
+            <a className='nav-link collapsed' href='SupplierLocations'>
+              <i className='bi bi-geo-alt'></i>
+              <span>Supplier Locations</span>
+            </a>
           </li>
 
           <hr></hr>

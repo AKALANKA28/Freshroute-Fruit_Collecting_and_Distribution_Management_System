@@ -58,6 +58,8 @@ const ExpenseForm = ({ handleSubmit, initialData }) => {
           <option value="Employee">Employee</option>
           <option value="Research">Research</option>
           <option value="Promotion">Promotion</option>
+          <option value="Payments">Payments</option>
+
         </select>
         {formik.touched.category && formik.errors.category && (
           <div className='error'>

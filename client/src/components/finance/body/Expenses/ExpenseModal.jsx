@@ -7,11 +7,16 @@ const ExpenseModal = ({
   handleModalClose,
   handleSubmit,
   formData,
+
+
 }) => {
+// eslint-disable-next-line
+const modalTitle = formData ? "Add" : "Edit";
+
   return (
     <Modal show={modalOpen} onHide={handleModalClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{formData ? "Edit" : "Add"} Expense</Modal.Title>
+      <Modal.Title>{modalTitle} Expense</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* Render the ExpenseForm component with appropriate props */}

@@ -39,9 +39,11 @@ import FDashboard from "./components/farmer/FDashboard";
 import SupplyRequests from "./components/supplierManagerDashboard/SupplyRequests";
 import ApprovedSupplies from "./components/supplierManagerDashboard/ApprovedSupplies";
 import DeclinedSupplies from "./components/supplierManagerDashboard/DeclinedSupplies";
+import SupplierLocations from "./components/supplierManagerDashboard/SupplierLocations";
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import ProcessDetails from "./components/transportDashboard/ProcessDetails";
+import CoveringDetails from "./components/transportDashboard/CoveringDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
@@ -64,10 +66,10 @@ import VolumePage from "./components/rpromotionDashboard/VolumePage";
 import PricePage from "./components/rpromotionDashboard/PricePage";
 import AccResourcePage from "./components/researchDashboard/AccResourcePage";
 
-//import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
-//import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
-//import NormalOrder from "./components/NormalOrder/NormalOrder";
-//import EditOrder from "./components/NormalOrder/EditOrder";
+// import RequestedOrder from "./components/RequestedOrder/RequestedOrder";
+// import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
+// import NormalOrder from "./components/NormalOrder/NormalOrder";
+// import EditOrder from "./components/NormalOrder/EditOrder";
 
 import PredictionDetails from "./components/farmer/PredictionDetails";
 
@@ -93,6 +95,9 @@ import DriverDetails from "./components/transportDashboard/DriverDetails";
 import Approvals from "./components/finance/body/Approvals/Approvals";
 import ApprovalPage from "./components/finance/ApprovalPage";
 import PaymentsPage from "./components/finance/PaymentsPage";
+import BuyerEdit from "./components/Buyer/Body/BuyerEdit"
+import AddProduct from "./components/finance/AddProduct";
+import DasboardAccess from "./components/DasboardAccess";
 
 const router = createBrowserRouter([
   {
@@ -348,6 +353,7 @@ const router = createBrowserRouter([
         path: "/OPDashboard/SupplierList",
         element: <SupplierList/>,
       }
+      
 
     ]
   },
@@ -420,6 +426,15 @@ const router = createBrowserRouter([
     element: (
       <div>
         <DeclinedSupplies />
+      </div>
+    ),
+  },
+
+  {
+    path: "/SupplierLocations",
+    element: (
+      <div>
+        <SupplierLocations />
       </div>
     ),
   },
@@ -643,6 +658,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/CoveringDetails",
+    element: (
+      <div>
+        <CoveringDetails />
+      </div>
+    ),
+  },
 
   {
     path: "/QualityList",
@@ -657,6 +680,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ExpensePage />
+      </div>
+    ),
+  },
+  {
+    path: "/BuyerEdit/:id",
+    element: (
+      <div>
+        <BuyerEdit />
       </div>
     ),
   },
@@ -675,6 +706,24 @@ const router = createBrowserRouter([
     element: (
       <div>
         <DriverDetails />
+      </div>
+    ),
+  },
+
+  {
+    path: "/addproduct",
+    element: (
+      <div>
+        <AddProduct />
+      </div>
+    ),
+  },
+
+  {
+    path: "/dAccess",
+    element: (
+      <div>
+        <DasboardAccess />
       </div>
     ),
   },

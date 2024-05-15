@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 import FruitTypeForm from "./FruitTypeForm";
 import FruitTypeReport from "./FruitTypeReport";
+import { ToastContainer, toast } from 'react-toastify';
 
 import "./FruitType.css";
 import SpinnerModal from '../../../spinner/SpinnerModal';
@@ -100,7 +101,7 @@ function FruitType() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/FruitType/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.success("Successfully Deleted!");
       getFetchData();
       handleCloseDeleteModal();
     } catch (err) {
@@ -111,7 +112,7 @@ function FruitType() {
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/FruitType/add", { ...formData, imageUrl: formData.imageUrl });
-      alert("Fruit Type Added");
+      toast.success("Fruit Type Added!");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
@@ -122,7 +123,7 @@ function FruitType() {
   const handleEditSubmit = async (formData) => {
     try {
       await axios.put(`/FruitType/update/${formData._id}`, { ...formData, imageUrl: formData.imageUrl });
-      alert("Fruit Type Updated");
+      toast.success("Fruit Type Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
@@ -130,10 +131,7 @@ function FruitType() {
     }
   };
 
-  const [showReportModal, setShowReportModal] = useState(false);
 
-  const handleCloseReportModal = () => setShowReportModal(false);
-  const handleShowReportModal = () => setShowReportModal(true);
 
   const handleShowDeleteModal = (id) => {
     setDeleteId(id);
@@ -162,28 +160,20 @@ function FruitType() {
                 </div>
               </div>
               <ul class="table-top-head">
-                <li>
-                  <div className="button-container">
-                    <a onClick={handleShowReportModal}>
-                      <img src={Pdf} alt="Pdf Icon" className="icon" />
-                    </a>
-                    <Modal show={showReportModal} onHide={handleCloseReportModal}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Salary Details Report</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <PDFViewer width="100%" height="500px">
-                          <FruitTypeReport dataList={dataList} />
-                        </PDFViewer>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseReportModal}>
-                          Close
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </div>
-                </li>
+              <li>
+              <BlobProvider
+                  document={<FruitTypeReport dataList={dataList}/>}
+                  fileName="FruitReport.pdf"
+                >
+                  {({ url, blob }) => (
+                    <div className="button-container">
+                      <a href={url} target="_blank">
+                        <img src={Pdf} alt="Pdf Icon" className="icon" />
+                      </a>
+                    </div>
+                  )}
+                </BlobProvider>
+              </li>
                 <li>
                   <div className="button-container">
                     <a href="#" onClick={handleButtonClick}>
@@ -300,6 +290,18 @@ function FruitType() {
           </div>
         </div>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
     </div>
   );
 }

@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import axios from "axios";
 import Sidebar from '../buyerManager/sidebar/Sidebar';
 import Header from '../buyerManager/header/header';
-
+import "./style.css"
+import PdfButton from '../buyerManager/PdfButton';
+import Swal from 'sweetalert2';
 
 export default class NormalOrder extends Component {
+
     constructor(props){
         super(props)
 
@@ -15,14 +18,17 @@ export default class NormalOrder extends Component {
 
     componentDidMount(){
         this.retriveRequest()
+        
     }
 
     retriveRequest(){
-        axios.get("http://localhost:8070/requests").then((res) =>{
+        axios.get("http://localhost:8070/requests/normal").then((res) =>{
+            
             if(res.data.success){
                 this.setState({
-                    requests:res.data. existingRequest
-                })
+                    requests:res.data. existingRequest,
+                });
+                
 
                 console.log(this.state.requests)
             }
@@ -30,27 +36,51 @@ export default class NormalOrder extends Component {
     }
 
 
-    onDelete = (id) =>{
-        const isConfirmed = window.confirm('Are you sure you want to delete this Order?');
+    
 
-        if (isConfirmed) {
-            axios.delete(`http://localhost:8070/request/delete/${id}`)
-                .then((res) => {
-                    this.retriveRequest();
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }
+    filterData(requests, searchKey){
+        const result = requests.filter((request) =>
+            request.rname.toLowerCase().includes(searchKey) ||
+            request.fruit.toLowerCase().includes(searchKey) 
+            
+        );
+    
+        this.setState({requests: result});
     }
+
+    handleSearchArea = (e) => {
+        const searchKey = e.currentTarget.value;
+    
+        axios.get('http://localhost:8070/requests/normal').then((res) => {
+          if (res.data.success) {
+            this.filterData(res.data.existingRequest, searchKey);
+          }
+        });
+      };
+
+      
+    
 
   render() {
     return (
-      <div>
+      <div id="main" style={{marginTop:"1%"}}>
         <Header/>
         <Sidebar/>
 
-        <div className='container' style={{marginTop:"100px", position:"relative"}}>
+        <div className='container'>
+
+
+          <div className='col-lg-3 mt-2 mb-2'>
+            <input
+              className='form-control'
+              type='search'
+              placeholder='Search'
+              name='serchQuery'
+              style={{ marginLeft: '20px', borderRadius: '20px' }}
+              onChange={this.handleSearchArea}
+            />
+          </div>
+
          <table className='table table-hover'>
             <thead>
                 <tr>
@@ -60,7 +90,7 @@ export default class NormalOrder extends Component {
                     <th scope='col'>Sub Category</th>
                     <th scope='col'>Quality</th>
                     <th scope='col'>Quantity</th>
-                    <th scope='col'>Date</th>
+                    <th scope='col'>Due Date</th>
                     <th scope='col'>Action</th>
                     
                 </tr>
@@ -77,13 +107,7 @@ export default class NormalOrder extends Component {
                     <td>{requests.quality}</td>
                     <td>{requests.date}</td>
                     <td>
-                        <a className='btn' href={`/EditOrder/${requests._id}`} style={{backgroundColor: "white", width:"50px", height:"45px", borderRadius:"50%"}}>
-                        <i className='fas fa-pen' style={{color:"black"}}></i>
-                        </a>
-                        &nbsp;
-                        <a className='btn' href='# 1' onClick={() => this.onDelete(requests._id)} style={{backgroundColor: "white", width:"50px", height:"45px", borderRadius:"50%"}}>
-                            <i className='fas fa-trash-alt' style={{color:"red"}}></i>
-                        </a>
+                       <PdfButton request={requests}/>
                     </td>
                 </tr>
             ))}

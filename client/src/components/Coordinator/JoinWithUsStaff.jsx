@@ -108,10 +108,10 @@ const JoinWithUsStaff = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "name" && /\d/.test(value)) {
+    if (name === "name" && /[^\p{L}\s]/u.test(value)) {
       return;
     }
-    if (name === "bankname" && /\d/.test(value)) {
+    if (name === "bankname"&& /[^\p{L}\s]/u.test(value)) {
       return;
     }
     if (name === "nic") {
@@ -139,9 +139,8 @@ const JoinWithUsStaff = () => {
   };
 
   const validateNic = (nic) => {
-    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/ && /[^0-9Vv]/;
+    const nicRegex = /^(([1][89]|[2][0])\d{10}|[89]\d{8}[Vv])$/;
 
-    
     if (!nicRegex.test(nic)) {
       setNicError("Invalid NIC format. Please enter a valid Sri Lankan NIC.");
     } else {
@@ -206,25 +205,27 @@ const JoinWithUsStaff = () => {
   return (
     <div>
       <Navbar/>
-      <div className='hero' style={{height:800}}>
-        <div>
-          <img src={fruits} className='background' alt="Hero Background"></img>
-        </div>
-        <div className="container">
-          <div className="col-lg-12">
-            <div className="hero-text">
-              <br/>
-              <p className='text1 '>Join With Us</p>
-              <p className='text2 fs-3'>Let's spread the freshness together!</p>
+      <div className='hero'>
+              <div>
+                <img src={fruits} className='background' style={{top:"-180px"}}></img>
+              </div>
+              <div className="container" >
+                <div className="col-lg-12">
+                    <div className="hero-text">
+                      <p className='text1 '>Join With Us
+</p>
+                      <p className='text2 fs-3'>Let's spread the freshness together!</p>
+                    </div>
+                    
+                    <div className="hero-dot-play">
+                      <ul className="hero-dots">
+                          
+                      </ul>
+                     
+                    </div>
+                </div>
+              </div>   
             </div>
-            <div className="hero-dot-play">
-              <ul className="hero-dots">
-                  
-              </ul>
-            </div>
-          </div>
-        </div>   
-      </div>
       
       <Container class1="contact-wrapper py-5 home-wrapper-2">
         <div className="row"> 
@@ -311,7 +312,7 @@ const JoinWithUsStaff = () => {
                   Job role
                 </label>
                 <select
-                  className="form-select"
+                  className="form-control"
                   name="jobrole"
                   onChange={handleChange}
                   value={formData.jobrole}

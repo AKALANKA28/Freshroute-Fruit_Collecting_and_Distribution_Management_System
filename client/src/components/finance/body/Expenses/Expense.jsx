@@ -10,6 +10,8 @@ import "../Expenses/expense.css";
 import { ToastContainer, toast } from "react-toastify";
 import Pagination from "../../components/Pagination";
 import ExpenseModal from "./ExpenseModal";
+import moment from "moment"; // Import moment.js for date manipulation
+import CardFilter from "../CardFilter";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -24,12 +26,6 @@ function Expense() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // Number of items per page
 
-  
-
-  useEffect(() => {
-    getFetchData();
-  }, []);
-
   useEffect(() => {
     setFilteredDataList(dataList); // Initialize filteredDataList with dataList
   }, [dataList]);
@@ -37,12 +33,61 @@ function Expense() {
   const getFetchData = async () => {
     try {
       const response = await axios.get("/expense/");
-      setDataList(response.data);
+      const sortedData = response.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setDataList(sortedData);
+      filterData(sortedData, filter); // Filter sorted data after fetching
     } catch (err) {
       alert(err.message);
     }
   };
 
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  useEffect(() => {
+    filterData(dataList, filter); // Re-filter data when filter state changes
+  }, [dataList, filter]);
+
+  const filterData = (data, selectedFilter) => {
+    const currentDate = moment(); // Get current date
+    let filteredList = [];
+
+    switch (selectedFilter) {
+      case "Today":
+        filteredList = data.filter((item) =>
+          moment(item.createdAt).isSame(currentDate, "day")
+        );
+        break;
+      case "This Week":
+        const startOfWeek = currentDate.clone().startOf("week");
+        const endOfWeek = currentDate.clone().endOf("week");
+        filteredList = data.filter((item) =>
+          moment(item.createdAt).isBetween(startOfWeek, endOfWeek, null, "[]")
+        );
+        break;
+      case "This Month":
+        filteredList = data.filter((item) =>
+          moment(item.createdAt).isSame(currentDate, "month")
+        );
+        break;
+      case "This Year":
+        filteredList = data.filter((item) =>
+          moment(item.createdAt).isSame(currentDate, "year")
+        );
+        break;
+      default:
+        filteredList = data;
+    }
+
+    setFilteredDataList(filteredList);
+  };
+
+  const handleFilterChange = (selectedFilter) => {
+    setFilter(selectedFilter);
+  };
   const handleRefreshClick = () => {
     getFetchData();
   };
@@ -92,7 +137,6 @@ function Expense() {
     }
   };
 
-
   //Pagination
 
   // Calculate total number of pages
@@ -119,17 +163,15 @@ function Expense() {
     }
   };
 
-
-    // Search functionality
   const handleSearch = (query) => {
     const filteredList = dataList.filter((expense) => {
-      const fullName = `${expense.customer_name} ${expense.date} ${expense.fruit_name} ${expense.amount} ${expense.paid} ${expense.due} ${expense.status}`;
-      return fullName.toLowerCase().includes(query.toLowerCase());
+      // Combine all searchable fields into a single string for comparison
+      const searchFields = `${expense.date} ${expense.category} ${expense.amount} ${expense.description}`;
+      return searchFields.toLowerCase().includes(query.toLowerCase());
     });
     setFilteredDataList(filteredList);
   };
-
-
+  
   return (
     <div className="main">
       <div className="body" id="body">
@@ -149,7 +191,7 @@ function Expense() {
                   <ul className="table-top-head">
                     <li>
                       <BlobProvider
-                        document={<ExpenseReport dataList={dataList} />}
+                        document={<ExpenseReport dataList={filteredDataList} />}
                         fileName="ExpenseReport.pdf"
                       >
                         {({ url, blob }) => (
@@ -191,7 +233,9 @@ function Expense() {
                     </button>
                   </div>
                 </div>
-                <div className="table-container">
+                <CardFilter filterChange={handleFilterChange} />
+
+                <div className="table-container" style={{ minHeight: "20rem" }}>
                   <SearchBar onSearch={handleSearch} />
                   {/* ---------------table--------------- */}
                   <table className="table table-bordeless datatable">
@@ -231,16 +275,17 @@ function Expense() {
                       ))}
                     </tbody>
                   </table>
-                  {/* Render pagination component */}
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    handleNextPage={handleNextPage}
-                    handlePreviousPage={handlePreviousPage}
-                  />
                 </div>
+                {/* Render pagination component */}
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  handleNextPage={handleNextPage}
+                  handlePreviousPage={handlePreviousPage}
+                />
               </div>
             </div>
+
             {/* Render ExpenseModal component */}
             <ExpenseModal
               modalOpen={modalOpen}
@@ -260,7 +305,7 @@ function Expense() {
               pauseOnHover
               theme="light"
             />
-          </>{" "}
+          </>
         </div>
       </div>
     </div>

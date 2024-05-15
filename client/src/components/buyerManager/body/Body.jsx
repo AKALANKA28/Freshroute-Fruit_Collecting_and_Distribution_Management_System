@@ -12,35 +12,38 @@ import News from './News'
 import BackToTop from './BackToTop'
 
 const Body = () => {
-
-
-   
   return (
-    <div> 
-   <section className="body" id='body'>
-        <div className="row">
+    <div>
+      <section className="body" id='body'>
+        <div className="container-fluid">
+        <div className="main">
+          <Reports />
+        </div>
+          <div className="row">
             <div className="col-lg-8">
-                <div className="row">
-                    <Cards />
-                    <div className="col-12">
-                        <Reports />
-                    </div>
-                    <div className="col-12">
-                     <RecentSales />
-                    </div>
-                    
+              <div className="row">
+                <div className="col-12">
+                  <Cards />
                 </div>
+                
+                <div className="col-12">
+                <div className="">
+                  <RecentSales />
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="col-lg-4">
-              <RecentActivity />
-              <BudgetReport />
-              
+              {/* <RecentActivity /> */}
+              <div className="text-lg-end"> 
+                <BudgetReport />
+              </div>
             </div>
+          </div>
         </div>
         <BackToTop />
-   </section>
-
-   </div>
+      </section>
+    </div>
   )
 }
 

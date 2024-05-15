@@ -25,14 +25,27 @@ exports.getAllSuppliers = async (req, res) => {
     }
 };
 exports.getAllSuppliersByFilter = async (req, res) => {
-    try {
-        const supplierList = await AcceptedSupply.find();
-        res.json(supplierList);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error retrieving orders", error: err.message });
+    const filter = createFilterFromRequest(req);
+    if (filter && filter.date) {
+        const supList = await AcceptedSupply.find();
+        const dateField = filter.field;
+        const dateValue = filter.date;
+        console.log(supList)
+        const newList = supList.filter((item) => {
+            const dateString = item[dateField];
+            const formattedDate = moment(dateString).format("YYYY-MM-DD")
+            console.log(formattedDate, dateValue)
+            return formattedDate=== dateValue
+        })
+        res.json(newList);
+    }else if (filter) {
+        const supList = await AcceptedSupply.find(filter);
+        res.json(supList);
+    } else {
+        res.status(400).json({ message: 'Invalid filter type' });
     }
 };
+
 exports.updateSuppliers = async (req, res) => {
     try {
         const { supplierList } = req.body;
@@ -133,6 +146,25 @@ const createFilterFromRequest = (req) => {
             filter = {
                 date: filterValue,
                 field: 'dueDate'
+            };
+            break;
+        case 'dateCanBeGiven':
+            filter = {
+                date: filterValue,
+                field: 'dateCanBeGiven'
+            };
+            break;
+        case 'price':
+            filter = { price: parseFloat(filterValue) };
+            break;
+        case 'supplierName' :
+            filter ={
+                supplierName: new RegExp(filterValue, 'i')
+            };
+            break;
+        case 'subCategory' :
+            filter ={
+                subCategory: new RegExp(filterValue, 'i')
             };
             break;
         default:
