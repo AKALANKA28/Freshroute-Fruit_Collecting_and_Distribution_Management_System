@@ -385,10 +385,10 @@ const JoinWithUs = () => {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <input type="text" value={formData.NIC} name="NIC" className={`form-control ${formErrors.NIC && 'is-invalid'}`} onChange={handleChange} placeholder='NIC' maxLength={12} required/>
                     {formErrors.NIC && <div className="invalid-feedback">{formErrors.NIC}</div>}
-                  </div>
+                  </div> */}
 
                       
                   <legend>Field Details</legend> 

@@ -76,7 +76,7 @@ function DeclinedSuppliersTable({ declinedSuppliers }) {
             <th scope="col">Email</th>
             <th scope="col">Mobile</th>
             <th scope="col">City</th>
-            <th scope="col">NIC</th>
+            {/* <th scope="col">NIC</th> */}
             <th scope="col">Land Address</th>
             <th scope="col">Field Area</th>
             <th scope="col">Land Deed</th>
@@ -90,7 +90,7 @@ function DeclinedSuppliersTable({ declinedSuppliers }) {
                 <td>{request.email}</td>
                 <td>{request.mobile}</td>
                 <td>{request.city}</td>
-                <td>{request.NIC}</td>
+                {/* <td>{request.NIC}</td> */}
                 <td>{request.landAddress}</td>
                 <td>{request.fieldArea}</td>
                 <td>{request.landDeedUrl && (
