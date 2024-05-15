@@ -13,7 +13,7 @@ import Navbar2 from "../../Navbar/Navbar2";
 import Grades from "../../Components/Grades";
 // import Grades from "../../Components/Grades";
 
-const SingleProduct = ({ setG, gradeData }) => {
+const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [grade, setGrade] = useState(null);
   const [productData, setProductData] = useState(null);
@@ -62,7 +62,7 @@ const SingleProduct = ({ setG, gradeData }) => {
 
   const uploadCart = () => {
     if (grade === null) {
-      toast.error("Please choose a Grade");
+      toast.error("Please choose color");
       return;
     } else {
       dispatch(
@@ -78,12 +78,6 @@ const SingleProduct = ({ setG, gradeData }) => {
   };
   // console.log(uploadCart);
 
-  const [clicked, setClicked] = useState(false);
-
-  const handleClick = () => {
-    setG(gradeData); // Set the grade when clicked
-    setClicked(true); // Set clicked state to true
-  };
   return (
     <div>
       <Navbar2 />
@@ -119,14 +113,12 @@ const SingleProduct = ({ setG, gradeData }) => {
                     <>
                       <div className="d-flex flex-column gap-2 pb-4">
                         <h3 className="product-heading">Grade</h3>
-                        <div className="d-flex flex-wrap gap-15 grade ">
+                        <div className="d-flex flex-wrap gap-15 grade">
                           {/* First span */}
-                          <div
+                          <span
                             className="badge border border-1 p-3 button-select"
-
-                            style={{background:"black", color:"white"}}
+                            style={{ backgroundColor: "black", color: "white" }}
                           >
-                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -137,14 +129,13 @@ const SingleProduct = ({ setG, gradeData }) => {
                                 )
                               } // Pass the first third of the gradeData array
                             />
-                          </div>
-                          </div>
+                          </span>
 
                           {/* Second span */}
-                          <div
+                          <span
                             className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
                           >
-                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -155,14 +146,13 @@ const SingleProduct = ({ setG, gradeData }) => {
                                 )
                               } // Pass the second third of the gradeData array
                             />
-                          </div>
-                          </div>
+                          </span>
 
                           {/* Third span */}
-                          <div
+                          <span
                             className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
                           >
-                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -172,11 +162,16 @@ const SingleProduct = ({ setG, gradeData }) => {
                                 )
                               } // Pass the last third of the gradeData array
                             />
-                          </div>
-                          <div className=" d-flex align-items-center gap-3 pb-4">
+                          </span>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  <div className=" d-flex align-items-center gap-3 pb-4">
                     {alreadyAdded === false && (
                       <>
-                        <h3 className='product-heading'>Quantity(Kg): </h3>
+                        {/* <h3 className='product-heading'>Quantity</h3> */}
                         <div className="">
                           <input
                             type="number"
@@ -218,12 +213,6 @@ const SingleProduct = ({ setG, gradeData }) => {
                       </button>
                     </div>
                   </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                
 
                   {/* <div className="d-flex flex-column gap-1 border-bottom my-3">
                       <h3 className='product-heading'>Shipping & Returns: </h3>
