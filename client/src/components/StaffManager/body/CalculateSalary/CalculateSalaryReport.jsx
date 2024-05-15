@@ -94,6 +94,29 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  signatureContainerCenter: {
+    marginTop: 40, 
+    flexDirection: "column", 
+    alignItems: "center", 
+    marginRight: 20, 
+  },
+  signatureContainer: {
+    marginTop: 40,
+    flexDirection: "column", 
+    alignItems: "flex-end", 
+    marginRight: 20, 
+  },
+  signatureLine: {
+    width: 200,
+    borderBottomWidth: 1,
+    borderBottomColor: "#333333",
+    marginTop: 8,
+    borderStyle: "dashed",
+  },
+  signatureText: {
+    fontSize: 10,
+    color: "#333333",
+  },
 });
 
 const Footer = () => (
@@ -141,6 +164,12 @@ const EmployeeReport = ({ dataList }) => {
               </View>
            ))}
            </View>
+           <View style={styles.signatureContainer}>
+          <View style={styles.signatureContainerCenter}>
+            <View style={styles.signatureLine} />
+           <Text style={styles.signatureText}>Signature</Text>
+        </View>
+        </View>
          </View>
          <Footer />
        </Page>
