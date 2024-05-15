@@ -9,7 +9,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import ScheduleForm from "./ScheduleForm";
 import ScheduleReport from "./ScheduleReport";
 import "./Schedule.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 
@@ -108,32 +108,32 @@ function Schedule() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Schedule/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.error("Successfully Deleted");
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Schedule/add", formData);
-      alert("Schedule Details Added");
+      toast.success("Schedule Details Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.patch(`/Schedule/update/${formData._id}`, formData);
-      alert("Schedule Details Updated");
+      toast.success("Schedule Details Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 

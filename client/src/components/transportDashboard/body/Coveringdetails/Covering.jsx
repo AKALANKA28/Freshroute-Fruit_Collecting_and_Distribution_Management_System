@@ -11,7 +11,7 @@ import CoveringForm from "./CoveringForm";
 import Vehicle from "../transportdetails/Vehicle"; // Import Vehicle component
 import CoveringReport from "./CoveringReport";
 import "./Covering.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 
@@ -111,29 +111,29 @@ function Covering() {
       alert("Successfully Deleted");
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/coverings/add", formData);
-      alert("Covering Details Added");
+      toast.success("Covering Details Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.patch(`/Covering/update/${formData._id}`, formData);
-      alert("Covering Details Updated");
+      toast.success("Covering Details Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 

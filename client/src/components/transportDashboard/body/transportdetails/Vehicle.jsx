@@ -11,6 +11,7 @@ import VehicleReport from "./VehicleReport";
 import "./Vehicle.css";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
+import { ToastContainer, toast } from "react-toastify";
 
 axios.defaults.baseURL = "http://localhost:8070/";
 
@@ -110,32 +111,32 @@ function Vehicle() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/Vehicle/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.error("Successfully Deleted");
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/Vehicle/add", formData);
-      alert("Vehicle Details Added");
+      toast.success("Vehicle Details Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.patch(`/Vehicle/update/${formData._id}`, formData);
-      alert("Vehicle Details Updated");
+      toast.success("Vehicle Details Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -232,7 +233,7 @@ function Vehicle() {
             </Modal.Body>
           </Modal>
 
-          <Modal show={editModalOpen} onHide={handleEditModalClose}>
+          <Modal show={editModalOpen} onHide={handleEditModalClose} size="x3">
             <Modal.Header closeButton>
               <Modal.Title>Edit Vehicle</Modal.Title>
             </Modal.Header>
@@ -304,6 +305,18 @@ function Vehicle() {
               </tbody>
             </table>
           </div>
+          <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
         </div>
       </div>
     </div>

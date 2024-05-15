@@ -81,7 +81,7 @@ const VehicleForm = ({ handleSubmit, initialData }) => {
 
                 )}
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <label htmlFor="type" className="form-label">
                   Type
                 </label>

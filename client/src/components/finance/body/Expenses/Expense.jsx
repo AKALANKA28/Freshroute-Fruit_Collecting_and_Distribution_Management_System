@@ -130,7 +130,7 @@ function Expense() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/expense/delete/${id}`);
-      toast.success("Successfully Deleted"); // Correct placement of toast function
+      toast.error("Successfully Deleted"); // Correct placement of toast function
       getFetchData();
     } catch (err) {
       alert(err.message);
