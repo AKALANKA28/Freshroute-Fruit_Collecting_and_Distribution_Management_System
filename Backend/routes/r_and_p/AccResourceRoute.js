@@ -5,7 +5,7 @@ const AccResourceController = require("../../controllers/r_and_p/AccResourceCont
 //const router = express.Router();
 
 // Route for creating a new application
-router.post('/add', AccResourceController.addAAccResource);
+router.post('/add', AccResourceController.addAccResource);
 router.get('/', AccResourceController.getAllAccResources);
 router.get("/get/:id", AccResourceController.getOneAccResource);
 router.delete("/delete/:id", AccResourceController.deleteAccResource);

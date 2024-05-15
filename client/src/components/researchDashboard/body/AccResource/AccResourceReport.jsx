@@ -55,27 +55,27 @@ const AccResourceReport = ({ dataList }) => {
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Name</Text>
-              <Text style={styles.tableColHeader}>Email</Text>
+              {/* <Text style={styles.tableColHeader}>Email</Text> */}
               <Text style={styles.tableColHeader}>Contact No</Text>
               <Text style={styles.tableColHeader}>Location</Text>
               <Text style={styles.tableColHeader}>Farm Size</Text>
               <Text style={styles.tableColHeader}>Fruit Type</Text>
               <Text style={styles.tableColHeader}>Production Capacity</Text>
               <Text style={styles.tableColHeader}>Resource Type</Text>
-              <Text style={styles.tableColHeader}>Details of Requirement</Text>
+              
             
             </View>
             {dataList.map((accresource, index) => (
               <View key={index} style={styles.tableRow}>
                 <Text style={styles.tableCol}>{accresource.name}</Text>
-                <Text style={styles.tableCol}>{accresource.email}</Text>
+                {/* <Text style={styles.tableCol}>{accresource.email}</Text> */}
                 <Text style={styles.tableCol}>{accresource.contactNumber}</Text>
                 <Text style={styles.tableCol}>{accresource.location}</Text>
                 <Text style={styles.tableCol}>{accresource.farmSize}</Text>
                 <Text style={styles.tableCol}>{accresource.fruitType}</Text>
                 <Text style={styles.tableCol}>{accresource.productionCapacity}</Text>
                 <Text style={styles.tableCol}>{accresource.resourceType}</Text>
-                <Text style={styles.tableCol}>{accresource.detailReq}</Text>
+                
               </View>
             ))}
 
