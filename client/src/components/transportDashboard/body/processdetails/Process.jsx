@@ -10,7 +10,7 @@ import Refresh from "../../../../assests/img/icons/refresh.png";
 import ProcessForm from "./ProcessForm";
 import ProcessReport from "./ProcessReport";
 import "./Process.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 
@@ -38,7 +38,7 @@ function Process() {
       const response = await axios.get("/Process/");
       setDataList(response.data);
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -107,28 +107,28 @@ function Process() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/process/delete/${id}`);
-      alert("Successfully Deleted");
+      toast.error("Successfully Deleted");
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleAddSubmit = async (formData) => {
     try {
       await axios.post("/process/add", formData);
-      alert("Process Details Added");
+      toast.success("Process Details Added");
       handleAddModalClose();
       getFetchData();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
   const handleEditSubmit = async (formData) => {
     try {
       await axios.patch(`/process/update/${formData._id}`, formData);
-      alert("Process Details Updated");
+      toast.success("Process Details Updated");
       handleEditModalClose();
       getFetchData();
     } catch (err) {
