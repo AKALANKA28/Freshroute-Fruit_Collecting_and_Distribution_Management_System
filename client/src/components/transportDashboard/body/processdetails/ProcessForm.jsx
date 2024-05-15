@@ -37,88 +37,95 @@ const ProcessForm = ({ handleSubmit, initialData }) => {
     },
   });
 
+  const handleNameChange = (e) => {
+    const { name, value } = e.target;
+    // Capitalize the first letter of the driver's name
+    const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
+    formik.setFieldValue(name, capitalizedValue);
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="container">
-        <div className="d-flex align-items-center gap-15">
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label htmlFor="process_ID" className="form-label">
-                  Process ID
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="process_ID"
-                  placeholder="Process ID"
-                  value={formik.values.process_ID}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.process_ID && formik.errors.process_ID && (
-                  <div className='error'>
-                    {formik.errors.process_ID}
-                  </div>
-                )}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="vehicle_no" className="form-label">
-                  Vehicle Number
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="vehicle_no"
-                  placeholder="Vehicle Number"
-                  value={formik.values.vehicle_no}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.vehicle_no && formik.errors.vehicle_no && (
-                  <div className='error'>
-                    {formik.errors.vehicle_no}
-                  </div>
-                )}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="driver_name" className="form-label">
-                  Driver Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="driver_name"
-                  placeholder="Driver Name"
-                  value={formik.values.driver_name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.driver_name && formik.errors.driver_name && (
-                  <div className='error'>
-                    {formik.errors.driver_name}
-                  </div>
-                )}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="current_status" className="form-label">
-                  Current Status
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="current_status"
-                  placeholder="Current Status"
-                  value={formik.values.current_status}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.current_status && formik.errors.current_status && (
-                  <div className='error'>
-                    {formik.errors.current_status}
-                  </div>
-                )}
-              </div>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label htmlFor="process_ID" className="form-label">
+                Process ID
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="process_ID"
+                placeholder="Process ID"
+                value={formik.values.process_ID}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.process_ID && formik.errors.process_ID && (
+                <div className='error'>
+                  {formik.errors.process_ID}
+                </div>
+              )}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="vehicle_no" className="form-label">
+                Vehicle Number
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="vehicle_no"
+                placeholder="Vehicle Number"
+                value={formik.values.vehicle_no}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.vehicle_no && formik.errors.vehicle_no && (
+                <div className='error'>
+                  {formik.errors.vehicle_no}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label htmlFor="driver_name" className="form-label">
+                Driver Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="driver_name"
+                placeholder="Driver Name"
+                value={formik.values.driver_name}
+                onChange={handleNameChange} // Changed to handleNameChange
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.driver_name && formik.errors.driver_name && (
+                <div className='error'>
+                  {formik.errors.driver_name}
+                </div>
+              )}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="current_status" className="form-label">
+                Current Status
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="current_status"
+                placeholder="Current Status"
+                value={formik.values.current_status}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.current_status && formik.errors.current_status && (
+                <div className='error'>
+                  {formik.errors.current_status}
+                </div>
+              )}
             </div>
           </div>
         </div>

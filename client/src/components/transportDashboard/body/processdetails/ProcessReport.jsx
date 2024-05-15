@@ -166,7 +166,7 @@ const TableBody = () => {
     dataList.map((process) => (
       <Fragment key={process.id}>
         <View style={{ width:'100%', flexDirection :'row'}}>
-          <View style={[styles.tbody, styles.tbody2]}>
+          <View style={styles.tbody}>
             <Text>{new Date(process.process_ID).toLocaleDateString()}</Text>   
           </View>
           <View style={styles.tbody}>

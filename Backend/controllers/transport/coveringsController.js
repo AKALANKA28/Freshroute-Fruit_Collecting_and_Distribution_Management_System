@@ -9,7 +9,7 @@ exports.addcoverings = async (req, res) => {
             vehicle_no,
             owner_name,
             total_coverings,
-            date: new Date(date),
+            date,
         });
 
         await newCoverings.save();
@@ -58,7 +58,7 @@ exports.updatecoverings = async (req, res) => {
             vehicle_no,
             owner_name,
             total_coverings,
-            date: new Date(date),
+            date,
         };
 
         const updatedcoverings = await coverings.findByIdAndUpdate(coveringId, update, { new: true });

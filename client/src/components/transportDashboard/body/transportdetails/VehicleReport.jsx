@@ -163,14 +163,14 @@ const TableHead = () => {
       <View style={[styles.theader, styles.theader2]}>
         <Text>Vehicle</Text>   
       </View>
-       <View style={styles.theader}>
+       {/* <View style={styles.theader}>
         <Text>Type</Text>   
       </View> 
        <View style={styles.theader}>
         <Text>Condi</Text>   
-      </View>
+      </View> */}
       <View style={styles.theader}>
-        <Text>Capa</Text>   
+        <Text>Payload</Text>   
       </View> 
       <View style={styles.theader}>
         <Text>Owner</Text>   
@@ -199,15 +199,15 @@ const TableBody = () => {
     dataList.map((vehicle) => (
       <Fragment key={vehicle.id}>
         <View style={{ width:'100%', flexDirection :'row'}}>
-          <View style={styles.tbody}>
+          <View style={[styles.tbody, styles.tbody2]}>
             <Text>{vehicle.vehicle_no}</Text>   
           </View>
-          <View style={styles.tbody}>
+          {/* <View style={styles.tbody}>
             <Text>{vehicle.type}</Text>   
           </View> 
            <View style={styles.tbody}>
             <Text>{vehicle.conditions}</Text>   
-          </View>
+          </View> */}
           <View style={styles.tbody}>
             <Text>{vehicle.capacity}</Text>   
           </View> 
