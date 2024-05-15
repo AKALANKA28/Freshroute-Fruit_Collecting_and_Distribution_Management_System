@@ -11,61 +11,66 @@ import {
 import logo from "../../../../assests/logo.png"; // Import your logo image
 
 const SalesReport = ({ dataList }) => {
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   const total = dataList.reduce((sum, sales) => {
     return sum + sales.totalPrice;
   }, 0);
   
-  const reciept_data = {
-    id: "642be0b4bbe5d71a5341dfb1",
-    invoice_no: "20200669",
-    name: "Akalanka Dias",
-    date: "09-05-2024",
-    items: [
-      {
-        id: 1,
-        date: "08/05/2024",
-        category: "Employee",
-        price: 20000.0,
-        description: "Employee Cost",
-      },
-      {
-        id: 2,
-        date: "08/05/2024	",
-        category: "Transport",
-        price: 50000.0,
-        description: "Fuel Cost",
-      },
-      {
-        id: 3,
-        date: "08/05/2024",
-        category: "Promotion",
-        price: 30000.0,
-        description: "Promotion Cost",
-      },
-      {
-        id: 4,
-        date: "08/05/2024",
-        category: "Research",
-        price: 10000.0,
-        description: "Reasearch Cost",
-      },
-      {
-        id: 5,
-        date: "08/05/2024",
-        category: "Transport",
-        price: 25000.0,
-        description: "Transport Cost",
-      },
-      {
-        id: 5,
-        date: "08/05/2024",
-        category: "Research	",
-        price: 30000.0,
-        description: "Expenses",
-      },
-    ],
-  };
+  // const reciept_data = {
+  //   id: "642be0b4bbe5d71a5341dfb1",
+  //   invoice_no: "20200669",
+  //   name: "Akalanka Dias",
+  //   date: "09-05-2024",
+  //   items: [
+  //     {
+  //       id: 1,
+  //       date: "08/05/2024",
+  //       category: "Employee",
+  //       price: 20000.0,
+  //       description: "Employee Cost",
+  //     },
+  //     {
+  //       id: 2,
+  //       date: "08/05/2024	",
+  //       category: "Transport",
+  //       price: 50000.0,
+  //       description: "Fuel Cost",
+  //     },
+  //     {
+  //       id: 3,
+  //       date: "08/05/2024",
+  //       category: "Promotion",
+  //       price: 30000.0,
+  //       description: "Promotion Cost",
+  //     },
+  //     {
+  //       id: 4,
+  //       date: "08/05/2024",
+  //       category: "Research",
+  //       price: 10000.0,
+  //       description: "Reasearch Cost",
+  //     },
+  //     {
+  //       id: 5,
+  //       date: "08/05/2024",
+  //       category: "Transport",
+  //       price: 25000.0,
+  //       description: "Transport Cost",
+  //     },
+  //     {
+  //       id: 5,
+  //       date: "08/05/2024",
+  //       category: "Research	",
+  //       price: 30000.0,
+  //       description: "Expenses",
+  //     },
+  //   ],
+  // };
 
   const styles = StyleSheet.create({
     page: {
@@ -169,9 +174,9 @@ const SalesReport = ({ dataList }) => {
         <View style={styles.spaceBetween}>
           <View style={{ maxWidth: 200 }}>
             <Text style={styles.addressTitle}>Finance Manger: </Text>
-            <Text style={styles.address}>{reciept_data.name}</Text>
+            <Text style={styles.address}>Akalanka Dias</Text>
           </View>
-          <Text style={styles.addressTitle}>{reciept_data.date}</Text>
+          <Text style={styles.addressTitle}>Date: {currentDate}</Text>
         </View>
       </View>
     );
