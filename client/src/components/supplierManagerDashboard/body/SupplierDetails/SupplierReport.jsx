@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     fontSize: 10,
     fontWeight: "bold",
-    width: "14.285%",
+    width: "16.666%",
     textAlign: "center",
     backgroundColor : '#DEDEDE'
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 8,
-    width: "14.285%",
+    width: "16.666%",
     textAlign: "center",
   },
   tbody2:{ flex:2, borderRightWidth:1, },
@@ -131,7 +131,7 @@ const SupplierReport = ({ dataList }) => {
           
           <View style={styles.table}>
             <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>NIC</Text>
+              {/* <Text style={styles.tableColHeader}>NIC</Text> */}
               <Text style={styles.tableColHeader}>Supplier Name</Text>
               <Text style={styles.tableColHeader}>Username</Text>
               <Text style={styles.tableColHeader}>Email</Text>
@@ -141,7 +141,7 @@ const SupplierReport = ({ dataList }) => {
             </View>
             {dataList.map((supplier, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={[styles.tableCol, styles.tbody2]}>{supplier.NIC}</Text>
+                {/* <Text style={[styles.tableCol, styles.tbody2]}>{supplier.NIC}</Text> */}
                 <Text style={[styles.tableCol, styles.tbody2]}>{supplier.name}</Text>
                 <Text style={[styles.tableCol, styles.tbody2]}>{supplier.username}</Text>
                 <Text style={[styles.tableCol, styles.tbody2]}>{supplier.email}</Text>
