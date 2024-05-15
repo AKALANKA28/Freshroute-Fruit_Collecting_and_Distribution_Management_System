@@ -44,13 +44,28 @@ function Schedule() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+    const filteredList = dataList.filter((schedule) => {
+      const searchFields = [
+        "schedule_ID",
+        "vehicle_no",
+        "driver_name",
+        "pickup_location",
+        "destination",
+        "date",
+        "quantity"
+      ];
+      return searchFields.some((field) => {
+        const fieldValue = schedule[field];
+        if (typeof fieldValue === "string") {
+          return fieldValue.toLowerCase().includes(query.toLowerCase());
+        }
+        // If fieldValue is not a string (like date), convert it to string and then check for inclusion
+        return String(fieldValue).toLowerCase().includes(query.toLowerCase());
+      });
     });
     setFilteredDataList(filteredList);
   };
-
+  
 
   const handleRefreshClick = () => {
     getFetchData();

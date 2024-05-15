@@ -166,18 +166,20 @@ function Sales() {
   };
 
   // Search functionality
-  const handleSearch = (query) => {
-    const filteredList = dataList.filter((sales) => {
-      const fullName = `${sales?.user?.name} ${sales.createdAt}  ${sales.orderItems.map((item) => (
-        <li key={item._id}>{item.product.title}</li>
-      ))}
-        </li>
-      ))}} ${sales.amount} ${sales.paid} ${sales.due} ${sales.status}`;
-      return fullName.toLowerCase().includes(query.toLowerCase());
-    });
-    setFilteredDataList(filteredList);
-    setCurrentPage(1); // Reset current page to 1 when a new search is performed
-  };
+// Search functionality
+const handleSearch = (query) => {
+  const filteredList = dataList.filter((sales) => {
+    const fullName = `${sales?.user?.name} ${sales.createdAt}  ${sales.orderItems.map((item) => (
+      <li key={item._id}>{item.product.title}</li>
+    ))}
+      </li>
+    ))}} ${sales.amount} ${sales.paid} ${sales.due} ${sales.status}`;
+    return fullName.toLowerCase().includes(query.toLowerCase());
+  });
+  setFilteredDataList(filteredList);
+  setCurrentPage(1); // Reset current page to 1 when a new search is performed
+};
+
 
   const handleRefreshClick = () => {
     // getFetchData();
