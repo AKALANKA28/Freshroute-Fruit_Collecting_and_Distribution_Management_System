@@ -207,7 +207,7 @@
 
 /* Title styling */
 h2 {
-  text-align: center; /* Center the title */
+  /* text-align: center; Center the title */
   font-size: 24px; /* Adjust the font size of the title */
   font-weight: bold; /* Make the title bold */
   color: #333; /* Set the color of the title */

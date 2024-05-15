@@ -14,7 +14,7 @@ const ExpenseModal = ({
 const modalTitle = formData ? "Add" : "Edit";
 
   return (
-    <Modal show={modalOpen} onHide={handleModalClose} size="lg">
+    <Modal show={modalOpen} onHide={handleModalClose}>
       <Modal.Header closeButton>
       <Modal.Title>{modalTitle} Expense</Modal.Title>
       </Modal.Header>

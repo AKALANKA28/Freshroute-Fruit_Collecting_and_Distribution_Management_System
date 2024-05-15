@@ -43,6 +43,7 @@ import SupplierLocations from "./components/supplierManagerDashboard/SupplierLoc
 
 import VehicleDetails from "./components/transportDashboard/VehicleDetails";
 import ProcessDetails from "./components/transportDashboard/ProcessDetails";
+import CoveringDetails from "./components/transportDashboard/CoveringDetails";
 
 import OrderProcessorHomePage from "./components/orderProcessor/OrderProcessorHomePage";
 import AssignedOrder from "./components/orderProcessor/body/AssignedOrders/AssignedOrderList"
@@ -352,6 +353,7 @@ const router = createBrowserRouter([
         path: "/OPDashboard/SupplierList",
         element: <SupplierList/>,
       }
+      
 
     ]
   },
@@ -661,6 +663,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ProcessDetails />
+      </div>
+    ),
+  },
+  {
+    path: "/CoveringDetails",
+    element: (
+      <div>
+        <CoveringDetails />
       </div>
     ),
   },

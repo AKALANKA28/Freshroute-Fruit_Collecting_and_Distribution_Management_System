@@ -705,8 +705,8 @@ header .search-form input:hover{
   font-size: 16px;
   font-weight: 500;
   transition: 0.3s;
-  color: var(--textColor);
-  background: #ffffff;
+  color: white;
+  background: var(--primaryColor);
   padding: 10px 15px;
   border-radius: 4px;
 
@@ -722,7 +722,7 @@ header .search-form input:hover{
 .sidebar-nav .nav-link i{
   font-size: 20px;
   margin-right: 10px;
-  color:var(--textColor);
+  color:white;
 }
 
 
@@ -913,7 +913,7 @@ header .search-form input:hover{
 
 
 .body .info-card h6{
-  font-size: 26px;
+  font-size: 25px;
   color: #000000;
   font-weight: 700;
   margin: 0;

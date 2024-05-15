@@ -33,8 +33,10 @@ function Sales() {
   const [selectedSales, setSelectedSales] = useState(null);
   const [filter, setFilter] = useState("Today");
   const [filteredDataList, setFilteredDataList] = useState([]);
+
   const dispatch = useDispatch();
   const location = useLocation();
+
   const getUserId = location.pathname.split("/")[3];
   // console.log(getUserId)
   const [modalOpen, setModalOpen] = useState(false);
@@ -164,14 +166,20 @@ function Sales() {
   };
 
   // Search functionality
-  const handleSearch = (query) => {
-    const filteredList = dataList.filter((sales) => {
-      const fullName = `${sales.customer_name} ${sales.date} ${sales.fruit_name} ${sales.amount} ${sales.paid} ${sales.due} ${sales.status}`;
-      return fullName.toLowerCase().includes(query.toLowerCase());
-    });
-    setFilteredDataList(filteredList);
-    setCurrentPage(1); // Reset current page to 1 when a new search is performed
-  };
+// Search functionality
+const handleSearch = (query) => {
+  const filteredList = dataList.filter((sales) => {
+    const fullName = `${sales?.user?.name} ${sales.createdAt}  ${sales.orderItems.map((item) => (
+      <li key={item._id}>{item.product.title}</li>
+    ))}
+      </li>
+    ))}} ${sales.amount} ${sales.paid} ${sales.due} ${sales.status}`;
+    return fullName.toLowerCase().includes(query.toLowerCase());
+  });
+  setFilteredDataList(filteredList);
+  setCurrentPage(1); // Reset current page to 1 when a new search is performed
+};
+
 
   const handleRefreshClick = () => {
     // getFetchData();
@@ -288,7 +296,7 @@ function Sales() {
 
           {dataList.length > 0 && (
             <div className="table-container">
-              <SearchBar onSearch={handleSearch} />
+<SearchBar onSearch={handleSearch} />
 
 
               {/* ---------------table--------------- */}

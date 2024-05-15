@@ -62,7 +62,7 @@ const SingleProduct = () => {
 
   const uploadCart = () => {
     if (grade === null) {
-      toast.error("Please choose color");
+      toast.error("Please choose a Grade");
       return;
     } else {
       dispatch(
@@ -115,7 +115,7 @@ const SingleProduct = () => {
                         <h3 className="product-heading">Grade</h3>
                         <div className="d-flex flex-wrap gap-15 grade">
                           {/* First span */}
-                          <span
+                          <div
                             className="badge border border-1 p-3 button-select"
                             style={{ backgroundColor: "black", color: "white" }}
                           >
@@ -129,12 +129,11 @@ const SingleProduct = () => {
                                 )
                               } // Pass the first third of the gradeData array
                             />
-                          </span>
+                          </div>
 
                           {/* Second span */}
-                          <span
+                          <div
                             className="badge border border-1 p-3 button-select"
-                            style={{ backgroundColor: "black", color: "white" }}
                           >
                             <Grades
                               setGrade={setGrade}
@@ -146,12 +145,11 @@ const SingleProduct = () => {
                                 )
                               } // Pass the second third of the gradeData array
                             />
-                          </span>
+                          </div>
 
                           {/* Third span */}
-                          <span
+                          <div
                             className="badge border border-1 p-3 button-select"
-                            style={{ backgroundColor: "black", color: "white" }}
                           >
                             <Grades
                               setGrade={setGrade}
@@ -162,7 +160,7 @@ const SingleProduct = () => {
                                 )
                               } // Pass the last third of the gradeData array
                             />
-                          </span>
+                          </div>
                         </div>
                       </div>
                     </>
@@ -171,7 +169,7 @@ const SingleProduct = () => {
                   <div className=" d-flex align-items-center gap-3 pb-4">
                     {alreadyAdded === false && (
                       <>
-                        {/* <h3 className='product-heading'>Quantity</h3> */}
+                        <h3 className='product-heading'>Quantity(Kg): </h3>
                         <div className="">
                           <input
                             type="number"

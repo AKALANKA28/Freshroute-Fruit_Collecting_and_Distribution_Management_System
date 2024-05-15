@@ -52,12 +52,20 @@ const Sidebar = () => {
                 </a>
             </li>
 
+
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/ScheduleDetails'>
                     <i className='bi bi-journal-medical'></i>
                     <span>Schedule Details</span>
                 </a>
             </li>
+            <li className='nav-item'>
+                <a className='nav-link collapsed' href='/CoveringDetails'>
+                    <i className='bi bi-compass'></i>
+                    <span>Coverings</span>
+                </a>
+            </li>
+
 
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/DriverDetails'>

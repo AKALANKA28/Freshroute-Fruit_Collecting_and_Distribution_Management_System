@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
+import { BlobProvider } from "@react-pdf/renderer";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -43,13 +44,25 @@ function Process() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+    const filteredList = dataList.filter((process) => {
+      const searchFields = [
+        "process_ID",
+        "vehicle_no",
+        "driver_name",
+        "current_status"
+      ];
+      return searchFields.some((field) => {
+        const fieldValue = process[field];
+        if (typeof fieldValue === "string") {
+          return fieldValue.toLowerCase().includes(query.toLowerCase());
+        }
+        // If fieldValue is not a string (like current_status), convert it to string and then check for inclusion
+        return String(fieldValue).toLowerCase().includes(query.toLowerCase());
+      });
     });
     setFilteredDataList(filteredList);
   };
-
+  
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -142,26 +155,18 @@ function Process() {
             </div>
             <ul class="table-top-head">
             <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Available Process Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <ProcessReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+            <BlobProvider
+                        document={<ProcessReport dataList={dataList} />}
+                        fileName="Process_Report.pdf"
+                      >
+                        {({ url, blob }) => (
+                          <div className="button-container">
+                            <a href={url} target="_blank">
+                              <img src={Pdf} alt="Pdf Icon" className="icon" />
+                            </a>
+                          </div>
+                        )}
+                      </BlobProvider>
       </li>
               <li>
                 <div className="button-container"> 

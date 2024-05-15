@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
+import { BlobProvider, PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
@@ -42,13 +42,29 @@ function Vehicle() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+    const filteredList = dataList.filter((vehicle) => {
+      const searchFields = [
+        "vehicle_no",
+        "type",
+        "conditions",
+        "owner_name",
+        "email",
+        "phone",
+        "Bank",
+        "Branch",
+        "account_no"
+      ];
+      return searchFields.some((field) => {
+        const fieldValue = vehicle[field];
+        if (typeof fieldValue === "string") {
+          return fieldValue.toLowerCase().includes(query.toLowerCase());
+        }
+        return false;
+      });
     });
     setFilteredDataList(filteredList);
   };
-
+  
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -145,6 +161,20 @@ function Vehicle() {
             </div>
             <ul class="table-top-head">
             <li>
+                      <BlobProvider
+                        document={<VehicleReport dataList={dataList} />}
+                        fileName="Vehicle_Report.pdf"
+                      >
+                        {({ url, blob }) => (
+                          <div className="button-container">
+                            <a href={url} target="_blank">
+                              <img src={Pdf} alt="Pdf Icon" className="icon" />
+                            </a>
+                          </div>
+                        )}
+                      </BlobProvider>
+                    </li>
+            {/* <li>
                   <div className="button-container">
                       <a onClick={handleShowReportModal}>
                           <img src={Pdf} alt="Pdf Icon"  className="icon"  />
@@ -155,6 +185,7 @@ function Vehicle() {
           </Modal.Header>
           <Modal.Body>
             <PDFViewer width="100%" height="500px">
+
               <VehicleReport dataList={dataList} />
             </PDFViewer>
           </Modal.Body>
@@ -165,7 +196,7 @@ function Vehicle() {
           </Modal.Footer>
         </Modal>
       </div>
-      </li>
+      </li> */}
               <li>
                 <div className="button-container">
                   <a href="#" onClick={handleButtonClick}>
@@ -218,7 +249,7 @@ function Vehicle() {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">Vehicle Number</th>
+                  <th scope="col">Vehicle No.</th>
                   <th scope="col">Type</th>
                   <th scope="col">Conditions</th>
                   <th scope="col">Payload</th>
@@ -228,7 +259,7 @@ function Vehicle() {
                   <th scope="col">Phone</th>
                   <th scope="col">Bank</th>
                   <th scope="col">Branch</th>
-                  <th scope="col">Account Number</th>
+                  <th scope="col">Acc No.</th>
                   <th>Action</th>
                 </tr>
               </thead>

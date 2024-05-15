@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 
 const TransportLocationMap = ({ suppliers }) => {
   const mapCenter = [7.8731, 80.7718]; // Center of Sri Lanka
-  const mapZoom = 7; // Initial zoom level
+  const mapZoom = 8; // Initial zoom level
 
   const [supplierCounts, setSupplierCounts] = useState({});
   const [hoveredSupplier, setHoveredSupplier] = useState(null);
@@ -48,7 +48,7 @@ const TransportLocationMap = ({ suppliers }) => {
   };
 
   return (
-    <div style={{ height: '500px', borderRadius: '15px', overflow: 'hidden' }}>
+    <div style={{ height: '630px', borderRadius: '15px', overflow: 'hidden' }}>
       <MapContainer center={mapCenter} zoom={mapZoom} style={{ height: '100%', width: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {suppliers.map((supplier, index) => (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PDFViewer } from "@react-pdf/renderer";
 import { Button, Modal } from "react-bootstrap";
+import { BlobProvider } from "@react-pdf/renderer"; // Import BlobProvider
 import SearchBar from './SearchBar';
 import Excel from "../../../../assests/img/icons/excel.png";
 import Pdf from "../../../../assests/img/icons/pdf.png";
@@ -13,7 +13,6 @@ import { ToastContainer } from "react-toastify";
 import * as XLSX from "xlsx";
 import { writeFile } from "xlsx";
 
-
 axios.defaults.baseURL = "http://localhost:8070/";
 
 function Schedule() {
@@ -22,7 +21,6 @@ function Schedule() {
   const [dataList, setDataList] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [filter, setFilter] = useState('Today');
-
   const [filteredDataList, setFilteredDataList] = useState([]); 
   
   useEffect(() => {
@@ -38,7 +36,6 @@ function Schedule() {
       const response = await axios.get("/Schedule/");
       setDataList(response.data);
       console.log(response);
-
     } catch (err) {
       alert(err.message);
     }
@@ -47,13 +44,28 @@ function Schedule() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+    const filteredList = dataList.filter((schedule) => {
+      const searchFields = [
+        "schedule_ID",
+        "vehicle_no",
+        "driver_name",
+        "pickup_location",
+        "destination",
+        "date",
+        "quantity"
+      ];
+      return searchFields.some((field) => {
+        const fieldValue = schedule[field];
+        if (typeof fieldValue === "string") {
+          return fieldValue.toLowerCase().includes(query.toLowerCase());
+        }
+        // If fieldValue is not a string (like date), convert it to string and then check for inclusion
+        return String(fieldValue).toLowerCase().includes(query.toLowerCase());
+      });
     });
     setFilteredDataList(filteredList);
   };
-
+  
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -147,26 +159,18 @@ function Schedule() {
             </div>
             <ul class="table-top-head">
             <li>
-                  <div className="button-container">
-                      <a onClick={handleShowReportModal}>
-                          <img src={Pdf} alt="Pdf Icon"  className="icon"  />
-                      </a>
-                      <Modal show={showReportModal} onHide={handleCloseReportModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Schedule Details Report</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PDFViewer width="100%" height="500px">
-              <ScheduleReport dataList={dataList} />
-            </PDFViewer>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReportModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+                      <BlobProvider
+                        document={<ScheduleReport dataList={dataList} />}
+                        fileName="Schedule_Report.pdf"
+                      >
+                        {({ url, blob }) => (
+                          <div className="button-container">
+                            <a href={url} target="_blank">
+                              <img src={Pdf} alt="Pdf Icon" className="icon" />
+                            </a>
+                          </div>
+                        )}
+                      </BlobProvider>
       </li>
               <li>
                 <div className="button-container">

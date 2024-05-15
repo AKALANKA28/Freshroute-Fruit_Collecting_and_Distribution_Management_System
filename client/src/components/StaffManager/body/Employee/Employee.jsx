@@ -45,6 +45,8 @@ function Employee() {
     try {
       const response = await axios.get("/Employee/");
       setDataList(response.data);
+
+      console.log(response.data);
     } catch (err) {
       alert(err.message);
     }
