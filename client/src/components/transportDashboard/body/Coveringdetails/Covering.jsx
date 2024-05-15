@@ -222,7 +222,7 @@ function Covering() {
                 <tr>
                   <th scope="col">Vehicle Number</th>
                   <th scope="col">Owner Name</th>
-                  <th scope="col"> Total Coverings</th>
+                  <th scope="col"> Total Coverings(Km)</th>
                   <th scope="col">Date</th>
                   <th>Action</th>
                 </tr>

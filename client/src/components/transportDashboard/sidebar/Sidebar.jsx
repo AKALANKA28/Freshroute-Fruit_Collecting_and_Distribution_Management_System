@@ -61,7 +61,7 @@ const Sidebar = () => {
             </li>
             <li className='nav-item'>
                 <a className='nav-link collapsed' href='/CoveringDetails'>
-                    <i className='bi bi-compass'></i>
+                    <i className='bi bi-c-circle-fill'></i>
                     <span>Coverings</span>
                 </a>
             </li>

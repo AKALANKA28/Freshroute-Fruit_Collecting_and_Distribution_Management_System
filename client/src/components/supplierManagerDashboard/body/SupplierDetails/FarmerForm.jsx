@@ -239,7 +239,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <label htmlFor="NIC" className="form-label">
           Farmer NIC
         </label>
@@ -255,7 +255,7 @@ const FarmerForm = ({ handleSubmit, initialData }) => {
           maxLength={12}
         />
         {formErrors.NIC && <div className="invalid-feedback">{formErrors.NIC}</div>}
-      </div>
+      </div> */}
       
       <div className="mb-3">
         <label htmlFor="username" className="form-label">
