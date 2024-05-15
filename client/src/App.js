@@ -569,6 +569,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/PDashboard",
+    element: (
+      <div>
+        <PDashboard />
+      </div>
+    ),
+  },
+  {
     path: "/TransportFee",
     element: (
       <div>

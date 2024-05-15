@@ -55,7 +55,6 @@ const PromotionReport = ({ dataList }) => {
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Farmer Name</Text>
-              <Text style={styles.tableColHeader}>NIC</Text>
               <Text style={styles.tableColHeader}>Location</Text>
               <Text style={styles.tableColHeader}>Application No</Text>
               <Text style={styles.tableColHeader}>Required Resouce</Text>
@@ -64,7 +63,6 @@ const PromotionReport = ({ dataList }) => {
             {dataList.map((Promotion, index) => (
               <View key={index} style={styles.tableRow}>
                 <Text style={styles.tableCol}>{Promotion.farmer_name}</Text>
-                <Text style={styles.tableCol}>{Promotion.nic}</Text>
                 <Text style={styles.tableCol}>{Promotion.location}</Text>
                 <Text style={styles.tableCol}>{Promotion.application_no}</Text>
                 <Text style={styles.tableCol}>{Promotion.required_resouce}</Text>

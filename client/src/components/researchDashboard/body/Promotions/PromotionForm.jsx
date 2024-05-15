@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 const PromotionForm = ({ handleSubmit, initialData }) => {
   const [formData, setFormData] = useState({
     farmer_name: "",
-    nic: "",
     location: "",
     application_no: "",
     required_resouce: ""
@@ -47,7 +46,7 @@ const PromotionForm = ({ handleSubmit, initialData }) => {
           required
         />
       </div>
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <label htmlFor="nic" className="form-label">
           NIC
         </label>
@@ -61,7 +60,7 @@ const PromotionForm = ({ handleSubmit, initialData }) => {
           onChange={handleChange}
           required
         />
-      </div>
+      </div> */}
       <div className="mb-3">
         <label htmlFor="location" className="form-label">
         Location
