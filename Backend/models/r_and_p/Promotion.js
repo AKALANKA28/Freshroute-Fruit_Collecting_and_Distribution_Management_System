@@ -8,11 +8,6 @@ const PromotionSchema = mongoose.Schema({
         required: true,
     },
 
-    nic: {
-        type: String,
-        required: true
-    },
-
     location: {
         type: String,
         required: true

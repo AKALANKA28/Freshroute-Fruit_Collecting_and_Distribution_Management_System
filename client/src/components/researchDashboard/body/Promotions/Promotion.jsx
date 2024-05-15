@@ -228,7 +228,6 @@ function Promotion() {
               <thead className="table-light">
                 <tr>
                   <th scope="col">Farmer Name</th>
-                  <th scope="col">NIC</th>
                   <th scope="col">Location</th>
                   <th scope="col">Application No</th>
                   <th scope="col">Required Resouce</th>
@@ -240,7 +239,6 @@ function Promotion() {
                   filteredDataList.map((promotion) => (
                     <tr key={promotion._id}>
                       <td>{promotion.farmer_name}</td>
-                      <td>{promotion.nic}</td>
                       <td>{promotion.location}</td>
                       <td>{promotion.application_no}</td>
                       <td>{promotion.required_resouce}</td>
