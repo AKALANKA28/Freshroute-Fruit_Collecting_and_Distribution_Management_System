@@ -17,11 +17,11 @@ const coverings = mongoose.Schema({
         type: Number,
         required: true
     },
-    // date: {
-    //     type : Date,
-    //     required: true,
-    //     trim: true
-    // },
+    date: {
+        type : String,
+        required: true,
+        trim: true
+    },
    
    
 })

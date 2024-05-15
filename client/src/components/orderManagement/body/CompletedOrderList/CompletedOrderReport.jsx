@@ -49,8 +49,38 @@ const styles = StyleSheet.create({
   logo:{
     width: 100,
     height: 100
+  },
+  signatureContainer:{
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    marginTop: 20,
+    marginRight: 5,
+    alignItems: "flex-end"
+  },
+  dottedLine:{
+    borderBottomWidth: 1,
+    borderColor: "#333333",
+    width: 100,
+    marginBottom: 5
+  },
+  signatureText: {
+    fontSize: 10,
+    color: "#333333"
+  },
+  footer: {
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    textSize: 10,
+    color: "#666666"
   }
 });
+
+const Footer = () => (
+  <Text style={styles.footer}>© 2024 Freshroute.lk copyright all right reserved.</Text>
+);
 
 const CompletedOrderReport = ({ dataList }) => {
   const currentDate = new Date().toLocaleString();
@@ -83,7 +113,15 @@ const CompletedOrderReport = ({ dataList }) => {
                 <Text style={styles.tableCol}>{item.opName}</Text>
               </View>
             ))}
+
+            
+            <View style={styles.signatureContainer}>
+              <View style={styles.dottedLine} />
+              <Text style={styles.signatureText}>Signature</Text>
+            </View>
+
           </View>
+          <Footer/>
         </View>
       </Page>
     </Document>

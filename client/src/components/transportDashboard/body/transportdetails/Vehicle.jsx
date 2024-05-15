@@ -42,13 +42,29 @@ function Vehicle() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+    const filteredList = dataList.filter((vehicle) => {
+      const searchFields = [
+        "vehicle_no",
+        "type",
+        "conditions",
+        "owner_name",
+        "email",
+        "phone",
+        "Bank",
+        "Branch",
+        "account_no"
+      ];
+      return searchFields.some((field) => {
+        const fieldValue = vehicle[field];
+        if (typeof fieldValue === "string") {
+          return fieldValue.toLowerCase().includes(query.toLowerCase());
+        }
+        return false;
+      });
     });
     setFilteredDataList(filteredList);
   };
-
+  
 
   const handleRefreshClick = () => {
     getFetchData();
@@ -233,7 +249,7 @@ function Vehicle() {
             <table className="table table-borderless datatable">
               <thead className="table-light">
                 <tr>
-                  <th scope="col">Vehicle Number</th>
+                  <th scope="col">Vehicle No.</th>
                   <th scope="col">Type</th>
                   <th scope="col">Conditions</th>
                   <th scope="col">Payload</th>
@@ -243,7 +259,7 @@ function Vehicle() {
                   <th scope="col">Phone</th>
                   <th scope="col">Bank</th>
                   <th scope="col">Branch</th>
-                  <th scope="col">Account Number</th>
+                  <th scope="col">Acc No.</th>
                   <th>Action</th>
                 </tr>
               </thead>

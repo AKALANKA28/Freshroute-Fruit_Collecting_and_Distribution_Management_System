@@ -156,8 +156,8 @@
 .grade .button-select{
   font-size: 14px;
   font-weight: 600;
-  color: rgb(255, 255, 255);
-  background-color: black;
+  color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
   padding-bottom: -20rem;
   cursor: pointer;
 
@@ -215,19 +215,14 @@
   margin-right: 3px;
 }
 
-/* .button-select{
+/* 
+.button-select{
+  background-color: rgba(0, 0, 0, 0);
+  color: #00000000;
+  font-size: 14px;
+  font-weight: 600;  
+}
+.button-select:hover{
   background-color: var(--hoverColor);
-  color: white;
-  cursor: pointer;
+  color: #ffffff;
 } */
-
-.button-select:hover {
-  background-color: lightgray; /* Change to your desired hover color */
-}
-
-.text-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-

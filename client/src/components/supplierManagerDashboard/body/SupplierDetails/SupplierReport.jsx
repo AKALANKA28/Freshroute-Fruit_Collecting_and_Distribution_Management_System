@@ -90,6 +90,23 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  signatureContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    marginTop: 20,
+    marginRight: 5,
+    alignItems: "flex-end",
+  },
+  dottedLine: {
+    borderBottomWidth: 1,
+    borderColor: "#333333",
+    width: 100,
+    marginBottom: 5,
+  },
+  signatureText: {
+    fontSize: 10,
+    color: "#333333",
+  },
 });
 
 const Footer = () => (
@@ -134,6 +151,12 @@ const SupplierReport = ({ dataList }) => {
               </View>
             ))}
           </View>
+
+          <View style={styles.signatureContainer}>
+            <View style={styles.dottedLine} />
+            <Text style={styles.signatureText}>Signature</Text>
+          </View>
+
         </View>
         <Footer />
       </Page>

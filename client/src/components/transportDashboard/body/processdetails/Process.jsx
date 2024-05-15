@@ -44,13 +44,25 @@ function Process() {
 
   // Search functionality
   const handleSearch = (query) => {
-    const filteredList = dataList.filter((employee) => {
-      const fullName = `${employee.name} ${employee.jobrole}`; // Customize this according to your data structure
-      return fullName.toLowerCase().includes(query.toLowerCase());
+    const filteredList = dataList.filter((process) => {
+      const searchFields = [
+        "process_ID",
+        "vehicle_no",
+        "driver_name",
+        "current_status"
+      ];
+      return searchFields.some((field) => {
+        const fieldValue = process[field];
+        if (typeof fieldValue === "string") {
+          return fieldValue.toLowerCase().includes(query.toLowerCase());
+        }
+        // If fieldValue is not a string (like current_status), convert it to string and then check for inclusion
+        return String(fieldValue).toLowerCase().includes(query.toLowerCase());
+      });
     });
     setFilteredDataList(filteredList);
   };
-
+  
 
   const handleRefreshClick = () => {
     getFetchData();

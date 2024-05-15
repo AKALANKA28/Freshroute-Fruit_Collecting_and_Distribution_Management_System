@@ -65,6 +65,7 @@
   text-transform: uppercase;
   line-height: 28px;
   font-size: 12px;
+  color: black;
   padding: 0.7rem 2rem;
   border: 1px solid var(--hoverColor);
   border-radius: 50px;

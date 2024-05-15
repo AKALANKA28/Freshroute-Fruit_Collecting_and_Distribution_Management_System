@@ -213,3 +213,8 @@
 .tab-height {
     height: 40px; /* Adjust height as needed */
 }
+
+button:disabled{
+    background-color: rgb(255 187 0 / 50%);
+    color: white;
+}

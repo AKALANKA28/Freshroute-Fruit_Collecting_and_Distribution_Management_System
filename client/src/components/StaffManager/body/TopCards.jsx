@@ -54,7 +54,7 @@ const TopCards = () => {
         }
     };
     
-
+    const formattedNetSalary = totalNetSalary.toLocaleString();
     useEffect(() => {
         fetchNetSalaryTotal();
         fetchCandidatesCount();
@@ -83,7 +83,7 @@ const TopCards = () => {
                                     </div>
                                     <div className="ps-3">
                                         <h6 className='card-price'>
-                                             Rs.{totalNetSalary}
+                                        Rs.{formattedNetSalary}
                                         </h6>
                                         <span className= 'text-success small pt-1 fw-bold'> 5%</span>
                                         <span className="text-muted small pt-2 ps-1"> increase</span>

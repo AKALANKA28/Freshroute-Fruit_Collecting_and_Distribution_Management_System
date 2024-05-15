@@ -2,7 +2,7 @@ import React from 'react'
 import './main.css'
 import PageTitle from './PageTitle'
 import Body from './Body'
-import img from "../../../assests/transport.jpg"
+import img from "../../../assests/driver.jpg"
 import { Link } from 'react-router-dom'
 import News from './Transactions'
 import AssingedOrders from './AssingedOrders'

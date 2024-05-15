@@ -300,7 +300,7 @@ const Checkout = () => {
                       onClick={makePayment}
                       type="submit"
                       className="product-button"
-                      disabled={!formik.isValid} // Disable the button if form is not valid
+                      // disabled={!formik.isValid} // Disable the button if form is not valid
 
                     >
                       Place Order
