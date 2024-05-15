@@ -111,3 +111,7 @@
     margin-top: 1.3rem;
 }
 
+.feature-transition {
+    transition: all 3s ease-in-out; /* Example transition effect */
+  }
+  

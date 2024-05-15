@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
 });
 
 const ProcessReport = ({ dataList }) => {
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
 
   const styles = StyleSheet.create({
@@ -77,10 +82,23 @@ const ProcessReport = ({ dataList }) => {
 
     // total:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1.5, borderColor : 'whitesmoke', borderBottomWidth:1},
 
+    footer: { position: "absolute", bottom: 50,left: 0,right: 0,textAlign: "center", fontSize: 10, color: "#666666"},
+
     tbody2:{ flex:2, borderRightWidth:1, }
     
 });
 
+
+const Footer = () => (
+  <View style={styles.footer}>
+
+    <Text>..................</Text>
+    <Text>{"\n"}signature</Text>
+    <Text>{"\n"}© 2024 Freshroute.lk copyright all right reserved.</Text>
+
+
+  </View>
+);
 
 const InvoiceTitle = () => (
   <View style={styles.titleContainer}>
@@ -118,7 +136,7 @@ const UserAddress = () => {
               Aashani Samarakoon
           </Text>
         </View>
-        {/* <Text style={styles.addressTitle}>{reciept_data.date}</Text> */}
+        <Text style={styles.addressTitle}>Date: {currentDate}</Text>
       </View>
     </View>
   );
@@ -127,7 +145,7 @@ const UserAddress = () => {
 const TableHead = () => {
   return (
     <View style={{ width:'100%', flexDirection :'row', marginTop:10}}>
-      <View style={[styles.theader, styles.theader2]}>
+      <View style={styles.theader}>
         <Text>Process ID</Text>   
       </View>
       <View style={styles.theader}>
@@ -198,6 +216,7 @@ const TableBody = () => {
         <UserAddress/>
         <TableHead/>
         <TableBody/>
+        <Footer/>
         {/* <TableTotal/> */}
     </Page>
       {/* <Page size="A4" style={styles.page}>

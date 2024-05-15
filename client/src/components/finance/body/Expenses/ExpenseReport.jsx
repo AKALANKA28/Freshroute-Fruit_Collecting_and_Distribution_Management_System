@@ -2,53 +2,60 @@ import React, { Fragment } from "react";
 import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import logo from "../../../../assests/logo.png"; // Import your logo image
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  heading: {
-    fontSize: 24,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  table: {
-    display: "table",
-    width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: { 
-    flexDirection: "row",
-    backgroundColor: "#FFF",
-  },
-  tableColHeader: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 12,
-  },
-  tableCol: {
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    padding: 5,
-    flex: 1,
-    fontSize: 10,
-  },
-});
+// const styles = StyleSheet.create({
+
+
+//   page: {
+//     flexDirection: "row",
+//     backgroundColor: "#FFFFFF",
+//   },
+//   section: {
+//     margin: 10,
+//     padding: 10,
+//     flexGrow: 1,
+//   },
+//   heading: {
+//     fontSize: 24,
+//     marginBottom: 10,
+//     textAlign: "center",
+//   },
+//   table: {
+//     display: "table",
+//     width: "100%",
+//     borderStyle: "solid",
+//     borderWidth: 1,
+//     borderRightWidth: 0,
+//     borderBottomWidth: 0,
+//   },
+//   tableRow: { 
+//     flexDirection: "row",
+//     backgroundColor: "#FFF",
+//   },
+//   tableColHeader: {
+//     borderStyle: "solid",
+//     borderBottomWidth: 1,
+//     borderRightWidth: 1,
+//     padding: 5,
+//     flex: 1,
+//     fontSize: 12,
+//   },
+//   tableCol: {
+//     borderStyle: "solid",
+//     borderBottomWidth: 1,
+//     borderRightWidth: 1,
+//     padding: 5,
+//     flex: 1,
+//     fontSize: 10,
+//   },
+// });
 
 const ExpenseReport = ({ dataList }) => {
 
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   const styles = StyleSheet.create({
     page: {fontSize: 11,paddingTop: 20,paddingLeft: 40,paddingRight: 40,lineHeight: 1.5,flexDirection: 'column' },
@@ -77,7 +84,23 @@ const ExpenseReport = ({ dataList }) => {
 
     total:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1.5, borderColor : 'whitesmoke', borderBottomWidth:1},
 
-    tbody2:{ flex:2, borderRightWidth:1, }
+    tbody2:{ flex:2, borderRightWidth:1, },
+
+    footer: {
+      position: "absolute",
+      bottom: 30, // Adjust this value as needed to position the footer
+      left: 0,
+      right: 0,
+      textAlign: "center",
+      fontSize: 10,
+      color: "#666666",
+    },
+
+    footer: { position: "absolute", bottom: 50,left: 0,right: 0,textAlign: "center", fontSize: 10, color: "#666666"},
+
+    space:{
+      alignment: "right",
+    }
     
 });
 
@@ -118,7 +141,7 @@ const UserAddress = () => {
               Akalanka Dias
           </Text>
         </View>
-        {/* <Text style={styles.addressTitle}>{reciept_data.date}</Text> */}
+        <Text style={styles.addressTitle}>Date: {currentDate}</Text>
       </View>
     </View>
   );
@@ -190,6 +213,19 @@ const TableTotal = () => {
   );
 };
 
+
+
+const Footer = () => (
+  <View style={styles.footer}>
+
+    <Text>..................</Text>
+    <Text style={styles.space}>{"\n"}signature</Text>
+    <Text>{"\n"}© 2024 Freshroute.lk copyright all right reserved.</Text>
+
+
+  </View>
+);
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -199,6 +235,8 @@ const TableTotal = () => {
         <TableHead/>
         <TableBody/>
         <TableTotal/>
+        <Footer/>
+
     </Page>
       {/* <Page size="A4" style={styles.page}>
         <View style={styles.section}>
