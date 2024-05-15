@@ -137,7 +137,7 @@ const Login = () => {
                       onChange={formik.handleChange("email")}
                       onBlur={formik.handleBlur("email")}
                     />
-                    <div className="error">
+                    <div className="error" style={{marginTop:"-15px"}}>
                       {formik.touched.email && formik.errors.email}
                     </div>
                     <label for="email">Email</label>
@@ -152,7 +152,7 @@ const Login = () => {
                       onChange={formik.handleChange("password")}
                       onBlur={formik.handleBlur("password")}
                     />
-                    <div className="error">
+                    <div className="error" style={{marginTop:"-15px"}}>
                       {formik.touched.password && formik.errors.password}
                     </div>
                     <label for="pass">Password</label>

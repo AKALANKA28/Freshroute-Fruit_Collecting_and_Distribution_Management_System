@@ -13,7 +13,7 @@ import Navbar2 from "../../Navbar/Navbar2";
 import Grades from "../../Components/Grades";
 // import Grades from "../../Components/Grades";
 
-const SingleProduct = ({ setG, gradeData }) => {
+const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [grade, setGrade] = useState(null);
   const [productData, setProductData] = useState(null);
@@ -78,12 +78,6 @@ const SingleProduct = ({ setG, gradeData }) => {
   };
   // console.log(uploadCart);
 
-  const [clicked, setClicked] = useState(false);
-
-  const handleClick = () => {
-    setG(gradeData); // Set the grade when clicked
-    setClicked(true); // Set clicked state to true
-  };
   return (
     <div>
       <Navbar2 />
@@ -119,16 +113,12 @@ const SingleProduct = ({ setG, gradeData }) => {
                     <>
                       <div className="d-flex flex-column gap-2 pb-4">
                         <h3 className="product-heading">Grade</h3>
-                        <div className="d-flex flex-wrap gap-15 grade ">
+                        <div className="d-flex flex-wrap gap-15 grade">
                           {/* First span */}
-                          <div
-                            className={`badge border border-1 p-3 button-select text-center ${
-                              clicked ? "active" : ""
-                            }`}
-                            onClick={handleClick}
-                            style={{ cursor: "pointer" }}
+                          <span
+                            className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
                           >
-                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -139,17 +129,13 @@ const SingleProduct = ({ setG, gradeData }) => {
                                 )
                               } // Pass the first third of the gradeData array
                             />
-                          </div>
+                          </span>
 
                           {/* Second span */}
-                          <div
-                            className={`badge border border-1 p-3 button-select text-center ${
-                              clicked ? "active" : ""
-                            }`}
-                            onClick={handleClick}
-                            style={{ cursor: "pointer" }}
+                          <span
+                            className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
                           >
-                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -160,17 +146,13 @@ const SingleProduct = ({ setG, gradeData }) => {
                                 )
                               } // Pass the second third of the gradeData array
                             />
-                          </div>
+                          </span>
 
                           {/* Third span */}
-                          <div
-                            className={`badge border border-1 p-3 button-select text-center ${
-                              clicked ? "active" : ""
-                            }`}
-                            onClick={handleClick}
-                            style={{ cursor: "pointer" }}
+                          <span
+                            className="badge border border-1 p-3 button-select"
+                            style={{ backgroundColor: "black", color: "white" }}
                           >
-                            {" "}
                             <Grades
                               setGrade={setGrade}
                               gradeData={
@@ -180,8 +162,7 @@ const SingleProduct = ({ setG, gradeData }) => {
                                 )
                               } // Pass the last third of the gradeData array
                             />
-                          </div>
-                          <div className="text-center">Stock: 1000 KG</div>
+                          </span>
                         </div>
                       </div>
                     </>

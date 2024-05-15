@@ -215,19 +215,14 @@
   margin-right: 3px;
 }
 
-/* .button-select{
+
+.button-select{
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+  font-size: 14px;
+  font-weight: 600;  
+}
+.button-select:hover{
   background-color: var(--hoverColor);
-  color: white;
-  cursor: pointer;
-} */
-
-.button-select:hover {
-  background-color: lightgray; /* Change to your desired hover color */
+  color: #ffffff;
 }
-
-.text-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-

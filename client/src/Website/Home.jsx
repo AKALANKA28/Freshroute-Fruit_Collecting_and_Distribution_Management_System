@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import "./website.css"
+import React, { useEffect, useState } from 'react';
+import "./website.css";
 import Hero from './Home/Hero/Hero';
 import Navbar from './Navbar/Navbar';
 import Background from './Home/Background/Background';
@@ -11,56 +11,52 @@ import Footer from './Footer/Footer';
 import Contact from './Home/Contact/Contact';
 import Blog from './Home/Blog/Blog';
 import Describe from './Home/Describe/Describe';
+import GoogleTranslate from './Components/GoogleTranslate';
 
 const Home = () => {
-
     let heroData = [
-        {text1: "ORGANIC", text2:"& NATURAL"},
-        {text1: "Indulge", text2:"your passions"},
-        {text1: "Give in to", text2:"your passions"},
-    
-      ]
-    
+        { text1: "ORGANIC", text2: "& NATURAL" },
+        { text1: "Indulge", text2: "your passions" },
+        { text1: "Give in to", text2: "your passions" },
+    ];
+
     const [heroCount, setHeroCount] = useState(0);
     const [playStatus, setPlayStatus] = useState(false);
 
-      useEffect(()=>{
-        setInterval(() => {
-            setHeroCount((count) => {return count ===0?2:count-1})
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setHeroCount((count) => count === 0 ? 2 : count - 1);
         }, 10000);
-     
-      }, []);
 
-      
-    
-  return (
-    <>
-      <Navbar />
-          <div className='hero__section'>
-          <Hero
-              setPlayStatus = {setPlayStatus} 
-              heroData = {heroData[heroCount]}
-              heroCount = {heroCount} 
-              setHeroCount = {setHeroCount} 
-              playStatus={playStatus}
-          />
-          <Background playStatus={playStatus} heroCount = {heroCount}  />
-         
-      </div>
-      <div>
-        <Features />
-        <Count/>
-        <About/>
-        <Partners />
-        <Describe />
-        <Contact />
-        {/* <Blog /> */}
-        <Footer />
-      </div>
-        
-       
-    </>
-  )
-}
+        return () => clearInterval(intervalId);
+    }, []);
 
-export default Home
+    return (
+        <>
+            <Navbar />
+            <div className='hero__section'>
+                <Hero
+                    setPlayStatus={setPlayStatus}
+                    heroData={heroData[heroCount]}
+                    heroCount={heroCount}
+                    setHeroCount={setHeroCount}
+                    playStatus={playStatus}
+                />
+                <Background playStatus={playStatus} heroCount={heroCount} />
+            </div>
+            <div>
+                <Features />
+                <Count />
+                <About />
+                <Partners />
+                <Describe />
+                <Contact />
+                {/* <Blog /> */}
+                <Footer />
+            </div>
+            {/* <GoogleTranslate /> Add the GoogleTranslate component */}
+        </>
+    );
+};
+
+export default Home;
